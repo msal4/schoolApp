@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="itemModel"
+            type="com.smart.resources.schools_app.database.model.HomeworkModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,7 +39,7 @@
             app:layout_constraintEnd_toEndOf="@+id/date"
             app:layout_constraintStart_toStartOf="@+id/date"
             app:layout_constraintTop_toBottomOf="@+id/date"
-            android:text="الفئة" />
+            android:text="@{itemModel.subjectName}" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/barrier"
@@ -68,7 +70,8 @@
             app:layout_constraintBottom_toTopOf="@+id/textView6"
             app:layout_constraintStart_toEndOf="@+id/imageView9"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="العنوان" />
+            android:text="@{itemModel.assignmentName}"
+            tools:text="العنوان" />
 
 
         <TextView
@@ -78,7 +81,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:text="المحتوى هو هذا وها وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا المحتوى هو هذاالمحتوى هو هذا"
+            android:text="@{itemModel.note}"
+            tools:text="المحتوى هو هذا وها وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا المحتوى هو هذاالمحتوى هو هذا"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/barrier"
             app:layout_constraintHorizontal_bias="0.5"
