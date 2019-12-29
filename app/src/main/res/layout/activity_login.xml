@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mine= "http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="loginViewModel"
+            type="com.smart.resources.schools_app.viewModel.LoginViewModel" />
+    </data>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:layoutDirection="rtl">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            android:layoutDirection="rtl"
+            android:padding="@dimen/login_padding"
+            tools:context=".ui.activity.LoginActivity">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_logo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                android:contentDescription="@string/logo_desc" />
+
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="34sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView"
+                android:text="School Name" />
+
+
+            <EditText
+                android:id="@+id/phoneEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:background="@drawable/background_edit_text"
+                android:drawableStart="@drawable/ic_phone_primary_24dp"
+                android:drawablePadding="@dimen/edit_text_drawable_padding"
+                android:hint="@string/phone_number"
+                android:padding="@dimen/edit_text_padding"
+                android:textSize="@dimen/login_text_size"
+                android:inputType="phone"
+                android:text="@={loginViewModel.phoneNumber}"
+                mine:errorMsg="@{loginViewModel.loginException.phoneNumberMsg}"
+                android:textAlignment="viewStart"
+                app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:layout_constraintVertical_bias="0.32"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <EditText
+                android:id="@+id/passwordEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/background_edit_text"
+                android:drawableStart="@drawable/ic_lock_primary_24dp"
+                android:drawablePadding="@dimen/edit_text_drawable_padding"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:text="@={loginViewModel.password}"
+                android:padding="@dimen/edit_text_padding"
+                mine:errorMsg="@{loginViewModel.loginException.passwordMsg}"
+                android:textSize="20sp"
+                android:textAlignment="viewStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/phoneEditText"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <Button
+                android:id="@+id/loginAsTeacherBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="64dp"
+                android:background="@drawable/background_button"
+                android:elevation="@dimen/elevation_btn_login"
+                android:padding="@dimen/btn_padding"
+                android:onClick="@{()->loginViewModel.loginAsTeacher()}"
+                android:text="@{loginViewModel.isTeacherLogging()? String.valueOf(' ') : @string/login_as_teacher}"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/loginAsStudentBtn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.507"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/passwordEditText"
+                app:layout_constraintVertical_bias="0.8"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="@string/login_as_teacher" />
+
+            <ProgressBar
+                android:id="@+id/teacherLoginProgressIndicator"
+                android:visibility="@{loginViewModel.isTeacherLogging()? View.VISIBLE: View.GONE}"
+                tools:visibility="gone"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:elevation="55dp"
+                android:indeterminateTint="@android:color/white"
+                android:outlineProvider="none"
+                app:layout_constraintBottom_toBottomOf="@+id/loginAsTeacherBtn"
+                app:layout_constraintDimensionRatio="w,1:1"
+                app:layout_constraintEnd_toEndOf="@+id/loginAsTeacherBtn"
+                app:layout_constraintStart_toStartOf="@+id/loginAsTeacherBtn"
+                app:layout_constraintTop_toTopOf="@+id/loginAsTeacherBtn" />
+
+            <Button
+                android:id="@+id/loginAsStudentBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/background_button"
+                android:padding="@dimen/btn_padding"
+                android:text="@{loginViewModel.isStudentLogging()? String.valueOf(' ') : @string/login_as_student}"
+                tools:text="@string/login_as_student"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:elevation="@dimen/elevation_btn_login"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loginAsTeacherBtn"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <ProgressBar
+                android:id="@+id/studentLoginProgressIndicator"
+                android:visibility="@{loginViewModel.isStudentLogging()? View.VISIBLE: View.GONE}"
+                tools:visibility="gone"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:elevation="55dp"
+                android:indeterminateTint="@android:color/white"
+                android:outlineProvider="none"
+                app:layout_constraintBottom_toBottomOf="@+id/loginAsStudentBtn"
+                app:layout_constraintDimensionRatio="w,1:1"
+                app:layout_constraintEnd_toEndOf="@+id/loginAsStudentBtn"
+                app:layout_constraintStart_toStartOf="@+id/loginAsStudentBtn"
+                app:layout_constraintTop_toTopOf="@+id/loginAsStudentBtn" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</layout>

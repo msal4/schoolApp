@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Schools_App</string>
+    <string name="password">كلمة السر</string>
+    <string name="phone_number">رقم الهاتف</string>
+    <string name="login_as_teacher">تسجيل الدخول كمدرس</string>
+    <string name="login_as_student">تسجيل الدخول كطالب</string>
+    <string name="homework">الواجبات</string>
+    <string name="section_icon_desc">ايقونة القسم</string>
+    <string name="notifications">الاشعارات</string>
+    <string name="exams">الامتحانات</string>
+    <string name="schedule">الجدول</string>
+    <string name="library">المكتبة</string>
+    <string name="absence">الغياب</string>
+    <string name="logo_desc">ايقونة التطبيق</string>
+    <string name="desc_ic_exam">ايقونة الامتحان</string>
+    <string name="desc_ic_book">ايقونة كتاب</string>
+    <string name="desc_ic_open_book">ايقونة كتاب مفتوع</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="student">الطالب</string>
+    <string name="the_class">الصف</string>
+    <string name="section">القسم</string>
+</resources>

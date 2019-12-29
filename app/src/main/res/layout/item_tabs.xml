@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/item_margin">
+
+        <com.google.android.material.tabs.TabItem
+            android:text="@string/student"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:text="@string/the_class" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:text="@string/section" />
+
+    </com.google.android.material.tabs.TabLayout>
+</layout>
+
