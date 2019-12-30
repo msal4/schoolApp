@@ -41,7 +41,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imageView9"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="اسم الامتحان" />
+            tools:text="اسم المادة" />
 
         <TextView
             android:id="@+id/date"
@@ -51,7 +51,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/examName"
             app:layout_constraintVertical_bias="0.491"
-            tools:text="8/10/2019" />
+            tools:text="1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

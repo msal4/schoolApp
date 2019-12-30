@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.adapter.sections.*
 import com.smart.resources.schools_app.database.dao.HomeworkDao
+import com.smart.resources.schools_app.database.dao.LibraryDao
 import com.smart.resources.schools_app.database.model.HomeworkModel
+import com.smart.resources.schools_app.database.model.LibraryModel
 import com.smart.resources.schools_app.databinding.FragmentRecyclerBinding
 import com.smart.resources.schools_app.ui.activity.SectionActivity
 import com.smart.resources.schools_app.util.BackendHelper
@@ -68,7 +70,9 @@ class RecyclerFragment : Fragment() {
             }
 
             Section.LIBRARY ->{
-                createGridLayout(LibraryRecyclerAdapter())
+
+
+                setupLibraryRecycler()
                 stringId= R.string.library
             }
 
@@ -91,7 +95,52 @@ class RecyclerFragment : Fragment() {
             (activity as SectionActivity).setCustomTitle(stringId)
     }
 
+
+    private fun setupLibraryRecycler() {
+
+        val libraryDao = BackendHelper.retrofit.create(LibraryDao::class.java)
+        libraryDao.fetchLib().enqueue(
+            object : Callback<List<LibraryModel>> {
+                override fun onFailure(call: Call<List<LibraryModel>>, t: Throwable) {
+
+                    this@RecyclerFragment.context?.toast(t.message.toString())
+                }
+
+                override fun onResponse(
+                    call: Call<List<LibraryModel>>,
+                    response: Response<List<LibraryModel>>
+                ) {
+                    if(response.isSuccessful) {
+                        val adapter1 = response.body()?.let { LibraryRecyclerAdapter(it) }
+                        binding.recyclerView.adapter = adapter1
+
+
+                        binding.recyclerView.apply {
+
+                            val itemMargin = resources.getDimension(R.dimen.item_margin).toInt()
+                            setPadding(itemMargin, itemMargin, 0, itemMargin)
+                            layoutManager = GridLayoutManager(context, 2)
+                            this.adapter = adapter
+                        }
+
+                        if(response.body()!!.isEmpty()){
+                            this@RecyclerFragment.context?.toast("no library!")
+                        }
+
+                    }else{
+                        this@RecyclerFragment.context?.toast(response.message())
+                    }
+                }
+
+
+            }
+        )
+    }
+
+
     private fun setupHomeworkRecycler(adapter: RecyclerView.Adapter<out RecyclerView.ViewHolder>?) {
+
+
         var adapter1 = adapter
         val homeworkDao = BackendHelper.retrofit.create(HomeworkDao::class.java)
         homeworkDao.fetchHomework().enqueue(
