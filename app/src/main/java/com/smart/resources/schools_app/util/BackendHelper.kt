@@ -1,14 +1,18 @@
 package com.smart.resources.schools_app.util
 
 import com.google.gson.GsonBuilder
+import com.smart.resources.autoprint.adapter.LocalDateTimeConverter
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import org.threeten.bp.LocalDateTime
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object BackendHelper {
     private const val API_BASE_URL = "http://bushra.srittwo.me/api/"
-    private val gson = GsonBuilder() // TODO: set date format
+    private val gson = GsonBuilder()
+        .registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeConverter())
+        // TODO: set date format
         .create()
 
 

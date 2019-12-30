@@ -9,10 +9,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.adapter.sections.*
+import com.smart.resources.schools_app.database.dao.ExamDao
 import com.smart.resources.schools_app.database.dao.HomeworkDao
 import com.smart.resources.schools_app.database.dao.LibraryDao
+import com.smart.resources.schools_app.database.dao.StudentAbsenceDao
+import com.smart.resources.schools_app.database.model.ExamModel
 import com.smart.resources.schools_app.database.model.HomeworkModel
 import com.smart.resources.schools_app.database.model.LibraryModel
+import com.smart.resources.schools_app.database.model.StudentAbsenceModel
 import com.smart.resources.schools_app.databinding.FragmentRecyclerBinding
 import com.smart.resources.schools_app.ui.activity.SectionActivity
 import com.smart.resources.schools_app.util.BackendHelper
@@ -64,8 +68,7 @@ class RecyclerFragment : Fragment() {
 
             }
             Section.EXAM -> {
-                adapter = ExamRecyclerAdapter()
-                binding.recyclerView.adapter= adapter
+               setupExamRecycler()
                 stringId= R.string.exams
             }
 
@@ -86,8 +89,7 @@ class RecyclerFragment : Fragment() {
                 stringId= R.string.schedule
             }
             Section.ABSENCE -> {
-                adapter= AbsenceRecyclerAdapter()
-                binding.recyclerView.adapter= adapter
+                setupStudentAbsenceRecycler()
                 stringId= R.string.absence
             }
         }
@@ -171,6 +173,78 @@ class RecyclerFragment : Fragment() {
             }
         )
     }
+
+
+
+    private fun setupExamRecycler() {
+
+
+        val examDao = BackendHelper.retrofit.create(ExamDao::class.java)
+        examDao.fetchExam().enqueue(
+            object : Callback<List<ExamModel>> {
+                override fun onFailure(call: Call<List<ExamModel>>, t: Throwable) {
+
+                    this@RecyclerFragment.context?.toast(t.message.toString())
+                }
+
+                override fun onResponse(
+                    call: Call<List<ExamModel>>,
+                    response: Response<List<ExamModel>>
+                ) {
+                    if(response.isSuccessful) {
+                        val adapter1 = response.body()?.let { ExamRecyclerAdapter(it) }
+                        binding.recyclerView.adapter = adapter1
+
+                        if(response.body()!!.isEmpty()){
+                            this@RecyclerFragment.context?.toast("no homework!")
+                        }
+
+                    }else{
+                        this@RecyclerFragment.context?.toast(response.message())
+                    }
+                }
+
+
+            }
+        )
+    }
+
+
+
+
+    private fun setupStudentAbsenceRecycler() {
+
+
+        val studentAbsenceDao = BackendHelper.retrofit.create(StudentAbsenceDao::class.java)
+        studentAbsenceDao.fetchstudentAbsence().enqueue(
+            object : Callback<List<StudentAbsenceModel>> {
+                override fun onFailure(call: Call<List<StudentAbsenceModel>>, t: Throwable) {
+
+                    this@RecyclerFragment.context?.toast(t.message.toString())
+                }
+
+                override fun onResponse(
+                    call: Call<List<StudentAbsenceModel>>,
+                    response: Response<List<StudentAbsenceModel>>
+                ) {
+                    if(response.isSuccessful) {
+                        val adapter1 = response.body()?.let { AbsenceRecyclerAdapter(it) }
+                        binding.recyclerView.adapter = adapter1
+
+                        if(response.body()!!.isEmpty()){
+                            this@RecyclerFragment.context?.toast("no homework!")
+                        }
+
+                    }else{
+                        this@RecyclerFragment.context?.toast(response.message())
+                    }
+                }
+
+
+            }
+        )
+    }
+
 
 
     private fun createGridLayout(adapter: RecyclerView.Adapter<out RecyclerView.ViewHolder>) {

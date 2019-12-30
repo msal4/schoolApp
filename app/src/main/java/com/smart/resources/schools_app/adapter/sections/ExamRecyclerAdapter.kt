@@ -3,12 +3,18 @@ package com.smart.resources.schools_app.adapter.sections
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.smart.resources.schools_app.database.model.ExamModel
+import com.smart.resources.schools_app.database.model.LibraryModel
 import com.smart.resources.schools_app.databinding.ItemExamBinding
 
-class ExamRecyclerAdapter : RecyclerView.Adapter<ExamRecyclerAdapter.MyViewHolder>() {
+class ExamRecyclerAdapter(private val body: List<ExamModel>) : RecyclerView.Adapter<ExamRecyclerAdapter.MyViewHolder>() {
 
-    inner class MyViewHolder(binding: ItemExamBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class MyViewHolder(private val binding: ItemExamBinding) : RecyclerView.ViewHolder(binding.root) {
 
+
+        fun bind(examModel: ExamModel){
+            binding.itemModel=examModel
+        }
     }
 
     override fun onCreateViewHolder(
@@ -21,9 +27,11 @@ class ExamRecyclerAdapter : RecyclerView.Adapter<ExamRecyclerAdapter.MyViewHolde
         return MyViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = 25
+    override fun getItemCount(): Int = body.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+
+        holder.bind(body[position])
     }
 
 }

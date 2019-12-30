@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:mine="http://schemas.android.com/apk/res/android">
 
     <data>
         <variable
@@ -28,7 +29,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
-            android:text="8/10/2019" />
+            mine:setDate="@{itemModel.date}"
+            tools:text="8/10/2019" />
 
         <TextView
             android:id="@+id/schedule"

@@ -1,10 +1,13 @@
 package com.smart.resources.schools_app.database.model;
 import com.google.gson.annotations.SerializedName;
 
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime;
+
 public class HomeworkModel {
 
     private String note;
-    private String date;
+    private LocalDateTime date;
     @SerializedName("assignment_name")
     private String assignmentName;
     @SerializedName("subject_name")
@@ -16,7 +19,7 @@ public class HomeworkModel {
         return note;
     }
 
-    public String getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
