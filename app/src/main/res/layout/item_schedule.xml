@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="dayOfWeek"
+            type="com.smart.resources.schools_app.util.Week" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -50,7 +53,9 @@
             android:layout_height="0dp"
             android:gravity="center"
             android:padding="12dp"
-            android:text="السبت"
+
+            tools:text="السبت"
+            android:text="@{dayOfWeek.dayName}"
             android:textSize="24sp"
             android:textColor="@android:color/black"
             android:textStyle="bold"

@@ -4,11 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.databinding.ItemScheduleBinding
+import com.smart.resources.schools_app.util.Week
 
-class ScheduleRecyclerAdapter : RecyclerView.Adapter<ScheduleRecyclerAdapter.MyViewHolder>() {
+class ScheduleRecyclerAdapter() : RecyclerView.Adapter<ScheduleRecyclerAdapter.MyViewHolder>() {
 
-    inner class MyViewHolder(binding: ItemScheduleBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class MyViewHolder(private val binding: ItemScheduleBinding) : RecyclerView.ViewHolder(binding.root) {
 
+        fun bind(week:Week){
+            binding.dayOfWeek= week
+        }
     }
 
     override fun onCreateViewHolder(
@@ -18,13 +22,14 @@ class ScheduleRecyclerAdapter : RecyclerView.Adapter<ScheduleRecyclerAdapter.MyV
         val inflater= LayoutInflater.from(parent.context)
         val binding= ItemScheduleBinding.inflate(inflater, parent, false)
 
+
         return MyViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = 25
+    override fun getItemCount(): Int = Week.values().size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-
+        holder.bind(Week.values()[position])
     }
 
 }

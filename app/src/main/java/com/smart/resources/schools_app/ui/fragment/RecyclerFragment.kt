@@ -23,8 +23,6 @@ import com.smart.resources.schools_app.util.BackendHelper
 import com.smart.resources.schools_app.util.Section
 import com.smart.resources.schools_app.util.toast
 import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class RecyclerFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerBinding

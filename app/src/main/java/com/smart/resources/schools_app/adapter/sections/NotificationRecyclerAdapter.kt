@@ -38,7 +38,6 @@ class NotificationRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
 
     override fun getItemCount(): Int = 25
 
-
     override fun getItemViewType(position: Int): Int=
         if(position== 0) TABS_VIEW_TYPE else NORMAL_VIEW_TYPE
 

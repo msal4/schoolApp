@@ -56,6 +56,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             loginException.passwordMsg.postValue(context.getString(R.string.field_required))
             return false
         }
+
         return true
     }
 }

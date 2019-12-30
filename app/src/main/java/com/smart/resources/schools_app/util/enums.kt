@@ -8,3 +8,17 @@ enum class Section{
     SCHEDULE,
     ABSENCE
 }
+
+
+enum class Week( val dayName:String) {
+
+    SATURDAY("السبت"),
+    SUNDAY("الاحد"),
+    MONDAY("الاثنين"),
+    TUESDAY( "الثلاثاء"),
+    WEDNESDAY("الاربعاء"),
+    THURSDAY( "الخميس"),
+    FRIDAY("الجمعة"),
+
+
+}
