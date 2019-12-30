@@ -13,9 +13,7 @@ import com.smart.resources.schools_app.database.dao.HomeworkDao
 import com.smart.resources.schools_app.database.model.HomeworkModel
 import com.smart.resources.schools_app.databinding.FragmentRecyclerBinding
 import com.smart.resources.schools_app.ui.activity.SectionActivity
-import com.smart.resources.schools_app.util.BackendHelper
-import com.smart.resources.schools_app.util.Section
-import com.smart.resources.schools_app.util.toast
+import com.smart.resources.schools_app.util.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -50,16 +48,15 @@ class RecyclerFragment : Fragment() {
     }
 
     private fun mapSectionToRecycler() {
+        binding.progressIndicator.show()
 
         var stringId= 0
-        var adapter:RecyclerView.Adapter<out RecyclerView.ViewHolder>?= null
+        val adapter:RecyclerView.Adapter<out RecyclerView.ViewHolder>?
 
         when (arguments?.getSerializable(EXTRA_SECTION)) {
             Section.HOMEWORK -> {
-
-                setupHomeworkRecycler(adapter)
+                setupHomeworkRecycler()
                 stringId= R.string.homework
-
             }
             Section.EXAM -> {
                 adapter = ExamRecyclerAdapter()
@@ -87,38 +84,34 @@ class RecyclerFragment : Fragment() {
                 stringId= R.string.absence
             }
         }
-
             (activity as SectionActivity).setCustomTitle(stringId)
     }
 
-    private fun setupHomeworkRecycler(adapter: RecyclerView.Adapter<out RecyclerView.ViewHolder>?) {
-        var adapter1 = adapter
+    private fun setupHomeworkRecycler() {
         val homeworkDao = BackendHelper.retrofit.create(HomeworkDao::class.java)
         homeworkDao.fetchHomework().enqueue(
-            object : Callback<List<HomeworkModel>> {
+            object : BackendCallBack<List<HomeworkModel>>() {
                 override fun onFailure(call: Call<List<HomeworkModel>>, t: Throwable) {
-
+                    super.onFailure(call, t)
                     this@RecyclerFragment.context?.toast(t.message.toString())
+                    binding.errorText.text= getString(R.string.connection_error)
                 }
 
-                override fun onResponse(
-                    call: Call<List<HomeworkModel>>,
-                    response: Response<List<HomeworkModel>>
-                ) {
-                    if(response.isSuccessful) {
-                        adapter1 = HomeworkRecyclerAdapter(response.body())
-                        binding.recyclerView.adapter = adapter1
-
-                        if(response.body()!!.isEmpty()){
-                            this@RecyclerFragment.context?.toast("no homework!")
-                        }
-
-                    }else{
-                        this@RecyclerFragment.context?.toast(response.message())
+                override fun onSuccess(result: List<HomeworkModel>?) {
+                    if(result.isNullOrEmpty()){
+                        binding.errorText.text= getString(R.string.no_homework)
+                        return
                     }
+                    binding.recyclerView.adapter = HomeworkRecyclerAdapter(result)
                 }
 
+                override fun onError(code: Int, msg: String?) {
+                    binding.errorText.text= msg
+                }
 
+                override fun onFinish() {
+                    binding.progressIndicator.hide()
+                }
             }
         )
     }

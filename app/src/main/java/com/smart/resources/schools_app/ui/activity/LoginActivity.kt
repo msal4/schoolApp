@@ -18,17 +18,20 @@ class LoginActivity : AppCompatActivity(), LoginViewListener {
         super.onCreate(savedInstanceState)
         binding= DataBindingUtil.setContentView(this, R.layout.activity_login)
 
+
         setupViewModel()
     }
 
     private fun setupViewModel() {
         binding.apply {
+            lifecycleOwner= this@LoginActivity
             viewModel = ViewModelProviders
                 .of(this@LoginActivity).get(LoginViewModel::class.java)
                 .apply {
                     listener = this@LoginActivity
                 }
             loginViewModel = viewModel
+
         }
     }
 
