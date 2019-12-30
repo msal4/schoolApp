@@ -15,8 +15,6 @@ import com.smart.resources.schools_app.databinding.FragmentRecyclerBinding
 import com.smart.resources.schools_app.ui.activity.SectionActivity
 import com.smart.resources.schools_app.util.*
 import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class RecyclerFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerBinding

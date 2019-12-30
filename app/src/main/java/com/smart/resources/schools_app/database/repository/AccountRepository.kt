@@ -1,6 +1,5 @@
 package com.smart.resources.schools_app.database.repository
 
-import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.database.dao.AccountDao
 import com.smart.resources.schools_app.util.*
 

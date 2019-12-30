@@ -6,7 +6,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ActivityLoginBinding
-import com.smart.resources.schools_app.util.toast
 import com.smart.resources.schools_app.viewModel.LoginViewModel
 import com.smart.resources.schools_app.viewModel.myInterface.LoginViewListener
 
@@ -35,12 +34,12 @@ class LoginActivity : AppCompatActivity(), LoginViewListener {
         }
     }
 
-
     override fun loginAsTeacher() {
         HomeActivity.newInstance(this)
     }
 
     override fun loginAsStudent() {
+
     }
 }
 
