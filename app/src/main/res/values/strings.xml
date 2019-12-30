@@ -21,4 +21,7 @@
     <string name="student">الطالب</string>
     <string name="the_class">الصف</string>
     <string name="section">القسم</string>
+    <string name="no_homework">لا يوجد واجبات</string>
+    <string name="connection_error">خطأ في الاتصال!</string>
+    <string name="field_required">هذا الحقل مطلوب!</string>
 </resources>
