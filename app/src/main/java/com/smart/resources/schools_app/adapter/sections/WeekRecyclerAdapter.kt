@@ -34,7 +34,7 @@ class WeekRecyclerAdapter(private val workDays: List<Int>) : RecyclerView.Adapte
         return MyViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = WeekDays.values().size
+    override fun getItemCount(): Int = workDays.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
