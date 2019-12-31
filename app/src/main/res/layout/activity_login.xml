@@ -43,20 +43,23 @@
 
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/schoolName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/monadi"
                 android:includeFontPadding="true"
+                android:shadowColor="@color/shadowColor"
+                android:shadowDx="2"
+                android:shadowDy="8"
+                android:shadowRadius="16"
                 android:text="@string/app_name"
                 android:textColor="@color/colorPrimary"
-                android:textSize="34sp"
+                android:textSize="38sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
 
             <EditText
                 android:id="@+id/phoneEditText"
@@ -78,7 +81,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:layout_constraintTop_toBottomOf="@+id/schoolName"
                 app:layout_constraintVertical_bias="0.32"
                 app:layout_constraintVertical_chainStyle="packed" />
 

@@ -1,7 +1,11 @@
 package com.smart.resources.schools_app.ui.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.jakewharton.threetenabp.AndroidThreeTen
@@ -52,6 +56,7 @@ class LoginActivity : AppCompatActivity(), LoginViewListener {
     override fun loginError(errorMsg: String) {
         binding.scrollView.showErrorSnackbar(errorMsg)
     }
+
 }
 
 

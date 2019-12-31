@@ -11,7 +11,9 @@ import com.smart.resources.schools_app.util.*
 import com.smart.resources.schools_app.viewModel.myInterface.LoginViewListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.http.HTTP
 import java.net.HttpURLConnection
 
@@ -37,7 +39,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
         CoroutineScope(IO).launch {
             when(val result= AccountRepository.login(phoneNumber.toString(), password.toString())){
-                    is Success -> listener?.login()
+                    is Success -> withContext(Main){listener?.login()}
                     is ResponseError -> getErrorMsg(result)
                     is ConnectionError->  listener?.loginError(context.getString(R.string.connection_error))
 
