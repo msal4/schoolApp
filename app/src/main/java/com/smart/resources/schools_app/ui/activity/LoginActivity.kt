@@ -28,9 +28,7 @@ class LoginActivity : AppCompatActivity(), LoginViewListener {
 
     private fun initComponents() {
         AndroidThreeTen.init(this)
-
         SharedPrefHelper.init(this)
-
         Logger.addLogAdapter(AndroidLogAdapter())
     }
 
@@ -42,15 +40,13 @@ class LoginActivity : AppCompatActivity(), LoginViewListener {
                     listener = this@LoginActivity
                 }
             loginViewModel = viewModel
+            lifecycleOwner= this@LoginActivity
         }
     }
 
 
-    override fun loginAsTeacher() {
+    override fun login() {
         HomeActivity.newInstance(this)
-    }
-
-    override fun loginAsStudent() {
     }
 }
 

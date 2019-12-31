@@ -1,7 +1,7 @@
 package com.smart.resources.schools_app.util
 
 import com.google.gson.GsonBuilder
-import com.smart.resources.autoprint.adapter.LocalDateTimeConverter
+import com.smart.resources.schools_app.adapter.LocalDateTimeConverter
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import org.threeten.bp.LocalDateTime

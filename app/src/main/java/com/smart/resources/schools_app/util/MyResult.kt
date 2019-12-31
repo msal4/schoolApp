@@ -20,5 +20,5 @@ sealed class MyResult<out T>{
     }
 }
 class Success<out T>(val data: T?) : MyResult<T>()
-class ResponseError(val statusCode: Int, val errorBody: String) : MyResult<Nothing>()
+class ResponseError(val statusCode: Int, val errorBody: String, val combinedMsg: String = "status code: $statusCode, error body: $errorBody") : MyResult<Nothing>()
 class ConnectionError(val exception: Throwable, val message: String = exception.localizedMessage as String) : MyResult<Nothing>()
