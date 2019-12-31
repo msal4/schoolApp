@@ -10,6 +10,7 @@ import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ActivityLoginBinding
 import com.smart.resources.schools_app.util.SharedPrefHelper
+import com.smart.resources.schools_app.util.showErrorSnackbar
 import com.smart.resources.schools_app.util.toast
 import com.smart.resources.schools_app.viewModel.LoginViewModel
 import com.smart.resources.schools_app.viewModel.myInterface.LoginViewListener
@@ -44,9 +45,12 @@ class LoginActivity : AppCompatActivity(), LoginViewListener {
         }
     }
 
-
     override fun login() {
         HomeActivity.newInstance(this)
+    }
+
+    override fun loginError(errorMsg: String) {
+        binding.scrollView.showErrorSnackbar(errorMsg)
     }
 }
 

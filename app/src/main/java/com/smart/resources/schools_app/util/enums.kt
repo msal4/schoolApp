@@ -10,7 +10,7 @@ enum class Section{
 }
 
 
-enum class Week( val dayName:String) {
+enum class WeekDays(val dayName:String) {
 
     SATURDAY("السبت"),
     SUNDAY("الاحد"),

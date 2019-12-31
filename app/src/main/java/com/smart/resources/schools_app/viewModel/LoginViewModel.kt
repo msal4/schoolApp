@@ -12,6 +12,8 @@ import com.smart.resources.schools_app.viewModel.myInterface.LoginViewListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import retrofit2.http.HTTP
+import java.net.HttpURLConnection
 
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
@@ -36,12 +38,20 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         CoroutineScope(IO).launch {
             when(val result= AccountRepository.login(phoneNumber.toString(), password.toString())){
                     is Success -> listener?.login()
-                    is ResponseError -> Logger.e("error code: ${result.statusCode} - msg: ${result.errorBody}")
-                    is ConnectionError->  Logger.e("exception : ${result.message}")
+                    is ResponseError -> getErrorMsg(result)
+                    is ConnectionError->  listener?.loginError(context.getString(R.string.connection_error))
+
                 }
 
             isTeacherLogging.postValue(false)
         }
+    }
+
+    private fun getErrorMsg(result: ResponseError) {
+        if (result.statusCode == HttpURLConnection.HTTP_BAD_REQUEST)
+            listener?.loginError(context.getString(R.string.wrong_login_info))
+        else
+            listener?.loginError(result.combinedMsg)
     }
 
     private fun isDataValid(): Boolean {

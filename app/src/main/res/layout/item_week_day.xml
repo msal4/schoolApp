@@ -6,7 +6,7 @@
     <data>
         <variable
             name="dayOfWeek"
-            type="com.smart.resources.schools_app.util.Week" />
+            type="com.smart.resources.schools_app.util.WeekDays" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -54,6 +54,8 @@
             android:gravity="center"
             android:padding="12dp"
 
+            android:fontFamily="@font/monadi"
+            android:includeFontPadding="true"
             tools:text="السبت"
             android:text="@{dayOfWeek.dayName}"
             android:textSize="24sp"

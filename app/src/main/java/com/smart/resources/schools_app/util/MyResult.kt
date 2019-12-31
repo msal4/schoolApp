@@ -1,12 +1,14 @@
 package com.smart.resources.schools_app.util
 
 import com.orhanobut.logger.Logger
+import kotlinx.coroutines.Deferred
 import retrofit2.Response
 
 sealed class MyResult<out T>{
     companion object{
-        fun <T>fromResponse(response: Response<T>):MyResult<T>  =
+        suspend fun <T>fromResponse(deferred: Deferred<Response<T>>):MyResult<T>  =
             try{
+                val response=  deferred.await()
             if (response.isSuccessful) {
                 Success(response.body())
             } else {

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 
 class SharedPrefHelper private constructor(context: Context) {
+
     var imgUri: String?
         get() = mSharedPreferences.getString(IMG_URI, null)
         set(accessToken) {
@@ -23,12 +24,12 @@ class SharedPrefHelper private constructor(context: Context) {
         private const val PREF_NAME = "mySettingsPref"
         private const val IMG_URI = "myImage"
         private const val ACCESS_TOKEN = "ACCESS_TOKEN"
+
         fun init(context: Context) {
             instance = SharedPrefHelper(context)
         }
 
         fun getInstance(): SharedPrefHelper? {
-            if (instance == null) throw NullPointerException()
             return instance
         }
     }

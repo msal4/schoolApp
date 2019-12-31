@@ -33,22 +33,12 @@ class HomeActivity : AppCompatActivity() {
 
         SharedPrefHelper.getInstance()?.imgUri?.let {
             loadImageUrl(binding.circleImageView,it)
-
         }
-
-
-
-
     }
 
 
     fun selectImage(view: View){
-
-
-
         IntentHelper.selectImage(this)
-
-        binding.circleImageView
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -62,7 +52,6 @@ class HomeActivity : AppCompatActivity() {
 
 
     fun navigate(view: View) {
-
         when(view.id){
             R.id.homework-> SectionActivity.newInstance(this, Section.HOMEWORK)
             R.id.exam-> SectionActivity.newInstance(this, Section.EXAM)
@@ -70,7 +59,6 @@ class HomeActivity : AppCompatActivity() {
             R.id.notifications-> SectionActivity.newInstance(this, Section.NOTIFICATION)
             R.id.schedule-> SectionActivity.newInstance(this, Section.SCHEDULE)
             R.id.absence-> SectionActivity.newInstance(this, Section.ABSENCE)
-
         }
     }
 }

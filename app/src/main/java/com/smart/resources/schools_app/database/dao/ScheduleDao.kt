@@ -5,6 +5,8 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
 
+
+// TODO: complete this
 interface ScheduleDao{
     @GET("subjectTables")
     suspend fun fetchSchedule(): Response<List<HomeworkModel>>

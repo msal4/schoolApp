@@ -64,6 +64,8 @@
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/monadi"
+            android:includeFontPadding="true"
             android:layout_marginStart="16dp"
             app:layout_constraintBottom_toTopOf="@+id/textView6"
             app:layout_constraintStart_toEndOf="@+id/imageView9"
