@@ -1,10 +1,10 @@
 package com.smart.resources.schools_app.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
@@ -16,12 +16,6 @@ import com.smart.resources.schools_app.util.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import retrofit2.Call
-import java.lang.Exception
-import retrofit2.Callback
-import retrofit2.Response
 
 class RecyclerFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerBinding
@@ -91,64 +85,10 @@ class RecyclerFragment : Fragment() {
     }
 
 
-    private fun setupLibraryRecycler()=
-        CoroutineScope(IO).launch{
-            val libraryDao = BackendHelper.retrofit.create(LibraryDao::class.java)
-            val result = MyResult.fromResponse(GlobalScope.async { libraryDao.fetchLib() })
-
-            withContext(Main){
-                when(result){
-                    is Success -> {
-                        if(result.data.isNullOrEmpty()){
-                            binding.errorText.text= getString(R.string.no_books)
-                        }else {
-                            val adapter = LibraryRecyclerAdapter(result.data)
-                            createGridLayout(adapter)
-                        }
-                    }
-                    is ResponseError -> binding.errorText.text= result.combinedMsg
-                    is ConnectionError ->  binding.errorText.text= getString(R.string.connection_error)
-                }
-
-                binding.progressIndicator.hide()
-            }
-        }
-
-
-    private fun setupHomeworkRecycler() =
-        CoroutineScope(IO).launch{
-            val homeworkDao = BackendHelper.retrofit.create(HomeworkDao::class.java)
-
-            try {
-                val result = MyResult.fromResponse(GlobalScope.async { homeworkDao.fetchHomework() })
-
-            withContext(Main){
-                when(result){
-                    is Success -> {
-                        if(result.data.isNullOrEmpty()){
-                            binding.errorText.text= getString(R.string.no_homework)
-                        }else {
-                            val adapter = HomeworkRecyclerAdapter(result.data)
-                            binding.recyclerView.adapter = adapter
-                        }
-                    }
-                    is ResponseError -> binding.errorText.text= result.combinedMsg
-                    is ConnectionError ->  binding.errorText.text= getString(R.string.connection_error)
-                }
-
-                binding.progressIndicator.hide()
-            }
-
-            }catch (e:Exception){
-
-            }
-
-        }
-
     private fun setupNotificationsRecycler() =
         CoroutineScope(IO).launch{
             val notificationsDao = BackendHelper.retrofit.create(NotificationsDao::class.java)
-            val result = MyResult.fromResponse(notificationsDao.fetchNotifications())
+            val result = MyResult.fromResponse(GlobalScope.async {  notificationsDao.fetchNotifications()})
 
             withContext(Main){
                 when(result){
@@ -168,16 +108,65 @@ class RecyclerFragment : Fragment() {
             }
         }
 
-    private fun setupExamRecycler()  =
+
+    private fun setupLibraryRecycler()=
         CoroutineScope(IO).launch{
-            val examDao = BackendHelper.retrofit.create(ExamDao::class.java)
-            val result = MyResult.fromResponse(GlobalScope.async { examDao.fetchExam() })
+            val libraryDao = BackendHelper.retrofit.create(LibraryDao::class.java)
+            val result = MyResult.fromResponse(GlobalScope.async { libraryDao.fetchLib()})
 
             withContext(Main){
                 when(result){
                     is Success -> {
                         if(result.data.isNullOrEmpty()){
-                            binding.errorText.text= getString(R.string.no_exams)
+                            binding.errorText.text= getString(R.string.no_homework)
+                        }else {
+                            val adapter = LibraryRecyclerAdapter(result.data)
+                            createGridLayout(adapter)
+                        }
+                    }
+                    is ResponseError -> binding.errorText.text= result.combinedMsg
+                    is ConnectionError ->  binding.errorText.text= getString(R.string.connection_error)
+                }
+
+                binding.progressIndicator.hide()
+            }
+        }
+
+
+    private fun setupHomeworkRecycler() =
+        CoroutineScope(IO).launch{
+            val homeworkDao = BackendHelper.retrofit.create(HomeworkDao::class.java)
+            val result = MyResult.fromResponse(GlobalScope.async { homeworkDao.fetchHomework()})
+
+            withContext(Main){
+                when(result){
+                    is Success -> {
+                        if(result.data.isNullOrEmpty()){
+                            binding.errorText.text= getString(R.string.no_homework)
+                        }else {
+                            val adapter = HomeworkRecyclerAdapter(result.data)
+                            binding.recyclerView.adapter = adapter
+                        }
+                    }
+                    is ResponseError -> binding.errorText.text= result.combinedMsg
+                    is ConnectionError ->  binding.errorText.text= getString(R.string.connection_error)
+                }
+
+                binding.progressIndicator.hide()
+            }
+        }
+
+
+    private fun setupExamRecycler()  =
+        CoroutineScope(IO).launch{
+            val examDao = BackendHelper.retrofit.create(ExamDao::class.java)
+            val result = MyResult.fromResponse(GlobalScope.async { examDao.fetchExam()})
+
+            withContext(Main){
+                when(result){
+                    is Success -> {
+                        if(result.data.isNullOrEmpty()){
+                            binding.errorText.text= getString(R.string.no_homework)
                         }else {
                             val adapter = ExamRecyclerAdapter(result.data)
                             binding.recyclerView.adapter = adapter
@@ -194,13 +183,13 @@ class RecyclerFragment : Fragment() {
     private fun setupStudentAbsenceRecycler()  =
         CoroutineScope(IO).launch{
             val examDao = BackendHelper.retrofit.create(StudentAbsenceDao::class.java)
-            val result = MyResult.fromResponse(GlobalScope.async { examDao.fetchStudentAbsence() })
+            val result = MyResult.fromResponse(GlobalScope.async { examDao.fetchStudentAbsence()})
 
             withContext(Main){
                 when(result){
                     is Success -> {
                         if(result.data.isNullOrEmpty()){
-                            binding.errorText.text= getString(R.string.no_student_absence)
+                            binding.errorText.text= getString(R.string.no_homework)
                         }else {
                             val adapter = AbsenceRecyclerAdapter(result.data)
                             binding.recyclerView.adapter = adapter
