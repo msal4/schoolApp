@@ -1,5 +1,4 @@
 package com.smart.resources.schools_app.ui.activity
-
 import android.graphics.Point
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -35,6 +34,7 @@ class LoginActivity : AppCompatActivity(), LoginViewListener {
         windowManager.defaultDisplay.getSize(point)
         params.height = point.y
     }
+
 
     private fun initComponents() {
         AndroidThreeTen.init(this)

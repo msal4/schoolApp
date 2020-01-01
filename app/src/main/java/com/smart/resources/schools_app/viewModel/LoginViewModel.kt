@@ -4,7 +4,6 @@ import android.app.Application
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.database.repository.AccountRepository
 import com.smart.resources.schools_app.util.*
@@ -14,7 +13,6 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.http.HTTP
 import java.net.HttpURLConnection
 
 
@@ -38,7 +36,10 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         else isStudentLogging.postValue(true)
 
         CoroutineScope(IO).launch {
-            when(val result= AccountRepository.login(phoneNumber.toString(), password.toString())){
+            val phone= withEnglishNum(phoneNumber.toString())
+            val pass= withEnglishNum(password.toString())
+
+            when(val result= AccountRepository.login(phone, pass)){
                     is Success -> withContext(Main){listener?.login()}
                     is ResponseError -> getErrorMsg(result)
                     is ConnectionError->  listener?.loginError(context.getString(R.string.connection_error))
@@ -69,5 +70,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
         return true
     }
+
+
 }
 
