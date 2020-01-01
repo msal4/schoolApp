@@ -33,12 +33,15 @@
 
 
         <TextView
+            android:textAlignment="viewStart"
             android:textColor="@android:color/black"
             android:textStyle="bold"
             android:id="@+id/examName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:fontFamily="@font/monadi"
+            android:includeFontPadding="true"
             app:layout_constraintBottom_toTopOf="@+id/textView6"
             app:layout_constraintStart_toEndOf="@+id/imageView9"
             app:layout_constraintTop_toTopOf="parent"
@@ -54,6 +57,7 @@
             android:layout_marginEnd="16dp"
             tools:text="8/10/2019"
             mine:setDate="@{itemModel.date}"
+            android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="@+id/examName"
             app:layout_constraintEnd_toStartOf="@+id/schedule"
             app:layout_constraintHorizontal_bias="0.0"
@@ -75,6 +79,7 @@
             android:text="-" />
 
         <TextView
+
             android:id="@+id/textView6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -93,6 +98,7 @@
 
         <TextView
             android:id="@+id/schedule"
+            android:textAlignment="viewStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"

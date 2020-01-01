@@ -28,8 +28,6 @@ fun setDate(textView: TextView, date: LocalDateTime){
 
 }
 
-
-
 @BindingAdapter("android:srcUrl")
 fun loadImageUrl(iv: ImageView, url: String) {
     Glide

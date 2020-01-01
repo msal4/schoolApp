@@ -1,7 +1,11 @@
 package com.smart.resources.schools_app.ui.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.jakewharton.threetenabp.AndroidThreeTen
@@ -10,6 +14,7 @@ import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ActivityLoginBinding
 import com.smart.resources.schools_app.util.SharedPrefHelper
+import com.smart.resources.schools_app.util.showErrorSnackbar
 import com.smart.resources.schools_app.util.toast
 import com.smart.resources.schools_app.viewModel.LoginViewModel
 import com.smart.resources.schools_app.viewModel.myInterface.LoginViewListener
@@ -44,10 +49,14 @@ class LoginActivity : AppCompatActivity(), LoginViewListener {
         }
     }
 
-
     override fun login() {
         HomeActivity.newInstance(this)
     }
+
+    override fun loginError(errorMsg: String) {
+        binding.scrollView.showErrorSnackbar(errorMsg)
+    }
+
 }
 
 

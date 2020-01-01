@@ -41,12 +41,16 @@
             app:layout_constraintStart_toEndOf="@+id/imageView9"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@{itemModel.subjectName}"
-            tools:text="اسم الامتحان"
+            android:fontFamily="@font/monadi"
+            android:includeFontPadding="true"
+            tools:text="اسم الطالب"
+            android:textAlignment="viewStart"
             android:textColor="@android:color/black"
             android:textStyle="bold"/>
 
 
         <TextView
+            android:textAlignment="viewStart"
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Schools_App</string>
+    <string name="app_name">اسم المدرسة</string>
     <string name="password">كلمة السر</string>
     <string name="phone_number">رقم الهاتف</string>
     <string name="login_as_teacher">تسجيل الدخول كمدرس</string>
@@ -22,4 +22,8 @@
     <string name="no_homework">لا يوجد واجبات</string>
     <string name="connection_error">خطأ في الاتصال!</string>
     <string name="field_required">هذا الحقل مطلوب!</string>
+    <string name="wrong_login_info">رقم الهاتف او كلمة السر غير صحيح!</string>
+    <string name="no_student_absence">لا يوجد غيابات</string>
+    <string name="no_exams">لا يوجد امتحانات</string>
+    <string name="no_books">لا يوجد كتب</string>
 </resources>

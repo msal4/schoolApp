@@ -22,6 +22,7 @@
         android:layout_marginBottom="@dimen/item_margin">
 
         <TextView
+            android:textAlignment="viewStart"
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,6 +38,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            tools:text="المادة"
+            android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/date"
             app:layout_constraintStart_toStartOf="@+id/date"
@@ -63,10 +66,13 @@
 
 
         <TextView
+            android:textAlignment="viewStart"
             android:id="@+id/examName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:fontFamily="@font/monadi"
+            android:includeFontPadding="true"
             android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/textView6"
@@ -77,6 +83,7 @@
 
 
         <TextView
+            android:textAlignment="viewStart"
             android:id="@+id/textView6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
