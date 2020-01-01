@@ -19,11 +19,12 @@
     <string name="student">الطالب</string>
     <string name="the_class">الصف</string>
     <string name="section">القسم</string>
-    <string name="no_homework">لا يوجد واجبات</string>
+    <string name="no_homework">لا توجد واجبات</string>
     <string name="connection_error">خطأ في الاتصال!</string>
     <string name="field_required">هذا الحقل مطلوب!</string>
     <string name="wrong_login_info">رقم الهاتف او كلمة السر غير صحيح!</string>
-    <string name="no_student_absence">لا يوجد غيابات</string>
-    <string name="no_exams">لا يوجد امتحانات</string>
-    <string name="no_books">لا يوجد كتب</string>
+    <string name="no_student_absence">لا توجد غيابات</string>
+    <string name="no_exams">لا توجد امتحانات</string>
+    <string name="no_notifications">لا توجد اشعارات</string>
+    <string name="no_library">لا توجد كتب</string>
 </resources>

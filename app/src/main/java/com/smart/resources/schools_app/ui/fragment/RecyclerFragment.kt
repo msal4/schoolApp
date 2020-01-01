@@ -94,7 +94,7 @@ class RecyclerFragment : Fragment() {
                 when(result){
                     is Success -> {
                         if(result.data.isNullOrEmpty()){
-                            binding.errorText.text= getString(R.string.no_homework)
+                            binding.errorText.text= getString(R.string.no_notifications)
                         }else {
                             val adapter = NotificationRecyclerAdapter(result.data)
                             binding.recyclerView.adapter = adapter
@@ -118,7 +118,7 @@ class RecyclerFragment : Fragment() {
                 when(result){
                     is Success -> {
                         if(result.data.isNullOrEmpty()){
-                            binding.errorText.text= getString(R.string.no_homework)
+                            binding.errorText.text= getString(R.string.no_library)
                         }else {
                             val adapter = LibraryRecyclerAdapter(result.data)
                             createGridLayout(adapter)
@@ -166,7 +166,7 @@ class RecyclerFragment : Fragment() {
                 when(result){
                     is Success -> {
                         if(result.data.isNullOrEmpty()){
-                            binding.errorText.text= getString(R.string.no_homework)
+                            binding.errorText.text= getString(R.string.no_exams)
                         }else {
                             val adapter = ExamRecyclerAdapter(result.data)
                             binding.recyclerView.adapter = adapter
@@ -189,7 +189,7 @@ class RecyclerFragment : Fragment() {
                 when(result){
                     is Success -> {
                         if(result.data.isNullOrEmpty()){
-                            binding.errorText.text= getString(R.string.no_homework)
+                            binding.errorText.text= getString(R.string.no_student_absence)
                         }else {
                             val adapter = AbsenceRecyclerAdapter(result.data)
                             binding.recyclerView.adapter = adapter
