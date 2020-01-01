@@ -9,13 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.adapter.sections.*
-import com.smart.resources.schools_app.database.dao.ExamDao
-import com.smart.resources.schools_app.database.dao.HomeworkDao
-import com.smart.resources.schools_app.database.dao.LibraryDao
-import com.smart.resources.schools_app.database.dao.StudentAbsenceDao
-import com.smart.resources.schools_app.database.model.ExamModel
-import com.smart.resources.schools_app.database.model.LibraryModel
-import com.smart.resources.schools_app.database.model.StudentAbsenceModel
+import com.smart.resources.schools_app.database.dao.*
 import com.smart.resources.schools_app.databinding.FragmentRecyclerBinding
 import com.smart.resources.schools_app.ui.activity.SectionActivity
 import com.smart.resources.schools_app.util.*
@@ -24,9 +18,6 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class RecyclerFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerBinding
@@ -79,8 +70,7 @@ class RecyclerFragment : Fragment() {
             }
 
             Section.NOTIFICATION ->{
-                val adapter = NotificationRecyclerAdapter()
-                binding.recyclerView.adapter= adapter
+                setupNotificationsRecycler()
                 stringId= R.string.notifications
             }
             Section.SCHEDULE -> {
@@ -133,6 +123,29 @@ class RecyclerFragment : Fragment() {
                             binding.errorText.text= getString(R.string.no_homework)
                         }else {
                             val adapter = HomeworkRecyclerAdapter(result.data)
+                            binding.recyclerView.adapter = adapter
+                        }
+                    }
+                    is ResponseError -> binding.errorText.text= result.combinedMsg
+                    is ConnectionError ->  binding.errorText.text= getString(R.string.connection_error)
+                }
+
+                binding.progressIndicator.hide()
+            }
+        }
+
+    private fun setupNotificationsRecycler() =
+        CoroutineScope(IO).launch{
+            val notificationsDao = BackendHelper.retrofit.create(NotificationsDao::class.java)
+            val result = MyResult.fromResponse(notificationsDao.fetchNotifications())
+
+            withContext(Main){
+                when(result){
+                    is Success -> {
+                        if(result.data.isNullOrEmpty()){
+                            binding.errorText.text= getString(R.string.no_homework)
+                        }else {
+                            val adapter = NotificationRecyclerAdapter(result.data)
                             binding.recyclerView.adapter = adapter
                         }
                     }
