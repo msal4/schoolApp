@@ -13,7 +13,7 @@ sealed class MyResult<out T>{
                 Success(response.body())
             } else {
                 Logger.e("error code: ${response.code()} - msg: ${response.message()}")
-                ResponseError(response.code(), response.errorBody()?.string().orEmpty())
+                ResponseError(response.code(), response.errorBody()?.toString().orEmpty())
             }
         }catch (e: Exception){
             Logger.e("exception : ${e.localizedMessage}")
