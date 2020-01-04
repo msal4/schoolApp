@@ -30,6 +30,10 @@ class ProfileActivity : AppCompatActivity() {
         binding= DataBindingUtil.setContentView(this, R.layout.activity_profile)
         initComponents()
 
+
+
+
+
         SharedPrefHelper.getInstance()?.imgUri?.let {
             loadImageUrl(binding.imageView,it)
             binding.imageView2.visibility=View.GONE
@@ -52,6 +56,10 @@ class ProfileActivity : AppCompatActivity() {
             val uri= IntentHelper.getImage(data)
             SharedPrefHelper.getInstance()?.imgUri=uri.toString()
             loadImageUrl(binding.imageView,uri.toString())
+
+            Logger.d("uri ${uri}")
+            Logger.d("uritostring ${uri.toString()}")
+
             binding.imageView2.visibility=View.GONE
             binding.imageView.alpha= 1.0F
         }

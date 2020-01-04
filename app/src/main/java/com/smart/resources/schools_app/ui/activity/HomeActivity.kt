@@ -34,7 +34,7 @@ class HomeActivity : AppCompatActivity() {
         binding= DataBindingUtil.setContentView(this, R.layout.activity_home)
 
         Logger.d("imageAmmar ${SharedPrefHelper.getInstance()?.imgUri}")
-        SharedPrefHelper.getInstance()?.imgUri=null
+        //SharedPrefHelper.getInstance()?.imgUri=null
         SharedPrefHelper.getInstance()?.imgUri?.let {
             loadImageUrl(binding.circleImageView,it)
         }
