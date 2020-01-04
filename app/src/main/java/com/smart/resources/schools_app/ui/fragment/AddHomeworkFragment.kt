@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.FragmentAddHomeworkBinding
+import com.smart.resources.schools_app.ui.activity.SectionActivity
 import com.smart.resources.schools_app.util.toast
 
 class AddHomeworkFragment : Fragment() {
@@ -33,6 +34,7 @@ class AddHomeworkFragment : Fragment() {
         binding = FragmentAddHomeworkBinding.inflate(inflater, container, false)
 
         setHasOptionsMenu(true)
+        (activity as SectionActivity).setCustomTitle(R.string.add_homework)
         return binding.root
     }
 

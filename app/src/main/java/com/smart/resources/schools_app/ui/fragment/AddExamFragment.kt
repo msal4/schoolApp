@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.FragmentAddExamBinding
+import com.smart.resources.schools_app.ui.activity.SectionActivity
 import com.smart.resources.schools_app.util.toast
 
 class AddExamFragment : Fragment() {
@@ -33,6 +34,7 @@ class AddExamFragment : Fragment() {
         binding = FragmentAddExamBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
 
+        (activity as SectionActivity).setCustomTitle(R.string.add_exam)
         return binding.root
     }
 
