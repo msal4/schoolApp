@@ -27,4 +27,14 @@
     <string name="no_exams">لا توجد امتحانات</string>
     <string name="no_notifications">لا توجد اشعارات</string>
     <string name="no_library">لا توجد كتب</string>
+    <string name="exam_name">اسم الامتحان</string>
+    <string name="notes">الملاحظات</string>
+    <string name="date">التاريخ</string>
+    <string name="classAndDivision">الصف والشعبة</string>
+    <string name="add">اضافة</string>
+    <string name="save">حفظ</string>
+    <string name="subject_name">اسم المادة</string>
+    <string name="exam_type">نوع الامتحان</string>
+    <string name="homework_name">اسم الواجب</string>
+    <string name="no_schedule">لا يوجد جدول</string>
 </resources>

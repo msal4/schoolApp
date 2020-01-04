@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.database.repository.AccountRepository
 import com.smart.resources.schools_app.util.*
-import com.smart.resources.schools_app.viewModel.myInterface.LoginViewListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -18,7 +17,7 @@ import java.net.HttpURLConnection
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
     private val context = getApplication<Application>().applicationContext
-    var listener:LoginViewListener?= null
+    var listener: LoginViewListener?= null
 
     val loginException = LoginException()
 

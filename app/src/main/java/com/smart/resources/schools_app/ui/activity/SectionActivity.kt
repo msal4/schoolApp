@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ActivitySectionBinding
-import com.smart.resources.schools_app.ui.fragment.RecyclerFragment
+import com.smart.resources.schools_app.ui.fragment.SectionFragment
 import com.smart.resources.schools_app.util.Section
 
 
@@ -28,22 +28,20 @@ class SectionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= DataBindingUtil.setContentView(this, R.layout.activity_section)
+        setSupportActionBar(binding.toolbar)
 
         createFragment()
     }
+
+
 
     fun setCustomTitle(@StringRes title: Int){
         binding.titleText.text= getString(title)
     }
 
     private fun createFragment() {
-        val fragment = RecyclerFragment
-            .newInstance(intent.getSerializableExtra(EXTRA_SECTION) as Section)
-
-        supportFragmentManager.beginTransaction().apply {
-            add(R.id.fragmentContainer, fragment)
-            commit()
-        }
+        val fragment = SectionFragment
+            .newInstance(supportFragmentManager, intent.getSerializableExtra(EXTRA_SECTION) as Section)
     }
 
 }

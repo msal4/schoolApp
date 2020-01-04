@@ -12,10 +12,11 @@ import com.smart.resources.schools_app.databinding.ActivityLoginBinding
 import com.smart.resources.schools_app.util.SharedPrefHelper
 import com.smart.resources.schools_app.util.showErrorSnackbar
 import com.smart.resources.schools_app.viewModel.LoginViewModel
-import com.smart.resources.schools_app.viewModel.myInterface.LoginViewListener
+import com.smart.resources.schools_app.viewModel.LoginViewListener
 
 
-class LoginActivity : AppCompatActivity(), LoginViewListener {
+class LoginActivity : AppCompatActivity(),
+    LoginViewListener {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var viewModel:LoginViewModel
 
