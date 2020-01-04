@@ -4,6 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:mine="http://schemas.android.com/apk/res/android">
 
+    <data>
+        <variable
+            name="itemModel"
+            type="com.smart.resources.schools_app.database.model.StudentAbsenceModel"
+            />
+    </data>
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,11 +23,11 @@
         android:elevation="@dimen/item_elevation"
         android:layout_marginBottom="@dimen/item_margin">
 
+
         <CheckBox
             android:id="@+id/studentName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="52dp"
             android:fontFamily="@font/monadi"
             android:includeFontPadding="true"
             android:text="@{itemModel.subjectName}"
@@ -27,6 +35,7 @@
             android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.507"
             tools:text="اسم الطالب" />
@@ -34,10 +43,11 @@
 
         <TextView
             android:id="@+id/date"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="256dp"
-            mine:setDate="@{itemModel.absenceDate}"
+            android:layout_marginStart="316dp"
+            mine:setDate="@{org.threeten.bp.LocalDateTime.now()}"
             android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/studentName"

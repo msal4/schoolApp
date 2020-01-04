@@ -54,7 +54,7 @@
                 android:layout_marginStart="12dp"
                 android:background="@drawable/background_circle_white"
                 android:elevation="2dp"
-                android:onClick="selectImage"
+                android:onClick="imageClick"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
