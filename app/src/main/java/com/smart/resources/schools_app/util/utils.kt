@@ -1,6 +1,9 @@
 package com.smart.resources.schools_app.util
 
 import android.content.res.Resources
+import android.util.Base64
+import java.nio.charset.StandardCharsets
+
 
 fun pxToDp(px: Int): Int {
     return (px / Resources.getSystem().displayMetrics.density).toInt()
@@ -8,6 +11,18 @@ fun pxToDp(px: Int): Int {
 
 fun dpToPx(dp: Int): Int {
     return (dp * Resources.getSystem().displayMetrics.density).toInt()
+}
+fun decodeToken(jwtToken: String): String {
+    val splitString = jwtToken.split('.')
+    val base64EncodedHeader = splitString[0]
+    val base64EncodedBody = splitString[1]
+    val base64EncodedSignature = splitString[2]
+    val body = base64Decode(base64EncodedBody)
+    return body
+}
+ private fun base64Decode(encoded: String): String {
+    val bytes: ByteArray = Base64.decode(encoded, Base64.URL_SAFE)
+    return String(bytes, StandardCharsets.UTF_8)
 }
 
 fun String.withEngNums() = this

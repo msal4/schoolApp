@@ -4,4 +4,10 @@ data class ClassInfoModel(
     val classId: String,
     val className: String,
     val sectionName: String
-)
+
+
+
+
+){
+    val getClassSection get() = "$className - $sectionName"
+}

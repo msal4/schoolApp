@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.adapter.loadImageUrl
+import com.smart.resources.schools_app.database.model.StudentInfoModel
 import com.smart.resources.schools_app.databinding.ActivityProfileBinding
 import com.smart.resources.schools_app.util.IntentHelper
 import com.smart.resources.schools_app.util.SharedPrefHelper
@@ -19,6 +20,8 @@ class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= DataBindingUtil.setContentView(this, R.layout.activity_profile)
+
+        binding.itemModel= StudentInfoModel.getInstance()
 
         SharedPrefHelper.instance?.imgUri?.let {
             loadImageUrl(binding.profileImage,it)
