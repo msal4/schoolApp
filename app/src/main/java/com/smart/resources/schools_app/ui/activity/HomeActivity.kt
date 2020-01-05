@@ -9,6 +9,7 @@ import android.transition.Transition
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.adapter.loadImageUrl
 import com.smart.resources.schools_app.databinding.ActivityHomeBinding
@@ -32,6 +33,8 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding= DataBindingUtil.setContentView(this, R.layout.activity_home)
 
+        Logger.d("imageAmmar ${SharedPrefHelper.getInstance()?.imgUri}")
+        //SharedPrefHelper.getInstance()?.imgUri=null
         SharedPrefHelper.getInstance()?.imgUri?.let {
             loadImageUrl(binding.circleImageView,it)
         }
@@ -39,18 +42,11 @@ class HomeActivity : AppCompatActivity() {
     }
 
 
-    fun selectImage(view: View){
-        IntentHelper.selectImage(this)
+    fun imageClick(view: View){
+        ProfileActivity.newInstance(this)
+
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(IntentHelper.GET_IMAGE_REQUEST==requestCode && resultCode== Activity.RESULT_OK){
-            val uri=IntentHelper.getImage(data)
-            SharedPrefHelper.getInstance()?.imgUri=uri.toString()
-            loadImageUrl(binding.circleImageView,uri.toString())
-        }
-    }
 
 
     fun navigate(view: View) {

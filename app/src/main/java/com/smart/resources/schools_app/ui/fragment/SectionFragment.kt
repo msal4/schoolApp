@@ -79,7 +79,7 @@ class SectionFragment : Fragment(), SectionViewModelListener {
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if(section== Section.HOMEWORK || section== Section.EXAM) {
+        if(section== Section.HOMEWORK || section== Section.EXAM || section == Section.ABSENCE) {
             inflater.inflate(R.menu.menu_add_btn, menu)
         }
 
@@ -98,6 +98,9 @@ class SectionFragment : Fragment(), SectionViewModelListener {
             fragmentManager?.let { AddHomeworkFragment.newInstance(it) }
         }else if(section == Section.EXAM){
             fragmentManager?.let { AddExamFragment.newInstance(it) }
+        }
+        else if(section == Section.ABSENCE){
+            fragmentManager?.let { AddAbsenceFragment.newInstance(it) }
         }
     }
 
