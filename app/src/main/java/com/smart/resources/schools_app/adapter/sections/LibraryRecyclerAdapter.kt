@@ -1,14 +1,17 @@
 package com.smart.resources.schools_app.adapter.sections
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.database.model.LibraryModel
 import com.smart.resources.schools_app.databinding.ItemLibraryBinding
+import com.smart.resources.schools_app.ui.activity.PdfWebViewActivity
 
 class LibraryRecyclerAdapter(private val listLib: List<LibraryModel>) : RecyclerView.Adapter<LibraryRecyclerAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(private val binding: ItemLibraryBinding) : RecyclerView.ViewHolder(binding.root) {
+
 
         fun bind(libraryModel: LibraryModel){
             binding.itemModel=libraryModel
@@ -25,10 +28,18 @@ class LibraryRecyclerAdapter(private val listLib: List<LibraryModel>) : Recycler
         return MyViewHolder(binding)
     }
 
+
+
+
     override fun getItemCount(): Int = listLib.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bind(listLib[position])
+
+        val attach=listLib[position].attachment
+        holder.itemView.setOnClickListener {
+            PdfWebViewActivity.newInstance(it.context,attach)
+        }
     }
 
 }
