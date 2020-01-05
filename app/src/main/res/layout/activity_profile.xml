@@ -6,99 +6,199 @@
     xmlns:mine= "http://schemas.android.com/apk/res/android">
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:layoutDirection="rtl"
-            tools:context=".ui.activity.ProfileActivity">
+    <data>
+        <variable
+            name="itemModel"
+            type="com.smart.resources.schools_app.database.model.StudentInfoModel" />
+    </data>
 
 
-            <include
-                android:id="@+id/toolbarPlaceHolder"
-                layout="@layout/view_toolbar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:pageTitle="@{@string/profile}" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profileImage"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:onClick="selectImage"
-                android:src="@drawable/ic_businessman"
-                app:civ_border_color="@android:color/darker_gray"
-                app:civ_border_overlay="false"
-                app:civ_border_width="5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbarPlaceHolder"
-                app:layout_constraintVertical_bias="0.100000024" />
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:layoutDirection="rtl"
+        tools:context=".ui.activity.ProfileActivity">
 
-            <ImageView
-                android:id="@+id/addImageIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/logo_desc"
-                android:onClick="selectImage"
-                android:src="@drawable/ic_camera"
-                app:layout_constraintBottom_toBottomOf="@+id/profileImage"
-                app:layout_constraintEnd_toEndOf="@+id/profileImage"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/profileImage"
-                app:layout_constraintTop_toTopOf="@+id/profileImage" />
 
-            <TextView
-                android:id="@+id/phoneEditText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:drawableStart="@drawable/ic_user"
-                android:drawablePadding="@dimen/edit_text_drawable_padding"
-                android:hint="@string/username"
-                android:maxLength="11"
-                android:padding="@dimen/edit_text_padding"
-                android:text=""
-                android:textAlignment="viewStart"
-                android:textSize="@dimen/login_text_size"
-                app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profileImage"
-                app:layout_constraintVertical_bias="0.19999999"
-                app:layout_constraintVertical_chainStyle="packed" />
+        <include
+            android:id="@+id/toolbarPlaceHolder"
+            layout="@layout/view_toolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:pageTitle="@{@string/profile}" />
 
-            <TextView
-                android:id="@+id/passwordEditText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileImage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="24dp"
+            android:onClick="selectImage"
+            android:src="@drawable/ic_businessman"
+            app:civ_border_color="@android:color/darker_gray"
+            app:civ_border_overlay="false"
+            app:civ_border_width="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/studentName"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarPlaceHolder"
+            app:layout_constraintVertical_chainStyle="spread" />
 
-                android:layout_marginEnd="24dp"
+        <ImageView
+            android:id="@+id/addImageIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/logo_desc"
+            android:onClick="selectImage"
+            android:src="@drawable/ic_camera"
+            app:layout_constraintBottom_toBottomOf="@+id/profileImage"
+            app:layout_constraintEnd_toEndOf="@+id/profileImage"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/profileImage"
+            app:layout_constraintTop_toTopOf="@+id/profileImage" />
 
-                android:drawableStart="@drawable/ic_class_name"
-                android:drawablePadding="@dimen/edit_text_drawable_padding"
-                android:hint="@string/the_class"
-                android:maxLength="30"
-                android:padding="@dimen/edit_text_padding"
-                android:text=""
-                android:textAlignment="viewStart"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/phoneEditText"
-                app:layout_constraintVertical_chainStyle="packed" />
+        <TextView
+            android:id="@+id/studentName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:drawableStart="@drawable/ic_user"
+            android:drawablePadding="@dimen/edit_text_drawable_padding"
+            android:hint="@string/username"
+            android:maxLength="11"
+            android:padding="@dimen/edit_text_padding"
+            android:text="@{itemModel.name}"
+            android:textAlignment="viewStart"
+            android:textSize="@dimen/login_text_size"
+            app:layout_constraintBottom_toTopOf="@+id/className"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profileImage"
+            app:layout_constraintVertical_chainStyle="packed" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/className"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:drawableStart="@drawable/ic_class_name"
+            android:drawablePadding="@dimen/edit_text_drawable_padding"
+            android:hint="@string/the_class"
+            android:maxLength="30"
+            android:padding="@dimen/edit_text_padding"
+            android:text="@{itemModel.classInfoModel.getClassSection}"
+            android:textAlignment="viewStart"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/studentEmail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/studentName"
+            app:layout_constraintVertical_chainStyle="packed" />
 
+
+        <TextView
+            android:id="@+id/studentEmail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:drawableStart="@drawable/ic_email_black_24dp"
+            android:drawablePadding="@dimen/edit_text_drawable_padding"
+            android:hint="@string/email"
+            android:maxLength="30"
+            android:padding="@dimen/edit_text_padding"
+            android:text="@{itemModel.email}"
+            android:textAlignment="viewStart"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/studentPhone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/className"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+
+        <TextView
+            android:id="@+id/studentAge"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:drawableStart="@drawable/ic_date_range_black_24dp"
+            android:drawablePadding="@dimen/edit_text_drawable_padding"
+            android:hint="@string/age"
+            android:maxLength="30"
+            android:padding="@dimen/edit_text_padding"
+            android:text="@{itemModel.age}"
+            android:textAlignment="viewStart"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/studentGender"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/studentPhone"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+
+        <TextView
+            android:id="@+id/studentPhone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:drawableStart="@drawable/ic_local_phone_black_24dp"
+            android:drawablePadding="@dimen/edit_text_drawable_padding"
+            android:hint="@string/phone"
+            android:maxLength="30"
+            android:padding="@dimen/edit_text_padding"
+            android:text="@{itemModel.phone}"
+            android:textAlignment="viewStart"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/studentAge"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/studentEmail"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+
+        <TextView
+            android:id="@+id/studentGender"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:drawableStart="@drawable/ic_user"
+            android:drawablePadding="@dimen/edit_text_drawable_padding"
+            android:hint="@string/gender"
+            android:maxLength="30"
+            android:padding="@dimen/edit_text_padding"
+            android:text="@{itemModel.gender}"
+            android:textAlignment="viewStart"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/studentAge"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
 </layout>

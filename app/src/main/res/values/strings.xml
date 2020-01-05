@@ -42,4 +42,9 @@
     <string name="add_absence">اضافة غياب</string>
     <string name="username">اسم الطالب</string>
     <string name="profile">الحساب</string>
+    <string name="email">الايميل</string>
+    <string name="phone">رقم الهاتف</string>
+    <string name="age">العمر</string>
+    <string name="gender">الجنس</string>
+    <string name="year">سنة</string>
 </resources>

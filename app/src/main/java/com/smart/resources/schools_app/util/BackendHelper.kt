@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object BackendHelper {
     private const val API_BASE_URL = "http://kother.srittwo.me/api/" // TODO: change1
-    private val gson = GsonBuilder()
+    val gson = GsonBuilder()
         .registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeConverter())
         // TODO: set date format
         .create()
