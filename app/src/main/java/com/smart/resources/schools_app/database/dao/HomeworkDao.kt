@@ -6,6 +6,6 @@ import retrofit2.Response
 import retrofit2.http.GET
 
 interface HomeworkDao {
-    @GET("homeworks")
+    @GET("classHomework")
     suspend fun fetchHomework(): Response<List<HomeworkModel>>
 }

@@ -61,29 +61,29 @@ class SectionViewModel(private val section:Section,
 
     private suspend fun sendRequest() = when (section) {
             Section.HOMEWORK -> {
-                BackendHelper.retrofit.create(HomeworkDao::class.java)
+                BackendHelper.retrofitWithAuth.create(HomeworkDao::class.java)
                     .run{ MyResult.fromResponse(GlobalScope.async {fetchHomework()})}
             }
             Section.EXAM -> {
-                BackendHelper.retrofit.create(ExamDao::class.java)
+                BackendHelper.retrofitWithAuth.create(ExamDao::class.java)
                     .run{ MyResult.fromResponse(GlobalScope.async {fetchExam()})}
             }
 
             Section.LIBRARY ->{
-                 BackendHelper.retrofit.create(LibraryDao::class.java)
+                 BackendHelper.retrofitWithAuth.create(LibraryDao::class.java)
                      .run{ MyResult.fromResponse(GlobalScope.async {fetchLib()})}
             }
             Section.NOTIFICATION ->{
-               BackendHelper.retrofit.create(NotificationsDao::class.java)
+               BackendHelper.retrofitWithAuth.create(NotificationsDao::class.java)
                    .run{ MyResult.fromResponse(GlobalScope.async {fetchNotifications()})}
             }
              Section.SCHEDULE -> {
                  // TODO: complete
-                 BackendHelper.retrofit.create(NotificationsDao::class.java)
+                 BackendHelper.retrofitWithAuth.create(NotificationsDao::class.java)
                      .run{ MyResult.fromResponse(GlobalScope.async {fetchNotifications()})}
             }
             Section.ABSENCE -> {
-                BackendHelper.retrofit.create(StudentAbsenceDao::class.java)
+                BackendHelper.retrofitWithAuth.create(StudentAbsenceDao::class.java)
                     .run{ MyResult.fromResponse(GlobalScope.async {fetchStudentAbsence()})}
             }
         }
