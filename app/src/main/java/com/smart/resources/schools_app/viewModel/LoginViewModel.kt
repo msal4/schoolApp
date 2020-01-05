@@ -28,24 +28,28 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     var password: String?= null
 
 
-    fun login(view: View){
-        if (!isDataValid()) return
+            fun login(view: View){
+                if (!isDataValid()) return
 
-        if(view.id== R.id.loginAsTeacherBtn) isTeacherLogging.postValue(true)
-        else isStudentLogging.postValue(true)
+                if(view.id== R.id.loginAsTeacherBtn) isTeacherLogging.postValue(true)
+                else isStudentLogging.postValue(true)
 
-        CoroutineScope(IO).launch {
-            val phone= withEnglishNum(phoneNumber.toString())
-            val pass= withEnglishNum(password.toString())
+                CoroutineScope(IO).launch {
+                    val phone= phoneNumber.toString().withEngNums()
+                    val pass=password.toString().withEngNums()
 
-            when(val result= AccountRepository.login(phone, pass)){
-                    is Success -> withContext(Main){listener?.login()}
+            when(val result= AccountRepository.loginStudent(phone, pass)){
+                    is Success -> {
+                        SharedPrefHelper.getInstance()?.accessToken= result.data?.get("token")?.asString
+                        withContext(Main){listener?.login()}
+                    }
                     is ResponseError -> getErrorMsg(result)
                     is ConnectionError->  listener?.loginError(context.getString(R.string.connection_error))
 
                 }
 
             isTeacherLogging.postValue(false)
+            isStudentLogging.postValue(false)
         }
     }
 

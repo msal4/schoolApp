@@ -12,7 +12,7 @@ sealed class MyResult<out T>{
             if (response.isSuccessful) {
                 Success(response.body())
             } else {
-                Logger.e("error code: ${response.code()} - msg: ${response.message()}")
+                Logger.e("error code: ${response.code()} - msg: ${response.errorBody()}")
                 ResponseError(response.code(), response.errorBody()?.toString().orEmpty())
             }
         }catch (e: Exception){

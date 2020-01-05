@@ -10,7 +10,7 @@ fun dpToPx(dp: Int): Int {
     return (dp * Resources.getSystem().displayMetrics.density).toInt()
 }
 
-fun withEnglishNum(str: String) = str
+fun String.withEngNums() = this
     .replace('٠', '0')
     .replace('١', '1')
     .replace('٢', '2')
