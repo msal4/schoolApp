@@ -24,8 +24,8 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     val isTeacherLogging= MutableLiveData<Boolean>()
     val isStudentLogging= MutableLiveData<Boolean>()
 
-    var phoneNumber: String?= null
-    var password: String?= null
+    var phoneNumber: String?= "770000000"
+    var password: String?= "pass2"
 
 
             fun login(view: View){
@@ -40,7 +40,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
             when(val result= AccountRepository.loginStudent(phone, pass)){
                     is Success -> {
-                        SharedPrefHelper.getInstance()?.accessToken= result.data?.get("token")?.asString
+                        SharedPrefHelper.instance?.accessToken= result.data?.get("token")?.asString
                         withContext(Main){listener?.login()}
                     }
                     is ResponseError -> getErrorMsg(result)

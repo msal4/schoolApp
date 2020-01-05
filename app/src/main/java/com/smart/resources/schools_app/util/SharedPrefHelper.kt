@@ -20,7 +20,7 @@ class SharedPrefHelper private constructor(context: Context) {
         }
 
     companion object {
-        private var instance: SharedPrefHelper? = null
+        var instance: SharedPrefHelper? = null
         private const val PREF_NAME = "mySettingsPref"
         private const val IMG_URI = "myImage"
         private const val ACCESS_TOKEN = "ACCESS_TOKEN"
@@ -29,9 +29,6 @@ class SharedPrefHelper private constructor(context: Context) {
             instance = SharedPrefHelper(context)
         }
 
-        fun getInstance(): SharedPrefHelper? {
-            return instance
-        }
     }
 
     init {

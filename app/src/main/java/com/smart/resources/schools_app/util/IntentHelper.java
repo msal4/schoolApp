@@ -22,19 +22,19 @@ public class IntentHelper {
     public static int GET_IMAGE_REQUEST = 0;
     public static int GET_MULTI_IMAGES_REQUEST = 1;
 
-    public static void selectImage(Activity currentActivity){
-        startGallery(currentActivity, false);
+    public static void selectImage(Activity currentActivity, boolean neededForLaterUsage){
+        startGallery(currentActivity, false, neededForLaterUsage);
     }
 
-    public static void selectMultipleImages(Activity currentActivity){
-        startGallery(currentActivity, true);
+    public static void selectMultipleImages(Activity currentActivity, boolean neededForLaterUsage){
+        startGallery(currentActivity, true, neededForLaterUsage);
     }
 
-    private static void startGallery(Activity activity, Boolean multiSelect){
+    private static void startGallery(Activity activity, Boolean multiSelect , boolean neededForLaterUsage){
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, multiSelect);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.setAction(neededForLaterUsage? Intent.ACTION_OPEN_DOCUMENT: Intent.ACTION_GET_CONTENT);
         activity.startActivityForResult(Intent.createChooser(intent,"Select Picture"), multiSelect? GET_MULTI_IMAGES_REQUEST: GET_IMAGE_REQUEST);
     }
 

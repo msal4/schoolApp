@@ -5,8 +5,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.util.dateDisFormatter
+import com.smart.resources.schools_app.util.toast
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import java.lang.Exception
@@ -29,7 +31,8 @@ fun setDate(textView: TextView, date: LocalDateTime){
 }
 
 @BindingAdapter("android:srcUrl")
-fun loadImageUrl(iv: ImageView, url: String) {
+fun loadImageUrl(iv: ImageView, url: String?) {
+    //iv.context.toast(url.toString())
     Glide
         .with(iv.context)
         .load(url)

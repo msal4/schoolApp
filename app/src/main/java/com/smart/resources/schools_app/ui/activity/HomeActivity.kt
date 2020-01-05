@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.transition.Transition
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.orhanobut.logger.Logger
@@ -17,6 +18,8 @@ import com.smart.resources.schools_app.util.IntentHelper
 import com.smart.resources.schools_app.util.Section
 import com.smart.resources.schools_app.util.SharedPrefHelper
 import com.smart.resources.schools_app.util.toast
+import kotlinx.android.synthetic.main.activity_home.*
+import java.net.URI
 
 
 class HomeActivity : AppCompatActivity() {
@@ -33,21 +36,32 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding= DataBindingUtil.setContentView(this, R.layout.activity_home)
 
-        Logger.d("imageAmmar ${SharedPrefHelper.getInstance()?.imgUri}")
-        //SharedPrefHelper.getInstance()?.imgUri=null
-        SharedPrefHelper.getInstance()?.imgUri?.let {
-            loadImageUrl(binding.circleImageView,it)
-        }
+        loadProfileImage()
+    }
 
+    private fun loadProfileImage() {
+        SharedPrefHelper.instance?.imgUri?.let {
+            loadImageUrl(binding.profileImage, URI.create(it).toString())
+        }
     }
 
 
     fun imageClick(view: View){
         ProfileActivity.newInstance(this)
-
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
+        when(requestCode){
+            ProfileActivity.REQUEST_IS_PROFILE_IMAGE_UPDATED -> {
+                if(resultCode == Activity.RESULT_OK){
+                    this.toast("result ok")
+                    loadProfileImage()
+                }
+            }
+        }
+    }
 
     fun navigate(view: View) {
         when(view.id){

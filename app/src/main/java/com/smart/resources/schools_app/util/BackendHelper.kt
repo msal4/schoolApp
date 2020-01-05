@@ -38,7 +38,7 @@ object BackendHelper {
                 mHttpClientWithInterceptor.addInterceptor(
                     Interceptor { chain ->
                         val token =
-                            SharedPrefHelper.getInstance()?.accessToken ?: return@Interceptor null
+                            SharedPrefHelper.instance?.accessToken ?: return@Interceptor null
                         val newRequest = chain.request().newBuilder()
                             .addHeader("token", token)
                             .build()

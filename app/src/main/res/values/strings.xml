@@ -41,4 +41,5 @@
     <string name="add_exam">اضافة امتحان</string>
     <string name="add_absence">اضافة غياب</string>
     <string name="username">اسم الطالب</string>
+    <string name="profile">الحساب</string>
 </resources>
