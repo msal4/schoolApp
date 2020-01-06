@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.databinding.ItemExamBinding
 import com.smart.resources.schools_app.databinding.ItemScheduleDayBinding
 
-class ScheduleDayRecyclerAdapter : RecyclerView.Adapter<ScheduleDayRecyclerAdapter.MyViewHolder>() {
+class ScheduleDayRecyclerAdapter(private val daySchedule:List<String?>) : RecyclerView.Adapter<ScheduleDayRecyclerAdapter.MyViewHolder>() {
 
-    inner class MyViewHolder(binding: ItemScheduleDayBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class MyViewHolder(val binding: ItemScheduleDayBinding) : RecyclerView.ViewHolder(binding.root) {
 
     }
 
@@ -22,9 +22,13 @@ class ScheduleDayRecyclerAdapter : RecyclerView.Adapter<ScheduleDayRecyclerAdapt
         return MyViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = 25
+    override fun getItemCount(): Int = daySchedule.filter {!it.isNullOrEmpty()}.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        holder.binding.apply {
+            subjectName.text = daySchedule[position]
+            itemPos.text= (position+1).toString()
+        }
     }
 
 }

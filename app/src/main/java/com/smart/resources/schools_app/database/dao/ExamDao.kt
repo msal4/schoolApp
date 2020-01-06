@@ -6,6 +6,6 @@ import retrofit2.Response
 import retrofit2.http.GET
 
 interface ExamDao {
-    @GET("exams")
+    @GET("examResult")
     suspend fun fetchExam(): Response<List<ExamModel>>
 }

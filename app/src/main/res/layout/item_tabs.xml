@@ -13,6 +13,7 @@
         android:layout_marginBottom="@dimen/item_margin">
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/studentTab"
             android:text="@string/student"
             android:layout_height="match_parent"
             android:layout_width="match_parent" />
@@ -20,13 +21,8 @@
         <com.google.android.material.tabs.TabItem
             android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:text="@string/the_class"
-            />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:text="@string/section" />
+            android:text="@string/section"
+            android:id="@+id/sectionTab"/>
 
     </com.google.android.material.tabs.TabLayout>
 </layout>

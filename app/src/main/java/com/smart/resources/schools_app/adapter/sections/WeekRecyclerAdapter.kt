@@ -3,19 +3,13 @@ package com.smart.resources.schools_app.adapter.sections
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.smart.resources.schools_app.database.model.ScheduleDayModel
 import com.smart.resources.schools_app.databinding.ItemWeekDayBinding
 import com.smart.resources.schools_app.util.WeekDays
 
-class WeekRecyclerAdapter(private val workDays: List<Int>) : RecyclerView.Adapter<WeekRecyclerAdapter.MyViewHolder>() {
-    private var listener: ItemListener? = null
-
-    interface ItemListener {
-        fun onItemClick(dayOfWeek: WeekDays)
-    }
-
-    fun setItemListener(listener: ItemListener) {
-        this.listener = listener
-    }
+class WeekRecyclerAdapter(private val schedule: List<ScheduleDayModel>)
+    : RecyclerView.Adapter<WeekRecyclerAdapter.MyViewHolder>() {
+    var onClick: ((ScheduleDayModel)->Unit)?= null
 
     inner class MyViewHolder(private val binding: ItemWeekDayBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -34,21 +28,20 @@ class WeekRecyclerAdapter(private val workDays: List<Int>) : RecyclerView.Adapte
         return MyViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = workDays.size
+    override fun getItemCount(): Int = schedule.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-        if(workDays.contains(position)) {
             val dayOfWeek= WeekDays.values()[position]
+            val scheduleDay= schedule[position]
+
             holder.apply {
                 bind(dayOfWeek)
-
                 itemView
                 .setOnClickListener {
-                    listener?.onItemClick(dayOfWeek)
+                    onClick?.invoke(scheduleDay)
                 }
             }
-        }
     }
 
 }

@@ -108,6 +108,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="85" />
+            android:setMark="@{itemModel.mark}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
