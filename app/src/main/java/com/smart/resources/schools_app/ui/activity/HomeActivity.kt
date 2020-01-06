@@ -35,6 +35,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= DataBindingUtil.setContentView(this, R.layout.activity_home)
+        binding.userType= SharedPrefHelper.instance?.userType
 
         loadProfileImage()
     }
@@ -44,7 +45,6 @@ class HomeActivity : AppCompatActivity() {
             loadImageUrl(binding.profileImage, URI.create(it).toString())
         }
     }
-
 
     fun imageClick(view: View){
         ProfileActivity.newInstance(this)

@@ -19,9 +19,10 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     >
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:layoutDirection="rtl"
@@ -67,24 +68,29 @@
             app:layout_constraintStart_toStartOf="@+id/profileImage"
             app:layout_constraintTop_toTopOf="@+id/profileImage" />
 
+
         <TextView
             android:id="@+id/studentName"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="24dp"
-            android:drawableStart="@drawable/ic_user"
             android:drawablePadding="@dimen/edit_text_drawable_padding"
-            android:hint="@string/username"
-            android:maxLength="11"
+            android:fontFamily="@font/monadi"
+            tools:text="@string/username"
             android:padding="@dimen/edit_text_padding"
+            android:shadowDx="1"
+            android:shadowDy="4"
+            android:shadowRadius="8"
+            android:shadowColor="@color/shadowColor"
             android:text="@{itemModel.name}"
-            android:textAlignment="viewStart"
-            android:textSize="@dimen/login_text_size"
-            app:layout_constraintBottom_toTopOf="@+id/className"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textFontWeight="900"
+            android:textSize="28sp"
+            app:layout_constraintBottom_toTopOf="@+id/studentAge"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profileImage"
             app:layout_constraintVertical_chainStyle="packed" />
@@ -107,9 +113,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/studentName"
-            app:layout_constraintVertical_chainStyle="packed" />
-
+            app:layout_constraintTop_toBottomOf="@+id/studentAge" />
 
         <TextView
             android:id="@+id/studentEmail"
@@ -129,8 +133,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/className"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layout_constraintTop_toBottomOf="@+id/className" />
 
 
         <TextView
@@ -138,22 +141,23 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:drawableStart="@drawable/ic_date_range_black_24dp"
             android:drawablePadding="@dimen/edit_text_drawable_padding"
             android:hint="@string/age"
             android:maxLength="30"
             android:padding="@dimen/edit_text_padding"
+            android:shadowColor="@android:color/black"
+
             android:text="@{itemModel.age}"
             android:textAlignment="viewStart"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/studentGender"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/className"
+            app:layout_constraintEnd_toStartOf="@+id/studentGender"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/studentPhone"
-            app:layout_constraintVertical_chainStyle="packed" />
-
+            app:layout_constraintTop_toBottomOf="@+id/studentName" />
 
         <TextView
             android:id="@+id/studentPhone"
@@ -161,7 +165,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:drawableStart="@drawable/ic_local_phone_black_24dp"
+            android:drawableStart="@drawable/ic_phone_black_24dp"
             android:drawablePadding="@dimen/edit_text_drawable_padding"
             android:hint="@string/phone"
             android:maxLength="30"
@@ -169,19 +173,18 @@
             android:text="@{itemModel.phone}"
             android:textAlignment="viewStart"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/studentAge"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/studentEmail"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layout_constraintTop_toBottomOf="@+id/studentEmail" />
 
 
         <TextView
             android:id="@+id/studentGender"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="24dp"
             android:drawableStart="@drawable/ic_user"
             android:drawablePadding="@dimen/edit_text_drawable_padding"
@@ -191,13 +194,11 @@
             android:text="@{itemModel.gender}"
             android:textAlignment="viewStart"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/studentAge"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/studentAge"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layout_constraintStart_toEndOf="@+id/studentAge"
+            app:layout_constraintTop_toTopOf="@+id/studentAge" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

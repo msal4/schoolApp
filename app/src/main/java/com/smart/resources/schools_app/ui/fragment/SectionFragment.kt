@@ -13,6 +13,8 @@ import com.smart.resources.schools_app.adapter.sections.WeekRecyclerAdapter
 import com.smart.resources.schools_app.databinding.FragmentSectionBinding
 import com.smart.resources.schools_app.ui.activity.SectionActivity
 import com.smart.resources.schools_app.util.Section
+import com.smart.resources.schools_app.util.SharedPrefHelper
+import com.smart.resources.schools_app.util.UserType
 import com.smart.resources.schools_app.util.hide
 import com.smart.resources.schools_app.viewModel.SectionViewModel
 import com.smart.resources.schools_app.viewModel.SectionViewModelFactory
@@ -79,11 +81,17 @@ class SectionFragment : Fragment(), SectionViewModelListener {
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if(section== Section.HOMEWORK || section== Section.EXAM || section == Section.ABSENCE) {
+        if(shouldShowAdd()) {
             inflater.inflate(R.menu.menu_add_btn, menu)
         }
 
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    private fun shouldShowAdd(): Boolean {
+        return (section == Section.HOMEWORK ||
+                section == Section.EXAM ||
+                section == Section.ABSENCE) && SharedPrefHelper.instance?.userType == UserType.TEACHER
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -94,13 +102,16 @@ class SectionFragment : Fragment(), SectionViewModelListener {
     }
 
     private fun gotoAddFragment() {
-        if(section == Section.HOMEWORK){
-            fragmentManager?.let { AddHomeworkFragment.newInstance(it) }
-        }else if(section == Section.EXAM){
-            fragmentManager?.let { AddExamFragment.newInstance(it) }
-        }
-        else if(section == Section.ABSENCE){
-            fragmentManager?.let { AddAbsenceFragment.newInstance(it) }
+        when (section) {
+            Section.HOMEWORK -> {
+                fragmentManager?.let { AddHomeworkFragment.newInstance(it) }
+            }
+            Section.EXAM -> {
+                fragmentManager?.let { AddExamFragment.newInstance(it) }
+            }
+            Section.ABSENCE -> {
+                fragmentManager?.let { AddAbsenceFragment.newInstance(it) }
+            }
         }
     }
 

@@ -59,7 +59,7 @@
             android:layout_width="@dimen/item_icon_size"
             android:layout_height="@dimen/item_icon_size"
             android:contentDescription="@string/desc_ic_exam"
-            android:src="@drawable/ic_notification"
+            android:src="@drawable/ic_notification_black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -4,6 +4,7 @@ import android.app.Application
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.JsonObject
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.database.repository.AccountRepository
 import com.smart.resources.schools_app.util.*
@@ -17,39 +18,50 @@ import java.net.HttpURLConnection
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
     private val context = getApplication<Application>().applicationContext
-    var listener: LoginViewListener?= null
+    var listener: LoginViewListener? = null
 
     val loginException = LoginException()
 
-    val isTeacherLogging= MutableLiveData<Boolean>()
-    val isStudentLogging= MutableLiveData<Boolean>()
+    val isTeacherLogging = MutableLiveData<Boolean>()
+    val isStudentLogging = MutableLiveData<Boolean>()
 
-    var phoneNumber: String?= "770000000"
-    var password: String?= "pass2"
+    var phoneNumber: String? = "770000000"
+    var password: String? = "pass2"
 
 
-            fun login(view: View){
-                if (!isDataValid()) return
+    fun login(view: View) {
+        if (!isDataValid()) return
 
-                if(view.id== R.id.loginAsTeacherBtn) isTeacherLogging.postValue(true)
-                else isStudentLogging.postValue(true)
+        if (view.id == R.id.loginAsTeacherBtn)
+            isTeacherLogging.postValue(true)
+        else isStudentLogging.postValue(true)
 
-                CoroutineScope(IO).launch {
-                    val phone= phoneNumber.toString().withEngNums()
-                    val pass=password.toString().withEngNums()
+        CoroutineScope(IO).launch {
+            val phone = phoneNumber.toString().withEngNums()
+            val pass = password.toString().withEngNums()
 
-            when(val result= AccountRepository.loginStudent(phone, pass)){
-                    is Success -> {
-                        SharedPrefHelper.instance?.accessToken= result.data?.get("token")?.asString
-                        withContext(Main){listener?.login()}
-                    }
-                    is ResponseError -> getErrorMsg(result)
-                    is ConnectionError->  listener?.loginError(context.getString(R.string.connection_error))
-
+            when (val result = AccountRepository.loginStudent(phone, pass)) {
+                is Success -> {
+                    setupSharedPrefs(view, result)
+                    withContext(Main) { listener?.login() }
                 }
+                is ResponseError -> getErrorMsg(result)
+                is ConnectionError -> listener?.loginError(context.getString(R.string.connection_error))
+
+            }
 
             isTeacherLogging.postValue(false)
             isStudentLogging.postValue(false)
+        }
+    }
+
+    private fun setupSharedPrefs(
+        view: View,
+        result: Success<JsonObject>
+    ) {
+        SharedPrefHelper.instance?.apply {
+            userType = if (view.id == R.id.loginAsTeacherBtn) UserType.TEACHER else UserType.STUDENT
+            accessToken = result.data?.get("token")?.asString
         }
     }
 

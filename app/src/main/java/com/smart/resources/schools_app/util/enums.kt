@@ -19,6 +19,10 @@ enum class WeekDays(val dayName:String) {
     WEDNESDAY("الاربعاء"),
     THURSDAY( "الخميس"),
     FRIDAY("الجمعة"),
+}
 
+enum class UserType{
+    STUDENT,
+    TEACHER
 
 }

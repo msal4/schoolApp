@@ -15,7 +15,6 @@
     <string name="desc_ic_exam">ايقونة الامتحان</string>
     <string name="desc_ic_book">ايقونة كتاب</string>
     <string name="desc_ic_open_book">ايقونة كتاب مفتوع</string>
-
     <string name="student">الطالب</string>
     <string name="the_class">الصف</string>
     <string name="section">القسم</string>
@@ -47,4 +46,7 @@
     <string name="age">العمر</string>
     <string name="gender">الجنس</string>
     <string name="year">سنة</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="account_expire">انتهت صلاحية الحساب، يرجى التسجيل من جديد</string>
+
 </resources>

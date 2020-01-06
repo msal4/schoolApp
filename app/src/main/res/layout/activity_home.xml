@@ -5,6 +5,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+        <import type="android.view.View"/>
+        <import type="com.smart.resources.schools_app.util.UserType"/>
+        <variable
+            name="userType"
+            type="com.smart.resources.schools_app.util.UserType" />
     </data>
 
 
@@ -20,7 +25,7 @@
             tools:context=".ui.activity.HomeActivity">
 
             <ImageView
-                android:id="@+id/addImageIcon"
+                android:id="@+id/topPart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
@@ -34,11 +39,11 @@
                 android:id="@+id/schoolName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
                 android:fontFamily="@font/monadi"
                 android:includeFontPadding="true"
-                android:textColor="@android:color/white"
-                android:layout_marginEnd="12dp"
                 android:text="@string/app_name"
+                android:textColor="@android:color/white"
                 android:textSize="26sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/profileImage"
@@ -55,7 +60,7 @@
                 android:onClick="imageClick"
                 app:civ_border_color="@android:color/white"
                 app:civ_border_width="2dp"
-                app:layout_constraintBottom_toBottomOf="@+id/addImageIcon"
+                app:layout_constraintBottom_toBottomOf="@+id/topPart"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.90999997" />
@@ -70,6 +75,7 @@
                 android:backgroundTint="@color/lightBlue"
                 android:elevation="@dimen/home_circle_elevation"
                 android:gravity="center|bottom"
+                android:onClick="navigate"
                 android:padding="@dimen/home_circle_padding"
                 android:text="@string/notifications"
                 android:textColor="@android:color/black"
@@ -78,8 +84,8 @@
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintStart_toStartOf="@+id/guideline4"
-                app:layout_constraintTop_toBottomOf="@+id/addImageIcon"
-                android:onClick="navigate"/>
+                app:layout_constraintTop_toBottomOf="@+id/topPart"
+                app:layout_constraintVertical_chainStyle="spread" />
 
             <ImageView
                 android:id="@+id/imageView4"
@@ -105,23 +111,25 @@
                 android:id="@+id/homework"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:background="@drawable/background_circle_white"
                 android:backgroundTint="@color/lightBlue"
                 android:elevation="@dimen/home_circle_elevation"
                 android:gravity="center|bottom"
+                android:onClick="navigate"
                 android:padding="@dimen/home_circle_padding"
                 android:text="@string/homework"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/home_circle_text_size"
-                app:layout_constraintBottom_toBottomOf="@+id/notifications"
+                app:layout_constraintBottom_toTopOf="@+id/exam"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toStartOf="@+id/guideline3"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toTopOf="@+id/notifications"
-                app:layout_constraintVertical_bias="0.0"
-                android:onClick="navigate"/>
+                app:layout_constraintTop_toBottomOf="@+id/topPart"
+                app:layout_constraintVertical_chainStyle="spread" />
 
             <ImageView
                 android:id="@+id/imageView3"
@@ -151,16 +159,17 @@
                 android:backgroundTint="@color/lightBlue"
                 android:elevation="@dimen/home_circle_elevation"
                 android:gravity="center|bottom"
+                android:onClick="navigate"
                 android:padding="@dimen/home_circle_padding"
                 android:text="@string/schedule"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/home_circle_text_size"
+                android:visibility="@{userType == UserType.STUDENT? View.VISIBLE: View.GONE}"
                 app:layout_constraintBottom_toTopOf="@+id/absence"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintStart_toStartOf="@+id/guideline4"
-                app:layout_constraintTop_toBottomOf="@+id/notifications"
-                android:onClick="navigate"/>
+                app:layout_constraintTop_toBottomOf="@+id/notifications" />
 
             <ImageView
                 android:id="@+id/imageView6"
@@ -185,22 +194,23 @@
                 android:id="@+id/exam"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_marginBottom="16dp"
                 android:background="@drawable/background_circle_white"
                 android:backgroundTint="@color/lightBlue"
                 android:elevation="@dimen/home_circle_elevation"
                 android:gravity="center|bottom"
+                android:onClick="navigate"
                 android:padding="@dimen/home_circle_padding"
                 android:text="@string/exams"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/home_circle_text_size"
-                app:layout_constraintBottom_toBottomOf="@+id/schedule"
+                app:layout_constraintBottom_toTopOf="@+id/library"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toStartOf="@+id/guideline3"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toTopOf="@+id/schedule"
-                app:layout_constraintVertical_bias="0.0"
-                android:onClick="navigate"/>
+                app:layout_constraintTop_toBottomOf="@+id/homework"
+                app:layout_constraintVertical_bias="0.0" />
 
             <ImageView
                 android:id="@+id/imageView5"
@@ -230,6 +240,7 @@
                 android:backgroundTint="@color/lightBlue"
                 android:elevation="@dimen/home_circle_elevation"
                 android:gravity="center|bottom"
+                android:onClick="navigate"
                 android:padding="@dimen/home_circle_padding"
                 android:text="@string/absence"
                 android:textColor="@android:color/black"
@@ -238,8 +249,7 @@
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintStart_toStartOf="@+id/guideline4"
-                app:layout_constraintTop_toBottomOf="@+id/schedule"
-                android:onClick="navigate"/>
+                app:layout_constraintTop_toBottomOf="@+id/schedule" />
 
             <ImageView
                 android:id="@+id/imageView8"
@@ -264,22 +274,24 @@
                 android:id="@+id/library"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_marginBottom="16dp"
                 android:background="@drawable/background_circle_white"
                 android:backgroundTint="@color/lightBlue"
                 android:elevation="@dimen/home_circle_elevation"
                 android:gravity="center|bottom"
+                android:onClick="navigate"
                 android:padding="@dimen/home_circle_padding"
                 android:text="@string/library"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/home_circle_text_size"
-                app:layout_constraintBottom_toBottomOf="@+id/absence"
+                android:visibility="@{userType == UserType.STUDENT? View.VISIBLE: View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toStartOf="@+id/guideline3"
-                app:layout_constraintHorizontal_bias="0.375"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toTopOf="@+id/absence"
-                app:layout_constraintVertical_bias="0.0"
-                android:onClick="navigate"/>
+                app:layout_constraintTop_toBottomOf="@+id/exam"
+                app:layout_constraintVertical_bias="0.0" />
 
             <ImageView
                 android:id="@+id/imageView7"
