@@ -5,20 +5,23 @@ import org.threeten.bp.LocalDateTime;
 
 public class LibraryModel {
 
-    private int id;
-    @SerializedName("class_name")
-    private String className;
+    private int idLibrary;
+    private String className,attachment;
     private String title;
-    @SerializedName("add_date")
+
     private LocalDateTime addDate;
 
 
-    public int getId() {
-        return id;
+    public int getIdLibrary() {
+        return idLibrary;
     }
 
     public String getClassName() {
         return className;
+    }
+
+    public String getAttachment() {
+        return attachment;
     }
 
     public String getTitle() {
