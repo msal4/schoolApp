@@ -6,38 +6,35 @@ import org.threeten.bp.LocalDateTime;
 
 public class StudentAbsenceModel {
 
-    @SerializedName("absence_id")
-    private int absenceId;
+    private int idAbsence;
 
-    @SerializedName("subject_name")
-    private String subjectName;
-
-    @SerializedName("student_id")
-    private int studentId;
-
-    @SerializedName("teacher_id")
-    private int teacherId;
-
-    @SerializedName("absence_date")
-    private LocalDateTime absenceDate;
-
-    public int getAbsenceId(){
-        return absenceId;
+    public int getIdAbsence() {
+        return idAbsence;
     }
 
-    public String getSubjectName(){
+    public String getSubjectName() {
         return subjectName;
     }
 
-    public int getStudentId(){
+    public int getStudentId() {
         return studentId;
     }
 
-    public int getTeacherId(){
+    public int getTeacherId() {
         return teacherId;
     }
 
-    public LocalDateTime getAbsenceDate(){
+    public LocalDateTime getAbsenceDate() {
         return absenceDate;
     }
+
+    private String subjectName;
+
+    private int studentId;
+
+    private int teacherId;
+
+    private LocalDateTime absenceDate;
+
+
 }
