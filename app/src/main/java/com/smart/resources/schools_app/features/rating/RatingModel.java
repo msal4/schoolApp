@@ -3,31 +3,35 @@ package com.smart.resources.schools_app.features.rating;
 import org.threeten.bp.LocalDateTime;
 
 public class RatingModel {
+    private int idBehavior;
+    private int rate;
+    private int teacherId;
+    private int studentId;
+    private String note;
+    private LocalDateTime date;
 
-    private int idLibrary;
-    private String className,attachment;
-    private String title;
-
-    private LocalDateTime addDate;
-
-
-    public int getIdLibrary() {
-        return idLibrary;
+    public int getIdBehavior(){
+        return idBehavior;
     }
 
-    public String getClassName() {
-        return className;
+    public int getRate(){
+        return rate;
     }
 
-    public String getAttachment() {
-        return attachment;
+    public int getTeacherId(){
+        return teacherId;
     }
 
-    public String getTitle() {
-        return title;
+    public int getStudentId(){
+        return studentId;
     }
 
-    public LocalDateTime getAddDate() {
-        return addDate;
+    public String getNote(){
+        return note;
     }
+
+    public LocalDateTime getDate(){
+        return date;
+    }
+
 }

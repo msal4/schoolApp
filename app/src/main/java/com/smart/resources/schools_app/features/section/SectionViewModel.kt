@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.features.studentAbsence.RatingAdapter
+import com.smart.resources.schools_app.features.rating.RatingAdapter
 import com.smart.resources.schools_app.features.exam.ExamDao
 import com.smart.resources.schools_app.features.exam.ExamModel
 import com.smart.resources.schools_app.features.exam.ExamRecyclerAdapter
@@ -26,6 +26,7 @@ import com.smart.resources.schools_app.core.util.SectionViewModelListener
 import com.smart.resources.schools_app.features.advertising.AdvertisingRecyclerAdapter
 import com.smart.resources.schools_app.features.rating.RatingModel
 import com.smart.resources.schools_app.features.notification.NotificationsDao
+import com.smart.resources.schools_app.features.rating.RatingDao
 import kotlinx.coroutines.*
 
 
@@ -83,7 +84,9 @@ class SectionViewModel(private val section:Section,
         Section.ABSENCE -> AbsenceRecyclerAdapter(
             result.data as List<StudentAbsenceModel>
         )
-        Section.RATE -> RatingAdapter(result.data as List<RatingModel>)
+        Section.RATE -> RatingAdapter(
+            result.data as List<RatingModel>
+        )
         Section.ADVERTISING ->  AdvertisingRecyclerAdapter(listOf())
     }
 
@@ -132,8 +135,8 @@ class SectionViewModel(private val section:Section,
             }
 
             Section.RATE -> {
-            BackendHelper.retrofitWithAuth.create(StudentAbsenceDao::class.java)
-                .run{ GlobalScope.async {fetchStudentAbsence()}.toMyResult()}
+            BackendHelper.retrofitWithAuth.create(RatingDao::class.java)
+                .run{ GlobalScope.async {fetchRating()}.toMyResult()}
             }
 
             Section.ADVERTISING -> {
