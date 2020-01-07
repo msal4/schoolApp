@@ -45,6 +45,8 @@ class SectionViewModel(private val section:Section,
             Section.NOTIFICATION ->  R.string.no_notifications
             Section.SCHEDULE ->  R.string.no_schedule
             Section.ABSENCE ->  R.string.no_student_absence
+            Section.RATE ->  R.string.rate
+            Section.ADVERTISING ->  R.string.advertising
         }
 
         return context.getString(stringId)
@@ -57,6 +59,8 @@ class SectionViewModel(private val section:Section,
         Section.NOTIFICATION -> NotificationRecyclerAdapter(result.data as List<NotificationsModel>)
         Section.SCHEDULE -> WeekRecyclerAdapter(listOf()) // TODO: complete
         Section.ABSENCE -> AbsenceRecyclerAdapter(result.data as List<StudentAbsenceModel>)
+        Section.RATE -> RatingAdapter(result.data as List<RatingModel>)
+        Section.ADVERTISING -> AdvertisingRecyclerAdapter(listOf())
     }
 
     private suspend fun sendRequest() = when (section) {
@@ -86,6 +90,17 @@ class SectionViewModel(private val section:Section,
                 BackendHelper.retrofitWithAuth.create(StudentAbsenceDao::class.java)
                     .run{ MyResult.fromResponse(GlobalScope.async {fetchStudentAbsence()})}
             }
+
+        Section.RATE -> {
+            BackendHelper.retrofitWithAuth.create(StudentAbsenceDao::class.java)
+                .run{ MyResult.fromResponse(GlobalScope.async {fetchStudentAbsence()})}
+        }
+
+        Section.ADVERTISING -> {
+            BackendHelper.retrofitWithAuth.create(NotificationsDao::class.java)
+                .run{ MyResult.fromResponse(GlobalScope.async {fetchNotifications()})}
+        }
+
         }
 }
 

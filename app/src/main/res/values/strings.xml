@@ -10,6 +10,7 @@
     <string name="exams">الامتحانات</string>
     <string name="schedule">الجدول</string>
     <string name="library">المكتبة</string>
+    <string name="rate">التقييم</string>
     <string name="absence">الغياب</string>
     <string name="logo_desc">ايقونة التطبيق</string>
     <string name="desc_ic_exam">ايقونة الامتحان</string>
@@ -48,5 +49,7 @@
     <string name="year">سنة</string>
     <string name="logout">تسجيل الخروج</string>
     <string name="account_expire">انتهت صلاحية الحساب، يرجى التسجيل من جديد</string>
+    <string name="advertising">الاعلانات</string>
+    <string name="read_more">إقرأ المزيد</string>
 
 </resources>

@@ -71,6 +71,10 @@ class HomeActivity : AppCompatActivity() {
             R.id.notifications-> SectionActivity.newInstance(this, Section.NOTIFICATION)
             R.id.schedule-> SectionActivity.newInstance(this, Section.SCHEDULE)
             R.id.absence-> SectionActivity.newInstance(this, Section.ABSENCE)
+            R.id.rating2-> SectionActivity.newInstance(this, Section.RATE)
+            R.id.adver-> SectionActivity.newInstance(this, Section.ADVERTISING)
+
+
         }
     }
 }

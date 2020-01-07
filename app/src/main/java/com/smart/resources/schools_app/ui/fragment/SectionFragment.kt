@@ -75,6 +75,8 @@ class SectionFragment : Fragment(), SectionViewModelListener {
             Section.NOTIFICATION -> R.string.notifications
             Section.SCHEDULE -> R.string.schedule
             Section.ABSENCE -> R.string.absence
+            Section.RATE -> R.string.rate
+            Section.ADVERTISING -> R.string.advertising
         }
         (activity as SectionActivity).setCustomTitle(stringId)
     }
