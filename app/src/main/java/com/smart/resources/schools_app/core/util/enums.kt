@@ -6,6 +6,8 @@ enum class Section{
     LIBRARY,
     SCHEDULE,
     ABSENCE,
+    RATE,
+    ADVERTISING
 }
 
 

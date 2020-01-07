@@ -58,6 +58,8 @@ class SectionViewModel(private val section:Section,
             Section.LIBRARY ->  R.string.no_library
             Section.SCHEDULE ->  R.string.no_schedule
             Section.ABSENCE ->  R.string.no_student_absence
+            Section.RATE ->  R.string.rate
+            Section.ADVERTISING ->  R.string.advertising
         }
 
         return context.getString(stringId)
@@ -77,6 +79,8 @@ class SectionViewModel(private val section:Section,
         Section.ABSENCE -> AbsenceRecyclerAdapter(
             result.data as List<StudentAbsenceModel>
         )
+        Section.RATE -> RatingAdapter(result.data as List<RatingModel>)
+        Section.ADVERTISING -> AdvertisingRecyclerAdapter(listOf())
     }
 
     private fun setupWeekRecycler(result: Success<List<Any>>) =
@@ -122,6 +126,17 @@ class SectionViewModel(private val section:Section,
                 BackendHelper.retrofitWithAuth.create(StudentAbsenceDao::class.java)
                     .run{ GlobalScope.async {fetchStudentAbsence()}.toMyResult()}
             }
+
+        Section.RATE -> {
+            BackendHelper.retrofitWithAuth.create(StudentAbsenceDao::class.java)
+                .run{ MyResult.fromResponse(GlobalScope.async {fetchStudentAbsence()})}
+        }
+
+        Section.ADVERTISING -> {
+            BackendHelper.retrofitWithAuth.create(NotificationsDao::class.java)
+                .run{ MyResult.fromResponse(GlobalScope.async {fetchNotifications()})}
+        }
+
         }
 }
 

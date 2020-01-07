@@ -80,6 +80,8 @@ class SectionFragment : Fragment(),
             Section.LIBRARY ->R.string.library
             Section.SCHEDULE -> R.string.schedule
             Section.ABSENCE -> R.string.absence
+            Section.RATE -> R.string.rate
+            Section.ADVERTISING -> R.string.advertising
         }
         (activity as SectionActivity).setCustomTitle(stringId)
     }
