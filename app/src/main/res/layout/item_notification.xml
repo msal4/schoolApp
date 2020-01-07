@@ -9,7 +9,7 @@
         <import type="android.view.View"/>
         <variable
             name="itemModel"
-            type="com.smart.resources.schools_app.database.model.NotificationModel" />
+            type="com.smart.resources.schools_app.features.notification.NotificationModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

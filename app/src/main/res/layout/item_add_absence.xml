@@ -7,7 +7,7 @@
     <data>
         <variable
             name="itemModel"
-            type="com.smart.resources.schools_app.database.model.StudentAbsenceModel"
+            type="com.smart.resources.schools_app.features.studentAbsence.StudentAbsenceModel"
             />
     </data>
 

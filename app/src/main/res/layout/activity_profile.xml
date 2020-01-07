@@ -2,14 +2,13 @@
 
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:mine= "http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
 
     <data>
         <variable
             name="itemModel"
-            type="com.smart.resources.schools_app.database.model.StudentInfoModel" />
+            type="com.smart.resources.schools_app.features.profile.StudentInfoModel" />
     </data>
 
 
@@ -26,7 +25,7 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         android:layoutDirection="rtl"
-        tools:context=".ui.activity.ProfileActivity">
+        tools:context=".features.profile.ProfileActivity">
 
 
         <androidx.appcompat.widget.Toolbar
@@ -48,8 +47,7 @@
                 android:includeFontPadding="true"
                 android:text="@string/profile"
                 android:textColor="@android:color/white"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/profileAttributeTitleSize" />
         </androidx.appcompat.widget.Toolbar>
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -71,8 +69,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="24dp"
+            android:layout_marginBottom="4dp"
             android:drawablePadding="@dimen/edit_text_drawable_padding"
             android:fontFamily="@font/monadi"
             android:padding="@dimen/edit_text_padding"
@@ -82,122 +80,193 @@
             android:shadowRadius="8"
             android:text="@{itemModel.name}"
             android:textAlignment="center"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:textFontWeight="900"
-            android:textSize="28sp"
-            app:layout_constraintBottom_toTopOf="@+id/studentAge"
+            android:textSize="@dimen/profileAttributeTitleSize"
+            app:layout_constraintBottom_toTopOf="@+id/profileImage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profileImage"
-            app:layout_constraintVertical_bias="0.01999998"
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="@string/username" />
 
-        <TextView
-            android:id="@+id/className"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:drawableStart="@drawable/ic_class_name"
-            android:drawablePadding="@dimen/edit_text_drawable_padding"
-            android:hint="@string/the_class"
-            android:maxLength="30"
-            android:padding="@dimen/edit_text_padding"
-            android:text="@{itemModel.classInfoModel.getClassSection}"
-            android:textAlignment="viewStart"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/studentEmail"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/studentAge" />
 
         <TextView
-            android:id="@+id/studentEmail"
-            android:layout_width="0dp"
+            android:id="@+id/sectionTitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:drawableStart="@drawable/ic_email_black_24dp"
+            android:fontFamily="@font/monadi"
+            android:drawableStart="@drawable/ic_age_black_24dp"
             android:drawablePadding="@dimen/edit_text_drawable_padding"
-            android:hint="@string/email"
             android:maxLength="30"
             android:padding="@dimen/edit_text_padding"
-            android:text="@{itemModel.email}"
+            android:text="@string/the_class"
             android:textAlignment="viewStart"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/studentPhone"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/profileAttributeTitleSize"
+            app:layout_constraintBottom_toTopOf="@+id/ageTitle"
+            app:layout_constraintEnd_toStartOf="@id/studentSection"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/genderTitle" />
+
+
+        <TextView
+            android:id="@+id/ageTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:drawableStart="@drawable/ic_class_name"
+            android:drawablePadding="@dimen/edit_text_drawable_padding"
+            android:padding="@dimen/edit_text_padding"
+            android:text="@string/age"
+            android:fontFamily="@font/monadi"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/profileAttributeTitleSize"
+            app:layout_constraintBottom_toTopOf="@+id/phoneTitle"
+            app:layout_constraintEnd_toStartOf="@id/studentAge"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sectionTitle" />
+
+
+        <TextView
+            android:id="@+id/phoneTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:drawableStart="@drawable/ic_phone_black_24dp"
+            android:drawablePadding="@dimen/edit_text_drawable_padding"
+            android:padding="@dimen/edit_text_padding"
+            android:text="@string/phone"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/black"
+            android:fontFamily="@font/monadi"
+            android:textSize="@dimen/profileAttributeTitleSize"
+            app:layout_constraintBottom_toTopOf="@id/emailTitle"
+            app:layout_constraintEnd_toStartOf="@id/studentPhone"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ageTitle" />
+
+        <TextView
+            android:id="@+id/emailTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:drawableStart="@drawable/ic_email_black_24dp"
+            android:drawablePadding="@dimen/edit_text_drawable_padding"
+            android:padding="@dimen/edit_text_padding"
+            android:text="@string/email"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/black"
+            android:fontFamily="@font/monadi"
+            android:textSize="@dimen/profileAttributeTitleSize"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/studentEmail"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/phoneTitle" />
+
+        <TextView
+            android:id="@+id/genderTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:drawableStart="@drawable/ic_user"
+            android:drawablePadding="@dimen/edit_text_drawable_padding"
+            android:maxLength="30"
+            android:padding="@dimen/edit_text_padding"
+            android:text="@string/gender"
+            android:fontFamily="@font/monadi"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/profileAttributeTitleSize"
+            app:layout_constraintBottom_toTopOf="@+id/sectionTitle"
+            app:layout_constraintEnd_toStartOf="@+id/studentGender"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profileImage"
+            app:layout_constraintVertical_chainStyle="spread" />
+
+        <TextView
+            android:id="@+id/studentGender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:text="@{itemModel.gender}"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/profileAttributeSize"
+            app:layout_constraintBottom_toBottomOf="@+id/genderTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/className" />
+            app:layout_constraintStart_toEndOf="@+id/genderTitle"
+            app:layout_constraintTop_toTopOf="@+id/genderTitle"
+            tools:text="ذكر" />
+
+        <TextView
+            android:id="@+id/studentSection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:text="@{itemModel.classInfoModel.getClassSection}"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/profileAttributeSize"
+            app:layout_constraintBottom_toBottomOf="@+id/sectionTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/sectionTitle"
+            app:layout_constraintTop_toTopOf="@+id/sectionTitle"
+            tools:text="ب - 5" />
 
 
         <TextView
             android:id="@+id/studentAge"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:drawableStart="@drawable/ic_date_range_black_24dp"
-            android:drawablePadding="@dimen/edit_text_drawable_padding"
-            android:hint="@string/age"
-            android:maxLength="30"
-            android:padding="@dimen/edit_text_padding"
-            android:shadowColor="@android:color/black"
-
+            android:layout_marginEnd="24dp"
             android:text="@{itemModel.age}"
-            android:textAlignment="viewStart"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/className"
-            app:layout_constraintEnd_toStartOf="@+id/studentGender"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/profileAttributeSize"
+            app:layout_constraintBottom_toBottomOf="@+id/ageTitle"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/studentName" />
+            app:layout_constraintStart_toEndOf="@+id/ageTitle"
+            app:layout_constraintTop_toTopOf="@+id/ageTitle"
+            tools:text="24 سنة" />
+
 
         <TextView
             android:id="@+id/studentPhone"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:drawableStart="@drawable/ic_phone_black_24dp"
-            android:drawablePadding="@dimen/edit_text_drawable_padding"
-            android:hint="@string/phone"
-            android:maxLength="30"
-            android:padding="@dimen/edit_text_padding"
             android:text="@{itemModel.phone}"
-            android:textAlignment="viewStart"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/profileAttributeSize"
+            app:layout_constraintBottom_toBottomOf="@+id/phoneTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/studentEmail" />
-
+            app:layout_constraintStart_toEndOf="@+id/phoneTitle"
+            app:layout_constraintTop_toTopOf="@+id/phoneTitle"
+            tools:text="07812345676" />
 
         <TextView
-            android:id="@+id/studentGender"
-            android:layout_width="0dp"
+            android:id="@+id/studentEmail"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginEnd="24dp"
-            android:drawableStart="@drawable/ic_user"
-            android:drawablePadding="@dimen/edit_text_drawable_padding"
-            android:hint="@string/gender"
-            android:maxLength="30"
-            android:padding="@dimen/edit_text_padding"
-            android:text="@{itemModel.gender}"
-            android:textAlignment="viewStart"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/studentAge"
+            android:text="@{itemModel.email}"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/profileAttributeSize"
+            app:layout_constraintBottom_toBottomOf="@+id/emailTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/studentAge"
-            app:layout_constraintTop_toTopOf="@+id/studentAge" />
-
+            app:layout_constraintStart_toEndOf="@+id/emailTitle"
+            app:layout_constraintTop_toTopOf="@+id/emailTitle"
+            tools:text="test@gmail.com" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
 </layout>

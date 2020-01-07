@@ -7,7 +7,7 @@
     <data>
         <variable
             name="itemModel"
-            type="com.smart.resources.schools_app.database.model.HomeworkModel" />
+            type="com.smart.resources.schools_app.features.homework.HomeworkModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
