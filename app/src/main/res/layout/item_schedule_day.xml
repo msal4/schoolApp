@@ -19,7 +19,7 @@
         android:padding="@dimen/item_padding">
 
         <ImageView
-            android:id="@+id/imageView9"
+            android:id="@+id/advertisementsIcon"
             android:layout_width="@dimen/item_icon_size"
             android:layout_height="@dimen/item_icon_size"
             android:contentDescription="@string/desc_ic_open_book"
@@ -43,7 +43,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/itemPos"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/imageView9"
+            app:layout_constraintStart_toEndOf="@+id/advertisementsIcon"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="اسم المادة" />
 

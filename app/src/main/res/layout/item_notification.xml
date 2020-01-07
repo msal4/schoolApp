@@ -59,7 +59,7 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView9"
+            android:id="@+id/advertisementsIcon"
             android:layout_width="@dimen/item_icon_size"
             android:layout_height="@dimen/item_icon_size"
             android:contentDescription="@string/desc_ic_exam"
@@ -81,7 +81,7 @@
             android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/textView6"
-            app:layout_constraintStart_toEndOf="@+id/imageView9"
+            app:layout_constraintStart_toEndOf="@+id/advertisementsIcon"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="العنوان" />
 
@@ -98,7 +98,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/barrier"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/imageView9"
+            app:layout_constraintStart_toEndOf="@+id/advertisementsIcon"
             app:layout_constraintTop_toBottomOf="@+id/examName"
             tools:text="المحتوى هو هذا وها وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا المحتوى هو هذاالمحتوى هو هذا" />
 

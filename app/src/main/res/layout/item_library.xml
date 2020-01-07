@@ -23,7 +23,7 @@
 
 
         <ImageView
-            android:id="@+id/imageView9"
+            android:id="@+id/advertisementsIcon"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:contentDescription="@string/desc_ic_book"
@@ -47,10 +47,10 @@
             android:fontFamily="@font/monadi"
             android:includeFontPadding="true"
             app:layout_constraintBottom_toTopOf="@+id/date"
-            app:layout_constraintEnd_toEndOf="@+id/imageView9"
-            app:layout_constraintStart_toStartOf="@+id/imageView9"
-            app:layout_constraintTop_toBottomOf="@+id/imageView9"
-            app:layout_constraintTop_toTopOf="@+id/imageView9"
+            app:layout_constraintEnd_toEndOf="@+id/advertisementsIcon"
+            app:layout_constraintStart_toStartOf="@+id/advertisementsIcon"
+            app:layout_constraintTop_toBottomOf="@+id/advertisementsIcon"
+            app:layout_constraintTop_toTopOf="@+id/advertisementsIcon"
             app:layout_constraintVertical_bias="0.41000003"
             app:layout_constraintVertical_chainStyle="packed"
             android:text="@{itemModel.title}"
@@ -64,7 +64,7 @@
             android:layout_marginTop="18dp"
             android:layout_marginBottom="16dp"
             android:textColor="@android:color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView9"
+            app:layout_constraintBottom_toBottomOf="@+id/advertisementsIcon"
             app:layout_constraintEnd_toEndOf="@+id/examName"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/examName"

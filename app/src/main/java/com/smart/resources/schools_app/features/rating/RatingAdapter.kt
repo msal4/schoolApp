@@ -27,7 +27,7 @@ class RatingAdapter(private val it: List<RatingModel>) : RecyclerView.Adapter<Ra
     override fun getItemCount(): Int = it.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bind(it[position])
+       // holder.bind(it[position])
     }
 
 }

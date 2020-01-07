@@ -21,11 +21,11 @@ class ScheduleDayRecyclerAdapter(private val daySchedule:List<String?>) : Recycl
         return MyViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = daySchedule.filter {!it.isNullOrEmpty()}.size
+    override fun getItemCount(): Int = daySchedule.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.binding.apply {
-            subjectName.text = daySchedule[position]
+            subjectName.text = daySchedule[position]?: "   -"
             itemPos.text= (position+1).toString()
         }
     }
