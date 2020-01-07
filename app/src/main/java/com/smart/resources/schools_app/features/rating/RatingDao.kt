@@ -11,9 +11,6 @@ import retrofit2.http.Path
 
 
 interface RatingDao{
-
     @GET("studentBehaviors")
     suspend fun fetchRating(): Response<List<RatingModel>>
-
-
 }

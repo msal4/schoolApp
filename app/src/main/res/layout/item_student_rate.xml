@@ -13,36 +13,36 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/item_margin"
         android:background="@drawable/background_item"
+        android:elevation="@dimen/item_elevation"
         android:layoutDirection="rtl"
         android:minHeight="@dimen/item_min_height"
         android:orientation="vertical"
-        android:padding="@dimen/item_padding"
-        android:elevation="@dimen/item_elevation"
-        android:layout_marginBottom="@dimen/item_margin">
+        android:padding="@dimen/item_padding">
 
         <TextView
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            mine:setDate="@{itemModel.date}"
+            android:textAlignment="viewStart"
             app:layout_constraintBottom_toTopOf="@+id/rate_id"
             app:layout_constraintEnd_toEndOf="parent"
-            android:textAlignment="viewStart"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
-            mine:setDate="@{itemModel.date}"
-            tools:text="8/10/2019"/>
+            app:layout_constraintVertical_chainStyle="spread"
+            tools:text="8/10/2019" />
 
         <RatingBar
 
             android:id="@+id/rate_id"
+            style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="?android:attr/ratingBarStyleSmall"
-            android:numStars="5"
-            android:stepSize="0.1"
-            android:rating="@{itemModel.rate}"
             android:isIndicator="true"
+            android:numStars="5"
+            android:rating="@{itemModel.rate}"
+            android:stepSize="0.1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/date"
             app:layout_constraintStart_toStartOf="@+id/date"
@@ -68,38 +68,38 @@
 
 
         <TextView
-            android:textAlignment="viewStart"
             android:id="@+id/examName"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+
             android:fontFamily="@font/monadi"
             android:includeFontPadding="true"
-            android:layout_marginStart="16dp"
+            android:text="@string/student"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/textView6"
             app:layout_constraintStart_toEndOf="@+id/advertisementsIcon"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/student"
             tools:text="@string/student" />
 
 
         <TextView
-            android:textAlignment="viewStart"
             android:id="@+id/textView6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            tools:text=""
             android:text="@{itemModel.note}"
+            android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/barrier"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/advertisementsIcon"
-            app:layout_constraintTop_toBottomOf="@+id/examName" />
+            app:layout_constraintTop_toBottomOf="@+id/examName"
+            tools:text="" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
