@@ -40,7 +40,7 @@ class SectionActivity : AppCompatActivity() {
     }
 
     fun setCustomTitle(@StringRes title: Int){
-        binding.titleText.text= getString(title)
+        setCustomTitle(getString(title))
     }
 
     private fun createFragment() {

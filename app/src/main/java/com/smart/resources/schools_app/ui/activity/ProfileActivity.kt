@@ -27,10 +27,9 @@ class ProfileActivity : AppCompatActivity(), CanLogout{
             itemModel= StudentInfoModel.getInstance()
             SharedPrefHelper.instance?.imgUri?.let {
                 loadImageUrl(profileImage,it)
-                addImageIcon.visibility=View.GONE
             }
 
-            setSupportActionBar(binding.toolbarPlaceHolder.toolbar)
+            setSupportActionBar(binding.toolbar)
         }
     }
 
@@ -53,7 +52,6 @@ class ProfileActivity : AppCompatActivity(), CanLogout{
                 loadImageUrl(binding.profileImage, it)
             }
 
-            binding.addImageIcon.visibility=View.GONE
             setResult(Activity.RESULT_OK)
         }
     }

@@ -11,7 +11,6 @@ import com.smart.resources.schools_app.database.model.NotificationModel
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.ui.activity.SectionActivity
 import com.smart.resources.schools_app.util.*
-import kotlinx.android.synthetic.main.fragment_recycler_loader.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -38,47 +37,45 @@ class NotificationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false)
-        adapter=  NotificationRecyclerAdapter()
-        adapter.onTabClicked={
-            adapter.clearData()
-            binding.errorText.text= ""
-            if(it== NotificationType.STUDENT){
-                fetchStudentNotifications()
-            }else{
-                fetchSectionNotifications()
-            }
+
+        NotificationRecyclerAdapter().apply {
+            adapter= this
+            onTabClicked= onTabClicked()
+            binding.recyclerView.adapter=this
         }
-        binding.recyclerView.adapter=adapter
 
 
         notificationsDao= BackendHelper
             .retrofitWithAuth
             .create(NotificationsDao::class.java)
 
-        fetchStudentNotifications()
+        fetchNotifications(NotificationType.STUDENT)
 
         (activity as SectionActivity).setCustomTitle(R.string.notifications)
         return binding.root
     }
 
-    fun fetchStudentNotifications() = CoroutineScope(IO).launch {
-        withContext(Main){binding.progressIndicator.show()}
-
-
-        val result= MyResult
-            .fromResponse(GlobalScope.async {notificationsDao.fetchNotifications()})
-
-        setupAdapter(result)
+    private fun onTabClicked(): (NotificationType) -> Unit {
+        return {
+            adapter.clearData()
+            binding.errorText.text = ""
+            fetchNotifications(it)
+        }
     }
 
-    fun fetchSectionNotifications() = CoroutineScope(IO).launch {
-        withContext(Main){binding.progressIndicator.show()}
-
-        val result= MyResult
-            .fromResponse(GlobalScope.async {notificationsDao.fetchSectionNotifications()})
-
-        setupAdapter(result)
+    private fun fetchNotifications(notificationType: NotificationType) =
+        CoroutineScope(IO)
+            .launch {
+                 withContext(Main){binding.progressIndicator.show()}
+                    val result= MyResult
+                         .fromResponse(GlobalScope.async { getNotifications(notificationType) })
+            setupAdapter(result)
     }
+
+    private suspend fun getNotifications(notificationType: NotificationType) =
+        if (notificationType == NotificationType.STUDENT) notificationsDao.fetchNotifications()
+        else notificationsDao.fetchSectionNotifications()
+
 
     private suspend fun setupAdapter(result: MyResult<List<NotificationModel>>) =
         withContext(Main){
@@ -96,6 +93,4 @@ class NotificationFragment : Fragment() {
             binding.errorText.text= errorMsg
             binding.progressIndicator.hide()
         }
-
-
 }

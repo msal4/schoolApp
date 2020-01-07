@@ -15,38 +15,39 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/item_margin"
         android:background="@drawable/background_item"
+        android:elevation="@dimen/item_elevation"
         android:layoutDirection="rtl"
         android:minHeight="@dimen/item_min_height"
         android:orientation="vertical"
-        android:padding="@dimen/item_padding"
-        android:elevation="@dimen/item_elevation"
-        android:layout_marginBottom="@dimen/item_margin">
+        android:padding="@dimen/item_padding">
 
         <TextView
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/schedule"
-            app:layout_constraintEnd_toEndOf="parent"
+            mine:setDate="@{itemModel.date}"
             android:textAlignment="viewStart"
+            app:layout_constraintBottom_toTopOf="@+id/category"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
-            mine:setDate="@{itemModel.date}"
-            tools:text="8/10/2019"/>
+            tools:text="8/10/2019" />
 
         <TextView
             android:id="@+id/category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:text="@{itemModel.category}"
+            android:textAlignment="viewStart"
             android:visibility="@{itemModel.categoryExist? View.VISIBLE: View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:textAlignment="viewStart"
             app:layout_constraintEnd_toEndOf="@+id/date"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/date"
             app:layout_constraintTop_toBottomOf="@+id/date"
-            android:text="@{itemModel.category}"
             tools:text="الفئة" />
 
         <androidx.constraintlayout.widget.Barrier
@@ -69,24 +70,23 @@
 
 
         <TextView
-            android:textAlignment="viewStart"
             android:id="@+id/examName"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:fontFamily="@font/monadi"
             android:includeFontPadding="true"
-            android:layout_marginStart="16dp"
+            android:text="@{itemModel.title}"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/textView6"
             app:layout_constraintStart_toEndOf="@+id/imageView9"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@{itemModel.title}"
             tools:text="العنوان" />
 
 
         <TextView
-            android:textAlignment="viewStart"
             android:id="@+id/textView6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -94,12 +94,13 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:text="@{itemModel.content}"
-            tools:text="المحتوى هو هذا وها وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا المحتوى هو هذاالمحتوى هو هذا"
+            android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/barrier"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/imageView9"
-            app:layout_constraintTop_toBottomOf="@+id/examName" />
+            app:layout_constraintTop_toBottomOf="@+id/examName"
+            tools:text="المحتوى هو هذا وها وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا المحتوى هو هذاالمحتوى هو هذا" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
