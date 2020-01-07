@@ -42,7 +42,6 @@ class SectionViewModel(private val section:Section,
             Section.HOMEWORK -> R.string.no_homework
             Section.EXAM ->  R.string.no_exams
             Section.LIBRARY ->  R.string.no_library
-            Section.NOTIFICATION ->  R.string.no_notifications
             Section.SCHEDULE ->  R.string.no_schedule
             Section.ABSENCE ->  R.string.no_student_absence
             Section.RATE ->  R.string.rate
@@ -56,12 +55,24 @@ class SectionViewModel(private val section:Section,
         Section.HOMEWORK -> HomeworkRecyclerAdapter(result.data as List<HomeworkModel>)
         Section.EXAM -> ExamRecyclerAdapter(result.data as List<ExamModel>)
         Section.LIBRARY -> LibraryRecyclerAdapter(result.data as List<LibraryModel>)
-        Section.NOTIFICATION -> NotificationRecyclerAdapter(result.data as List<NotificationsModel>)
-        Section.SCHEDULE -> WeekRecyclerAdapter(listOf()) // TODO: complete
+        Section.SCHEDULE -> setupWeekRecycler(result)
         Section.ABSENCE -> AbsenceRecyclerAdapter(result.data as List<StudentAbsenceModel>)
         Section.RATE -> RatingAdapter(result.data as List<RatingModel>)
         Section.ADVERTISING -> AdvertisingRecyclerAdapter(listOf())
     }
+
+    private fun setupWeekRecycler(result: Success<List<Any>>) =
+        WeekRecyclerAdapter(mapWeekRecyclerData(result))
+            .apply {
+                onClick = {
+                    viewModelListener.onScheduleItemClicked(it)
+                }
+            }
+
+    private fun mapWeekRecyclerData(result: Success<List<Any>>) =
+            (result.data as List<List<String?>>)
+                .mapIndexed { index, list ->  ScheduleDayModel( WeekDays.getDayName(index), list) }
+                .filter {!it.dayList.isNullOrEmpty()}
 
     private suspend fun sendRequest() = when (section) {
             Section.HOMEWORK -> {
@@ -77,14 +88,10 @@ class SectionViewModel(private val section:Section,
                  BackendHelper.retrofitWithAuth.create(LibraryDao::class.java)
                      .run{ MyResult.fromResponse(GlobalScope.async {fetchLib()})}
             }
-            Section.NOTIFICATION ->{
-               BackendHelper.retrofitWithAuth.create(NotificationsDao::class.java)
-                   .run{ MyResult.fromResponse(GlobalScope.async {fetchNotifications()})}
-            }
+
              Section.SCHEDULE -> {
-                 // TODO: complete
-                 BackendHelper.retrofitWithAuth.create(NotificationsDao::class.java)
-                     .run{ MyResult.fromResponse(GlobalScope.async {fetchNotifications()})}
+                 BackendHelper.retrofitWithAuth.create(ScheduleDao::class.java)
+                     .run{ MyResult.fromResponse(GlobalScope.async {fetchSchedule()})}
             }
             Section.ABSENCE -> {
                 BackendHelper.retrofitWithAuth.create(StudentAbsenceDao::class.java)

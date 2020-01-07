@@ -4,7 +4,6 @@ enum class Section{
     HOMEWORK,
     EXAM,
     LIBRARY,
-    NOTIFICATION,
     SCHEDULE,
     ABSENCE,
     RATE,
@@ -20,11 +19,20 @@ enum class WeekDays(val dayName:String) {
     TUESDAY( "الثلاثاء"),
     WEDNESDAY("الاربعاء"),
     THURSDAY( "الخميس"),
-    FRIDAY("الجمعة"),
+    FRIDAY("الجمعة");
+
+    companion object{
+        fun getDayName(pos: Int)= values()[pos].dayName
+    }
 }
 
 enum class UserType{
     STUDENT,
     TEACHER
 
+}
+
+enum class NotificationType{
+    STUDENT,
+    SECTION
 }

@@ -10,7 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.adapter.sections.LibraryRecyclerAdapter
 import com.smart.resources.schools_app.adapter.sections.WeekRecyclerAdapter
-import com.smart.resources.schools_app.databinding.FragmentSectionBinding
+import com.smart.resources.schools_app.database.model.ScheduleDayModel
+import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.ui.activity.SectionActivity
 import com.smart.resources.schools_app.util.Section
 import com.smart.resources.schools_app.util.SharedPrefHelper
@@ -22,7 +23,7 @@ import com.smart.resources.schools_app.viewModel.SectionViewModelListener
 
 
 class SectionFragment : Fragment(), SectionViewModelListener {
-    private lateinit var binding: FragmentSectionBinding
+    private lateinit var binding: FragmentRecyclerLoaderBinding
     private lateinit var section:Section
 
     companion object {
@@ -48,7 +49,7 @@ class SectionFragment : Fragment(), SectionViewModelListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentSectionBinding.inflate(inflater, container, false)
+        binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
         section= arguments?.getSerializable(EXTRA_SECTION) as Section
 
@@ -72,7 +73,6 @@ class SectionFragment : Fragment(), SectionViewModelListener {
             Section.HOMEWORK -> R.string.homework
             Section.EXAM -> R.string.exams
             Section.LIBRARY ->R.string.library
-            Section.NOTIFICATION -> R.string.notifications
             Section.SCHEDULE -> R.string.schedule
             Section.ABSENCE -> R.string.absence
             Section.RATE -> R.string.rate
@@ -135,6 +135,10 @@ class SectionFragment : Fragment(), SectionViewModelListener {
     override fun onError(errorMsg: String) {
         binding.progressIndicator.hide()
         binding.errorText.text= errorMsg
+    }
+
+    override fun onScheduleItemClicked(dayModel: ScheduleDayModel) {
+        fragmentManager?.let { ScheduleDayFragment.newInstance(it, dayModel) }
     }
 
 }

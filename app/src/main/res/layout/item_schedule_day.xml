@@ -31,7 +31,7 @@
 
 
         <TextView
-            android:id="@+id/examName"
+            android:id="@+id/subjectName"
             android:textStyle="bold"
             android:textColor="@android:color/black"
             android:layout_width="wrap_content"
@@ -41,20 +41,20 @@
             android:includeFontPadding="true"
             android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/date"
+            app:layout_constraintEnd_toStartOf="@+id/itemPos"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imageView9"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="اسم المادة" />
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/itemPos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="viewStart"
-            app:layout_constraintBottom_toBottomOf="@+id/examName"
+            app:layout_constraintBottom_toBottomOf="@+id/subjectName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/examName"
+            app:layout_constraintTop_toTopOf="@+id/subjectName"
             app:layout_constraintVertical_bias="0.491"
             tools:text="1" />
 

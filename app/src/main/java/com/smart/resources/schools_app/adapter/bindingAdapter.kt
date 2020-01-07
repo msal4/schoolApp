@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.orhanobut.logger.Logger
+import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.util.dateDisFormatter
 import org.threeten.bp.LocalDateTime
 import java.lang.Exception
@@ -34,4 +35,9 @@ fun loadImageUrl(iv: ImageView, url: String?) {
         .with(iv.context)
         .load(url)
         .into(iv)
+}
+
+@BindingAdapter("android:setMark")
+fun setMark(tv: TextView, mark:Int?) {
+    tv.text= mark?.toString() ?: "- "
 }
