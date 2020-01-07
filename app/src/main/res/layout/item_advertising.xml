@@ -7,7 +7,7 @@
     <data>
         <variable
             name="itemModel"
-            type="com.smart.resources.schools_app.database.model.AdvertisingModel" />
+            type="com.smart.resources.schools_app.features.advertising.AdvertisingModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

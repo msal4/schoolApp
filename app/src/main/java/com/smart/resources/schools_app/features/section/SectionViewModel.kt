@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.features.studentAbsence.RatingAdapter
 import com.smart.resources.schools_app.features.exam.ExamDao
 import com.smart.resources.schools_app.features.exam.ExamModel
 import com.smart.resources.schools_app.features.exam.ExamRecyclerAdapter
@@ -22,6 +23,9 @@ import com.smart.resources.schools_app.features.studentAbsence.StudentAbsenceDao
 import com.smart.resources.schools_app.features.studentAbsence.StudentAbsenceModel
 import com.smart.resources.schools_app.core.util.*
 import com.smart.resources.schools_app.core.util.SectionViewModelListener
+import com.smart.resources.schools_app.features.advertising.AdvertisingRecyclerAdapter
+import com.smart.resources.schools_app.features.rating.RatingModel
+import com.smart.resources.schools_app.features.notification.NotificationsDao
 import kotlinx.coroutines.*
 
 
@@ -80,7 +84,7 @@ class SectionViewModel(private val section:Section,
             result.data as List<StudentAbsenceModel>
         )
         Section.RATE -> RatingAdapter(result.data as List<RatingModel>)
-        Section.ADVERTISING -> AdvertisingRecyclerAdapter(listOf())
+        Section.ADVERTISING ->  AdvertisingRecyclerAdapter(listOf())
     }
 
     private fun setupWeekRecycler(result: Success<List<Any>>) =
@@ -127,16 +131,15 @@ class SectionViewModel(private val section:Section,
                     .run{ GlobalScope.async {fetchStudentAbsence()}.toMyResult()}
             }
 
-        Section.RATE -> {
+            Section.RATE -> {
             BackendHelper.retrofitWithAuth.create(StudentAbsenceDao::class.java)
-                .run{ MyResult.fromResponse(GlobalScope.async {fetchStudentAbsence()})}
-        }
+                .run{ GlobalScope.async {fetchStudentAbsence()}.toMyResult()}
+            }
 
-        Section.ADVERTISING -> {
+            Section.ADVERTISING -> {
             BackendHelper.retrofitWithAuth.create(NotificationsDao::class.java)
-                .run{ MyResult.fromResponse(GlobalScope.async {fetchNotifications()})}
-        }
-
+                .run{ GlobalScope.async {fetchNotifications()}.toMyResult()}
+             }
         }
 }
 

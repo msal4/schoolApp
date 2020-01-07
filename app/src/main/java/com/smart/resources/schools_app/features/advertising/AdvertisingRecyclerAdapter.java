@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.studentAbsence;
+package com.smart.resources.schools_app.features.advertising;
 
 import android.text.Html;
 import android.text.SpannableStringBuilder;
@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.smart.resources.schools_app.features.advertising.AdvertisingModel;
 import com.smart.resources.schools_app.databinding.ItemAdvertisingBinding;
 
 import java.util.List;

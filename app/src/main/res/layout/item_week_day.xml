@@ -6,7 +6,7 @@
     <data>
         <variable
             name="dayOfWeek"
-            type="com.smart.resources.schools_app.util.WeekDays" />
+            type="com.smart.resources.schools_app.core.util.WeekDays" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

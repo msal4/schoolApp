@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.database.dao
+package com.smart.resources.schools_app.features.rating
 
 import com.google.gson.JsonObject
 import retrofit2.Response

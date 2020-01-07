@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.database.model;
+package com.smart.resources.schools_app.features.rating;
 
 import org.threeten.bp.LocalDateTime;
 

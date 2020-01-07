@@ -1,12 +1,9 @@
-package com.smart.resources.schools_app.adapter.sections
+package com.smart.resources.schools_app.features.studentAbsence
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.smart.resources.schools_app.database.model.ExamModel
-import com.smart.resources.schools_app.database.model.RatingModel
-import com.smart.resources.schools_app.database.model.StudentAbsenceModel
-import com.smart.resources.schools_app.databinding.ItemAbsenceBinding
+import com.smart.resources.schools_app.features.rating.RatingModel
 import com.smart.resources.schools_app.databinding.ItemStudentRateBinding
 
 class RatingAdapter(private val it: List<RatingModel>) : RecyclerView.Adapter<RatingAdapter.MyViewHolder>() {
@@ -16,8 +13,6 @@ class RatingAdapter(private val it: List<RatingModel>) : RecyclerView.Adapter<Ra
         fun bind(ratingModel: RatingModel){
             binding.itemModel=ratingModel
         }
-
-
     }
 
     override fun onCreateViewHolder(
