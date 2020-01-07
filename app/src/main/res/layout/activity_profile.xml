@@ -104,11 +104,13 @@
             android:textAlignment="viewStart"
             android:textColor="@android:color/black"
             android:textSize="@dimen/profileAttributeTitleSize"
-            app:layout_constraintBottom_toTopOf="@+id/ageTitle"
+            app:layout_constraintVertical_chainStyle="spread"
+            app:layout_constraintBottom_toTopOf="@+id/genderTitle"
             app:layout_constraintEnd_toStartOf="@id/studentSection"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/genderTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/profileImage"
+            />
 
 
         <TextView
@@ -128,7 +130,7 @@
             app:layout_constraintEnd_toStartOf="@id/studentAge"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sectionTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/genderTitle" />
 
 
         <TextView
@@ -183,13 +185,13 @@
             android:textAlignment="viewStart"
             android:textColor="@android:color/black"
             android:textSize="@dimen/profileAttributeTitleSize"
-            app:layout_constraintBottom_toTopOf="@+id/sectionTitle"
+            app:layout_constraintBottom_toTopOf="@+id/ageTitle"
             app:layout_constraintEnd_toStartOf="@+id/studentGender"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profileImage"
-            app:layout_constraintVertical_chainStyle="spread" />
+            app:layout_constraintTop_toBottomOf="@+id/sectionTitle"
+             />
 
         <TextView
             android:id="@+id/studentGender"

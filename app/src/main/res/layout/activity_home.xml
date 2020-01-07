@@ -245,7 +245,7 @@
                 android:text="@string/absence"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/home_circle_text_size"
-                app:layout_constraintBottom_toTopOf="@id/adver"
+                app:layout_constraintBottom_toTopOf="@id/ratings"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintStart_toStartOf="@+id/guideline4"
@@ -273,7 +273,7 @@
 
 
             <TextView
-                android:id="@+id/adver"
+                android:id="@+id/advertisements"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginBottom="16dp"
@@ -288,15 +288,18 @@
                 android:textSize="@dimen/home_circle_text_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="h,1:1"
-                app:layout_constraintEnd_toStartOf="@+id/guideline2"
-                app:layout_constraintStart_toStartOf="@+id/guideline4"
-                app:layout_constraintTop_toBottomOf="@+id/absence" />
+                app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toBottomOf="@+id/library"
+                app:layout_constraintVertical_bias="0.0"
+               />
 
 
             <ImageView
-                android:id="@+id/imageView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/advertisementsIcon"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginStart="@dimen/home_circle_padding"
                 android:layout_marginTop="@dimen/home_circle_top_padding"
                 android:layout_marginEnd="@dimen/home_circle_padding"
@@ -305,11 +308,11 @@
                 android:elevation="6dp"
                 android:outlineProvider="none"
                 android:src="@drawable/ic_television"
-                app:layout_constraintBottom_toBottomOf="@+id/absence"
+                app:layout_constraintBottom_toBottomOf="@+id/advertisements"
                 app:layout_constraintDimensionRatio="h,1:1"
-                app:layout_constraintEnd_toEndOf="@+id/adver"
-                app:layout_constraintStart_toStartOf="@+id/adver"
-                app:layout_constraintTop_toTopOf="@+id/adver"
+                app:layout_constraintEnd_toEndOf="@+id/advertisements"
+                app:layout_constraintStart_toStartOf="@+id/advertisements"
+                app:layout_constraintTop_toTopOf="@+id/advertisements"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
@@ -327,7 +330,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/home_circle_text_size"
                 android:visibility="@{userType == UserType.STUDENT? View.VISIBLE: View.GONE}"
-                app:layout_constraintBottom_toBottomOf="@id/rating2"
+                app:layout_constraintBottom_toBottomOf="@id/advertisements"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toStartOf="@+id/guideline3"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -356,7 +359,7 @@
 
 
             <TextView
-                android:id="@+id/rating2"
+                android:id="@+id/ratings"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginBottom="16dp"
@@ -369,16 +372,15 @@
                 android:text="@string/rate"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/home_circle_text_size"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="h,1:1"
-                app:layout_constraintEnd_toStartOf="@+id/guideline3"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toBottomOf="@+id/library"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/absence"/>
 
             <ImageView
-                android:id="@+id/rating"
+                android:id="@+id/ratingIcon"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="@dimen/home_circle_padding"
@@ -388,12 +390,12 @@
                 android:contentDescription="@string/section_icon_desc"
                 android:elevation="6dp"
                 android:outlineProvider="none"
-                android:src="@drawable/ic_star"
-                app:layout_constraintBottom_toBottomOf="@+id/rating2"
+                android:src="@drawable/ic_rating"
+                app:layout_constraintBottom_toBottomOf="@+id/ratings"
                 app:layout_constraintDimensionRatio="h,1:1"
-                app:layout_constraintEnd_toEndOf="@+id/rating2"
-                app:layout_constraintStart_toStartOf="@+id/rating2"
-                app:layout_constraintTop_toTopOf="@+id/rating2"
+                app:layout_constraintEnd_toEndOf="@+id/ratings"
+                app:layout_constraintStart_toStartOf="@+id/ratings"
+                app:layout_constraintTop_toTopOf="@+id/ratings"
                 app:layout_constraintVertical_bias="0.0" />
 
             <androidx.constraintlayout.widget.Guideline

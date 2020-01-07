@@ -1,9 +1,8 @@
-package com.smart.resources.schools_app.features.studentAbsence
+package com.smart.resources.schools_app.features.rating
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.smart.resources.schools_app.features.rating.RatingModel
 import com.smart.resources.schools_app.databinding.ItemStudentRateBinding
 
 class RatingAdapter(private val it: List<RatingModel>) : RecyclerView.Adapter<RatingAdapter.MyViewHolder>() {
@@ -28,7 +27,7 @@ class RatingAdapter(private val it: List<RatingModel>) : RecyclerView.Adapter<Ra
     override fun getItemCount(): Int = it.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bind(it[position])
+       // holder.bind(it[position])
     }
 
 }

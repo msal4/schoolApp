@@ -22,7 +22,7 @@
         android:layout_marginBottom="@dimen/item_margin">
 
         <ImageView
-            android:id="@+id/imageView9"
+            android:id="@+id/advertisementsIcon"
             android:layout_width="@dimen/item_icon_size"
             android:layout_height="@dimen/item_icon_size"
             android:src="@drawable/ic_exam"
@@ -43,7 +43,7 @@
             android:fontFamily="@font/monadi"
             android:includeFontPadding="true"
             app:layout_constraintBottom_toTopOf="@+id/textView6"
-            app:layout_constraintStart_toEndOf="@+id/imageView9"
+            app:layout_constraintStart_toEndOf="@+id/advertisementsIcon"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@{itemModel.subjectName}"
             tools:text="اسم الامتحان" />
@@ -90,7 +90,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/schedule"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/imageView9"
+            app:layout_constraintStart_toEndOf="@+id/advertisementsIcon"
             app:layout_constraintTop_toBottomOf="@+id/examName"
             android:text="@{itemModel.note}"
             tools:text="ملاحظات تيست"

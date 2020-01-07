@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.features.studentAbsence.RatingAdapter
+import com.smart.resources.schools_app.features.rating.RatingAdapter
 import com.smart.resources.schools_app.features.exam.ExamDao
 import com.smart.resources.schools_app.features.exam.ExamModel
 import com.smart.resources.schools_app.features.exam.ExamRecyclerAdapter
@@ -83,7 +83,9 @@ class SectionViewModel(private val section:Section,
         Section.ABSENCE -> AbsenceRecyclerAdapter(
             result.data as List<StudentAbsenceModel>
         )
-        Section.RATE -> RatingAdapter(result.data as List<RatingModel>)
+        Section.RATE -> RatingAdapter(
+            result.data as List<RatingModel>
+        )
         Section.ADVERTISING ->  AdvertisingRecyclerAdapter(listOf())
     }
 
