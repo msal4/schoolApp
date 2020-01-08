@@ -39,18 +39,14 @@ public class AdvertisingRecyclerAdapter extends RecyclerView.Adapter<Advertising
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        AdvertisingModel model = new AdvertisingModel("ammar","The Data Binding Library generates binding classes that are used to access the layout's variables and views. This page shows how to create and customize generated binding classes.\n" +
-                "\n" +
-                "The generated binding class links the layout variables with the views within the layout. The name and package of the binding class can be customized. All generated binding classes inherit from the ViewDataBinding class.\n" +
-                "\n" +
-                "A binding class is generated for each layout file. By default, the name of the class is based on the name of the layout file, converting it to Pascal case and adding the Binding suffix to it. The above layout filename is activity_main.xml so the corresponding generated class is ActivityMainBinding. This class holds all the bindings from the layout properties (for example, the user variable) to the layout's views and knows how to assign values for the binding expressions.");
+        AdvertisingModel model = dataList.get(position);
         holder.bind(model);
     }
 
 
     @Override
     public int getItemCount() {
-        return 25;
+        return dataList.size();
     }
 
 
@@ -61,10 +57,17 @@ public class AdvertisingRecyclerAdapter extends RecyclerView.Adapter<Advertising
             super(binding.getRoot());
             this.binding = binding;
             binding.expandLayout.setOnStateChangeListener((oldState, newState)->{
+
                 if(newState== State.Collapsed){
-                    binding.contentText.setMaxLines(2);
+                    /*if(binding.contentText.getLineCount()<3){
+                        binding.contentText.append("\u2026");
+                    }else {*/
+                        binding.contentText.setMaxLines(2);
+                   // }
                 }else if(newState== State.Expanded|| newState == State.Expanding){
                     binding.contentText.setMaxLines(25);
+                   /* String text=binding.contentText.getText().toString();
+                    binding.contentText.setText(text.replace('\u2026',' ').trim());*/
                 }
 
                 return Unit.INSTANCE;
