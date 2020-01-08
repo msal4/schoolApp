@@ -12,6 +12,9 @@ import com.smart.resources.schools_app.features.notification.NotificationFragmen
 import com.smart.resources.schools_app.core.util.Section
 import com.smart.resources.schools_app.core.util.Section.EXAM
 import com.smart.resources.schools_app.features.exam.ExamFragment
+import com.smart.resources.schools_app.features.homework.HomeworkFragment
+import com.smart.resources.schools_app.features.library.LibraryFragment
+import kotlinx.android.synthetic.main.activity_home.*
 
 
 class SectionActivity : AppCompatActivity() {
@@ -48,7 +51,9 @@ class SectionActivity : AppCompatActivity() {
 
         when(val section= intent.getSerializableExtra(EXTRA_SECTION) as Section){
             EXAM -> ExamFragment.newInstance(supportFragmentManager)
+            Section.HOMEWORK -> HomeworkFragment.newInstance(supportFragmentManager)
             Section.NOTIFICATION -> NotificationFragment.newInstance(supportFragmentManager)
+            Section.LIBRARY -> LibraryFragment.newInstance(supportFragmentManager)
             else -> SectionFragment.newInstance(supportFragmentManager, section)
         }
     }

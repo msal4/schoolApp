@@ -26,7 +26,7 @@ class ExamViewModel : ViewModel() {
         .create(ExamDao::class.java)
 
 
-    fun fetchExams(){
+    private fun fetchExams(){
         viewModelScope.launch {
             val result = GlobalScope.async { examsDao.fetchExams() }.toMyResult()
             exams.value = result

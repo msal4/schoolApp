@@ -10,10 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.loadImageUrl
+import com.smart.resources.schools_app.core.util.*
 import com.smart.resources.schools_app.databinding.ActivityProfileBinding
-import com.smart.resources.schools_app.core.util.CanLogout
-import com.smart.resources.schools_app.core.util.IntentHelper
-import com.smart.resources.schools_app.core.util.SharedPrefHelper
 
 
 class ProfileActivity : AppCompatActivity(),
@@ -25,7 +23,7 @@ class ProfileActivity : AppCompatActivity(),
         binding= DataBindingUtil.setContentView(this, R.layout.activity_profile)
 
         binding.apply {
-            itemModel= StudentInfoModel.getInstance()
+            itemModel= getPersonModel()
             SharedPrefHelper.instance?.imgUri?.let {
                 loadImageUrl(
                     profileImage,
@@ -36,6 +34,10 @@ class ProfileActivity : AppCompatActivity(),
             setSupportActionBar(binding.toolbar)
         }
     }
+
+    private fun getPersonModel() =
+        if (SharedPrefHelper.instance?.userType == UserType.STUDENT) StudentInfoModel.instance
+        else TeacherInfoModel.instance
 
     companion object Factory{
         const val REQUEST_IS_PROFILE_IMAGE_UPDATED = 0

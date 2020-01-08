@@ -8,10 +8,10 @@
     <data>
         <variable
             name="itemModel"
-            type="com.smart.resources.schools_app.features.profile.StudentInfoModel" />
+            type="com.smart.resources.schools_app.features.profile.PersonModel" />
+
+
     </data>
-
-
 
 <ScrollView
     android:layout_width="match_parent"
@@ -206,7 +206,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
-            android:text="@{itemModel.classInfoModel.getClassSection}"
+            android:text="@{itemModel.classesAsString}"
             android:textColor="@android:color/black"
             android:textSize="@dimen/profileAttributeSize"
             app:layout_constraintBottom_toBottomOf="@+id/sectionTitle"

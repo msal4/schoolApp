@@ -71,12 +71,6 @@ class SectionViewModel(private val section:Section,
     }
 
     private fun getAdapter(result: Success<List<Any>>) = when (section) {
-        Section.HOMEWORK -> HomeworkRecyclerAdapter(
-            result.data as List<HomeworkModel>
-        )
-        Section.LIBRARY -> LibraryRecyclerAdapter(
-            result.data as List<LibraryModel>
-        )
         Section.SCHEDULE -> setupWeekRecycler(result)
         Section.ABSENCE -> AbsenceRecyclerAdapter(
             result.data as List<StudentAbsenceModel>
@@ -109,16 +103,6 @@ class SectionViewModel(private val section:Section,
                 .filter {!it.dayList.isNullOrEmpty()}
 
     private suspend fun sendRequest() = when (section) {
-            Section.HOMEWORK -> {
-                BackendHelper.retrofitWithAuth.create(HomeworkDao::class.java)
-                    .run{ GlobalScope.async {fetchHomework()}.toMyResult()}
-            }
-
-            Section.LIBRARY ->{
-                 BackendHelper.retrofitWithAuth.create(LibraryDao::class.java)
-                     .run{ GlobalScope.async {fetchLib()}.toMyResult()}
-            }
-
              Section.SCHEDULE -> {
                  BackendHelper.retrofitWithAuth.create(ScheduleDao::class.java)
                      .run{GlobalScope.async {fetchSchedule()}.toMyResult()}

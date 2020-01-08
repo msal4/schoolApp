@@ -13,13 +13,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/item_margin"
         android:background="@drawable/background_item"
+        android:elevation="@dimen/item_elevation"
         android:layoutDirection="rtl"
         android:minHeight="@dimen/item_min_height"
         android:orientation="vertical"
-        android:padding="@dimen/item_padding"
-        android:elevation="@dimen/item_elevation"
-        android:layout_marginBottom="@dimen/item_margin">
+        android:paddingStart="@dimen/item_padding"
+        android:paddingEnd="@dimen/item_padding">
 
         <ImageView
             android:id="@+id/advertisementsIcon"
@@ -37,24 +38,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:fontFamily="@font/monadi"
+            android:includeFontPadding="true"
+            android:text="@{itemModel.subjectName}"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/date"
             app:layout_constraintStart_toEndOf="@+id/advertisementsIcon"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@{itemModel.subjectName}"
-            android:fontFamily="@font/monadi"
-            android:includeFontPadding="true"
-            tools:text="اسم الطالب"
-            android:textAlignment="viewStart"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"/>
+            app:layout_constraintVertical_chainStyle="spread"
+            tools:text="اسم الطالب" />
 
 
         <TextView
-            android:textAlignment="viewStart"
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             mine:setDate="@{itemModel.absenceDate}"
+            android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/examName"
             app:layout_constraintTop_toBottomOf="@+id/examName"

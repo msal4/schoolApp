@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.exam
+package com.smart.resources.schools_app.features.homework
 
 import android.os.Bundle
 import android.view.*
@@ -10,18 +10,16 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.section.SectionActivity
 import com.smart.resources.schools_app.core.util.*
-import com.smart.resources.schools_app.features.homework.HomeworkFragment
-import com.smart.resources.schools_app.features.homework.HomeworkViewModel
 
-class ExamFragment : Fragment() {
+class HomeworkFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
-    private lateinit var viewModel: ExamViewModel
+    private lateinit var viewModel: HomeworkViewModel
 
     companion object {
         fun newInstance(fm:FragmentManager){
 
             val fragment=
-                ExamFragment()
+                HomeworkFragment()
 
             fm.beginTransaction().apply {
                 add(R.id.fragmentContainer, fragment)
@@ -35,7 +33,7 @@ class ExamFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false)
-        (activity as SectionActivity).setCustomTitle(R.string.exams)
+        (activity as SectionActivity).setCustomTitle(R.string.homework)
         setHasOptionsMenu(true)
 
         setupViewModel()
@@ -44,13 +42,14 @@ class ExamFragment : Fragment() {
 
     private fun setupViewModel() {
         viewModel = ViewModelProviders.of(this)
-            .get(ExamViewModel::class.java).apply {
-                getExams().observe(this@ExamFragment, Observer{onExamsDownload(it)})
+            .get(HomeworkViewModel::class.java).apply {
+                getExams().observe(this@HomeworkFragment, Observer{onHomeworkDownload(it)})
             }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         if(SharedPrefHelper.instance?.userType == UserType.TEACHER) {
+
             inflater.inflate(R.menu.menu_add_btn, menu)
         }
 
@@ -59,19 +58,19 @@ class ExamFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.addMenuItem-> fragmentManager?.let { AddExamFragment.newInstance(it) }
+            R.id.addMenuItem-> fragmentManager?.let { AddHomeworkFragment.newInstance(it) }
         }
         return super.onOptionsItemSelected(item)
     }
 
 
-    private  fun onExamsDownload(result: MyResult<List<ExamModel>>) {
+    private  fun onHomeworkDownload(result: HomeworkResult) {
         var errorMsg = ""
         when (result) {
             is Success -> {
-                if (result.data.isNullOrEmpty()) errorMsg = getString(R.string.no_exams)
+                if (result.data.isNullOrEmpty()) errorMsg = getString(R.string.no_homework)
                 else {
-                    binding.recyclerView.adapter= ExamRecyclerAdapter(result.data)
+                    binding.recyclerView.adapter= HomeworkRecyclerAdapter(result.data)
                 }
 
             }

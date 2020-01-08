@@ -22,7 +22,7 @@
     <string name="no_homework">لا توجد واجبات</string>
     <string name="connection_error">خطأ في الاتصال!</string>
     <string name="field_required">هذا الحقل مطلوب!</string>
-    <string name="wrong_login_info">رقم الهاتف او كلمة السر غير صحيح!</string>
+    <string name="wrong_login_info">رقم الهاتف او كلمة السر غير صحيحة!</string>
     <string name="no_student_absence">لا توجد غيابات</string>
     <string name="no_exams">لا توجد امتحانات</string>
     <string name="no_notifications">لا توجد اشعارات</string>

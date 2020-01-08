@@ -75,8 +75,6 @@ class SectionFragment : Fragment(),
 
     private fun setActivityTitle() {
         val stringId=when (section) {
-            Section.HOMEWORK -> R.string.homework
-            Section.LIBRARY ->R.string.library
             Section.SCHEDULE -> R.string.schedule
             Section.ABSENCE -> R.string.absence
             Section.RATE -> R.string.rate
@@ -96,8 +94,7 @@ class SectionFragment : Fragment(),
     }
 
     private fun shouldShowAdd(): Boolean {
-        return (section == Section.HOMEWORK ||
-                section == Section.ABSENCE) && SharedPrefHelper.instance?.userType == UserType.TEACHER
+        return (section == Section.ABSENCE) && SharedPrefHelper.instance?.userType == UserType.TEACHER
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -109,12 +106,10 @@ class SectionFragment : Fragment(),
 
     private fun gotoAddFragment() {
         when (section) {
-            Section.HOMEWORK -> {
-                fragmentManager?.let { AddHomeworkFragment.newInstance(it) }
-            }
             Section.ABSENCE -> {
                 fragmentManager?.let { AddAbsenceFragment.newInstance(it) }
             }
+
         }
     }
 

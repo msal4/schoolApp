@@ -11,12 +11,10 @@ import retrofit2.http.Path
 
 
 interface LoginDao{
-    companion object{
-        private const val USERNAME_PATH= "username"
-        private const val PASSWORD_PATH= "password"
-    }
 
     @POST("studentLogin")
     suspend fun loginStudent(@Body body: HashMap<String, String>): Response<JsonObject>
 
+    @POST("teacherLogin")
+    suspend fun loginTeacher(@Body body: HashMap<String, String>): Response<JsonObject>
 }

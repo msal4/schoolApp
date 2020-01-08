@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.exam
+package com.smart.resources.schools_app.features.library
 
 import android.os.Bundle
 import android.view.*
@@ -6,22 +6,22 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.section.SectionActivity
 import com.smart.resources.schools_app.core.util.*
-import com.smart.resources.schools_app.features.homework.HomeworkFragment
-import com.smart.resources.schools_app.features.homework.HomeworkViewModel
 
-class ExamFragment : Fragment() {
+class LibraryFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
-    private lateinit var viewModel: ExamViewModel
+    private lateinit var viewModel: LibraryViewModel
 
     companion object {
         fun newInstance(fm:FragmentManager){
 
             val fragment=
-                ExamFragment()
+                LibraryFragment()
 
             fm.beginTransaction().apply {
                 add(R.id.fragmentContainer, fragment)
@@ -35,8 +35,7 @@ class ExamFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false)
-        (activity as SectionActivity).setCustomTitle(R.string.exams)
-        setHasOptionsMenu(true)
+        (activity as SectionActivity).setCustomTitle(R.string.library)
 
         setupViewModel()
         return binding.root
@@ -44,36 +43,19 @@ class ExamFragment : Fragment() {
 
     private fun setupViewModel() {
         viewModel = ViewModelProviders.of(this)
-            .get(ExamViewModel::class.java).apply {
-                getExams().observe(this@ExamFragment, Observer{onExamsDownload(it)})
+            .get(LibraryViewModel::class.java).apply {
+                getBooks().observe(this@LibraryFragment, Observer{onHomeworkDownload(it)})
             }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if(SharedPrefHelper.instance?.userType == UserType.TEACHER) {
-            inflater.inflate(R.menu.menu_add_btn, menu)
-        }
-
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.addMenuItem-> fragmentManager?.let { AddExamFragment.newInstance(it) }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-
-    private  fun onExamsDownload(result: MyResult<List<ExamModel>>) {
+    private  fun onHomeworkDownload(result: LibraryResult) {
         var errorMsg = ""
         when (result) {
             is Success -> {
-                if (result.data.isNullOrEmpty()) errorMsg = getString(R.string.no_exams)
+                if (result.data.isNullOrEmpty()) errorMsg = getString(R.string.no_library)
                 else {
-                    binding.recyclerView.adapter= ExamRecyclerAdapter(result.data)
+                     createGridLayout(LibraryRecyclerAdapter(result.data))
                 }
-
             }
             is ResponseError -> errorMsg = result.combinedMsg
             is ConnectionError -> errorMsg = getString(R.string.connection_error)
@@ -81,5 +63,14 @@ class ExamFragment : Fragment() {
 
         binding.errorText.text = errorMsg
         binding.progressIndicator.hide()
+    }
+
+    private fun createGridLayout(adapter: RecyclerView.Adapter<out RecyclerView.ViewHolder>) {
+        binding.recyclerView.apply {
+            val itemMargin = resources.getDimension(R.dimen.item_margin).toInt()
+            setPadding(itemMargin, itemMargin, 0, itemMargin)
+            layoutManager = GridLayoutManager(context, 2)
+            this.adapter = adapter
+        }
     }
 }

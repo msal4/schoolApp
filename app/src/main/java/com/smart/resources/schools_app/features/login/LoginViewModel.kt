@@ -23,27 +23,33 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     val isTeacherLogging = MutableLiveData<Boolean>()
     val isStudentLogging = MutableLiveData<Boolean>()
 
-    var phoneNumber: String? = "770000000"
-    var password: String? = "pass2"
+    var phoneNumber: String? = "07808888888"
+    var password: String? = "passt2"
 
 
     fun login(view: View) {
         if (!isDataValid()) return
 
-        if (view.id == R.id.loginAsTeacherBtn)
+        val userType=
+        if (view.id == R.id.loginAsTeacherBtn){
             isTeacherLogging.postValue(true)
-        else isStudentLogging.postValue(true)
+            UserType.TEACHER
+        }
+        else {
+            isStudentLogging.postValue(true)
+            UserType.STUDENT
+        }
 
         viewModelScope.launch {
             val phone = phoneNumber.toString().withEngNums()
             val pass = password.toString().withEngNums()
 
-            when (val token = LoginRepository.loginStudent(phone, pass)) {
+            when (val token = getToken(userType, phone, pass)) {
                 is Success -> {
-                    setupSharedPrefs(view, token)
+                    setupSharedPrefs(userType, token)
                     withContext(Main) { onLogin?.invoke() }
                 }
-                is ResponseError -> getErrorMsg(token)
+                is ResponseError -> onLoginError?.invoke(context.getString(R.string.wrong_login_info))
                 is ConnectionError -> onLoginError?.invoke(context.getString(R.string.connection_error))
 
             }
@@ -53,21 +59,20 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    private suspend fun getToken(userType: UserType, phone: String, pass: String) =
+        with(LoginRepository) {
+            if (userType== UserType.STUDENT) loginStudent(phone, pass)
+            else loginTeacher(phone, pass)
+        }
+
     private fun setupSharedPrefs(
-        view: View,
+        userType: UserType,
         result: Success<String>
     ) {
         SharedPrefHelper.instance?.apply {
-            userType = if (view.id == R.id.loginAsTeacherBtn) UserType.TEACHER else UserType.STUDENT
+            this.userType = if (userType== UserType.TEACHER) UserType.TEACHER else UserType.STUDENT
             accessToken = result.data
         }
-    }
-
-    private fun getErrorMsg(result: ResponseError) {
-        if (result.statusCode == HttpURLConnection.HTTP_BAD_REQUEST)
-            onLoginError?.invoke(context.getString(R.string.wrong_login_info))
-        else
-            onLoginError?.invoke(result.combinedMsg)
     }
 
     private fun isDataValid(): Boolean {
