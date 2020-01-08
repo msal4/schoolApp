@@ -5,7 +5,7 @@ enum class Section{
     LIBRARY,
     SCHEDULE,
     ABSENCE,
-    RATE,
+    RATING,
     ADVERTISING,
     EXAM,
     NOTIFICATION

@@ -9,8 +9,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.forEach
 import androidx.core.view.get
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.orhanobut.logger.Logger
+import com.smart.resources.schools_app.R
 
 fun Context.toast(msg:String){
     Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
@@ -35,4 +38,11 @@ fun ViewGroup.showErrorSnackbar(msg:String){
         }
     }
     snackBar.show()
+}
+
+fun RecyclerView.createGridLayout(adapter: RecyclerView.Adapter<out RecyclerView.ViewHolder>) {
+        val itemMargin = resources.getDimension(R.dimen.item_margin).toInt()
+        setPadding(itemMargin, itemMargin, 0, itemMargin)
+        layoutManager = GridLayoutManager(context, 2)
+        this.adapter = adapter
 }

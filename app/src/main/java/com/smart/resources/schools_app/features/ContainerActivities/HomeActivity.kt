@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.homePage
+package com.smart.resources.schools_app.features.ContainerActivities
 
 import android.app.Activity
 import android.content.Context
@@ -11,7 +11,6 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.loadImageUrl
 import com.smart.resources.schools_app.databinding.ActivityHomeBinding
 import com.smart.resources.schools_app.features.profile.ProfileActivity
-import com.smart.resources.schools_app.features.section.SectionActivity
 import com.smart.resources.schools_app.core.util.Section
 import com.smart.resources.schools_app.core.util.SharedPrefHelper
 import com.smart.resources.schools_app.core.util.toast
@@ -72,7 +71,7 @@ class HomeActivity : AppCompatActivity() {
             R.id.notifications-> SectionActivity.newInstance(this, Section.NOTIFICATION)
             R.id.schedule-> SectionActivity.newInstance(this, Section.SCHEDULE)
             R.id.absence-> SectionActivity.newInstance(this, Section.ABSENCE)
-            R.id.ratings-> SectionActivity.newInstance(this, Section.RATE)
+            R.id.ratings-> SectionActivity.newInstance(this, Section.RATING)
             R.id.advertisements-> SectionActivity.newInstance(this, Section.ADVERTISING)
 
 

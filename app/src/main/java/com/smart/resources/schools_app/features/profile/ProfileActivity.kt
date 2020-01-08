@@ -27,7 +27,6 @@ class ProfileActivity : AppCompatActivity(),
             SharedPrefHelper.instance?.imgUri?.let {
                 loadImageUrl(profileImage, it)
             }
-
             setSupportActionBar(binding.toolbar)
         }
     }

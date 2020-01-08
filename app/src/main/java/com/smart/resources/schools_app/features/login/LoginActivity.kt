@@ -13,7 +13,7 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ActivityLoginBinding
 import com.smart.resources.schools_app.core.util.SharedPrefHelper
 import com.smart.resources.schools_app.core.util.showErrorSnackbar
-import com.smart.resources.schools_app.features.homePage.HomeActivity
+import com.smart.resources.schools_app.features.ContainerActivities.HomeActivity
 
 
 class LoginActivity : AppCompatActivity(){

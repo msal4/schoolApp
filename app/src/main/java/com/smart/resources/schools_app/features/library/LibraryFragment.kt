@@ -6,11 +6,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
-import com.smart.resources.schools_app.features.section.SectionActivity
+import com.smart.resources.schools_app.features.ContainerActivities.SectionActivity
 import com.smart.resources.schools_app.core.util.*
 
 class LibraryFragment : Fragment() {
@@ -54,7 +52,7 @@ class LibraryFragment : Fragment() {
             is Success -> {
                 if (result.data.isNullOrEmpty()) errorMsg = getString(R.string.no_library)
                 else {
-                     createGridLayout(LibraryRecyclerAdapter(result.data))
+                    binding.recyclerView.createGridLayout(LibraryRecyclerAdapter(result.data))
                 }
             }
             is ResponseError -> errorMsg = result.combinedMsg
@@ -63,14 +61,5 @@ class LibraryFragment : Fragment() {
 
         binding.errorText.text = errorMsg
         binding.progressIndicator.hide()
-    }
-
-    private fun createGridLayout(adapter: RecyclerView.Adapter<out RecyclerView.ViewHolder>) {
-        binding.recyclerView.apply {
-            val itemMargin = resources.getDimension(R.dimen.item_margin).toInt()
-            setPadding(itemMargin, itemMargin, 0, itemMargin)
-            layoutManager = GridLayoutManager(context, 2)
-            this.adapter = adapter
-        }
     }
 }

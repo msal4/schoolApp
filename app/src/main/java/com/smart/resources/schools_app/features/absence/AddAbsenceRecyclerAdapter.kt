@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.studentAbsence
+package com.smart.resources.schools_app.features.absence
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.homework
+package com.smart.resources.schools_app.features.absence
 
 import android.os.Bundle
 import android.view.*
@@ -11,7 +11,7 @@ import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.ContainerActivities.SectionActivity
 import com.smart.resources.schools_app.core.util.*
 
-class HomeworkFragment : Fragment() {
+class AbsenceFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
     private lateinit var viewModel: HomeworkViewModel
 
@@ -19,7 +19,7 @@ class HomeworkFragment : Fragment() {
         fun newInstance(fm:FragmentManager){
 
             val fragment=
-                HomeworkFragment()
+                AbsenceFragment()
 
             fm.beginTransaction().apply {
                 add(R.id.fragmentContainer, fragment)
@@ -33,7 +33,7 @@ class HomeworkFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false)
-        (activity as SectionActivity).setCustomTitle(R.string.homework)
+        (activity as SectionActivity).setCustomTitle(R.string.absence)
         setHasOptionsMenu(true)
 
         setupViewModel()
@@ -43,13 +43,12 @@ class HomeworkFragment : Fragment() {
     private fun setupViewModel() {
         viewModel = ViewModelProviders.of(this)
             .get(HomeworkViewModel::class.java).apply {
-                getExams().observe(this@HomeworkFragment, Observer{onHomeworkDownload(it)})
+                getExams().observe(this@AbsenceFragment, Observer{onHomeworkDownload(it)})
             }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         if(SharedPrefHelper.instance?.userType == UserType.TEACHER) {
-
             inflater.inflate(R.menu.menu_add_btn, menu)
         }
 
@@ -58,19 +57,19 @@ class HomeworkFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.addMenuItem-> fragmentManager?.let { AddHomeworkFragment.newInstance(it) }
+            R.id.addMenuItem-> fragmentManager?.let { AddAbsenceFragment.newInstance(it) }
         }
         return super.onOptionsItemSelected(item)
     }
 
 
-    private  fun onHomeworkDownload(result: HomeworkResult) {
+    private  fun onHomeworkDownload(result: Absence) {
         var errorMsg = ""
         when (result) {
             is Success -> {
-                if (result.data.isNullOrEmpty()) errorMsg = getString(R.string.no_homework)
+                if (result.data.isNullOrEmpty()) errorMsg = getString(R.string.no_student_absence)
                 else {
-                    binding.recyclerView.adapter= HomeworkRecyclerAdapter(result.data)
+                    binding.recyclerView.adapter= AbsenceRecyclerAdapter(result.data)
                 }
 
             }

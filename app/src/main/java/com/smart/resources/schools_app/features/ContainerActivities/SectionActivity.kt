@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.section
+package com.smart.resources.schools_app.features.ContainerActivities
 
 import android.content.Context
 import android.content.Intent
@@ -11,10 +11,13 @@ import com.smart.resources.schools_app.databinding.ActivitySectionBinding
 import com.smart.resources.schools_app.features.notification.NotificationFragment
 import com.smart.resources.schools_app.core.util.Section
 import com.smart.resources.schools_app.core.util.Section.EXAM
+import com.smart.resources.schools_app.features.absence.AbsenceFragment
+import com.smart.resources.schools_app.features.advertising.AdvertisingFragment
 import com.smart.resources.schools_app.features.exam.ExamFragment
 import com.smart.resources.schools_app.features.homework.HomeworkFragment
 import com.smart.resources.schools_app.features.library.LibraryFragment
-import kotlinx.android.synthetic.main.activity_home.*
+import com.smart.resources.schools_app.features.rating.RatingFragment
+import com.smart.resources.schools_app.features.schedule.ScheduleFragment
 
 
 class SectionActivity : AppCompatActivity() {
@@ -48,13 +51,15 @@ class SectionActivity : AppCompatActivity() {
     }
 
     private fun createFragment() {
-
-        when(val section= intent.getSerializableExtra(EXTRA_SECTION) as Section){
+        when(intent.getSerializableExtra(EXTRA_SECTION) as Section){
             EXAM -> ExamFragment.newInstance(supportFragmentManager)
             Section.HOMEWORK -> HomeworkFragment.newInstance(supportFragmentManager)
             Section.NOTIFICATION -> NotificationFragment.newInstance(supportFragmentManager)
             Section.LIBRARY -> LibraryFragment.newInstance(supportFragmentManager)
-            else -> SectionFragment.newInstance(supportFragmentManager, section)
+            Section.SCHEDULE -> ScheduleFragment.newInstance(supportFragmentManager)
+            Section.ADVERTISING -> AdvertisingFragment.newInstance(supportFragmentManager)
+            Section.ABSENCE -> AbsenceFragment.newInstance(supportFragmentManager)
+            Section.RATING -> RatingFragment.newInstance(supportFragmentManager)
         }
     }
 

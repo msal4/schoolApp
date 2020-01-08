@@ -22,7 +22,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".features.homePage.HomeActivity">
+            tools:context=".features.ContainerActivities.HomeActivity">
 
             <ImageView
                 android:id="@+id/topPart"
@@ -369,7 +369,7 @@
                 android:gravity="center|bottom"
                 android:onClick="navigate"
                 android:padding="@dimen/home_circle_padding"
-                android:text="@string/rate"
+                android:text="@string/rating"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/home_circle_text_size"
 

@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.homework
+package com.smart.resources.schools_app.features.schedule
 
 import android.os.Bundle
 import android.view.*
@@ -11,15 +11,15 @@ import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.ContainerActivities.SectionActivity
 import com.smart.resources.schools_app.core.util.*
 
-class HomeworkFragment : Fragment() {
+class ScheduleFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
-    private lateinit var viewModel: HomeworkViewModel
+    private lateinit var viewModel: ScheduleViewModel
 
     companion object {
         fun newInstance(fm:FragmentManager){
 
             val fragment=
-                HomeworkFragment()
+                ScheduleFragment()
 
             fm.beginTransaction().apply {
                 add(R.id.fragmentContainer, fragment)
@@ -33,8 +33,7 @@ class HomeworkFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false)
-        (activity as SectionActivity).setCustomTitle(R.string.homework)
-        setHasOptionsMenu(true)
+        (activity as SectionActivity).setCustomTitle(R.string.schedule)
 
         setupViewModel()
         return binding.root
@@ -42,37 +41,19 @@ class HomeworkFragment : Fragment() {
 
     private fun setupViewModel() {
         viewModel = ViewModelProviders.of(this)
-            .get(HomeworkViewModel::class.java).apply {
-                getExams().observe(this@HomeworkFragment, Observer{onHomeworkDownload(it)})
+            .get(ScheduleViewModel::class.java).apply {
+                getSchedule().observe(this@ScheduleFragment, Observer{onScheduleDownloaded(it)})
             }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if(SharedPrefHelper.instance?.userType == UserType.TEACHER) {
-
-            inflater.inflate(R.menu.menu_add_btn, menu)
-        }
-
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.addMenuItem-> fragmentManager?.let { AddHomeworkFragment.newInstance(it) }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-
-    private  fun onHomeworkDownload(result: HomeworkResult) {
+    private  fun onScheduleDownloaded(result: ScheduleResult) {
         var errorMsg = ""
         when (result) {
             is Success -> {
-                if (result.data.isNullOrEmpty()) errorMsg = getString(R.string.no_homework)
+                if (result.data.isNullOrEmpty()) errorMsg = getString(R.string.no_schedule)
                 else {
-                    binding.recyclerView.adapter= HomeworkRecyclerAdapter(result.data)
+                    setupWeekRecycler(result)
                 }
-
             }
             is ResponseError -> errorMsg = result.combinedMsg
             is ConnectionError -> errorMsg = getString(R.string.connection_error)
@@ -81,4 +62,32 @@ class HomeworkFragment : Fragment() {
         binding.errorText.text = errorMsg
         binding.progressIndicator.hide()
     }
+
+
+    private fun setupWeekRecycler(result: Success<List<Any>>) =
+        binding
+            .recyclerView
+            .createGridLayout(
+                WeekRecyclerAdapter(mapWeekRecyclerData(result))
+                    .apply{onClick = ::onDayClicked })
+
+
+    private fun onDayClicked(scheduleDayModel: ScheduleDayModel){
+        fragmentManager?.let {
+            ScheduleDayFragment.newInstance(
+                it,
+                scheduleDayModel
+            )
+        }
+    }
+
+    private fun mapWeekRecyclerData(result: Success<List<Any>>) =
+        (result.data as List<List<String?>>)
+            .mapIndexed { index, list ->
+                ScheduleDayModel(
+                    WeekDays.getDayName(index),
+                    list
+                )
+            }
+            .filter {!it.dayList.isNullOrEmpty()}
 }

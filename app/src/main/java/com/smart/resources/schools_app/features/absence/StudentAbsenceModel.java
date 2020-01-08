@@ -1,7 +1,5 @@
-package com.smart.resources.schools_app.features.studentAbsence;
-import com.google.gson.annotations.SerializedName;
+package com.smart.resources.schools_app.features.absence;
 
-import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
 
 public class StudentAbsenceModel {

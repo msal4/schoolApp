@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.homework
+package com.smart.resources.schools_app.features.advertising
 
 import android.os.Bundle
 import android.view.*
@@ -11,7 +11,7 @@ import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.ContainerActivities.SectionActivity
 import com.smart.resources.schools_app.core.util.*
 
-class HomeworkFragment : Fragment() {
+class AdvertisingFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
     private lateinit var viewModel: HomeworkViewModel
 
@@ -19,7 +19,7 @@ class HomeworkFragment : Fragment() {
         fun newInstance(fm:FragmentManager){
 
             val fragment=
-                HomeworkFragment()
+                AdvertisingFragment()
 
             fm.beginTransaction().apply {
                 add(R.id.fragmentContainer, fragment)
@@ -33,8 +33,7 @@ class HomeworkFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false)
-        (activity as SectionActivity).setCustomTitle(R.string.homework)
-        setHasOptionsMenu(true)
+        (activity as SectionActivity).setCustomTitle(R.string.advertising)
 
         setupViewModel()
         return binding.root
@@ -43,34 +42,18 @@ class HomeworkFragment : Fragment() {
     private fun setupViewModel() {
         viewModel = ViewModelProviders.of(this)
             .get(HomeworkViewModel::class.java).apply {
-                getExams().observe(this@HomeworkFragment, Observer{onHomeworkDownload(it)})
+                getExams().observe(this@AdvertisingFragment, Observer{onHomeworkDownload(it)})
             }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if(SharedPrefHelper.instance?.userType == UserType.TEACHER) {
 
-            inflater.inflate(R.menu.menu_add_btn, menu)
-        }
-
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.addMenuItem-> fragmentManager?.let { AddHomeworkFragment.newInstance(it) }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-
-    private  fun onHomeworkDownload(result: HomeworkResult) {
+    private  fun onHomeworkDownload(result: AdvertisingResult) {
         var errorMsg = ""
         when (result) {
             is Success -> {
-                if (result.data.isNullOrEmpty()) errorMsg = getString(R.string.no_homework)
+                if (result.data.isNullOrEmpty()) errorMsg = getString(R.string.no_advertisements)
                 else {
-                    binding.recyclerView.adapter= HomeworkRecyclerAdapter(result.data)
+                    binding.recyclerView.adapter= AdvertisingRecyclerAdapter(result.data)
                 }
 
             }

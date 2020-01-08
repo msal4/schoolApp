@@ -15,11 +15,11 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".features.pdfViewer.PdfWebViewActivity"/>
         <activity
-            android:name=".features.section.SectionActivity"
+            android:name=".features.ContainerActivities.SectionActivity"
             android:label=""
             android:screenOrientation="portrait" />
         <activity
-            android:name=".features.homePage.HomeActivity"
+            android:name=".features.ContainerActivities.HomeActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".features.profile.ProfileActivity"

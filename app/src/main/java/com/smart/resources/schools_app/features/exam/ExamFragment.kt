@@ -8,10 +8,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
-import com.smart.resources.schools_app.features.section.SectionActivity
+import com.smart.resources.schools_app.features.ContainerActivities.SectionActivity
 import com.smart.resources.schools_app.core.util.*
-import com.smart.resources.schools_app.features.homework.HomeworkFragment
-import com.smart.resources.schools_app.features.homework.HomeworkViewModel
 
 class ExamFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding

@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.FragmentAddHomeworkBinding
-import com.smart.resources.schools_app.features.section.SectionActivity
+import com.smart.resources.schools_app.features.ContainerActivities.SectionActivity
 import com.smart.resources.schools_app.core.util.toast
 
 class AddHomeworkFragment : Fragment() {
