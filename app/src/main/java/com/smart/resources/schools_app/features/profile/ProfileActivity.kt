@@ -25,10 +25,7 @@ class ProfileActivity : AppCompatActivity(),
         binding.apply {
             itemModel= getPersonModel()
             SharedPrefHelper.instance?.imgUri?.let {
-                loadImageUrl(
-                    profileImage,
-                    it
-                )
+                loadImageUrl(profileImage, it)
             }
 
             setSupportActionBar(binding.toolbar)

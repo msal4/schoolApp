@@ -40,6 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layoutDirection="rtl"
+        android:gravity="center"
         android:orientation="horizontal">
 
 
@@ -49,12 +50,13 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/monadi"
             android:includeFontPadding="true"
-            android:text="الطالب"
+            android:text="@{itemModel.title}"
+
             android:textAlignment="viewStart"
             android:textColor="@android:color/black"
             android:textSize="24sp"
             android:textStyle="bold"
-            tools:text="@{itemModel.title}" />
+            tools:text="العنوان" />
 
 
 
@@ -65,9 +67,6 @@
             android:includeFontPadding="true"
             mine:setDate="@{itemModel.date}"
             android:textAlignment="viewEnd"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-
             tools:text="date" />
 
     </LinearLayout>
@@ -83,6 +82,7 @@
             android:minLines="2"
             android:gravity="center|start"
             android:text="@{itemModel.note.trim()}"
+            tools:text="تيست تيست تيست  تيست نص تيست"
             android:textAlignment="viewStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
