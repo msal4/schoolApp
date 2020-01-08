@@ -23,6 +23,8 @@ import com.smart.resources.schools_app.features.studentAbsence.StudentAbsenceDao
 import com.smart.resources.schools_app.features.studentAbsence.StudentAbsenceModel
 import com.smart.resources.schools_app.core.util.*
 import com.smart.resources.schools_app.core.util.SectionViewModelListener
+import com.smart.resources.schools_app.features.advertising.AdvertisingDao
+import com.smart.resources.schools_app.features.advertising.AdvertisingModel
 import com.smart.resources.schools_app.features.advertising.AdvertisingRecyclerAdapter
 import com.smart.resources.schools_app.features.rating.RatingModel
 import com.smart.resources.schools_app.features.notification.NotificationsDao
@@ -84,7 +86,7 @@ class SectionViewModel(private val section:Section,
         Section.RATE -> RatingAdapter(
             result.data as List<RatingModel>
         )
-        Section.ADVERTISING ->  AdvertisingRecyclerAdapter(listOf())
+        Section.ADVERTISING ->  AdvertisingRecyclerAdapter(result.data as List<AdvertisingModel>)
         else -> throw Exception()
     }
 
@@ -134,8 +136,8 @@ class SectionViewModel(private val section:Section,
             }
 
             Section.ADVERTISING -> {
-            BackendHelper.retrofitWithAuth.create(NotificationsDao::class.java)
-                .run{ GlobalScope.async {fetchNotifications()}.toMyResult()}
+            BackendHelper.retrofitWithAuth.create(AdvertisingDao::class.java)
+                .run{ GlobalScope.async {fetchAdvertisements()}.toMyResult()}
              }
         else ->  throw Exception()
     }
