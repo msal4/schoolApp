@@ -69,7 +69,7 @@ class HomeActivity : AppCompatActivity() {
             R.id.homework-> SectionActivity.newInstance(this, Section.HOMEWORK)
             R.id.exam-> SectionActivity.newInstance(this, Section.EXAM)
             R.id.library-> SectionActivity.newInstance(this, Section.LIBRARY)
-            R.id.notifications-> SectionActivity.newInstance(this, null)
+            R.id.notifications-> SectionActivity.newInstance(this, Section.NOTIFICATION)
             R.id.schedule-> SectionActivity.newInstance(this, Section.SCHEDULE)
             R.id.absence-> SectionActivity.newInstance(this, Section.ABSENCE)
             R.id.ratings-> SectionActivity.newInstance(this, Section.RATE)

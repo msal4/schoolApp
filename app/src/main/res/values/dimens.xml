@@ -21,4 +21,5 @@
     <dimen name="item_elevation">4dp</dimen>
     <dimen name="profileAttributeTitleSize">22sp</dimen>
     <dimen name="profileAttributeSize">16sp</dimen>
+    <dimen name="advertising_collapsed_height">120dp</dimen>
 </resources>

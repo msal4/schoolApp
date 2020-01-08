@@ -42,7 +42,7 @@
             android:layout_marginStart="16dp"
             android:fontFamily="@font/monadi"
             android:includeFontPadding="true"
-            app:layout_constraintBottom_toTopOf="@+id/textView6"
+            app:layout_constraintBottom_toTopOf="@+id/contentText"
             app:layout_constraintStart_toEndOf="@+id/advertisementsIcon"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@{itemModel.subjectName}"
@@ -80,7 +80,7 @@
 
         <TextView
 
-            android:id="@+id/textView6"
+            android:id="@+id/contentText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

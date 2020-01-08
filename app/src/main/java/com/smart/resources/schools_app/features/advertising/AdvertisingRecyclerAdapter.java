@@ -19,6 +19,9 @@ import com.smart.resources.schools_app.databinding.ItemAdvertisingBinding;
 
 import java.util.List;
 
+import kotlin.Unit;
+import ru.rhanza.constraintexpandablelayout.State;
+
 public class AdvertisingRecyclerAdapter extends RecyclerView.Adapter<AdvertisingRecyclerAdapter.MyViewHolder> {
     private List<AdvertisingModel> dataList;
 
@@ -57,74 +60,24 @@ public class AdvertisingRecyclerAdapter extends RecyclerView.Adapter<Advertising
         public MyViewHolder(@NonNull ItemAdvertisingBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+            binding.expandLayout.setOnStateChangeListener((oldState, newState)->{
+                if(newState== State.Collapsed){
+                    binding.contentText.setMaxLines(2);
+                }else if(newState== State.Expanded|| newState == State.Expanding){
+                    binding.contentText.setMaxLines(25);
+                }
+
+                return Unit.INSTANCE;
+            });
+
+            binding.expandLayout.setOnClickListener(v -> {
+                binding.expandLayout.toggle(true);
+
+            });
         }
 
         private void bind(AdvertisingModel model) {
             binding.setItemModel(model);
-            makeTextViewResizable(binding.imageView,binding.textView6, 2, "read more", true);
-        }
-
-
-        public void makeTextViewResizable(final CardView img, final TextView tv, final int maxLine, final String expandText, final boolean viewMore) {
-
-            if (tv.getTag() == null) {
-                tv.setTag(tv.getText());
-            }
-            ViewTreeObserver vto = tv.getViewTreeObserver();
-            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-
-                @SuppressWarnings("deprecation")
-                @Override
-                public void onGlobalLayout() {
-                    String text;
-                    int lineEndIndex;
-                    ViewTreeObserver obs = tv.getViewTreeObserver();
-                    obs.removeGlobalOnLayoutListener(this);
-                    if (maxLine == 0) {
-                        lineEndIndex = tv.getLayout().getLineEnd(0);
-                        text = tv.getText().subSequence(0, lineEndIndex - expandText.length() + 1) + " " + expandText;
-                    } else if (maxLine > 0 && tv.getLineCount() >= maxLine) {
-                        lineEndIndex = tv.getLayout().getLineEnd(maxLine - 1);
-                        text = tv.getText().subSequence(0, lineEndIndex - expandText.length() + 1) + " " + expandText;
-                    } else {
-                        lineEndIndex = tv.getLayout().getLineEnd(tv.getLayout().getLineCount() - 1);
-                        text = tv.getText().subSequence(0, lineEndIndex) + " " + expandText;
-                    }
-                    tv.setText(text);
-                    tv.setMovementMethod(LinkMovementMethod.getInstance());
-                    tv.setText(
-                            addClickablePartTextViewResizable(img,Html.fromHtml(tv.getText().toString()), tv, lineEndIndex, expandText,
-                                    viewMore,expandText), TextView.BufferType.SPANNABLE);
-                }
-            });
-        }
-
-        private SpannableStringBuilder addClickablePartTextViewResizable(final CardView img,final Spanned strSpanned, final TextView tv,
-                                                                         final int maxLine, final String spanableText, final boolean viewMore, final String expand) {
-            String str = strSpanned.toString();
-            SpannableStringBuilder ssb = new SpannableStringBuilder(strSpanned);
-
-            if (str.contains(spanableText)) {
-                ssb.setSpan(new ClickableSpan() {
-
-                    @Override
-                    public void onClick(View widget) {
-                        tv.setLayoutParams(tv.getLayoutParams());
-                        tv.setText(tv.getTag().toString(), TextView.BufferType.SPANNABLE);
-                        tv.invalidate();
-                        if (viewMore) {
-                            makeTextViewResizable(img,tv, -1, "read less", false);
-                            img.setVisibility(View.VISIBLE);
-                        } else {
-                            makeTextViewResizable(img ,tv, 2, expand, true);
-                            img.setVisibility(View.GONE);
-                        }
-
-                    }
-                }, str.indexOf(spanableText), str.indexOf(spanableText) + spanableText.length(), 0);
-
-            }
-            return ssb;
         }
     }
 

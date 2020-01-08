@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.databinding.ItemExamBinding
 
-class ExamRecyclerAdapter(private val body: List<ExamModel>) : RecyclerView.Adapter<ExamRecyclerAdapter.MyViewHolder>() {
+class ExamRecyclerAdapter(private val exams: List<ExamModel>) : RecyclerView.Adapter<ExamRecyclerAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(private val binding: ItemExamBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -25,11 +25,11 @@ class ExamRecyclerAdapter(private val body: List<ExamModel>) : RecyclerView.Adap
         return MyViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = body.size
+    override fun getItemCount(): Int = exams.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-        holder.bind(body[position])
+        holder.bind(exams[position])
     }
 
 }

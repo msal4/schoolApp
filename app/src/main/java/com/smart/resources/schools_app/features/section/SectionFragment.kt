@@ -76,12 +76,12 @@ class SectionFragment : Fragment(),
     private fun setActivityTitle() {
         val stringId=when (section) {
             Section.HOMEWORK -> R.string.homework
-            Section.EXAM -> R.string.exams
             Section.LIBRARY ->R.string.library
             Section.SCHEDULE -> R.string.schedule
             Section.ABSENCE -> R.string.absence
             Section.RATE -> R.string.rate
             Section.ADVERTISING -> R.string.advertising
+            else ->  0
         }
         (activity as SectionActivity).setCustomTitle(stringId)
     }
@@ -97,7 +97,6 @@ class SectionFragment : Fragment(),
 
     private fun shouldShowAdd(): Boolean {
         return (section == Section.HOMEWORK ||
-                section == Section.EXAM ||
                 section == Section.ABSENCE) && SharedPrefHelper.instance?.userType == UserType.TEACHER
     }
 
@@ -112,9 +111,6 @@ class SectionFragment : Fragment(),
         when (section) {
             Section.HOMEWORK -> {
                 fragmentManager?.let { AddHomeworkFragment.newInstance(it) }
-            }
-            Section.EXAM -> {
-                fragmentManager?.let { AddExamFragment.newInstance(it) }
             }
             Section.ABSENCE -> {
                 fragmentManager?.let { AddAbsenceFragment.newInstance(it) }

@@ -9,11 +9,24 @@
             name="itemModel"
             type="com.smart.resources.schools_app.features.advertising.AdvertisingModel" />
     </data>
+<ru.rhanza.constraintexpandablelayout.ExpandableLayout
+    android:clipToPadding="false"
+    android:clipChildren="false"
+    android:layout_height="wrap_content"
+    android:id="@+id/expandLayout"
+    android:layout_width="match_parent"
+    app:el_animationDuration="300"
+    app:el_initialState="collapsed"
+    app:el_collapsedHeight="@dimen/advertising_collapsed_height"
+    app:el_moreText="Expand/Collapse"
+    app:el_shadowHeight="20dp"
+    app:el_showButton="false"
+    app:el_showShadow="false"
+    android:layout_marginBottom="@dimen/item_margin">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/item_margin"
         android:background="@drawable/background_item"
         android:elevation="@dimen/item_elevation"
         android:layoutDirection="rtl"
@@ -30,6 +43,7 @@
             android:text="الطالب"
             android:textAlignment="viewStart"
             android:textColor="@android:color/black"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.08"
@@ -40,38 +54,34 @@
 
 
         <TextView
-            android:id="@+id/textView6"
-            android:layout_width="0dp"
+            android:id="@+id/contentText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-
+            android:layout_marginTop="12dp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:text="المحتوى هو هذا وها وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا المحتوى هو هذاالمحتوى هو هذا المحتوى هو هذا وها وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا المحتوى هو هذاالمحتوى هو هذا المحتوى هو هذا وها وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا المحتوى هو هذاالمحتوى هو هذا المحتوى هو هذا وها وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا المحتوى هو هذاالمحتوى هو هذا"
             android:textAlignment="viewStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/examName"
-            android:text="المحتوى هو هذا وها وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا المحتوى هو هذاالمحتوى هو هذا المحتوى هو هذا وها وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا المحتوى هو هذاالمحتوى هو هذا المحتوى هو هذا وها وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا المحتوى هو هذاالمحتوى هو هذا المحتوى هو هذا وها وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا المحتوى هو هذاالمحتوى هو هذا" />
+            app:layout_constraintTop_toBottomOf="@+id/examName" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/imageView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginTop="16dp"
             app:cardCornerRadius="12dp"
-            app:cardElevation="0dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="16:9"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.51"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView6">
+            app:cardElevation="0dp">
 
             <ImageView
-
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/ares" />
+                android:scaleType="centerCrop"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
         </androidx.cardview.widget.CardView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</ru.rhanza.constraintexpandablelayout.ExpandableLayout>
 </layout>

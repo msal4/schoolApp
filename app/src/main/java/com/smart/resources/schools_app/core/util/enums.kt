@@ -2,12 +2,13 @@ package com.smart.resources.schools_app.core.util
 
 enum class Section{
     HOMEWORK,
-    EXAM,
     LIBRARY,
     SCHEDULE,
     ABSENCE,
     RATE,
-    ADVERTISING
+    ADVERTISING,
+    EXAM,
+    NOTIFICATION
 }
 
 

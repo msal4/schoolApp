@@ -79,14 +79,14 @@
             android:textAlignment="viewStart"
             android:textColor="@android:color/black"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textView6"
+            app:layout_constraintBottom_toTopOf="@+id/contentText"
             app:layout_constraintStart_toEndOf="@+id/advertisementsIcon"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/student" />
 
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/contentText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

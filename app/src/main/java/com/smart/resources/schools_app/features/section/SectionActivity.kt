@@ -10,6 +10,8 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ActivitySectionBinding
 import com.smart.resources.schools_app.features.notification.NotificationFragment
 import com.smart.resources.schools_app.core.util.Section
+import com.smart.resources.schools_app.core.util.Section.EXAM
+import com.smart.resources.schools_app.features.exam.ExamFragment
 
 
 class SectionActivity : AppCompatActivity() {
@@ -43,10 +45,12 @@ class SectionActivity : AppCompatActivity() {
     }
 
     private fun createFragment() {
-        val section= intent.getSerializableExtra(EXTRA_SECTION) as Section?
 
-        if(section== null) NotificationFragment.newInstance(supportFragmentManager)
-        else SectionFragment.newInstance(supportFragmentManager, section)
+        when(val section= intent.getSerializableExtra(EXTRA_SECTION) as Section){
+            EXAM -> ExamFragment.newInstance(supportFragmentManager)
+            Section.NOTIFICATION -> NotificationFragment.newInstance(supportFragmentManager)
+            else -> SectionFragment.newInstance(supportFragmentManager, section)
+        }
     }
 
 }

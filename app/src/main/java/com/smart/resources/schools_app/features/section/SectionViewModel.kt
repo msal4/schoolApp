@@ -59,12 +59,12 @@ class SectionViewModel(private val section:Section,
     private fun getEmptyListMsg(): String {
         val stringId= when (section) {
             Section.HOMEWORK -> R.string.no_homework
-            Section.EXAM ->  R.string.no_exams
             Section.LIBRARY ->  R.string.no_library
             Section.SCHEDULE ->  R.string.no_schedule
             Section.ABSENCE ->  R.string.no_student_absence
             Section.RATE ->  R.string.rate
             Section.ADVERTISING ->  R.string.advertising
+            else -> 0
         }
 
         return context.getString(stringId)
@@ -73,9 +73,6 @@ class SectionViewModel(private val section:Section,
     private fun getAdapter(result: Success<List<Any>>) = when (section) {
         Section.HOMEWORK -> HomeworkRecyclerAdapter(
             result.data as List<HomeworkModel>
-        )
-        Section.EXAM -> ExamRecyclerAdapter(
-            result.data as List<ExamModel>
         )
         Section.LIBRARY -> LibraryRecyclerAdapter(
             result.data as List<LibraryModel>
@@ -88,6 +85,7 @@ class SectionViewModel(private val section:Section,
             result.data as List<RatingModel>
         )
         Section.ADVERTISING ->  AdvertisingRecyclerAdapter(listOf())
+        else -> throw Exception()
     }
 
     private fun setupWeekRecycler(result: Success<List<Any>>) =
@@ -115,10 +113,6 @@ class SectionViewModel(private val section:Section,
                 BackendHelper.retrofitWithAuth.create(HomeworkDao::class.java)
                     .run{ GlobalScope.async {fetchHomework()}.toMyResult()}
             }
-            Section.EXAM -> {
-                BackendHelper.retrofitWithAuth.create(ExamDao::class.java)
-                    .run{ GlobalScope.async {fetchExam()}.toMyResult()}
-            }
 
             Section.LIBRARY ->{
                  BackendHelper.retrofitWithAuth.create(LibraryDao::class.java)
@@ -143,7 +137,8 @@ class SectionViewModel(private val section:Section,
             BackendHelper.retrofitWithAuth.create(NotificationsDao::class.java)
                 .run{ GlobalScope.async {fetchNotifications()}.toMyResult()}
              }
-        }
+        else ->  throw Exception()
+    }
 }
 
 class SectionViewModelFactory(
