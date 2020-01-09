@@ -25,11 +25,11 @@ class HomeworkViewModel : ViewModel() {
         .retrofitWithAuth
         .create(HomeworkDao::class.java)
 
-
     private fun fetchHomework(){
         viewModelScope.launch {
             val result = GlobalScope.async { homeworkDao.fetchHomework() }.toMyResult()
             homework.value = result
         }
     }
+
 }

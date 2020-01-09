@@ -1,5 +1,6 @@
 package com.smart.resources.schools_app.core
 
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -7,6 +8,7 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.core.util.dateDisFormatter
+import com.tiper.MaterialSpinner
 import org.threeten.bp.LocalDateTime
 import java.lang.Exception
 
@@ -39,4 +41,15 @@ fun loadImageUrl(iv: ImageView, url: String?) {
 @BindingAdapter("android:setMark")
 fun setMark(tv: TextView, mark:Int?) {
     tv.text= mark?.toString() ?: "- "
+}
+
+
+@BindingAdapter("android:setList")
+fun <T>setSpinnerList(spinner: MaterialSpinner, list:List<T>) {
+    val arrayAdapter= ArrayAdapter<T>(
+        spinner.context,
+        android.R.layout.simple_spinner_item,
+        list)
+
+    spinner.adapter= arrayAdapter
 }

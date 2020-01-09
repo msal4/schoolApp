@@ -2,6 +2,8 @@ package com.smart.resources.schools_app.core.util
 
 import android.content.res.Resources
 import android.util.Base64
+import okhttp3.MediaType
+import okhttp3.RequestBody
 import java.nio.charset.StandardCharsets
 
 
@@ -45,3 +47,5 @@ fun List<Any>.concatStrings(): String{
 
     return sb.substring(0, sb.length-1)
 }
+
+fun String.asRequestBody() :RequestBody= RequestBody.create(MediaType.parse("text/plain"),this.trim())

@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="postModel"
+            type="com.smart.resources.schools_app.features.homework.PostHomeworkModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,6 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/subject_name"
+                android:text="@={postModel.subjectName}"
                 tools:text="تيست" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -47,6 +50,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@={postModel.note}"
                 android:hint="@string/notes" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -84,6 +88,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@={postModel.assignmentName}"
                 android:hint="@string/homework_name" />
 
         </com.google.android.material.textfield.TextInputLayout>
