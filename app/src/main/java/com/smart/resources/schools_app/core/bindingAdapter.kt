@@ -1,5 +1,6 @@
 package com.smart.resources.schools_app.core
 
+import android.R
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ImageView
@@ -46,10 +47,12 @@ fun setMark(tv: TextView, mark:Int?) {
 
 @BindingAdapter("android:setList")
 fun <T>setSpinnerList(spinner: MaterialSpinner, list:List<T>) {
-    val arrayAdapter= ArrayAdapter<T>(
-        spinner.context,
-        android.R.layout.simple_spinner_item,
-        list)
 
-    spinner.adapter= arrayAdapter
+
+    val adapter = ArrayAdapter<T>(
+        spinner.context,
+        R.layout.simple_spinner_item, list
+    )
+
+    spinner.adapter= adapter
 }

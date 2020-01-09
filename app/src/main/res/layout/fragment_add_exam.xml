@@ -26,6 +26,7 @@
 
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/subjectName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/exam_name"
@@ -45,6 +46,7 @@
             app:layout_constraintTop_toBottomOf="@+id/examNameField">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/note"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/notes" />
@@ -57,12 +59,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            android:focusable="false"
             app:layout_constraintBottom_toTopOf="@+id/examTypeField"
             app:layout_constraintEnd_toEndOf="@+id/notesField"
             app:layout_constraintStart_toStartOf="@+id/notesField"
             app:layout_constraintTop_toBottomOf="@+id/notesField">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/dateExam"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/date" />
@@ -82,6 +86,7 @@
             app:layout_constraintTop_toBottomOf="@+id/dateField">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/exam_type" />
@@ -98,6 +103,7 @@
             android:minHeight="60dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/examTypeField"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/examTypeField"
             app:layout_constraintTop_toBottomOf="@+id/examTypeField" />
 

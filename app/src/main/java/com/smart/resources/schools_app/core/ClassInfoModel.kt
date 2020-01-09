@@ -1,7 +1,7 @@
 package com.smart.resources.schools_app.core
 
 data class ClassInfoModel(
-    val classId: String,
+    val classId: Int,
     val className: String,
     val sectionName: String
 ){
