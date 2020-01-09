@@ -8,7 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
-import com.smart.resources.schools_app.features.ContainerActivities.SectionActivity
+import com.smart.resources.schools_app.features.containerActivities.SectionActivity
 import com.smart.resources.schools_app.core.util.*
 
 class ExamFragment : Fragment() {

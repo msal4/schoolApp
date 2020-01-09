@@ -22,7 +22,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".features.ContainerActivities.HomeActivity">
+            tools:context=".features.containerActivities.HomeActivity">
 
             <ImageView
                 android:id="@+id/topPart"

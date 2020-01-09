@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.ContainerActivities
+package com.smart.resources.schools_app.features.containerActivities
 
 import android.content.Context
 import android.content.Intent

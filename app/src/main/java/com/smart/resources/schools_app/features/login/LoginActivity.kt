@@ -13,7 +13,7 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ActivityLoginBinding
 import com.smart.resources.schools_app.core.util.SharedPrefHelper
 import com.smart.resources.schools_app.core.util.showErrorSnackbar
-import com.smart.resources.schools_app.features.ContainerActivities.HomeActivity
+import com.smart.resources.schools_app.features.containerActivities.HomeActivity
 
 
 class LoginActivity : AppCompatActivity(){
@@ -33,19 +33,16 @@ class LoginActivity : AppCompatActivity(){
 
         initComponents()
         if(SharedPrefHelper.instance?.accessToken != null){
-            HomeActivity.newInstance(
-                this
-            )
+            HomeActivity.newInstance(this)
         }
         setupConstraintLayoutHeight()
         setupViewModel()
     }
 
     private fun setupConstraintLayoutHeight() {
-        val params = binding.constraintLayout.layoutParams
         val point = Point()
         windowManager.defaultDisplay.getSize(point)
-        params.height = point.y
+        binding.constraintLayout.minHeight = (point.y * 0.9).toInt()
     }
 
 

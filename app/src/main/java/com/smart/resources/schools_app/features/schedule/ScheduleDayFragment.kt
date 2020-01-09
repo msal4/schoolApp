@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.FragmentScheduleDayBinding
-import com.smart.resources.schools_app.features.ContainerActivities.SectionActivity
+import com.smart.resources.schools_app.features.containerActivities.SectionActivity
 
 class ScheduleDayFragment : Fragment() {
     private lateinit var binding: FragmentScheduleDayBinding

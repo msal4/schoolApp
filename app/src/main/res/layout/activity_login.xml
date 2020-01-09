@@ -23,8 +23,8 @@
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false"
             android:clipChildren="false"
+            android:clipToPadding="false"
             android:layoutDirection="rtl"
             android:padding="@dimen/login_padding"
             tools:context=".features.login.LoginActivity">
@@ -33,13 +33,14 @@
                 android:id="@+id/profileImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/logo_desc"
                 android:src="@drawable/ic_logo"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/schoolName"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                android:contentDescription="@string/logo_desc" />
+                app:layout_constraintVertical_bias="0.49"
+                app:layout_constraintVertical_chainStyle="packed" />
 
 
             <TextView
@@ -57,7 +58,9 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="38sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/phoneNumber"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/profileImage" />
 
@@ -69,20 +72,20 @@
                 android:background="@drawable/background_outline"
                 android:drawableStart="@drawable/ic_phone_primary_24dp"
                 android:drawablePadding="@dimen/edit_text_drawable_padding"
-                android:hint="@string/phone_number"
-                android:padding="@dimen/edit_text_padding"
-                android:maxLength="11"
-                android:textSize="@dimen/login_text_size"
-                android:inputType="phone"
-                android:text="@={loginViewModel.phoneNumber}"
                 mine:errorMsg="@{loginViewModel.loginException.phoneNumberMsg}"
+                android:hint="@string/phone_number"
+                android:inputType="phone"
+                android:maxLength="11"
+                android:padding="@dimen/edit_text_padding"
+                android:text="@={loginViewModel.phoneNumber}"
                 android:textAlignment="viewStart"
-                app:layout_constraintBottom_toTopOf="@+id/sectionTitle"
+                android:textSize="@dimen/login_text_size"
+                app:layout_constraintBottom_toTopOf="@+id/password"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/schoolName"
-                app:layout_constraintVertical_bias="0.32"
+                app:layout_constraintVertical_bias="0.49"
                 app:layout_constraintVertical_chainStyle="packed" />
 
             <EditText
@@ -93,14 +96,15 @@
                 android:background="@drawable/background_outline"
                 android:drawableStart="@drawable/ic_lock_primary_24dp"
                 android:drawablePadding="@dimen/edit_text_drawable_padding"
+                mine:errorMsg="@{loginViewModel.loginException.passwordMsg}"
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 android:maxLength="30"
-                android:text="@={loginViewModel.password}"
                 android:padding="@dimen/edit_text_padding"
-                mine:errorMsg="@{loginViewModel.loginException.passwordMsg}"
-                android:textSize="20sp"
+                android:text="@={loginViewModel.password}"
                 android:textAlignment="viewStart"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@id/loginAsTeacherBtn"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -114,8 +118,8 @@
                 android:layout_marginTop="64dp"
                 android:background="@drawable/background_button"
                 android:elevation="@dimen/elevation_btn_login"
-                android:padding="@dimen/btn_padding"
                 android:onClick="@{(view)->loginViewModel.login(view)}"
+                android:padding="@dimen/btn_padding"
                 android:text="@{loginViewModel.isTeacherLogging().booleanValue()? String.valueOf(' ') : @string/login_as_teacher}"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
@@ -130,8 +134,6 @@
 
             <ProgressBar
                 android:id="@+id/teacherLoginProgressIndicator"
-                android:visibility="@{loginViewModel.isTeacherLogging().booleanValue()? View.VISIBLE: View.GONE}"
-                tools:visibility="gone"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="4dp"
@@ -139,11 +141,13 @@
                 android:elevation="55dp"
                 android:indeterminateTint="@android:color/white"
                 android:outlineProvider="none"
+                android:visibility="@{loginViewModel.isTeacherLogging().booleanValue()? View.VISIBLE: View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@+id/loginAsTeacherBtn"
                 app:layout_constraintDimensionRatio="w,1:1"
                 app:layout_constraintEnd_toEndOf="@+id/loginAsTeacherBtn"
                 app:layout_constraintStart_toStartOf="@+id/loginAsTeacherBtn"
-                app:layout_constraintTop_toTopOf="@+id/loginAsTeacherBtn" />
+                app:layout_constraintTop_toTopOf="@+id/loginAsTeacherBtn"
+                tools:visibility="gone" />
 
             <Button
                 android:id="@+id/loginAsStudentBtn"
@@ -151,24 +155,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/background_button"
-                android:padding="@dimen/btn_padding"
+                android:elevation="@dimen/elevation_btn_login"
                 android:onClick="@{(view)->loginViewModel.login(view)}"
+                android:padding="@dimen/btn_padding"
                 android:text="@{loginViewModel.isStudentLogging().booleanValue()? String.valueOf(' ') : @string/login_as_student}"
-                tools:text="@string/login_as_student"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
-                android:elevation="@dimen/elevation_btn_login"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginAsTeacherBtn"
-                app:layout_constraintVertical_chainStyle="packed" />
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="@string/login_as_student" />
 
             <ProgressBar
                 android:id="@+id/studentLoginProgressIndicator"
-                android:visibility="@{loginViewModel.isStudentLogging().booleanValue()? View.VISIBLE: View.GONE}"
-                tools:visibility="gone"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="4dp"
@@ -176,11 +178,13 @@
                 android:elevation="55dp"
                 android:indeterminateTint="@android:color/white"
                 android:outlineProvider="none"
+                android:visibility="@{loginViewModel.isStudentLogging().booleanValue()? View.VISIBLE: View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@+id/loginAsStudentBtn"
                 app:layout_constraintDimensionRatio="w,1:1"
                 app:layout_constraintEnd_toEndOf="@+id/loginAsStudentBtn"
                 app:layout_constraintStart_toStartOf="@+id/loginAsStudentBtn"
-                app:layout_constraintTop_toTopOf="@+id/loginAsStudentBtn" />
+                app:layout_constraintTop_toTopOf="@+id/loginAsStudentBtn"
+                tools:visibility="gone" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
