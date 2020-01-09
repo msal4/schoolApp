@@ -6,4 +6,6 @@ data class ClassInfoModel(
     val sectionName: String
 ){
     val getClassSection get() = "$className - $sectionName"
+    override fun toString(): String = getClassSection
+
 }

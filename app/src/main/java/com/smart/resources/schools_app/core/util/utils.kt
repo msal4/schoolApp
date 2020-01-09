@@ -36,3 +36,12 @@ fun String.withEngNums() = this
     .replace('٧', '7')
     .replace('٨', '8')
     .replace('٩', '9')
+
+fun List<Any>.concatStrings(): String{
+    val sb= StringBuilder()
+    this.map { it.toString() }.forEach {
+        sb.append(it).append(',')
+    }
+
+    return sb.substring(0, sb.length-1)
+}

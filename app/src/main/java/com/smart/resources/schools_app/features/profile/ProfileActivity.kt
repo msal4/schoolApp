@@ -23,7 +23,12 @@ class ProfileActivity : AppCompatActivity(),
         binding= DataBindingUtil.setContentView(this, R.layout.activity_profile)
 
         binding.apply {
-            itemModel= getPersonModel()
+            val personModel= getPersonModel()
+            itemModel= personModel
+            if( personModel is TeacherInfoModel){
+                teacherModel= personModel
+            }
+
             SharedPrefHelper.instance?.imgUri?.let {
                 loadImageUrl(profileImage, it)
             }

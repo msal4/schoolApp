@@ -53,5 +53,7 @@
     <string name="read_more">إقرأ المزيد</string>
     <string name="no_advertisements">لا توجد اعلانات</string>
     <string name="no_rating">لا توجد تقييمات</string>
+    <string name="responsibility">المسؤولية</string>
+    <string name="subjects">المواد</string>
 
 </resources>

@@ -2,11 +2,14 @@ package com.smart.resources.schools_app.features.profile
 
 import com.google.gson.annotations.SerializedName
 import com.smart.resources.schools_app.core.ClassInfoModel
+import com.smart.resources.schools_app.core.util.concatStrings
 import org.threeten.bp.LocalDateTime
 
 class TeacherInfoModel(
+    @SerializedName("subjectName")
     val subjects: List<String>,
-    val responsibilities: List<String>,
+    val examType: List<String>,
+    val responsibility: String,
     @SerializedName("classInfo")
     val classesInfo: List<ClassInfoModel>,
     name: String,
@@ -29,12 +32,6 @@ class TeacherInfoModel(
     }
 
 
-    override val classesAsString: String? get() {
-             val classes= StringBuilder()
-             classesInfo.map { it.getClassSection }.forEach {
-                 classes.append(it).append(',')
-             }
-
-             return classes.substring(0, classes.length-1)
-     }
+    override val classesAsString: String? get()= classesInfo.concatStrings()
+    val subjectsAsString: String? get()= subjects.concatStrings()
 }
