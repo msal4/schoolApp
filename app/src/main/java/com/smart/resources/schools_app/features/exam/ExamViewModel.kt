@@ -13,12 +13,16 @@ class ExamViewModel : ViewModel() {
     private val exams: MutableLiveData<notificationsResult>
             by lazy { MutableLiveData<notificationsResult>() }
 
+
+
+
     fun getExams():
             LiveData<notificationsResult> {
         fetchExams()
 
         return exams
     }
+
 
 
     private val examsDao: ExamDao = BackendHelper
@@ -32,4 +36,5 @@ class ExamViewModel : ViewModel() {
             exams.value = result
         }
     }
+
 }

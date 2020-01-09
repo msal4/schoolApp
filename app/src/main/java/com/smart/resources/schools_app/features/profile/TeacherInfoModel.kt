@@ -25,7 +25,8 @@ class TeacherInfoModel(
     companion object {
         var instance: TeacherInfoModel? = null
             get() {
-                if (field == null) field = fromToken(TeacherInfoModel::class.java)
+                if (field == null)
+                    field = fromToken(TeacherInfoModel::class.java)
                 return field
             }
 
