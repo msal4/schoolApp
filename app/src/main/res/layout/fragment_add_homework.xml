@@ -32,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/subject_name"
                 android:text="@={postModel.subjectName}"
+                android:textAlignment="viewStart"
                 tools:text="تيست" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -51,6 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@={postModel.note}"
+                android:textAlignment="viewStart"
                 android:hint="@string/notes" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -69,6 +71,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textAlignment="viewStart"
                 android:hint="@string/date" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -89,6 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@={postModel.assignmentName}"
+                android:textAlignment="viewStart"
                 android:hint="@string/homework_name" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -101,6 +105,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/classAndDivision"
             android:minHeight="60dp"
+            android:textAlignment="viewStart"
+            android:gravity="start"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/examTypeField"
             app:layout_constraintStart_toStartOf="@+id/examTypeField"

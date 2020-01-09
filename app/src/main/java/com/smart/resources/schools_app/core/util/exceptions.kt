@@ -7,3 +7,10 @@ data class LoginException(
     val passwordMsg: MutableLiveData<String> = MutableLiveData(),
     val msg: MutableLiveData<String> = MutableLiveData()
 )
+
+
+data class AddHomeworkException(
+    val subjectNameMsg: MutableLiveData<String> = MutableLiveData(),
+    val AssignmentNameMsg: MutableLiveData<String> = MutableLiveData(),
+    val msg: MutableLiveData<String> = MutableLiveData()
+)

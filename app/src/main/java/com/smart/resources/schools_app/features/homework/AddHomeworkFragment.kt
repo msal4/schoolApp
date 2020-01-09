@@ -13,6 +13,7 @@ import com.smart.resources.schools_app.databinding.FragmentAddHomeworkBinding
 import com.smart.resources.schools_app.features.containerActivities.SectionActivity
 import com.smart.resources.schools_app.core.util.toast
 import com.smart.resources.schools_app.features.profile.TeacherInfoModel
+import java.util.logging.Logger
 
 class AddHomeworkFragment : Fragment() {
     private lateinit var binding: FragmentAddHomeworkBinding
@@ -68,6 +69,7 @@ class AddHomeworkFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.saveMenuItem-> {
@@ -75,6 +77,8 @@ class AddHomeworkFragment : Fragment() {
                 true
             }
         }
+
         return super.onOptionsItemSelected(item)
     }
+
 }
