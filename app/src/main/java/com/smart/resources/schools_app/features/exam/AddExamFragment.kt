@@ -9,11 +9,20 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.adapters.dateTimeBackendFormatter
+import com.smart.resources.schools_app.core.adapters.dateTimePostFormatter
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import com.smart.resources.schools_app.core.adapters.setSpinnerList
+import com.smart.resources.schools_app.core.myTypes.ConnectionError
+import com.smart.resources.schools_app.core.myTypes.MyResult
+import com.smart.resources.schools_app.core.myTypes.ResponseError
+import com.smart.resources.schools_app.core.myTypes.Success
+import com.smart.resources.schools_app.core.utils.hide
+import com.smart.resources.schools_app.core.utils.toast
 import com.smart.resources.schools_app.databinding.FragmentAddExamBinding
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 import com.smart.resources.schools_app.features.profile.TeacherInfoModel
+import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import java.util.*
 
@@ -22,15 +31,17 @@ class AddExamFragment : Fragment() {
     private lateinit var viewModel: AddExamViewModel
 
     companion object {
-        private const val ADD_EXAM_FRAGMENT= "addExamFragment"
+        private const val ADD_EXAM_FRAGMENT = "addExamFragment"
 
-        fun newInstance(fm:FragmentManager){
+        fun newInstance(fm: FragmentManager) {
 
-            val fragment=
+            val fragment =
                 AddExamFragment()
             fm.beginTransaction().apply {
-                setCustomAnimations(R.anim.slide_in_right,
-                    R.anim.slide_out_left,R.anim.slide_in_left, R.anim.slide_out_right)
+                setCustomAnimations(
+                    R.anim.slide_in_right,
+                    R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right
+                )
                 replace(R.id.fragmentContainer, fragment)
                 addToBackStack(ADD_EXAM_FRAGMENT)
                 commit()
@@ -55,7 +66,7 @@ class AddExamFragment : Fragment() {
         }
 
 
-        binding.dateExam.setOnClickListener{
+        binding.dateExam.setOnClickListener {
 
             val c = Calendar.getInstance()
             val year = c.get(Calendar.YEAR)
@@ -68,8 +79,14 @@ class AddExamFragment : Fragment() {
                     it,
                     DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
+                        var month: String
+                        if ((monthOfYear + 1) >= 10) {
+                            month = (monthOfYear + 1).toString()
+                        } else {
+                            month = "0" + (monthOfYear + 1)
+                        }
                         // Display Selected date in textbox
-                        binding.dateExam.setText(""+year + "-" + (monthOfYear+1) + "-" + dayOfMonth)
+                        binding.dateExam.setText("" + year + "-" + month + "-" + dayOfMonth)
                     },
                     year,
                     month,
@@ -90,8 +107,8 @@ class AddExamFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.saveMenuItem-> {
+        when (item.itemId) {
+            R.id.saveMenuItem -> {
 
 
                 onSave()
@@ -100,12 +117,17 @@ class AddExamFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun onSave(){
+    private fun onSave() {
 
-        val classinf=binding.ClassAndSectionSpinner.selectedItem as ClassInfoModel
+        val classinf = binding.ClassAndSectionSpinner.selectedItem as ClassInfoModel
 
-        val  examPostModel=ExamPostModel(classinf.classId,binding.subjectName.text.toString(),
-            LocalDateTime.parse(binding.dateExam.text.toString()),binding.note.text.toString(),binding.type.toString())
+        val examPostModel = ExamPostModel(
+            classinf.classId,
+            binding.subjectName.text.toString(),
+            LocalDate.parse(binding.dateExam.text.toString(), dateTimePostFormatter),
+            binding.note.text.toString(),
+            binding.type.toString()
+        )
 
         viewModel.addExams(examPostModel)
 
@@ -113,12 +135,10 @@ class AddExamFragment : Fragment() {
     }
 
 
-
     private fun setupViewModel() {
 
         viewModel = ViewModelProviders.of(this)
             .get(AddExamViewModel::class.java)
-
 
 
     }

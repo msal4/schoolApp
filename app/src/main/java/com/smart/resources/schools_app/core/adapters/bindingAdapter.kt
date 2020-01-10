@@ -9,6 +9,7 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.orhanobut.logger.Logger
 import com.tiper.MaterialSpinner
+import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import java.lang.Exception
 
@@ -19,10 +20,21 @@ fun setEditTextError(editText: EditText, errorMsg:String?){
 
 
 
-@BindingAdapter("mine:setDate")
+@BindingAdapter("mine:setDateTime")
 fun setDate(textView: TextView, date: LocalDateTime){
     try {
         textView.text = date.format(dateDisFormatter)
+    }catch (e: Exception){
+        Logger.e("binding error: ${e.message}")
+    }
+
+}
+
+
+@BindingAdapter("mine:setDate")
+fun setDate(textView: TextView, date: LocalDate){
+    try {
+        textView.text = date.format(dateTimePostFormatter)
     }catch (e: Exception){
         Logger.e("binding error: ${e.message}")
     }

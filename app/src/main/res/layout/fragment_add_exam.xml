@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/exam_name"
-                tools:text="تيست" />
+                android:text="mmar" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -49,6 +49,7 @@
                 android:id="@+id/note"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="alwaeli"
                 android:hint="@string/notes" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -88,6 +89,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/type"
                 android:layout_width="match_parent"
+                android:text="ammar type"
                 android:layout_height="wrap_content"
                 android:hint="@string/exam_type" />
 
