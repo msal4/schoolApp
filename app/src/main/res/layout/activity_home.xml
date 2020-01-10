@@ -6,10 +6,10 @@
 
     <data>
         <import type="android.view.View"/>
-        <import type="com.smart.resources.schools_app.core.util.UserType"/>
+        <import type="com.smart.resources.schools_app.core.myTypes.UserType"/>
         <variable
             name="userType"
-            type="com.smart.resources.schools_app.core.util.UserType" />
+            type="com.smart.resources.schools_app.core.myTypes.UserType" />
     </data>
 
 
@@ -22,7 +22,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".features.containerActivities.HomeActivity">
+            tools:context=".sharedUi.HomeActivity">
 
             <ImageView
                 android:id="@+id/topPart"

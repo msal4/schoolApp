@@ -9,9 +9,12 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.loadImageUrl
-import com.smart.resources.schools_app.core.util.*
+import com.smart.resources.schools_app.core.helpers.IntentHelper
+import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
+import com.smart.resources.schools_app.core.adapters.loadImageUrl
+import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.databinding.ActivityProfileBinding
+import com.smart.resources.schools_app.features.login.CanLogout
 
 
 class ProfileActivity : AppCompatActivity(),
@@ -30,7 +33,10 @@ class ProfileActivity : AppCompatActivity(),
             }
 
             SharedPrefHelper.instance?.imgUri?.let {
-                loadImageUrl(profileImage, it)
+                loadImageUrl(
+                    profileImage,
+                    it
+                )
             }
             setSupportActionBar(binding.toolbar)
         }

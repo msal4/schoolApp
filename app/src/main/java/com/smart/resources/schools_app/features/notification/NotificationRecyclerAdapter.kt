@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.smart.resources.schools_app.databinding.ItemNotificationBinding
 import com.smart.resources.schools_app.databinding.ItemTabsBinding
-import com.smart.resources.schools_app.core.util.NotificationType
+import com.smart.resources.schools_app.core.myTypes.NotificationType
 
 class NotificationRecyclerAdapter
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

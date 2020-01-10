@@ -13,13 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".features.pdfViewer.PdfWebViewActivity"/>
+        <activity android:name=".features.library.PdfWebViewActivity"/>
         <activity
-            android:name=".features.containerActivities.SectionActivity"
+            android:name=".sharedUi.SectionActivity"
             android:label=""
             android:screenOrientation="portrait" />
         <activity
-            android:name=".features.containerActivities.HomeActivity"
+            android:name=".sharedUi.HomeActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".features.profile.ProfileActivity"

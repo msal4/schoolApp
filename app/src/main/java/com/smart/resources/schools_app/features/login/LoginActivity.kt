@@ -11,9 +11,9 @@ import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ActivityLoginBinding
-import com.smart.resources.schools_app.core.util.SharedPrefHelper
-import com.smart.resources.schools_app.core.util.showErrorSnackbar
-import com.smart.resources.schools_app.features.containerActivities.HomeActivity
+import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
+import com.smart.resources.schools_app.core.utils.showErrorSnackbar
+import com.smart.resources.schools_app.sharedUi.HomeActivity
 
 
 class LoginActivity : AppCompatActivity(){

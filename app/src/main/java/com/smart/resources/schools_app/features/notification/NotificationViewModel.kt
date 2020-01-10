@@ -4,7 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.smart.resources.schools_app.core.util.*
+import com.smart.resources.schools_app.core.helpers.BackendHelper
+import com.smart.resources.schools_app.core.myTypes.MyResult
+import com.smart.resources.schools_app.core.myTypes.NotificationType
+import com.smart.resources.schools_app.core.myTypes.toMyResult
 import kotlinx.coroutines.*
 
 typealias notificationsResult= MyResult<List<NotificationModel>>
@@ -21,11 +24,6 @@ class NotificationViewModel : ViewModel() {
     }
 
 
-    private val notificationsDao: NotificationsDao = BackendHelper
-        .retrofitWithAuth
-        .create(NotificationsDao::class.java)
-
-
     fun fetchNotifications(notificationType: NotificationType){
         viewModelScope.launch {
             val result = GlobalScope.async { getNotificationsDeferred(notificationType) }.toMyResult()
@@ -34,6 +32,9 @@ class NotificationViewModel : ViewModel() {
     }
 
     private suspend fun getNotificationsDeferred(notificationType: NotificationType) =
-        if (notificationType == NotificationType.STUDENT) notificationsDao.fetchNotifications()
-        else notificationsDao.fetchSectionNotifications()
+        with(BackendHelper.notificationDao){
+            if (notificationType == NotificationType.STUDENT) fetchNotifications()
+            else fetchSectionNotifications()
+        }
+
 }

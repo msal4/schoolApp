@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.containerActivities
+package com.smart.resources.schools_app.sharedUi
 
 import android.content.Context
 import android.content.Intent
@@ -9,8 +9,8 @@ import androidx.databinding.DataBindingUtil
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ActivitySectionBinding
 import com.smart.resources.schools_app.features.notification.NotificationFragment
-import com.smart.resources.schools_app.core.util.Section
-import com.smart.resources.schools_app.core.util.Section.EXAM
+import com.smart.resources.schools_app.core.myTypes.Section
+import com.smart.resources.schools_app.core.myTypes.Section.EXAM
 import com.smart.resources.schools_app.features.absence.AbsenceFragment
 import com.smart.resources.schools_app.features.advertising.AdvertisingFragment
 import com.smart.resources.schools_app.features.exam.ExamFragment

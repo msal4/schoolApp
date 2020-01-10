@@ -4,16 +4,12 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.setSpinnerList
+import com.smart.resources.schools_app.core.adapters.setSpinnerList
 import com.smart.resources.schools_app.databinding.FragmentAddHomeworkBinding
-import com.smart.resources.schools_app.features.containerActivities.SectionActivity
-import com.smart.resources.schools_app.core.util.toast
+import com.smart.resources.schools_app.sharedUi.SectionActivity
 import com.smart.resources.schools_app.features.profile.TeacherInfoModel
-import java.util.logging.Logger
 
 class AddHomeworkFragment : Fragment() {
     private lateinit var binding: FragmentAddHomeworkBinding
@@ -56,7 +52,10 @@ class AddHomeworkFragment : Fragment() {
             .instance
             ?.classesInfo
             ?.let {
-            setSpinnerList(binding.ClassAndSectionSpinner, it)
+                setSpinnerList(
+                    binding.ClassAndSectionSpinner,
+                    it
+                )
         }
 
         setHasOptionsMenu(true)

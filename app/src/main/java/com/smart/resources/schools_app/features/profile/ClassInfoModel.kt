@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.core
+package com.smart.resources.schools_app.features.profile
 
 data class ClassInfoModel(
     val classId: Int,

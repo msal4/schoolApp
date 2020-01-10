@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.core.util
+package com.smart.resources.schools_app.core.myTypes
 
 import androidx.lifecycle.MutableLiveData
 

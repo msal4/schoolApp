@@ -6,11 +6,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.util.*
+import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
+import com.smart.resources.schools_app.core.myTypes.*
+import com.smart.resources.schools_app.core.utils.*
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.net.HttpURLConnection
 
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
@@ -19,7 +20,8 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     var onLoginError: ((errorMsg:String)->Unit)?= null
 
 
-    val loginException = LoginException()
+    val loginException =
+        LoginException()
     val isTeacherLogging = MutableLiveData<Boolean>()
     val isStudentLogging = MutableLiveData<Boolean>()
 

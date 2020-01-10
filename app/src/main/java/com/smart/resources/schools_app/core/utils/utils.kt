@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.core.util
+package com.smart.resources.schools_app.core.utils
 
 import android.content.res.Resources
 import android.util.Base64
@@ -14,16 +14,16 @@ fun pxToDp(px: Int): Int {
 fun dpToPx(dp: Int): Int {
     return (dp * Resources.getSystem().displayMetrics.density).toInt()
 }
-fun decodeToken(jwtToken: String): String {
-    val splitString = jwtToken.split('.')
-    val base64EncodedHeader = splitString[0]
+
+fun String.decodeToken(): String {
+    val splitString = this.split('.')
+//    val base64EncodedHeader = splitString[0]
     val base64EncodedBody = splitString[1]
-    val base64EncodedSignature = splitString[2]
-    val body = base64Decode(base64EncodedBody)
-    return body
+//    val base64EncodedSignature = splitString[2]
+    return base64EncodedBody.base64Decode()
 }
- private fun base64Decode(encoded: String): String {
-    val bytes: ByteArray = Base64.decode(encoded, Base64.URL_SAFE)
+ private fun String.base64Decode(): String {
+    val bytes: ByteArray = Base64.decode(this, Base64.URL_SAFE)
     return String(bytes, StandardCharsets.UTF_8)
 }
 

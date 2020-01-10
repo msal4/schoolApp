@@ -1,8 +1,8 @@
 package com.smart.resources.schools_app.features.profile
 
-import com.smart.resources.schools_app.core.util.BackendHelper
-import com.smart.resources.schools_app.core.util.SharedPrefHelper
-import com.smart.resources.schools_app.core.util.decodeToken
+import com.smart.resources.schools_app.core.helpers.BackendHelper
+import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
+import com.smart.resources.schools_app.core.utils.decodeToken
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.Period
 
@@ -23,7 +23,7 @@ abstract class PersonModel( val name: String, val email: String, val phone: Stri
          fun <T:PersonModel>fromToken(classType:Class<T>): T? {
             return try {
                 val token = SharedPrefHelper.instance?.accessToken
-                val body = decodeToken(token!!)
+                val body = token?.decodeToken()
                 val gson = BackendHelper.gson
                 gson.fromJson(body, classType)
             } catch (e: Exception) {

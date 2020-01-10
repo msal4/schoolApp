@@ -1,7 +1,8 @@
-package com.smart.resources.schools_app.core.util
+package com.smart.resources.schools_app.core.helpers
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.smart.resources.schools_app.core.myTypes.UserType
 
 class SharedPrefHelper private constructor(context: Context) {
     private val mSharedPreferences: SharedPreferences
@@ -41,7 +42,10 @@ class SharedPrefHelper private constructor(context: Context) {
         private const val USER_TYPE = "userType"
 
         fun init(context: Context) {
-            instance = SharedPrefHelper(context)
+            instance =
+                SharedPrefHelper(
+                    context
+                )
         }
 
     }

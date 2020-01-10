@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ItemAddAbsenceBinding
-import com.smart.resources.schools_app.features.containerActivities.SectionActivity
-import com.smart.resources.schools_app.core.util.toast
+import com.smart.resources.schools_app.sharedUi.SectionActivity
+import com.smart.resources.schools_app.core.utils.toast
 
 class AddAbsenceFragment : Fragment() {
     private lateinit var binding: ItemAddAbsenceBinding

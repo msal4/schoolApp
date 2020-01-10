@@ -1,8 +1,7 @@
 package com.smart.resources.schools_app.features.profile
 
 import com.google.gson.annotations.SerializedName
-import com.smart.resources.schools_app.core.ClassInfoModel
-import com.smart.resources.schools_app.core.util.concatStrings
+import com.smart.resources.schools_app.core.utils.concatStrings
 import org.threeten.bp.LocalDateTime
 
 class TeacherInfoModel(

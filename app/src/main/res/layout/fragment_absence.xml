@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layoutDirection="rtl"
-        tools:context=".features.containerActivities.SectionActivity">
+        tools:context=".sharedUi.SectionActivity">
 
         <com.tiper.MaterialSpinner
             android:id="@+id/classAndSectionSpinner1"

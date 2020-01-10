@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.core.util
+package com.smart.resources.schools_app.core.myTypes
 
 enum class Section{
     HOMEWORK,
@@ -10,7 +10,6 @@ enum class Section{
     EXAM,
     NOTIFICATION
 }
-
 
 enum class WeekDays(val dayName:String) {
 

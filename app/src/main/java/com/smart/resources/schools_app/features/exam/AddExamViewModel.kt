@@ -2,9 +2,9 @@ package com.smart.resources.schools_app.features.exam
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.smart.resources.schools_app.core.util.BackendHelper
-import com.smart.resources.schools_app.core.util.MyResult
-import com.smart.resources.schools_app.core.util.toMyResult
+import com.smart.resources.schools_app.core.helpers.BackendHelper
+import com.smart.resources.schools_app.core.myTypes.MyResult
+import com.smart.resources.schools_app.core.myTypes.toMyResult
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.containerActivities
+package com.smart.resources.schools_app.sharedUi
 
 import android.app.Activity
 import android.content.Context
@@ -8,12 +8,12 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.loadImageUrl
+import com.smart.resources.schools_app.core.adapters.loadImageUrl
 import com.smart.resources.schools_app.databinding.ActivityHomeBinding
 import com.smart.resources.schools_app.features.profile.ProfileActivity
-import com.smart.resources.schools_app.core.util.Section
-import com.smart.resources.schools_app.core.util.SharedPrefHelper
-import com.smart.resources.schools_app.core.util.toast
+import com.smart.resources.schools_app.core.myTypes.Section
+import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
+import com.smart.resources.schools_app.core.utils.toast
 import java.net.URI
 
 
@@ -65,14 +65,38 @@ class HomeActivity : AppCompatActivity() {
 
     fun navigate(view: View) {
         when(view.id){
-            R.id.homework-> SectionActivity.newInstance(this, Section.HOMEWORK)
-            R.id.exam-> SectionActivity.newInstance(this, Section.EXAM)
-            R.id.library-> SectionActivity.newInstance(this, Section.LIBRARY)
-            R.id.notifications-> SectionActivity.newInstance(this, Section.NOTIFICATION)
-            R.id.schedule-> SectionActivity.newInstance(this, Section.SCHEDULE)
-            R.id.absence-> SectionActivity.newInstance(this, Section.ABSENCE)
-            R.id.ratings-> SectionActivity.newInstance(this, Section.RATING)
-            R.id.advertisements-> SectionActivity.newInstance(this, Section.ADVERTISING)
+            R.id.homework-> SectionActivity.newInstance(
+                this,
+                Section.HOMEWORK
+            )
+            R.id.exam-> SectionActivity.newInstance(
+                this,
+                Section.EXAM
+            )
+            R.id.library-> SectionActivity.newInstance(
+                this,
+                Section.LIBRARY
+            )
+            R.id.notifications-> SectionActivity.newInstance(
+                this,
+                Section.NOTIFICATION
+            )
+            R.id.schedule-> SectionActivity.newInstance(
+                this,
+                Section.SCHEDULE
+            )
+            R.id.absence-> SectionActivity.newInstance(
+                this,
+                Section.ABSENCE
+            )
+            R.id.ratings-> SectionActivity.newInstance(
+                this,
+                Section.RATING
+            )
+            R.id.advertisements-> SectionActivity.newInstance(
+                this,
+                Section.ADVERTISING
+            )
 
 
         }

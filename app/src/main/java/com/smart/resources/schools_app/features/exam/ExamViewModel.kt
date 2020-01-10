@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.smart.resources.schools_app.core.util.*
+import com.smart.resources.schools_app.core.helpers.BackendHelper
+import com.smart.resources.schools_app.core.myTypes.MyResult
+import com.smart.resources.schools_app.core.myTypes.toMyResult
 import kotlinx.coroutines.*
 
 typealias notificationsResult= MyResult<List<ExamModel>>
@@ -23,16 +25,9 @@ class ExamViewModel : ViewModel() {
         return exams
     }
 
-
-
-    private val examsDao: ExamDao = BackendHelper
-        .retrofitWithAuth
-        .create(ExamDao::class.java)
-
-
     private fun fetchExams(){
         viewModelScope.launch {
-            val result = GlobalScope.async { examsDao.fetchExams() }.toMyResult()
+            val result = GlobalScope.async { BackendHelper.examDao.fetchExams() }.toMyResult()
             exams.value = result
         }
     }

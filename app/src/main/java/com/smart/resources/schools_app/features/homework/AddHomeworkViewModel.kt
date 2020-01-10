@@ -2,16 +2,11 @@ package com.smart.resources.schools_app.features.homework
 
 import androidx.lifecycle.ViewModel
 import com.orhanobut.logger.Logger
-import com.smart.resources.schools_app.core.util.*
+import com.smart.resources.schools_app.core.helpers.BackendHelper
 
 
 class AddHomeworkViewModel : ViewModel() {
    val postHomeworkModel= PostHomeworkModel()
-
-
-    private val homeworkDao: HomeworkDao = BackendHelper
-        .retrofitWithAuth
-        .create(HomeworkDao::class.java)
 
     fun addHomework(){
 

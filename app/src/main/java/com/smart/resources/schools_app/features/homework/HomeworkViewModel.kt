@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.smart.resources.schools_app.core.util.*
+import com.smart.resources.schools_app.core.helpers.BackendHelper
+import com.smart.resources.schools_app.core.myTypes.MyResult
+import com.smart.resources.schools_app.core.myTypes.toMyResult
 import kotlinx.coroutines.*
 
 typealias HomeworkResult= MyResult<List<HomeworkModel>>
@@ -21,13 +23,9 @@ class HomeworkViewModel : ViewModel() {
     }
 
 
-    private val homeworkDao: HomeworkDao = BackendHelper
-        .retrofitWithAuth
-        .create(HomeworkDao::class.java)
-
     private fun fetchHomework(){
         viewModelScope.launch {
-            val result = GlobalScope.async { homeworkDao.fetchHomework() }.toMyResult()
+            val result = GlobalScope.async { BackendHelper.homeworkDao.fetchHomework() }.toMyResult()
             homework.value = result
         }
     }

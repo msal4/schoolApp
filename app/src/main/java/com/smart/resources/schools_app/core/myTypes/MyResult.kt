@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.core.util
+package com.smart.resources.schools_app.core.myTypes
 
 import com.orhanobut.logger.Logger
 import kotlinx.coroutines.Deferred
@@ -23,5 +23,8 @@ fun <T> Response<T>.toMyResult(): MyResult<T> =
         Success(this.body())
     } else {
         Logger.e("error code: ${this.code()} - msg: ${this.errorBody()}")
-        ResponseError(this.code(), this.errorBody()?.toString().orEmpty())
+        ResponseError(
+            this.code(),
+            this.errorBody()?.toString().orEmpty()
+        )
     }

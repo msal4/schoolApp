@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.core
+package com.smart.resources.schools_app.core.adapters
 
 import android.R
 import android.widget.ArrayAdapter
@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.orhanobut.logger.Logger
-import com.smart.resources.schools_app.core.util.dateDisFormatter
 import com.tiper.MaterialSpinner
 import org.threeten.bp.LocalDateTime
 import java.lang.Exception

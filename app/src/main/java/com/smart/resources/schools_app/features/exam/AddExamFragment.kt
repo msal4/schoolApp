@@ -8,17 +8,14 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
-import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.ClassInfoModel
-import com.smart.resources.schools_app.core.setSpinnerList
-import com.smart.resources.schools_app.core.util.*
+import com.smart.resources.schools_app.features.profile.ClassInfoModel
+import com.smart.resources.schools_app.core.adapters.setSpinnerList
 import com.smart.resources.schools_app.databinding.FragmentAddExamBinding
-import com.smart.resources.schools_app.features.containerActivities.SectionActivity
+import com.smart.resources.schools_app.sharedUi.SectionActivity
 import com.smart.resources.schools_app.features.profile.TeacherInfoModel
 import org.threeten.bp.LocalDateTime
 import java.util.*
-import javax.xml.datatype.DatatypeConstants.MONTHS
 
 class AddExamFragment : Fragment() {
     private lateinit var binding: FragmentAddExamBinding
@@ -51,7 +48,8 @@ class AddExamFragment : Fragment() {
 
 
         TeacherInfoModel.instance?.classesInfo?.let {
-            setSpinnerList(binding.ClassAndSectionSpinner,
+            setSpinnerList(
+                binding.ClassAndSectionSpinner,
                 it
             )
         }

@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.smart.resources.schools_app.core.util.*
+import com.smart.resources.schools_app.core.helpers.BackendHelper
+import com.smart.resources.schools_app.core.myTypes.MyResult
+import com.smart.resources.schools_app.core.myTypes.toMyResult
 import kotlinx.coroutines.*
 
 typealias RatingResult= MyResult<List<RatingModel>>
@@ -20,15 +22,10 @@ class RatingViewModel : ViewModel() {
         return homework
     }
 
-
-    private val ratingDao: RatingDao = BackendHelper
-        .retrofitWithAuth
-        .create(RatingDao::class.java)
-
-
     private fun fetchRatings(){
         viewModelScope.launch {
-            val result = GlobalScope.async { ratingDao.fetchRating() }.toMyResult()
+            val result = GlobalScope.async { BackendHelper
+                .ratingDao.fetchRating() }.toMyResult()
             homework.value = result
         }
     }

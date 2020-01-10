@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.pdfViewer
+package com.smart.resources.schools_app.features.library
 
 import android.annotation.SuppressLint
 import android.content.Context
