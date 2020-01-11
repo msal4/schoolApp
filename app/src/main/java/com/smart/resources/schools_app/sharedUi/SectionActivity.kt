@@ -63,4 +63,5 @@ class SectionActivity : AppCompatActivity() {
         }
     }
 
+    fun getToolbarProgressBar()= binding.toolbarProgressBar
 }

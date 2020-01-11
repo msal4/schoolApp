@@ -1,9 +1,15 @@
 package com.smart.resources.schools_app.core.utils
 
+import android.content.Context
 import android.content.res.Resources
+import android.net.Uri
 import android.util.Base64
+import com.orhanobut.logger.Logger
+import id.zelory.compressor.Compressor
 import okhttp3.MediaType
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import java.io.File
 import java.nio.charset.StandardCharsets
 
 
@@ -49,3 +55,8 @@ fun List<Any>.concatStrings(): String{
 }
 
 fun String.asRequestBody() :RequestBody= RequestBody.create(MediaType.parse("text/plain"),this.trim())
+
+fun File.asBodyPart(fieldName:String) :MultipartBody.Part?{
+    val requestBody = RequestBody.create(MediaType.parse("Image/*"), this)
+    return MultipartBody.Part.createFormData(fieldName, name, requestBody)
+}

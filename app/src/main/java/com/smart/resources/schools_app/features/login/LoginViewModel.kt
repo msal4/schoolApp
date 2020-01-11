@@ -20,8 +20,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     var onLoginError: ((errorMsg:String)->Unit)?= null
 
 
-    val loginException =
-        LoginException()
+    val loginException = LoginException()
     val isTeacherLogging = MutableLiveData<Boolean>()
     val isStudentLogging = MutableLiveData<Boolean>()
 

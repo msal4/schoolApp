@@ -22,4 +22,5 @@
     <dimen name="profileAttributeTitleSize">22sp</dimen>
     <dimen name="profileAttributeSize">16sp</dimen>
     <dimen name="advertising_collapsed_height">120dp</dimen>
+    <dimen name="error_text_margin">42dp</dimen>
 </resources>

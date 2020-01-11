@@ -61,7 +61,7 @@ class ProfileActivity : AppCompatActivity(),
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(IntentHelper.GET_IMAGE_REQUEST==requestCode && resultCode== Activity.RESULT_OK){
+        if(IntentHelper.GET_IMAGE_REQUEST==requestCode && resultCode== Activity.RESULT_OK && data != null){
             IntentHelper.getImage(data).toString().let {
                 SharedPrefHelper.instance?.imgUri= it
                 loadImageUrl(
@@ -90,7 +90,7 @@ class ProfileActivity : AppCompatActivity(),
     }
 
     fun selectImage(view: View) {
-            IntentHelper.selectImage(this, true)
+            IntentHelper.selectImage(this)
     }
 }
 

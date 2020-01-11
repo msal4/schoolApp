@@ -65,7 +65,7 @@ public class AdvertisingRecyclerAdapter extends RecyclerView.Adapter<Advertising
                         binding.contentText.setMaxLines(2);
                    // }
                 }else if(newState== State.Expanded|| newState == State.Expanding){
-                    binding.contentText.setMaxLines(25);
+                    binding.contentText.setMaxLines(100);
                    /* String text=binding.contentText.getText().toString();
                     binding.contentText.setText(text.replace('\u2026',' ').trim());*/
                 }

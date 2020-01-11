@@ -9,14 +9,14 @@ interface HomeworkDao {
     @GET("classHomework")
     suspend fun fetchHomework(): Response<List<HomeworkModel>>
 
-    @FormUrlEncoded
+    @Multipart
     @POST("addHomework")
     suspend fun addHomework(
         @Part("subjectName") subjectName: RequestBody,
         @Part("assignmentName") assignmentName: RequestBody,
         @Part("date") date: RequestBody,
         @Part("note") note: RequestBody,
-        @Part attachment: MultipartBody.Part,
+        @Part attachment: MultipartBody.Part?,
         @Part("classId") classId: RequestBody
     ): Response<Unit>
 }

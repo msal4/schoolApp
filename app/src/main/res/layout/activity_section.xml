@@ -35,6 +35,16 @@
                 tools:text="العنوان"
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
+
+            <ProgressBar
+                android:visibility="gone"
+                android:id="@+id/toolbarProgressBar"
+                android:padding="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end" />
+
+
         </androidx.appcompat.widget.Toolbar>
 
 

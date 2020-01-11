@@ -9,8 +9,9 @@ data class LoginException(
 )
 
 
-data class AddHomeworkException(
+data class PostException(
     val subjectNameMsg: MutableLiveData<String> = MutableLiveData(),
-    val AssignmentNameMsg: MutableLiveData<String> = MutableLiveData(),
-    val msg: MutableLiveData<String> = MutableLiveData()
+    val assignmentNameMsg: MutableLiveData<String> = MutableLiveData(),
+    val dateMsg:  MutableLiveData<String> = MutableLiveData(),
+    val sectionMsg:  MutableLiveData<String> = MutableLiveData()
 )

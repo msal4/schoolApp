@@ -1,15 +1,18 @@
 package com.smart.resources.schools_app.core.adapters
 
-import android.R
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.*
 import androidx.databinding.BindingAdapter
+import androidx.databinding.InverseBindingAdapter
+import androidx.databinding.InverseBindingListener
 import com.bumptech.glide.Glide
+import com.google.android.material.textfield.TextInputLayout
 import com.orhanobut.logger.Logger
 import com.tiper.MaterialSpinner
+import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
+import org.threeten.bp.LocalTime
 import java.lang.Exception
 
 @BindingAdapter("mine:errorMsg")
@@ -17,17 +20,51 @@ fun setEditTextError(editText: EditText, errorMsg:String?){
     editText.error= errorMsg
 }
 
+@BindingAdapter("mine:errorMsg")
+fun setInputLayoutError(inputLayout: TextInputLayout, errorMsg:String?){
+    inputLayout.error= errorMsg
+}
 
+@BindingAdapter("mine:errorMsg")
+fun setSpinnerError(spinner: MaterialSpinner, errorMsg:String?){
+    spinner.error= errorMsg
+}
 
 @BindingAdapter("mine:setDate")
-fun setDate(textView: TextView, date: LocalDateTime){
+fun setTextFromDate(textView: TextView, date: LocalDateTime?){
     try {
-        textView.text = date.format(dateDisFormatter)
+        textView.text = date?.format(dateDisFormatter)
     }catch (e: Exception){
         Logger.e("binding error: ${e.message}")
     }
 
 }
+@InverseBindingAdapter(attribute = "mine:setDate")
+fun setDateFomText(textView: TextView): LocalDateTime{
+    return LocalDateTime.of(LocalDate.parse(textView.text, dateDisFormatter), LocalTime.of(0, 0))
+}
+
+
+
+@BindingAdapter("mine:setDateAttrChanged")
+fun setListeners(
+    view: TextView,
+    attrChange: InverseBindingListener
+) {
+    view.addTextChangedListener(object :TextWatcher{
+        override fun afterTextChanged(s: Editable?) {
+            attrChange.onChange()
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        }
+
+    })
+}
+
 
 @BindingAdapter("android:srcUrl")
 fun loadImageUrl(iv: ImageView, url: String?) {
@@ -50,8 +87,9 @@ fun <T>setSpinnerList(spinner: MaterialSpinner, list:List<T>) {
 
     val adapter = ArrayAdapter<T>(
         spinner.context,
-        R.layout.simple_spinner_item, list
+        android.R.layout.simple_spinner_item, list
     )
 
     spinner.adapter= adapter
 }
+

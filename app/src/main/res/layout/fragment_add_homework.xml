@@ -1,18 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:mine="http://schemas.android.com/apk/res/android">
 
     <data>
         <variable
-            name="postModel"
-            type="com.smart.resources.schools_app.features.homework.PostHomeworkModel" />
+        name="postModel"
+        type="com.smart.resources.schools_app.features.homework.PostHomeworkModel" />
+
+        <variable
+            name="e"
+            type="com.smart.resources.schools_app.core.myTypes.PostException" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="24dp">
+        android:fillViewport="true">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp"
+        android:layoutDirection="rtl">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/examNameField"
@@ -32,8 +45,9 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/subject_name"
                 android:text="@={postModel.subjectName}"
-                android:textAlignment="viewStart"
-                tools:text="تيست" />
+                style="@style/MyEditText"
+                tools:text="تيست"
+                mine:errorMsg="@{e.subjectNameMsg}"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -43,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/dateField"
+            app:layout_constraintBottom_toTopOf="@+id/dateInputLayout"
             app:layout_constraintEnd_toEndOf="@+id/examNameField"
             app:layout_constraintStart_toStartOf="@+id/examNameField"
             app:layout_constraintTop_toBottomOf="@+id/examNameField">
@@ -52,13 +66,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@={postModel.note}"
-                android:textAlignment="viewStart"
-                android:hint="@string/notes" />
+                style="@style/MyEditText"
+                android:inputType="textMultiLine"
+                android:hint="@string/notes_optional" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/dateField"
+            android:id="@+id/dateInputLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,12 +81,18 @@
             app:layout_constraintBottom_toTopOf="@+id/examTypeField"
             app:layout_constraintEnd_toEndOf="@+id/notesField"
             app:layout_constraintStart_toStartOf="@+id/notesField"
+            android:focusable="false"
+            mine:errorMsg="@{e.dateMsg}"
             app:layout_constraintTop_toBottomOf="@+id/notesField">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/dateField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="viewStart"
+                android:inputType="date"
+                style="@style/MyEditText"
+                mine:setDate="@={postModel.date}"
+                android:focusable="false"
                 android:hint="@string/date" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -84,16 +105,17 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toTopOf="@+id/ClassAndSectionSpinner"
-            app:layout_constraintEnd_toEndOf="@+id/dateField"
-            app:layout_constraintStart_toStartOf="@+id/dateField"
-            app:layout_constraintTop_toBottomOf="@+id/dateField">
+            app:layout_constraintEnd_toEndOf="@+id/dateInputLayout"
+            app:layout_constraintStart_toStartOf="@+id/dateInputLayout"
+            app:layout_constraintTop_toBottomOf="@+id/dateInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@={postModel.assignmentName}"
-                android:textAlignment="viewStart"
-                android:hint="@string/homework_name" />
+                style="@style/MyEditText"
+                android:hint="@string/homework_name"
+                mine:errorMsg="@{e.assignmentNameMsg}"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -103,14 +125,55 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="right"
             android:hint="@string/classAndDivision"
             android:minHeight="60dp"
-            android:textAlignment="viewStart"
-            android:gravity="start"
-            app:layout_constraintBottom_toBottomOf="parent"
+            mine:errorMsg="@{e.sectionMsg}"
+            app:layout_constraintBottom_toTopOf="@id/homeworkImageCard"
             app:layout_constraintEnd_toEndOf="@+id/examTypeField"
             app:layout_constraintStart_toStartOf="@+id/examTypeField"
             app:layout_constraintTop_toBottomOf="@+id/examTypeField" />
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/homeworkImageCard"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            android:contentDescription="@string/homework_image_content_desc"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ClassAndSectionSpinner">
+
+            <ImageView
+                android:id="@+id/homeworkImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                tools:src="@tools:sample/backgrounds/scenic" />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <ImageView
+            android:id="@+id/addImageIcon"
+            android:layout_width="wrap_content"
+            android:layout_margin="4dp"
+            android:tintMode="src_in"
+            android:layout_height="wrap_content"
+            android:elevation="88dp"
+            android:outlineProvider="none"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_add_image"
+            app:layout_constraintStart_toStartOf="@+id/homeworkImageCard"
+            app:layout_constraintTop_toTopOf="@+id/homeworkImageCard"
+            android:contentDescription="@string/add_image_con_desc" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 </layout>
