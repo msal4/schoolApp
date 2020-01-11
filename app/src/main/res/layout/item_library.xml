@@ -69,7 +69,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/examName"
             app:layout_constraintTop_toBottomOf="@+id/examName"
-            mine:setDate="@{itemModel.addDate}"
+            mine:setDateTime="@{itemModel.addDate}"
             tools:text="8/10/2019" />
 
 

@@ -30,7 +30,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
-            mine:setDate="@{itemModel.date}"
+            mine:setDateTime="@{itemModel.date}"
             tools:text="8/10/2019" />
 
         <TextView
