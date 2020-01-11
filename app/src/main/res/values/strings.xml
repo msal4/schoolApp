@@ -55,5 +55,7 @@
     <string name="no_rating">لا توجد تقييمات</string>
     <string name="responsibility">المسؤولية</string>
     <string name="subjects">المواد</string>
+    <string name="rate_student">تقييم الطالب</string>
+    <string name="rate">تقييم</string>
 
 </resources>

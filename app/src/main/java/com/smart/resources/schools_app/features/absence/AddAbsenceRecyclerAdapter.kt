@@ -9,9 +9,9 @@ class AddAbsenceRecyclerAdapter(private val it: List<StudentAbsenceModel>) : Rec
 
     inner class MyViewHolder(private val binding: ItemAddAbsenceBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(studentAbsenceModel: StudentAbsenceModel){
+        /*fun bind(studentAbsenceModel: StudentAbsenceModel){
             binding.itemModel=studentAbsenceModel
-        }
+        }*/
 
 
     }
@@ -26,10 +26,10 @@ class AddAbsenceRecyclerAdapter(private val it: List<StudentAbsenceModel>) : Rec
         return MyViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = it.size
+    override fun getItemCount(): Int = 25
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bind(it[position])
+        ///holder.bind(it[position])
     }
 
 }

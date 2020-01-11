@@ -23,6 +23,7 @@ import com.smart.resources.schools_app.databinding.FragmentAddExamBinding
 import com.smart.resources.schools_app.databinding.FragmentAddMarkBinding
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 import com.smart.resources.schools_app.features.profile.TeacherInfoModel
+import com.smart.resources.schools_app.features.rating.AddRatingAdapter
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import java.util.*
@@ -30,6 +31,7 @@ import java.util.*
 class AddMarkFragment : Fragment() {
     private lateinit var binding: FragmentAddMarkBinding
     private lateinit var viewModel: ExamViewModel
+    private lateinit var adapter: AddMarkRecyclerAdapter
 
     companion object {
         private const val ADD_EXAM_FRAGMENT = "addExamFragment"
@@ -58,6 +60,8 @@ class AddMarkFragment : Fragment() {
         binding = FragmentAddMarkBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
 
+        adapter= AddMarkRecyclerAdapter(listOf())
+        binding.recyclerView.adapter=adapter
 
         setupViewModel()
         (activity as SectionActivity).setCustomTitle(R.string.add_exam)

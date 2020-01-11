@@ -7,10 +7,34 @@
 
     </data>
 
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/addRatingLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    tools:context=".sharedUi.SectionActivity">
+
+
+        <com.tiper.MaterialSpinner
+            android:id="@+id/classAndSectionSpinnerAmmar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+        </com.tiper.MaterialSpinner>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:padding="@dimen/item_margin"
@@ -18,9 +42,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/classAndSectionSpinnerAmmar"
         app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/item_add_rating"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
+</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

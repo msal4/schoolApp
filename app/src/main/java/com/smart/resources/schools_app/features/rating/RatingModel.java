@@ -10,6 +10,7 @@ public class RatingModel {
     private String note;
     private LocalDateTime date;
 
+
     public int getIdBehavior(){
         return idBehavior;
     }

@@ -28,6 +28,7 @@
             android:id="@+id/studentName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
             android:fontFamily="@font/monadi"
             android:includeFontPadding="true"
             android:text="@{itemModel.subjectName}"
@@ -37,19 +38,18 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.507"
             tools:text="اسم الطالب" />
-
 
         <TextView
             android:id="@+id/date"
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="316dp"
             mine:setDateTime="@{org.threeten.bp.LocalDateTime.now()}"
             android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.917"
             app:layout_constraintStart_toStartOf="@+id/studentName"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="8/10/2019" />

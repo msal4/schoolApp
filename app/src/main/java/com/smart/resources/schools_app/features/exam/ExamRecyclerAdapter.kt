@@ -9,10 +9,10 @@ class ExamRecyclerAdapter(private val exams: List<ExamModel>) : RecyclerView.Ada
 
     inner class MyViewHolder(private val binding: ItemExamBinding) : RecyclerView.ViewHolder(binding.root) {
 
-
+/*
         fun bind(examModel: ExamModel){
             binding.itemModel=examModel
-        }
+        }*/
     }
 
     override fun onCreateViewHolder(
@@ -25,11 +25,11 @@ class ExamRecyclerAdapter(private val exams: List<ExamModel>) : RecyclerView.Ada
         return MyViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = exams.size
+    override fun getItemCount(): Int = 25
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-        holder.bind(exams[position])
+     //   holder.bind(exams[position])
     }
 
 }

@@ -13,9 +13,11 @@ import com.smart.resources.schools_app.core.myTypes.Section
 import com.smart.resources.schools_app.core.myTypes.Section.EXAM
 import com.smart.resources.schools_app.features.absence.AbsenceFragment
 import com.smart.resources.schools_app.features.advertising.AdvertisingFragment
+import com.smart.resources.schools_app.features.exam.AddMarkFragment
 import com.smart.resources.schools_app.features.exam.ExamFragment
 import com.smart.resources.schools_app.features.homework.HomeworkFragment
 import com.smart.resources.schools_app.features.library.LibraryFragment
+import com.smart.resources.schools_app.features.rating.AddRatingFragment
 import com.smart.resources.schools_app.features.rating.RatingFragment
 import com.smart.resources.schools_app.features.schedule.ScheduleFragment
 
@@ -52,14 +54,14 @@ class SectionActivity : AppCompatActivity() {
 
     private fun createFragment() {
         when(intent.getSerializableExtra(EXTRA_SECTION) as Section){
-            EXAM -> ExamFragment.newInstance(supportFragmentManager)
+            EXAM -> AddMarkFragment.newInstance(supportFragmentManager)
             Section.HOMEWORK -> HomeworkFragment.newInstance(supportFragmentManager)
             Section.NOTIFICATION -> NotificationFragment.newInstance(supportFragmentManager)
             Section.LIBRARY -> LibraryFragment.newInstance(supportFragmentManager)
             Section.SCHEDULE -> ScheduleFragment.newInstance(supportFragmentManager)
             Section.ADVERTISING -> AdvertisingFragment.newInstance(supportFragmentManager)
             Section.ABSENCE -> AbsenceFragment.newInstance(supportFragmentManager)
-            Section.RATING -> RatingFragment.newInstance(supportFragmentManager)
+            Section.RATING -> AddRatingFragment.newInstance(supportFragmentManager)
         }
     }
 

@@ -15,6 +15,8 @@ public class IntentHelper {
         startGallery(currentActivity, false, neededForLaterUsage);
     }
 
+
+
     public static void selectMultipleImages(Activity currentActivity, boolean neededForLaterUsage){
         startGallery(currentActivity, true, neededForLaterUsage);
     }

@@ -11,9 +11,9 @@ class AddMarkRecyclerAdapter(private val exams: List<ExamModel>) : RecyclerView.
     inner class MyViewHolder(private val binding: ItemAddMarkBinding) : RecyclerView.ViewHolder(binding.root) {
 
 
-        fun bind(examModel: ExamModel){
+        /*fun bind(examModel: ExamModel){
             binding.itemModel=examModel
-        }
+        }*/
     }
 
     override fun onCreateViewHolder(
@@ -26,11 +26,11 @@ class AddMarkRecyclerAdapter(private val exams: List<ExamModel>) : RecyclerView.
         return MyViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = exams.size
+    override fun getItemCount(): Int = 25
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-        holder.bind(exams[position])
+        //holder.bind(exams[position])
     }
 
 }

@@ -5,9 +5,10 @@
 
     <data>
 
-        <variable
-            name="itemModel"
-            type="com.smart.resources.schools_app.features.exam.ExamModel" />
+
+
+
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,8 +32,7 @@
             android:textAlignment="viewStart"
             android:textColor="@android:color/black"
             android:textStyle="bold"
-
-            android:text="@{itemModel.subjectName}"
+            android:text="اسم المادة"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/mark"
             app:layout_constraintHorizontal_bias="0.016"
@@ -47,7 +47,8 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:padding="20dp"
-            android:enabled="@{itemModel.mark ==null ? true:false}"
+            android:enabled="true"
+            android:text="1"
             app:layout_constraintBottom_toBottomOf="@+id/subjectNameM"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
