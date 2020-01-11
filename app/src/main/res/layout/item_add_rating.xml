@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_item"
+        android:layoutDirection="rtl"
+        android:minHeight="@dimen/item_min_height"
+        android:orientation="vertical"
+        android:elevation="@dimen/item_elevation"
+        android:layout_marginBottom="@dimen/item_margin"
+        android:padding="@dimen/item_padding">
+
+
+        <TextView
+            android:id="@+id/studentNameR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/monadi"
+            android:includeFontPadding="true"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/rate"
+            app:layout_constraintHorizontal_bias="0.016"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.539"
+            tools:text="اسم الطالب" />
+
+        <RatingBar
+            android:id="@+id/rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.RatingBar.Indicator"
+            app:layout_constraintBottom_toBottomOf="@+id/studentNameR"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/studentNameR"
+            app:layout_constraintVertical_bias="0.472"
+             />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
