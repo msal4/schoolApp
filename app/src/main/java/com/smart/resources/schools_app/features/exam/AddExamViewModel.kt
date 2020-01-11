@@ -2,15 +2,10 @@ package com.smart.resources.schools_app.features.exam
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.helpers.BackendHelper
 import com.smart.resources.schools_app.core.myTypes.*
-import com.smart.resources.schools_app.features.homework.HomeworkRepository
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 
@@ -42,6 +37,9 @@ class AddExamViewModel(application: Application) : AndroidViewModel(application)
     private fun validateData()=
         with(postExamModel){
             if(date != null) postException.dateMsg.postValue(null)
+            if(type.isNotBlank()) postException.typeMsg.postValue(null)
+            if(classId.isNotBlank()) postException.sectionMsg.postValue(null)
+
             if(classId.isNotBlank()) postException.sectionMsg.postValue(null)
 
             when {
@@ -54,7 +52,7 @@ class AddExamViewModel(application: Application) : AndroidViewModel(application)
                     false
                 }
                 type.isBlank() -> {
-                    postException.assignmentNameMsg.postValue(c.getString(R.string.field_required))
+                    postException.typeMsg.postValue(c.getString(R.string.field_required))
                     false
                 }
 

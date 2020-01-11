@@ -104,7 +104,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/ClassAndSectionSpinner"
+            app:layout_constraintBottom_toTopOf="@+id/classAndSectionSpinner"
             app:layout_constraintEnd_toEndOf="@+id/dateInputLayout"
             app:layout_constraintStart_toStartOf="@+id/dateInputLayout"
             app:layout_constraintTop_toBottomOf="@+id/dateInputLayout">
@@ -115,13 +115,13 @@
                 android:text="@={postModel.assignmentName}"
                 style="@style/MyEditText"
                 android:hint="@string/homework_name"
-                mine:errorMsg="@{e.assignmentNameMsg}"/>
+                mine:errorMsg="@{e.typeMsg}"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.tiper.MaterialSpinner
-            android:id="@+id/ClassAndSectionSpinner"
+            android:id="@+id/classAndSectionSpinner"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -147,7 +147,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ClassAndSectionSpinner">
+            app:layout_constraintTop_toBottomOf="@+id/classAndSectionSpinner">
 
             <ImageView
                 android:id="@+id/homeworkImage"

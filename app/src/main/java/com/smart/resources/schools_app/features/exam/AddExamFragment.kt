@@ -1,42 +1,27 @@
 package com.smart.resources.schools_app.features.exam
 
-import android.app.Activity
-import android.app.Application
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.viewModelScope
-import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.adapters.loadImageUrl
 import com.smart.resources.schools_app.core.adapters.setSpinnerList
 import com.smart.resources.schools_app.core.adapters.setTextFromDate
-import com.smart.resources.schools_app.core.helpers.IntentHelper
 import com.smart.resources.schools_app.core.myTypes.*
-import com.smart.resources.schools_app.core.utils.FileUtils
 import com.smart.resources.schools_app.core.utils.hide
 import com.smart.resources.schools_app.core.utils.show
 import com.smart.resources.schools_app.core.utils.showErrorSnackbar
 import com.smart.resources.schools_app.databinding.FragmentAddExamBinding
-import com.smart.resources.schools_app.databinding.FragmentAddHomeworkBinding
-import com.smart.resources.schools_app.features.homework.AddHomeworkViewModel
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import com.smart.resources.schools_app.features.profile.TeacherInfoModel
 import com.smart.resources.schools_app.sharedUi.DatePickerFragment
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 import com.tiper.MaterialSpinner
-import id.zelory.compressor.Compressor
 import org.threeten.bp.LocalDateTime
-import java.io.File
 
 class AddExamFragment : Fragment(), PostListener {
     private lateinit var binding: FragmentAddExamBinding
@@ -44,7 +29,7 @@ class AddExamFragment : Fragment(), PostListener {
     private lateinit var progressBar: ProgressBar
     private lateinit var saveItem: MenuItem
 
-    private val onSpinnerItemSelected = object :
+    private val onClassSelected = object :
         MaterialSpinner.OnItemSelectedListener {
         override fun onItemSelected(
             parent: MaterialSpinner,
@@ -54,6 +39,22 @@ class AddExamFragment : Fragment(), PostListener {
         ) {
             viewModel.postExamModel.classId =
                 (parent.selectedItem as ClassInfoModel).classId.toString()
+        }
+
+        override fun onNothingSelected(parent: MaterialSpinner) {
+        }
+
+    }
+
+    private val onExamTypeSelected = object :
+        MaterialSpinner.OnItemSelectedListener {
+        override fun onItemSelected(
+            parent: MaterialSpinner,
+            view: View?,
+            position: Int,
+            id: Long
+        ) {
+            viewModel.postExamModel.type = parent.selectedItem.toString()
         }
 
         override fun onNothingSelected(parent: MaterialSpinner) {
@@ -90,7 +91,7 @@ class AddExamFragment : Fragment(), PostListener {
 
         setHasOptionsMenu(true)
         (activity as SectionActivity).apply {
-            setCustomTitle(R.string.add_homework)
+            setCustomTitle(R.string.add_exam)
             progressBar = getToolbarProgressBar()
             onBackPressedDispatcher
                 .addCallback(this@AddExamFragment, object :
@@ -116,13 +117,14 @@ class AddExamFragment : Fragment(), PostListener {
         binding = FragmentAddExamBinding
             .inflate(inflater, container, false)
             .apply {
-                TeacherInfoModel.instance?.classesInfo
-                    ?.let {
-                        setSpinnerList(ClassAndSectionSpinner, it)
-                    }
+                TeacherInfoModel.instance?.apply {
+                    setSpinnerList(classAndSectionSpinner, classesInfo)
+                    setSpinnerList(examTypeSpinner, examType)
+                }
 
                 dateField.setOnClickListener(::onDateClicked)
-                ClassAndSectionSpinner.onItemSelectedListener = onSpinnerItemSelected
+                classAndSectionSpinner.onItemSelectedListener = onClassSelected
+                examTypeSpinner.onItemSelectedListener= onExamTypeSelected
             }
     }
 

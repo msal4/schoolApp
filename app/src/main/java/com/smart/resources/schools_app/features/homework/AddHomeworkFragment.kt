@@ -108,11 +108,11 @@ class AddHomeworkFragment : Fragment(), PostListener {
             .inflate(inflater, container, false).apply {
                 TeacherInfoModel.instance?.classesInfo
                     ?.let {
-                        setSpinnerList(ClassAndSectionSpinner, it)
+                        setSpinnerList(classAndSectionSpinner, it)
                     }
 
                 dateField.setOnClickListener(::onDateClicked)
-                ClassAndSectionSpinner.onItemSelectedListener = onSpinnerItemSelected
+                classAndSectionSpinner.onItemSelectedListener = onSpinnerItemSelected
                 addImageIcon.setOnClickListener(::addImage)
             }
     }

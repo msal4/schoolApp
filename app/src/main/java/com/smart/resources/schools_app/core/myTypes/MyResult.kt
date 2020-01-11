@@ -20,17 +20,20 @@ suspend fun <T> Deferred<Response<T>>.toMyResult(): MyResult<T> =
     }
 
 fun <T> Response<T>.toMyResult(): MyResult<T> =
-    if (this.isSuccessful) {
-        Success(this.body())
-    } else {
-        val errorString= this.errorBody()?.string()
-        val errorMsg= extractMessageIfExists(errorString)
+    when {
+        isSuccessful -> {
+            Success(body())
+        }
+        else -> {
+            val errorString= errorBody()?.string()
+            val errorMsg= extractMessageIfExists(errorString)
 
-        Logger.e("error code: ${this.code()} - msg: $errorMsg")
-        ResponseError(
-            this.code(),
-            errorMsg
-        )
+            Logger.e("error code: ${code()} - msg: $errorMsg")
+            ResponseError(
+                code(),
+                errorMsg
+            )
+        }
     }
 
 private fun extractMessageIfExists(errorString: String?): String {
@@ -41,6 +44,5 @@ private fun extractMessageIfExists(errorString: String?): String {
         } catch (e: Exception) {
             errorString.toString()
         }
-
     }
 }

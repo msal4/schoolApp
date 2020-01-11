@@ -45,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/exam_name"
                 style="@style/MyEditText"
+                android:text="@={postModel.subjectName}"
                 mine:errorMsg="@{e.subjectNameMsg}"
                 tools:text="تيست" />
 
@@ -66,6 +67,7 @@
                 style="@style/MyEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@={postModel.note}"
                 android:hint="@string/notes_optional"
                 android:inputType="textMultiLine" />
 
@@ -78,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:focusable="false"
-            app:layout_constraintBottom_toTopOf="@+id/examTypeField"
+            app:layout_constraintBottom_toTopOf="@+id/examTypeSpinner"
             app:layout_constraintEnd_toEndOf="@+id/notesField"
             app:layout_constraintStart_toStartOf="@+id/notesField"
             app:layout_constraintTop_toBottomOf="@+id/notesField">
@@ -89,48 +91,45 @@
                 android:layout_height="wrap_content"
                 style="@style/MyEditText"
                 android:inputType="date"
+                mine:setDate="@={postModel.date}"
+                android:focusable="false"
                 mine:errorMsg="@{e.dateMsg}"
                 android:hint="@string/date" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/examTypeField"
+        <com.tiper.MaterialSpinner
+            android:id="@+id/examTypeSpinner"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/exam_type"
+            android:minHeight="60dp"
+            android:gravity="right"
+            android:focusableInTouchMode="false"
+            mine:errorMsg="@{e.typeMsg}"
             android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/ClassAndSectionSpinner"
+            app:layout_constraintBottom_toTopOf="@+id/classAndSectionSpinner"
             app:layout_constraintEnd_toEndOf="@+id/dateInputLayout"
             app:layout_constraintStart_toStartOf="@+id/dateInputLayout"
-            app:layout_constraintTop_toBottomOf="@+id/dateInputLayout">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/MyEditText"
-                mine:errorMsg="@{e.assignmentNameMsg}"
-                android:hint="@string/exam_type" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintTop_toBottomOf="@+id/dateInputLayout" />
 
 
         <com.tiper.MaterialSpinner
-            android:id="@+id/ClassAndSectionSpinner"
+            android:id="@+id/classAndSectionSpinner"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/classAndDivision"
             android:minHeight="60dp"
+            android:focusableInTouchMode="false"
             android:gravity="right"
             mine:errorMsg="@{e.sectionMsg}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/examTypeField"
+            app:layout_constraintEnd_toEndOf="@+id/examTypeSpinner"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/examTypeField"
-            app:layout_constraintTop_toBottomOf="@+id/examTypeField" />
+            app:layout_constraintStart_toStartOf="@+id/examTypeSpinner"
+            app:layout_constraintTop_toBottomOf="@+id/examTypeSpinner" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

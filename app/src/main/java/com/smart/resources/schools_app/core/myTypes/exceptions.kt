@@ -11,7 +11,7 @@ data class LoginException(
 
 data class PostException(
     val subjectNameMsg: MutableLiveData<String> = MutableLiveData(),
-    val assignmentNameMsg: MutableLiveData<String> = MutableLiveData(),
+    val typeMsg: MutableLiveData<String> = MutableLiveData(),
     val dateMsg:  MutableLiveData<String> = MutableLiveData(),
     val sectionMsg:  MutableLiveData<String> = MutableLiveData()
 )

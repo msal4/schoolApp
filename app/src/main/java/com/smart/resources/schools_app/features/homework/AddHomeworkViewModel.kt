@@ -7,7 +7,10 @@ import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.core.myTypes.PostListener
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import retrofit2.Response
 
 
 class AddHomeworkViewModel(application: Application) : AndroidViewModel(application) {
@@ -26,11 +29,13 @@ class AddHomeworkViewModel(application: Application) : AndroidViewModel(applicat
         listener?.onUploadStarted()
         viewModelScope.launch {
             val response= HomeworkRepository.addHomework(postHomeworkModel)
-            when(val myRes= response?.toMyResult()){
-                is Success -> listener?.onUploadComplete()
-                is ResponseError -> listener?.onError(myRes.combinedMsg)
-                is ConnectionError -> listener?.onError(myRes.message)
-                null -> listener?.onError(c.getString(R.string.data_conversion_error))
+            if(response== null)  listener?.onError(c.getString(R.string.data_conversion_error))
+            else {
+                when (val myRes = GlobalScope.async { response as Response<Unit> }.toMyResult()) {
+                    is Success -> listener?.onUploadComplete()
+                    is ResponseError -> listener?.onError(myRes.combinedMsg)
+                    is ConnectionError -> listener?.onError(myRes.message)
+                }
             }
         }
     }
@@ -50,7 +55,7 @@ class AddHomeworkViewModel(application: Application) : AndroidViewModel(applicat
                     false
                 }
                 assignmentName.isBlank() -> {
-                    postException.assignmentNameMsg.postValue(c.getString(R.string.field_required))
+                    postException.typeMsg.postValue(c.getString(R.string.field_required))
                     false
                 }
 
