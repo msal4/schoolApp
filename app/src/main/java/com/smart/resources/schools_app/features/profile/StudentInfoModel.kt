@@ -3,6 +3,8 @@ package com.smart.resources.schools_app.features.profile
 import com.google.gson.annotations.SerializedName
 import org.threeten.bp.LocalDateTime
 
+
+
 class StudentInfoModel(
     val classInfo: ClassInfoModel,
     name: String,

@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.absence
+package com.smart.resources.schools_app.features.absence.getAbsence
 
 import android.os.Bundle
 import android.view.*
@@ -8,17 +8,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
-import com.smart.resources.schools_app.core.myTypes.ConnectionError
-import com.smart.resources.schools_app.core.myTypes.ResponseError
-import com.smart.resources.schools_app.core.myTypes.Success
 import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.sharedUi.SectionActivity
-import com.smart.resources.schools_app.core.utils.*
+import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
 
 class AbsenceFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
-    private lateinit var viewModel: HomeworkViewModel
+    private lateinit var viewModel: AbsenceViewModel
 
     companion object {
         fun newInstance(fm:FragmentManager){
@@ -47,8 +44,8 @@ class AbsenceFragment : Fragment() {
 
     private fun setupViewModel() {
         viewModel = ViewModelProviders.of(this)
-            .get(HomeworkViewModel::class.java).apply {
-                getExams().observe(this@AbsenceFragment, Observer{onHomeworkDownload(it)})
+            .get(AbsenceViewModel::class.java).apply {
+                getAbsence().observe(this@AbsenceFragment, Observer{})
             }
     }
 
@@ -67,22 +64,20 @@ class AbsenceFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-
-    private  fun onHomeworkDownload(result: Absence) {
-        var errorMsg = ""
-        when (result) {
-            is Success -> {
-                if (result.data.isNullOrEmpty()) errorMsg = getString(R.string.no_student_absence)
-                else {
-                    binding.recyclerView.adapter= AbsenceRecyclerAdapter(result.data)
-                }
-
-            }
-            is ResponseError -> errorMsg = result.combinedMsg
-            is ConnectionError -> errorMsg = getString(R.string.connection_error)
-        }
-
-        binding.errorText.text = errorMsg
-        binding.progressIndicator.hide()
-    }
+//    private  fun onHomeworkDownload(result: Absence) {
+//        var errorMsg = ""
+//        when (result) {
+//            is Success -> {
+//                if (result.data.isNullOrEmpty()) errorMsg = getString(R.string.no_student_absence)
+//                else {
+//                    binding.recyclerView.adapter= AbsenceRecyclerAdapter(result.data)
+//                }
+//            }
+//            is ResponseError -> errorMsg = result.combinedMsg
+//            is ConnectionError -> errorMsg = getString(R.string.connection_error)
+//        }
+//
+//        binding.errorText.text = errorMsg
+//        binding.progressIndicator.hide()
+//    }
 }

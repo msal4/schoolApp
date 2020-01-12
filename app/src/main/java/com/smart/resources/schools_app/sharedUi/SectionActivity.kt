@@ -3,22 +3,24 @@ package com.smart.resources.schools_app.sharedUi
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ProgressBar
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.databinding.ActivitySectionBinding
 import com.smart.resources.schools_app.features.notification.NotificationFragment
 import com.smart.resources.schools_app.core.myTypes.Section
 import com.smart.resources.schools_app.core.myTypes.Section.EXAM
-import com.smart.resources.schools_app.features.absence.AbsenceFragment
+import com.smart.resources.schools_app.core.myTypes.UserType
+import com.smart.resources.schools_app.features.absence.getAbsence.AbsenceFragment
+import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
 import com.smart.resources.schools_app.features.advertising.AdvertisingFragment
 import com.smart.resources.schools_app.features.exam.AddMarkFragment
-import com.smart.resources.schools_app.features.exam.ExamFragment
 import com.smart.resources.schools_app.features.homework.ui.HomeworkFragment
 import com.smart.resources.schools_app.features.library.LibraryFragment
 import com.smart.resources.schools_app.features.rating.AddRatingFragment
-import com.smart.resources.schools_app.features.rating.RatingFragment
 import com.smart.resources.schools_app.features.schedule.ScheduleFragment
 
 
@@ -53,6 +55,8 @@ class SectionActivity : AppCompatActivity() {
     }
 
     private fun createFragment() {
+        val userType= SharedPrefHelper.instance?.userType
+
         when(intent.getSerializableExtra(EXTRA_SECTION) as Section){
             EXAM -> AddMarkFragment.newInstance(supportFragmentManager)
             Section.HOMEWORK -> HomeworkFragment.newInstance(supportFragmentManager)
@@ -60,10 +64,15 @@ class SectionActivity : AppCompatActivity() {
             Section.LIBRARY -> LibraryFragment.newInstance(supportFragmentManager)
             Section.SCHEDULE -> ScheduleFragment.newInstance(supportFragmentManager)
             Section.ADVERTISING -> AdvertisingFragment.newInstance(supportFragmentManager)
-            Section.ABSENCE -> AbsenceFragment.newInstance(supportFragmentManager)
+            Section.ABSENCE -> if(userType== UserType.STUDENT){
+                AbsenceFragment.newInstance(supportFragmentManager)
+            }
+            else{
+                AddAbsenceFragment.newInstance(supportFragmentManager)
+            }
             Section.RATING -> AddRatingFragment.newInstance(supportFragmentManager)
         }
     }
 
-    fun getToolbarProgressBar()= binding.toolbarProgressBar
+    fun getToolbarProgressBar(): ProgressBar = binding.toolbarProgressBar
 }

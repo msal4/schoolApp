@@ -69,7 +69,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/studentName"
+            android:id="@+id/studentCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -133,7 +133,7 @@
             android:textSize="@dimen/profileAttributeTitleSize"
             android:visibility="@{teacherModel == null? View.GONE: View.VISIBLE}"
             app:layout_constraintBottom_toTopOf="@+id/genderTitle"
-            app:layout_constraintEnd_toStartOf="@id/teacherSubjects"
+            app:layout_constraintEnd_toStartOf="@id/subjects_spinner"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sectionTitle"
@@ -265,7 +265,7 @@
 
 
         <TextView
-            android:id="@+id/teacherSubjects"
+            android:id="@+id/subjects_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
