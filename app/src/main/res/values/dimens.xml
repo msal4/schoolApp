@@ -23,4 +23,5 @@
     <dimen name="profileAttributeSize">16sp</dimen>
     <dimen name="advertising_collapsed_height">120dp</dimen>
     <dimen name="error_text_margin">42dp</dimen>
+    <dimen name="toolbar_tile_size">18dp</dimen>
 </resources>

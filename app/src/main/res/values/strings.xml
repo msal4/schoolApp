@@ -56,5 +56,6 @@
     <string name="subjects">المواد</string>
     <string name="homework_image_content_desc">صورة الواجب</string>
     <string name="add_image_con_desc">ايقونة صورة و زائد اضغط لاضافة صورة</string>
-
+    <string name="rate_student">تقييم الطالب</string>
+    <string name="rate">تقييم</string>
 </resources>

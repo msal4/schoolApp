@@ -1,58 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:mine="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable
-            name="itemModel"
-            type="com.smart.resources.schools_app.features.absence.StudentAbsenceModel"
-            />
-    </data>
 
+
+
+
+
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/background_item"
-        android:layoutDirection="ltr"
+        android:layoutDirection="rtl"
         android:minHeight="@dimen/item_min_height"
         android:orientation="vertical"
-        android:padding="@dimen/item_padding"
         android:elevation="@dimen/item_elevation"
-        android:layout_marginBottom="@dimen/item_margin">
+        android:layout_marginBottom="@dimen/item_margin"
+        android:padding="@dimen/item_padding">
 
 
-        <CheckBox
-            android:id="@+id/studentName"
+        <TextView
+            android:id="@+id/subjectNameM"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
             android:fontFamily="@font/monadi"
             android:includeFontPadding="true"
-            android:text="@{itemModel.subjectName}"
             android:textAlignment="viewStart"
             android:textColor="@android:color/black"
             android:textStyle="bold"
+            android:text="اسم المادة"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/mark"
+            app:layout_constraintHorizontal_bias="0.016"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="اسم الطالب" />
+            app:layout_constraintVertical_bias="0.539"
+            tools:text="اسم المادة" />
 
-        <TextView
-            android:id="@+id/date"
-
+        <EditText
+            android:id="@+id/mark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            mine:setDateTime="@{org.threeten.bp.LocalDateTime.now()}"
-            android:textAlignment="viewStart"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textAlignment="center"
+            android:padding="20dp"
+            android:enabled="true"
+            android:text="1"
+            app:layout_constraintBottom_toBottomOf="@+id/subjectNameM"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.917"
-            app:layout_constraintStart_toStartOf="@+id/studentName"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="8/10/2019" />
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/subjectNameM"
+            app:layout_constraintVertical_bias="0.472"
+            tools:text="1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
