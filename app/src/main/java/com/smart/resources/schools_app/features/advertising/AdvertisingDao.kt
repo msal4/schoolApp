@@ -6,4 +6,6 @@ import retrofit2.http.GET
 interface AdvertisingDao {
     @GET("advertisements")
     suspend fun fetchAdvertisements(): Response<List<AdvertisingModel>>
+
+
 }

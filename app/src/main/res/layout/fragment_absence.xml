@@ -7,42 +7,55 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layoutDirection="rtl"
-        tools:context=".sharedUi.SectionActivity">
+        tools:context=".sharedUi.SectionActivity"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
         <com.tiper.MaterialSpinner
-            android:id="@+id/classAndSectionSpinner1"
+            android:focusableInTouchMode="false"
+            android:layout_marginStart="@dimen/item_margin"
+            android:layout_marginTop="@dimen/item_margin"
+            android:id="@+id/classAndSectionSpinner"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="@string/classAndDivision"
-            android:minHeight="60dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            android:gravity="right"
+            android:layout_weight="1"
+            android:minHeight="60dp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
+        <com.tiper.MaterialSpinner
+            android:focusableInTouchMode="false"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="@dimen/item_margin"
+            android:layout_marginTop="@dimen/item_margin"
+            android:id="@+id/subjects_spinner"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:gravity="right"
             android:layout_height="wrap_content"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:padding="@dimen/item_margin"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/classAndSectionSpinner1"
-            app:layout_constraintVertical_bias="0.0"
-            tools:listitem="@layout/item_add_absence" />
+            android:hint="@string/subject"
+            android:minHeight="60dp"
+            android:layout_weight="1"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/recyclerViewLoader"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            layout="@layout/fragment_recycler_loader"/>
+
+    </LinearLayout>
 </layout>

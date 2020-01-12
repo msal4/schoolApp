@@ -5,53 +5,50 @@
     xmlns:mine="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable
-            name="itemModel"
-            type="com.smart.resources.schools_app.features.absence.StudentAbsenceModel"
-            />
+
     </data>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/item_margin"
         android:background="@drawable/background_item"
-        android:layoutDirection="ltr"
+        android:elevation="@dimen/item_elevation"
+        android:layoutDirection="rtl"
         android:minHeight="@dimen/item_min_height"
         android:orientation="vertical"
-        android:padding="@dimen/item_padding"
-        android:elevation="@dimen/item_elevation"
-        android:layout_marginBottom="@dimen/item_margin">
+        android:padding="@dimen/item_padding">
 
 
         <CheckBox
-            android:id="@+id/studentName"
+            android:id="@+id/studentCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
+            android:layout_marginStart="12dp"
             android:fontFamily="@font/monadi"
-            android:includeFontPadding="true"
-            android:text="@{itemModel.subjectName}"
+            android:paddingStart="8dp"
             android:textAlignment="viewStart"
             android:textColor="@android:color/black"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/date"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.51"
             tools:text="اسم الطالب" />
 
         <TextView
             android:id="@+id/date"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
             mine:setDate="@{org.threeten.bp.LocalDateTime.now()}"
             android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.917"
-            app:layout_constraintStart_toStartOf="@+id/studentName"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/studentCheckBox"
+            app:layout_constraintTop_toTopOf="@+id/studentCheckBox"
             tools:text="8/10/2019" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

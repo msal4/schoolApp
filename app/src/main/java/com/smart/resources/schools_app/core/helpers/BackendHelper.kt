@@ -11,6 +11,7 @@ import com.smart.resources.schools_app.features.login.AccountDao
 import com.smart.resources.schools_app.features.notification.NotificationsDao
 import com.smart.resources.schools_app.features.rating.RatingDao
 import com.smart.resources.schools_app.features.schedule.ScheduleDao
+import com.smart.resources.schools_app.features.students.StudentDao
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import org.threeten.bp.LocalDateTime
@@ -60,13 +61,14 @@ object BackendHelper {
         )
     }
 
-    val homeworkDao by lazy{retrofitWithAuth.create(HomeworkDao::class.java)}
-    val examDao  by lazy{retrofitWithAuth.create(ExamDao::class.java)}
-    val libraryDao by lazy{ retrofitWithAuth.create(LibraryDao::class.java)}
-    val notificationDao  by lazy{retrofitWithAuth.create(NotificationsDao::class.java)}
-    val absenceDao by lazy{retrofitWithAuth.create(AbsenceDao::class.java)}
-    val advertisingDao by lazy{ retrofitWithAuth.create(AdvertisingDao::class.java)}
-    val scheduleDao by lazy{ retrofitWithAuth.create(ScheduleDao::class.java)}
-    val ratingDao by lazy{ retrofitWithAuth.create(RatingDao::class.java)}
-    val accountDao by lazy{ retrofit.create(AccountDao::class.java)}
+    val homeworkDao: HomeworkDao by lazy{retrofitWithAuth.create(HomeworkDao::class.java)}
+    val examDao: ExamDao by lazy{retrofitWithAuth.create(ExamDao::class.java)}
+    val libraryDao: LibraryDao by lazy{ retrofitWithAuth.create(LibraryDao::class.java)}
+    val notificationDao: NotificationsDao by lazy{retrofitWithAuth.create(NotificationsDao::class.java)}
+    val absenceDao: AbsenceDao by lazy{retrofitWithAuth.create(AbsenceDao::class.java)}
+    val advertisingDao: AdvertisingDao by lazy{ retrofitWithAuth.create(AdvertisingDao::class.java)}
+    val scheduleDao: ScheduleDao by lazy{ retrofitWithAuth.create(ScheduleDao::class.java)}
+    val ratingDao: RatingDao by lazy{ retrofitWithAuth.create(RatingDao::class.java)}
+    val studentDao: StudentDao by lazy{ retrofitWithAuth.create(StudentDao::class.java)}
+    val accountDao: AccountDao by lazy{ retrofit.create(AccountDao::class.java)}
 }

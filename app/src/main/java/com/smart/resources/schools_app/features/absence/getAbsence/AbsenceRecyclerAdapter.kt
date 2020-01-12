@@ -1,9 +1,10 @@
-package com.smart.resources.schools_app.features.absence
+package com.smart.resources.schools_app.features.absence.getAbsence
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.databinding.ItemAbsenceBinding
+import com.smart.resources.schools_app.features.absence.StudentAbsenceModel
 
 class AbsenceRecyclerAdapter(private val it: List<StudentAbsenceModel>) : RecyclerView.Adapter<AbsenceRecyclerAdapter.MyViewHolder>() {
 
