@@ -54,7 +54,7 @@ class SectionActivity : AppCompatActivity() {
 
     private fun createFragment() {
         when(intent.getSerializableExtra(EXTRA_SECTION) as Section){
-            EXAM -> AddMarkFragment.newInstance(supportFragmentManager)
+            EXAM -> ExamFragment.newInstance(supportFragmentManager)
             Section.HOMEWORK -> HomeworkFragment.newInstance(supportFragmentManager)
             Section.NOTIFICATION -> NotificationFragment.newInstance(supportFragmentManager)
             Section.LIBRARY -> LibraryFragment.newInstance(supportFragmentManager)

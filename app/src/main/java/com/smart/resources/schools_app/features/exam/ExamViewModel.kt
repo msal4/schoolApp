@@ -13,7 +13,8 @@ typealias notificationsResult= MyResult<List<ExamModel>>
 
 class ExamViewModel : ViewModel() {
     private val exams: MutableLiveData<notificationsResult>
-            by lazy { MutableLiveData<notificationsResult>() }
+            by lazy { MutableLiveData<notificationsResult>()
+            }
 
 
 
@@ -24,9 +25,22 @@ class ExamViewModel : ViewModel() {
         return exams
     }
 
+    fun getTeacherExams():
+            LiveData<notificationsResult> {
+
+        return exams
+    }
+
     fun fetchExams(){
         viewModelScope.launch {
             val result = GlobalScope.async { BackendHelper.examDao.fetchExams() }.toMyResult()
+            exams.value = result
+        }
+    }
+
+    fun fetchTeacherExams(){
+        viewModelScope.launch {
+            val result = GlobalScope.async { BackendHelper.examDao.fetchTeacherExams() }.toMyResult()
             exams.value = result
         }
     }

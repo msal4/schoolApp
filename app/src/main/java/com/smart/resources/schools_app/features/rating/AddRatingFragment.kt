@@ -3,6 +3,7 @@ package com.smart.resources.schools_app.features.rating
 import android.app.Activity
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.smart.resources.schools_app.R
@@ -10,9 +11,10 @@ import com.smart.resources.schools_app.core.adapters.setSpinnerList
 import com.smart.resources.schools_app.databinding.FragmentAddRatingBinding
 import com.smart.resources.schools_app.features.profile.TeacherInfoModel
 import com.smart.resources.schools_app.sharedUi.SectionActivity
+import com.tiper.MaterialSpinner
 
 
-class AddRatingFragment : Fragment(), GetData {
+class AddRatingFragment : Fragment(), GetData, MaterialSpinner.OnItemSelectedListener {
     private lateinit var binding: FragmentAddRatingBinding
     private lateinit var adapter: AddRatingAdapter
     private var callback: GetData? = null
@@ -45,11 +47,11 @@ class AddRatingFragment : Fragment(), GetData {
 
 
 
+
+        binding.classAndSectionSpinnerAmmar.onItemSelectedListener=this
         callback=this
         adapter= fragmentManager?.let {
-            AddRatingAdapter(listOf(), callback as AddRatingFragment,
-                it
-            )
+            AddRatingAdapter(listOf())
         }!!
         binding.recyclerView.adapter=adapter
         TeacherInfoModel.instance?.classesInfo?.let {
@@ -81,6 +83,29 @@ class AddRatingFragment : Fragment(), GetData {
 
     override fun callbackMethod(notes: String?, rating: Int) {
 
+    }
+
+
+    fun getClassId(className:String):Int{
+        var x=-1
+        var classInfo=TeacherInfoModel.instance?.classesInfo
+        if (classInfo != null) {
+            for( cl in classInfo){
+                if(cl.getClassSection == className){
+                    x=cl.classId
+                    break
+                }
+            }
+        }
+        return x
+    }
+    override fun onItemSelected(parent: MaterialSpinner, view: View?, position: Int, id: Long) {
+
+        Toast.makeText(context,""+getClassId(parent.selectedItem.toString()),Toast.LENGTH_LONG).show()
+    }
+
+    override fun onNothingSelected(parent: MaterialSpinner) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 

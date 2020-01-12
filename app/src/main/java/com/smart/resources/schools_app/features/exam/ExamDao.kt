@@ -10,6 +10,9 @@ interface ExamDao {
     suspend fun fetchExams(): Response<List<ExamModel>>
 
 
+    @GET("teacherExams")
+    suspend fun fetchTeacherExams(): Response<List<ExamModel>>
+
     @POST("addExam")
     suspend fun addExam(@Body postExamModel: PostExamModel): Response<Unit>
 }

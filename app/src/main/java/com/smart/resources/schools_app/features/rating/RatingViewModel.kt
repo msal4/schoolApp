@@ -12,21 +12,21 @@ import kotlinx.coroutines.*
 typealias RatingResult= MyResult<List<RatingModel>>
 
 class RatingViewModel : ViewModel() {
-    private val homework: MutableLiveData<RatingResult>
+    private val rating: MutableLiveData<RatingResult>
             by lazy { MutableLiveData<RatingResult>() }
 
     fun getRatings():
             LiveData<RatingResult> {
         fetchRatings()
 
-        return homework
+        return rating
     }
 
     private fun fetchRatings(){
         viewModelScope.launch {
             val result = GlobalScope.async { BackendHelper
                 .ratingDao.fetchRating() }.toMyResult()
-            homework.value = result
+            rating.value = result
         }
     }
 }

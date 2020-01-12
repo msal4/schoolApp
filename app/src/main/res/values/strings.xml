@@ -54,6 +54,7 @@
     <string name="no_rating">لا توجد تقييمات</string>
     <string name="role">الدور</string>
     <string name="subjects">المواد</string>
+    <string name="notes">ملاحظات</string>
     <string name="homework_image_content_desc">صورة الواجب</string>
     <string name="add_image_con_desc">ايقونة صورة و زائد اضغط لاضافة صورة</string>
     <string name="rate_student">تقييم الطالب</string>

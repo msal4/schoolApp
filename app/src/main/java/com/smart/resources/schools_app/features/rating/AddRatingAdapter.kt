@@ -8,8 +8,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.databinding.ItemAddRatingBinding
 import com.smart.resources.schools_app.databinding.ItemStudentRateBinding
+import com.smart.resources.schools_app.features.profile.StudentInfoModel
 
-class AddRatingAdapter(private val it: List<RatingModel>, val callback: GetData, val supported:FragmentManager) :
+class AddRatingAdapter(private val it: List<StudentInfoModel>) :
     RecyclerView.Adapter<AddRatingAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(val binding: ItemAddRatingBinding) :
@@ -30,10 +31,6 @@ class AddRatingAdapter(private val it: List<RatingModel>, val callback: GetData,
         val binding = ItemAddRatingBinding.inflate(inflater, parent, false)
 
 
-        binding.rate.setOnClickListener(View.OnClickListener {
-            var addRating = AddRatingBottomSheet.newInstance(callback)
-            addRating.show(supported, "String")
-        })
         return MyViewHolder(binding)
     }
 

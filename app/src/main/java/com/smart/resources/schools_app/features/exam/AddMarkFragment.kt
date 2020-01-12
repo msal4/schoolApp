@@ -10,7 +10,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.adapters.dateTimeBackendFormatter
-import com.smart.resources.schools_app.core.adapters.dateTimePostFormatter
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import com.smart.resources.schools_app.core.adapters.setSpinnerList
 import com.smart.resources.schools_app.core.myTypes.ConnectionError
