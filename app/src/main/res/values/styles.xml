@@ -22,7 +22,7 @@
         <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
     </style>
 
-    <style name="MyEditText" parent="@android:style/Widget">
+    <style name="MyEditText" parent="@style/Widget.AppCompat.EditText">
         <item name="android:inputType">text</item>
         <item name="android:textAlignment">viewStart</item>
     </style>

@@ -11,4 +11,8 @@ interface NotificationsDao{
 
     @GET("sectionNotifications")
     suspend fun fetchSectionNotifications(): Response<List<NotificationModel>>
+
+    @GET("teacherNotifications")
+    suspend fun fetchTeacherNotifications(): Response<List<NotificationModel>>
 }
+

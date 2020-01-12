@@ -65,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:includeFontPadding="true"
-            mine:setDateTime="@{itemModel.date}"
+            mine:setDate="@{itemModel.date}"
             android:textAlignment="viewEnd"
             tools:text="date" />
 

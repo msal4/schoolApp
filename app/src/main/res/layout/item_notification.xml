@@ -27,7 +27,7 @@
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            mine:setDateTime="@{itemModel.date}"
+            mine:setDate="@{itemModel.date}"
             android:textAlignment="viewStart"
             app:layout_constraintBottom_toTopOf="@+id/category"
             app:layout_constraintEnd_toEndOf="parent"

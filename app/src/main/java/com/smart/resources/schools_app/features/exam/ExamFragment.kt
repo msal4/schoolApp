@@ -45,6 +45,8 @@ class ExamFragment : Fragment() {
     private fun setupViewModel() {
         viewModel = ViewModelProviders.of(this)
             .get(ExamViewModel::class.java).apply {
+                fetchExams() // TODO: improve performance by not fetching new data every time
+
                 getExams().observe(this@ExamFragment, Observer{onExamsDownload(it)})
             }
     }

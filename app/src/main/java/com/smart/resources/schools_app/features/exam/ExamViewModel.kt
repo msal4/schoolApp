@@ -20,12 +20,11 @@ class ExamViewModel : ViewModel() {
 
     fun getExams():
             LiveData<notificationsResult> {
-        fetchExams()
 
         return exams
     }
 
-    private fun fetchExams(){
+    fun fetchExams(){
         viewModelScope.launch {
             val result = GlobalScope.async { BackendHelper.examDao.fetchExams() }.toMyResult()
             exams.value = result

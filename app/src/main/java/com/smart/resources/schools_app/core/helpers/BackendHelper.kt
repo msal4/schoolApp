@@ -5,7 +5,7 @@ import com.smart.resources.schools_app.core.adapters.LocalDateTimeConverter
 import com.smart.resources.schools_app.features.absence.AbsenceDao
 import com.smart.resources.schools_app.features.advertising.AdvertisingDao
 import com.smart.resources.schools_app.features.exam.ExamDao
-import com.smart.resources.schools_app.features.homework.HomeworkDao
+import com.smart.resources.schools_app.features.homework.model.HomeworkDao
 import com.smart.resources.schools_app.features.library.LibraryDao
 import com.smart.resources.schools_app.features.login.AccountDao
 import com.smart.resources.schools_app.features.notification.NotificationsDao

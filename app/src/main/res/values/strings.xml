@@ -56,6 +56,5 @@
     <string name="subjects">المواد</string>
     <string name="homework_image_content_desc">صورة الواجب</string>
     <string name="add_image_con_desc">ايقونة صورة و زائد اضغط لاضافة صورة</string>
-    <string name="data_conversion_error">خطا في تحويل البيانات!</string>
 
 </resources>

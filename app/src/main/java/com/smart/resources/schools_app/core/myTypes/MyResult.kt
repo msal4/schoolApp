@@ -10,10 +10,10 @@ class Success<out T>(val data: T?) : MyResult<T>()
 class ResponseError(val statusCode: Int, val errorBody: String, val combinedMsg: String = "status code: $statusCode\nmessage: $errorBody") : MyResult<Nothing>()
 class ConnectionError(val exception: Throwable, val message: String = exception.localizedMessage as String) : MyResult<Nothing>()
 
-suspend fun <T> Deferred<Response<T>>.toMyResult(): MyResult<T> =
+suspend fun <T> Deferred<Response<T>?>.toMyResult(): MyResult<T> =
     try {
         val response = this.await()
-        response.toMyResult()
+        response?.toMyResult() ?: throw Exception("Data Conversion Error")
     } catch (e: Exception) {
         Logger.e("exception : ${e.localizedMessage}")
         ConnectionError(e)

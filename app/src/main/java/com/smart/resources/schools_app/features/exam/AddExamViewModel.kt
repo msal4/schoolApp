@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 
@@ -24,12 +26,10 @@ class AddExamViewModel(application: Application) : AndroidViewModel(application)
 
         listener?.onUploadStarted()
         viewModelScope.launch {
-            val response= ExamRepository.addExam(postExamModel)
-            when(val myRes= response?.toMyResult()){
+            when(val myRes= GlobalScope.async { ExamRepository.addExam(postExamModel) }.toMyResult()){
                 is Success -> listener?.onUploadComplete()
                 is ResponseError -> listener?.onError(myRes.combinedMsg)
-                is ConnectionError -> listener?.onError(myRes.message)
-                null -> listener?.onError(c.getString(R.string.data_conversion_error))
+                is ConnectionError -> listener?.onError(c.getString(R.string.connection_error))
             }
         }
     }

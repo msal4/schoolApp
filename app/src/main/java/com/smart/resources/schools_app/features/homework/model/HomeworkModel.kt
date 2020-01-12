@@ -1,6 +1,5 @@
-package com.smart.resources.schools_app.features.homework
+package com.smart.resources.schools_app.features.homework.model
 
-import android.net.Uri
 import org.threeten.bp.LocalDateTime
 import java.io.File
 
@@ -24,7 +23,7 @@ class HomeworkModel(
     note: String,
     subjectName: String
 
-):BaseHomeworkModel(assignmentName, date, note, subjectName)
+): BaseHomeworkModel(assignmentName, date, note, subjectName)
 
 class PostHomeworkModel(
     var attachment: File?= null,

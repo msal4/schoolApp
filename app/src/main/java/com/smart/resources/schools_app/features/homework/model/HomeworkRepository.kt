@@ -1,7 +1,5 @@
-package com.smart.resources.schools_app.features.homework
+package com.smart.resources.schools_app.features.homework.model
 
-import com.smart.resources.schools_app.core.adapters.dateDisFormatter
-import com.smart.resources.schools_app.core.adapters.dateTimeBackendFormatter
 import com.smart.resources.schools_app.core.adapters.dateTimeBackendSendFormatter
 import com.smart.resources.schools_app.core.helpers.BackendHelper
 import com.smart.resources.schools_app.core.utils.asBodyPart
@@ -10,7 +8,7 @@ import retrofit2.Response
 
 object HomeworkRepository{
 
-    suspend fun addHomework(postHomeworkModel: PostHomeworkModel): Response<Unit>? {
+    suspend fun addHomework(postHomeworkModel: PostHomeworkModel): Response<HomeworkModel>? {
         postHomeworkModel.apply {
                 date?.format(dateTimeBackendSendFormatter)?.asRequestBody()?.let {
                     formattedDate->

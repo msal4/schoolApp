@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.homework
+package com.smart.resources.schools_app.features.homework.model
 
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -18,5 +18,6 @@ interface HomeworkDao {
         @Part("note") note: RequestBody,
         @Part attachment: MultipartBody.Part?,
         @Part("classId") classId: RequestBody
-    ): Response<Unit>
+    ): Response<HomeworkModel>
+
 }

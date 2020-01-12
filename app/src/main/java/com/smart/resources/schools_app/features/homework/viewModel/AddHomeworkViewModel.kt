@@ -1,44 +1,43 @@
-package com.smart.resources.schools_app.features.homework
+package com.smart.resources.schools_app.features.homework.viewModel
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.*
-import com.smart.resources.schools_app.core.myTypes.PostListener
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import com.smart.resources.schools_app.features.homework.model.HomeworkModel
+import com.smart.resources.schools_app.features.homework.model.HomeworkRepository
+import com.smart.resources.schools_app.features.homework.model.PostHomeworkModel
+import kotlinx.coroutines.*
 import retrofit2.Response
 
 
-class AddHomeworkViewModel(application: Application) : AndroidViewModel(application) {
+class AddHomeworkViewModel  (application: Application) : AndroidViewModel(application) {
     private val c= application.applicationContext
-    val postHomeworkModel= PostHomeworkModel()
+    val postHomeworkModel=
+        PostHomeworkModel()
     val postException= PostException()
-    var listener: PostListener?= null
+    var uploadListener: PostListener?= null
 
     fun addHomework(){
-
         Logger.i(postHomeworkModel.toString())
         Logger.i("isDataValid: ${validateData()}")
 
         if(!validateData()) return
 
-        listener?.onUploadStarted()
+        uploadListener?.onUploadStarted()
         viewModelScope.launch {
-            val response= HomeworkRepository.addHomework(postHomeworkModel)
-            if(response== null)  listener?.onError(c.getString(R.string.data_conversion_error))
-            else {
-                when (val myRes = GlobalScope.async { response as Response<Unit> }.toMyResult()) {
-                    is Success -> listener?.onUploadComplete()
-                    is ResponseError -> listener?.onError(myRes.combinedMsg)
-                    is ConnectionError -> listener?.onError(myRes.message)
+                when (val myRes = GlobalScope.async { HomeworkRepository.addHomework(
+                    postHomeworkModel
+                ) as Response<HomeworkModel> }.toMyResult()) {
+                    is Success -> uploadListener?.onUploadComplete()
+
+                    is ResponseError -> uploadListener?.onError(myRes.combinedMsg)
+                    is ConnectionError -> uploadListener?.onError(c.getString(R.string.connection_error))
                 }
-            }
         }
     }
+
 
     private fun validateData()=
         with(postHomeworkModel){

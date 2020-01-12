@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="316dp"
-            mine:setDateTime="@{org.threeten.bp.LocalDateTime.now()}"
+            mine:setDate="@{org.threeten.bp.LocalDateTime.now()}"
             android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/studentName"

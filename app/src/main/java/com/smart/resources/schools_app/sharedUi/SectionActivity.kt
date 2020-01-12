@@ -14,7 +14,7 @@ import com.smart.resources.schools_app.core.myTypes.Section.EXAM
 import com.smart.resources.schools_app.features.absence.AbsenceFragment
 import com.smart.resources.schools_app.features.advertising.AdvertisingFragment
 import com.smart.resources.schools_app.features.exam.ExamFragment
-import com.smart.resources.schools_app.features.homework.HomeworkFragment
+import com.smart.resources.schools_app.features.homework.ui.HomeworkFragment
 import com.smart.resources.schools_app.features.library.LibraryFragment
 import com.smart.resources.schools_app.features.rating.RatingFragment
 import com.smart.resources.schools_app.features.schedule.ScheduleFragment

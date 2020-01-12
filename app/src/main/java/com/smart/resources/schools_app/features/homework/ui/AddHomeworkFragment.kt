@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.homework
+package com.smart.resources.schools_app.features.homework.ui
 
 import android.app.Activity
 import android.content.Intent
@@ -20,6 +20,8 @@ import com.smart.resources.schools_app.core.helpers.IntentHelper
 import com.smart.resources.schools_app.core.myTypes.PostListener
 import com.smart.resources.schools_app.core.utils.*
 import com.smart.resources.schools_app.databinding.FragmentAddHomeworkBinding
+import com.smart.resources.schools_app.features.homework.model.HomeworkModel
+import com.smart.resources.schools_app.features.homework.viewModel.AddHomeworkViewModel
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 import com.smart.resources.schools_app.features.profile.TeacherInfoModel
@@ -115,6 +117,7 @@ class AddHomeworkFragment : Fragment(), PostListener {
                 classAndSectionSpinner.onItemSelectedListener = onSpinnerItemSelected
                 addImageIcon.setOnClickListener(::addImage)
             }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -176,9 +179,11 @@ class AddHomeworkFragment : Fragment(), PostListener {
                     e= postException
                     postModel = postHomeworkModel
                     lifecycleOwner= this@AddHomeworkFragment
-                    listener= this@AddHomeworkFragment
+                    uploadListener= this@AddHomeworkFragment
                 }
             }
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

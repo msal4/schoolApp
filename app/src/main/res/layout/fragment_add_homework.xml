@@ -7,7 +7,7 @@
     <data>
         <variable
         name="postModel"
-        type="com.smart.resources.schools_app.features.homework.PostHomeworkModel" />
+        type="com.smart.resources.schools_app.features.homework.model.PostHomeworkModel" />
 
         <variable
             name="e"
