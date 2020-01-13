@@ -104,7 +104,8 @@ class ExamFragment : Fragment(), ExamRecyclerAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(examModel: ExamModel) {
-        fragm?.let { AddMarkFragment.newInstance(it) }
+
+        fragm?.let { examModel.idExam?.let { it1 -> AddMarkFragment.newInstance(it, it1) } }
     }
 
 }

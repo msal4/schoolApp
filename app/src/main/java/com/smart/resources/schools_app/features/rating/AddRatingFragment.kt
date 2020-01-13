@@ -6,18 +6,27 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.adapters.setSpinnerList
+import com.smart.resources.schools_app.core.myTypes.ConnectionError
+import com.smart.resources.schools_app.core.myTypes.ResponseError
+import com.smart.resources.schools_app.core.myTypes.Success
+import com.smart.resources.schools_app.core.utils.hide
 import com.smart.resources.schools_app.databinding.FragmentAddRatingBinding
 import com.smart.resources.schools_app.features.profile.TeacherInfoModel
+import com.smart.resources.schools_app.features.students.Student
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 import com.tiper.MaterialSpinner
 
 
-class AddRatingFragment : Fragment(), GetData, MaterialSpinner.OnItemSelectedListener {
+class AddRatingFragment : Fragment(), MaterialSpinner.OnItemSelectedListener,
+    AddRatingAdapter.OnItemClickListener {
     private lateinit var binding: FragmentAddRatingBinding
     private lateinit var adapter: AddRatingAdapter
-    private var callback: GetData? = null
+    private lateinit var viewModel: AddRatingViewModel
+
 
     companion object {
         private const val ADD_RATING_FRAGMENT= "addRatingFragment"
@@ -49,11 +58,7 @@ class AddRatingFragment : Fragment(), GetData, MaterialSpinner.OnItemSelectedLis
 
 
         binding.classAndSectionSpinnerAmmar.onItemSelectedListener=this
-        callback=this
-        adapter= fragmentManager?.let {
-            AddRatingAdapter(listOf())
-        }!!
-        binding.recyclerView.adapter=adapter
+
         TeacherInfoModel.instance?.classesInfo?.let {
             setSpinnerList(
                 binding.classAndSectionSpinnerAmmar,
@@ -64,6 +69,15 @@ class AddRatingFragment : Fragment(), GetData, MaterialSpinner.OnItemSelectedLis
         //setHasOptionsMenu(true)
         (activity as SectionActivity).setCustomTitle(R.string.add_homework)
         return binding.root
+    }
+
+
+
+    private fun setupViewModel(classId:Int) {
+        viewModel = ViewModelProviders.of(this)
+            .get(AddRatingViewModel::class.java).apply {
+                getRatings(classId).observe(this@AddRatingFragment, Observer{onRatingDownload(it)})
+            }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -81,7 +95,20 @@ class AddRatingFragment : Fragment(), GetData, MaterialSpinner.OnItemSelectedLis
         return super.onOptionsItemSelected(item)
     }
 
-    override fun callbackMethod(notes: String?, rating: Int) {
+
+    private  fun onRatingDownload(result: RatingResult1) {
+        var errorMsg = ""
+        when (result) {
+            is Success -> {
+                if (result.data.isNullOrEmpty()) errorMsg = getString(R.string.no_rating)
+                else {
+                    binding.recyclerView.adapter= AddRatingAdapter(result.data,this)
+                }
+
+            }
+            is ResponseError -> errorMsg = result.combinedMsg
+            is ConnectionError -> errorMsg = getString(R.string.connection_error)
+        }
 
     }
 
@@ -99,13 +126,20 @@ class AddRatingFragment : Fragment(), GetData, MaterialSpinner.OnItemSelectedLis
         }
         return x
     }
+
+
     override fun onItemSelected(parent: MaterialSpinner, view: View?, position: Int, id: Long) {
+        setupViewModel(getClassId(parent.selectedItem.toString()))
 
         Toast.makeText(context,""+getClassId(parent.selectedItem.toString()),Toast.LENGTH_LONG).show()
     }
 
     override fun onNothingSelected(parent: MaterialSpinner) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onItemClick(examModel: Student) {
+        AddRatingBottomSheet.newInstance()
     }
 
 

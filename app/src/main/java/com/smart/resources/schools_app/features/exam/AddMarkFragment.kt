@@ -1,42 +1,37 @@
 package com.smart.resources.schools_app.features.exam
 
-import android.app.DatePickerDialog
+import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.adapters.dateTimeBackendFormatter
-import com.smart.resources.schools_app.features.profile.ClassInfoModel
-import com.smart.resources.schools_app.core.adapters.setSpinnerList
-import com.smart.resources.schools_app.core.myTypes.ConnectionError
-import com.smart.resources.schools_app.core.myTypes.MyResult
-import com.smart.resources.schools_app.core.myTypes.ResponseError
-import com.smart.resources.schools_app.core.myTypes.Success
-import com.smart.resources.schools_app.core.utils.hide
-import com.smart.resources.schools_app.core.utils.toast
-import com.smart.resources.schools_app.databinding.FragmentAddExamBinding
+import com.smart.resources.schools_app.core.helpers.BackendHelper
+import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.databinding.FragmentAddMarkBinding
+import com.smart.resources.schools_app.features.students.SendStudentResult
 import com.smart.resources.schools_app.sharedUi.SectionActivity
-import com.smart.resources.schools_app.features.profile.TeacherInfoModel
-import com.smart.resources.schools_app.features.rating.AddRatingAdapter
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
-import java.util.*
+import com.smart.resources.schools_app.features.students.Student
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.IO
 
 class AddMarkFragment : Fragment() {
     private lateinit var binding: FragmentAddMarkBinding
-    private lateinit var viewModel: ExamViewModel
+    private lateinit var viewModel: FetchStudentViewModel
     private lateinit var adapter: AddMarkRecyclerAdapter
+    private lateinit var adapter2: AddMarkRecyclerAdapter
+    private var job:Job?=null
 
     companion object {
         private const val ADD_EXAM_FRAGMENT = "addExamFragment"
+        var examId1 = -1
+        fun newInstance(fm: FragmentManager, examId: Int) {
 
-        fun newInstance(fm: FragmentManager) {
-
+            examId1 = examId
             val fragment =
                 AddMarkFragment()
             fm.beginTransaction().apply {
@@ -59,10 +54,10 @@ class AddMarkFragment : Fragment() {
         binding = FragmentAddMarkBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
 
-        adapter= AddMarkRecyclerAdapter(listOf())
-        binding.recyclerView.adapter=adapter
+        adapter = AddMarkRecyclerAdapter(listOf())
+        binding.recyclerView.adapter = adapter
 
-        setupViewModel()
+        setupViewModel(examId1)
         (activity as SectionActivity).setCustomTitle(R.string.add_exam)
         return binding.root
     }
@@ -75,30 +70,73 @@ class AddMarkFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.saveMenuItem -> {
-
+                onSave()
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
+    private fun onSave() {
 
 
-    private fun setupViewModel() {
+       val studebtResult : SendStudentResult=SendStudentResult(AddMarkRecyclerAdapter.sendStudentResult,
+           examId1)
+
+
+
+        if(studebtResult.marks.isNotEmpty()) {
+
+            job = CoroutineScope(IO).launch {
+                val result =
+                    GlobalScope.async { BackendHelper.examDao.addMultiResult(studebtResult) }
+                        .toMyResult()
+
+
+
+            }
+        }
+    }
+
+
+
+    fun validate(st:SendStudentResult):Boolean{
+        var x=true
+        for(s in st.marks){
+            if(s.mark>100 || s.mark<0){
+                x=false
+            }
+        }
+        return x
+    }
+
+    override fun onStop() {
+        super.onStop()
+        job?.cancel()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        job?.start()
+    }
+
+    private fun setupViewModel(examId: Int) {
         viewModel = ViewModelProviders.of(this)
-            .get(ExamViewModel::class.java).apply {
-                getExams().observe(this@AddMarkFragment, androidx.lifecycle.Observer { onExamsDownload(it) })
+            .get(FetchStudentViewModel::class.java).apply {
+                getStudents(examId).observe(
+                    this@AddMarkFragment,
+                    androidx.lifecycle.Observer { onExamsDownload(it) })
             }
 
     }
 
 
-    private  fun onExamsDownload(result: MyResult<List<ExamModel>>) {
+    private fun onExamsDownload(result: MyResult<List<Student>>) {
         var errorMsg = ""
         when (result) {
             is Success -> {
                 if (result.data.isNullOrEmpty()) errorMsg = getString(R.string.no_exams)
                 else {
-                    binding.recyclerView.adapter= AddMarkRecyclerAdapter(result.data)
+                    binding.recyclerView.adapter = AddMarkRecyclerAdapter(result.data)
                 }
 
             }

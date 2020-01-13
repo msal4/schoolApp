@@ -7,7 +7,7 @@
 
         <variable
             name="itemModel"
-            type="com.smart.resources.schools_app.features.profile.StudentInfoModel" />
+            type="com.smart.resources.schools_app.features.students.Student" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

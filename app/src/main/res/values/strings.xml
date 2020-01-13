@@ -59,8 +59,8 @@
     <string name="add_image_con_desc">ايقونة صورة و زائد اضغط لاضافة صورة</string>
     <string name="rate_student">تقييم الطالب</string>
     <string name="rate">تقييم</string>
-    <string name="notes">ملاحظات</string>
     <string name="subject">المادة</string>
     <string name="no_students">لا يوجد طلاب</string>
     <string name="select_class">اختر صف</string>
+    <string name="must_enter_dgree">يجب ادخال درجة الطالب</string>
 </resources>

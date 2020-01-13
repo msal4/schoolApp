@@ -8,8 +8,4 @@ interface RatingDao{
     @GET("studentBehaviors")
     suspend fun fetchRating(): Response<List<RatingModel>>
 
-
-    @GET("studentBehaviors\\")
-    suspend fun fetchStudents(): Response<List<RatingModel>>
-
 }

@@ -8,17 +8,23 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.databinding.ItemAddRatingBinding
 import com.smart.resources.schools_app.databinding.ItemStudentRateBinding
+import com.smart.resources.schools_app.features.exam.ExamModel
+import com.smart.resources.schools_app.features.exam.ExamRecyclerAdapter
 import com.smart.resources.schools_app.features.profile.StudentInfoModel
+import com.smart.resources.schools_app.features.students.Student
 
-class AddRatingAdapter(private val it: List<StudentInfoModel>) :
+class AddRatingAdapter(private val it: List<Student>,private val listener: AddRatingAdapter.OnItemClickListener) :
     RecyclerView.Adapter<AddRatingAdapter.MyViewHolder>() {
 
+    interface OnItemClickListener {
+        fun onItemClick(examModel: Student)
+    }
     inner class MyViewHolder(val binding: ItemAddRatingBinding) :
         RecyclerView.ViewHolder(binding.root) {
-/*
-        fun bind(ratingModel: RatingModel){
+
+        fun bind(ratingModel: Student){
             binding.itemModel=ratingModel
-        }*/
+        }
 
 
     }
@@ -35,10 +41,15 @@ class AddRatingAdapter(private val it: List<StudentInfoModel>) :
     }
 
 
-    override fun getItemCount(): Int = 25
+    override fun getItemCount(): Int = it.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        //holder.bind(it[position])
+
+        val rating = it[position]
+        holder.itemView.setOnClickListener { listener.onItemClick(rating) }
+
+
+        holder.bind(rating)
 
     }
 

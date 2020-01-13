@@ -15,15 +15,13 @@ class AddRatingBottomSheet : BottomSheetDialogFragment() {
     private var numOfItems:Int= 1
 
     companion object Factory {
-        private var callback: GetData? = null
         fun newInstance(
-            callback: GetData
+
         ): AddRatingBottomSheet {
             val bottomSheet =
                 AddRatingBottomSheet()
             val bundle = Bundle()
 
-            this.callback=callback
             bottomSheet.arguments = bundle
             return bottomSheet
         }
@@ -67,7 +65,7 @@ class AddRatingBottomSheet : BottomSheetDialogFragment() {
 
     private fun insertRating(it: View) {
 
-        callback?.callbackMethod(binding.ratingNotes.text.toString(),numOfItems)
+
     }
 
 }
