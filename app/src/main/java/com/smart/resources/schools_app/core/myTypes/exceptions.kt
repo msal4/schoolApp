@@ -18,6 +18,7 @@ data class PostException(
 )
 
 
+
 data class AddAbsenceException(
     val sectionAndClassesMsg: MutableLiveData<String> = MutableLiveData(),
     val subjectMsg: MutableLiveData<String> = MutableLiveData()

@@ -57,11 +57,11 @@ class AddRatingFragment : Fragment(), MaterialSpinner.OnItemSelectedListener,
 
 
 
-        binding.classAndSectionSpinnerAmmar.onItemSelectedListener=this
+        binding.classAndSectionSpinner.onItemSelectedListener=this
 
         TeacherInfoModel.instance?.classesInfo?.let {
             setSpinnerList(
-                binding.classAndSectionSpinnerAmmar,
+                binding.classAndSectionSpinner,
                 it
             )
         }

@@ -13,6 +13,9 @@ import com.smart.resources.schools_app.features.homework.model.HomeworkModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import kotlin.Unit;
+import ru.rhanza.constraintexpandablelayout.State;
+
 public class HomeworkRecyclerAdapter extends RecyclerView.Adapter<HomeworkRecyclerAdapter.MyViewHolder> {
     private List<HomeworkModel> dataList= new ArrayList<HomeworkModel> ();
 
@@ -51,7 +54,28 @@ public class HomeworkRecyclerAdapter extends RecyclerView.Adapter<HomeworkRecycl
 
         public MyViewHolder(@NonNull ItemHomeworkBinding binding ) {
             super(binding.getRoot());
-            this.binding= binding;
+            this.binding = binding;
+            binding.expandLayout.setOnStateChangeListener((oldState, newState)->{
+
+                if(newState== State.Collapsed){
+                    /*if(binding.contentText.getLineCount()<3){
+                        binding.contentText.append("\u2026");
+                    }else {*/
+                    binding.contentText.setMaxLines(2);
+                    // }
+                }else if(newState== State.Expanded|| newState == State.Expanding){
+                    binding.contentText.setMaxLines(100);
+                   /* String text=binding.contentText.getText().toString();
+                    binding.contentText.setText(text.replace('\u2026',' ').trim());*/
+                }
+
+                return Unit.INSTANCE;
+            });
+
+            binding.expandLayout.setOnClickListener(v -> {
+                binding.expandLayout.toggle(true);
+
+            });
         }
 
         private void bind(HomeworkModel model){

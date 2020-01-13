@@ -6,7 +6,6 @@ import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.observe
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.adapters.setSpinnerList
 import com.smart.resources.schools_app.core.myTypes.PostListener
@@ -91,7 +90,7 @@ class AddAbsenceFragment : Fragment(), MaterialSpinner.OnItemSelectedListener, P
             .apply {
                 binding.viewState = listState
                 binding.exception= addAbsenceException
-                addAbsenceModels.observe(this@AddAbsenceFragment, ::onStudentsDownloadCompleted)
+               // addAbsenceModels.observe(this@AddAbsenceFragment, ::onStudentsDownloadCompleted)
             }
     }
 

@@ -1,5 +1,7 @@
 package com.smart.resources.schools_app.features.advertising;
 
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -9,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -81,6 +84,12 @@ public class AdvertisingRecyclerAdapter extends RecyclerView.Adapter<Advertising
 
         private void bind(AdvertisingModel model) {
             binding.setItemModel(model);
+
+            if(model.getAttachment().toLowerCase().endsWith(".jpg")|| model.getAttachment().toLowerCase().endsWith(".png")){
+                binding.imgExist.setVisibility(View.VISIBLE);
+            }else{
+                binding.imgExist.setVisibility(View.GONE);
+            }
         }
     }
 

@@ -27,12 +27,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_item"
         android:elevation="@dimen/item_elevation"
         android:layoutDirection="rtl"
         android:minHeight="@dimen/item_min_height"
-        android:orientation="vertical"
-        android:padding="@dimen/item_padding">
+        android:orientation="vertical">
 
 
 
@@ -72,22 +70,37 @@
     </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/contentText"
+        <LinearLayout
+            android:id="@+id/exisiLin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:minLines="2"
-            android:gravity="center|start"
-            android:text="@{itemModel.note.trim()}"
-            tools:text="تيست تيست تيست  تيست نص تيست"
-            android:textAlignment="viewStart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/examName" />
+            android:layoutDirection="rtl"
+            android:layout_marginTop="13dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/contentText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center|start"
+                android:minLines="2"
+                android:text="@{itemModel.note.trim()}"
+                android:textAlignment="viewStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/examName"
+                tools:text="تيست تيست تيست  تيست نص تيست" />
+
+            <ImageView
+                android:id="@+id/imgExist"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_img_exist" />
+        </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/imageView"
@@ -98,6 +111,7 @@
             app:cardElevation="0dp">
 
             <ImageView
+                android:id="@+id/imgAdv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
@@ -105,6 +119,6 @@
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
         </androidx.cardview.widget.CardView>
 
-    </LinearLayout>
+ </LinearLayout>
 </ru.rhanza.constraintexpandablelayout.ExpandableLayout>
 </layout>

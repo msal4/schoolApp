@@ -66,4 +66,6 @@
     <string name="done_successfully">تمت العملية بنجاح ✓</string>
     <string name="select_class">اختر صف</string>
     <string name="must_enter_dgree">يجب ادخال درجة الطالب</string>
+    <string name="no_dgree_added">لم يتم اضافة ددرجة</string>
+    <string name="mark">الدرجة</string>
 </resources>
