@@ -12,7 +12,7 @@ import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ActivityLoginBinding
 import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
-import com.smart.resources.schools_app.core.utils.showErrorSnackbar
+import com.smart.resources.schools_app.core.utils.showSnackBar
 import com.smart.resources.schools_app.sharedUi.HomeActivity
 
 
@@ -72,7 +72,7 @@ class LoginActivity : AppCompatActivity(){
     }
 
     private fun onLoginError(errorMsg: String) {
-        binding.scrollView.showErrorSnackbar(errorMsg)
+        binding.scrollView.showSnackBar(errorMsg)
     }
 
 }

@@ -4,16 +4,30 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.databinding.ItemAddAbsenceBinding
+import com.smart.resources.schools_app.features.absence.AddAbsenceModel
 import com.smart.resources.schools_app.features.students.Student
 
-class AddAbsenceRecyclerAdapter(val onStudentSelected: (Student, Boolean)->Unit)
+class AddAbsenceRecyclerAdapter()
     : RecyclerView.Adapter<AddAbsenceRecyclerAdapter.MyViewHolder>() {
-    private var students: List<Student> = listOf()
+    private var students: List<AddAbsenceModel>?= null
 
-    fun updateData(students: List<Student>){
+    fun updateData(students: List<AddAbsenceModel>){
         this.students = students
         notifyDataSetChanged()
     }
+
+    fun clearData(){
+        students= null
+        notifyDataSetChanged()
+    }
+
+    fun uncheckAll(){
+        students?.apply {
+            forEach { it.isChecked= false }
+            notifyDataSetChanged()
+        }
+    }
+
 
     inner class MyViewHolder(val binding: ItemAddAbsenceBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -28,14 +42,18 @@ class AddAbsenceRecyclerAdapter(val onStudentSelected: (Student, Boolean)->Unit)
         return MyViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = students.size
+    override fun getItemCount(): Int = students?.size?:0
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val student= students[position]
+        if(students.isNullOrEmpty()) return
+        val student= students!![position]
+
+
         holder.binding.apply {
             studentCheckBox.text= student.name
+            studentCheckBox.isChecked= student.isChecked
             studentCheckBox.setOnCheckedChangeListener { _, isChecked ->
-                onStudentSelected(student, isChecked)
+                student.isChecked= isChecked
             }
         }
     }

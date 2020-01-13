@@ -30,6 +30,7 @@ fun setSpinnerError(spinner: MaterialSpinner, errorMsg:String?){
     spinner.error= errorMsg
 }
 
+
 @BindingAdapter("mine:setDate")
 fun setTextFromDate(textView: TextView, date: LocalDateTime?){
     try {

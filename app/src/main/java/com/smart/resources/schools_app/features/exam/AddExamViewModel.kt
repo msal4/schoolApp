@@ -27,7 +27,7 @@ class AddExamViewModel(application: Application) : AndroidViewModel(application)
         listener?.onUploadStarted()
         viewModelScope.launch {
             when(val myRes= GlobalScope.async { ExamRepository.addExam(postExamModel) }.toMyResult()){
-                is Success -> listener?.onUploadComplete()
+                is Success -> listener?.onUploadCompleted()
                 is ResponseError -> listener?.onError(myRes.combinedMsg)
                 is ConnectionError -> listener?.onError(c.getString(R.string.connection_error))
             }

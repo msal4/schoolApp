@@ -40,7 +40,7 @@
             android:layout_marginStart="16dp"
             android:fontFamily="@font/monadi"
             android:includeFontPadding="true"
-            android:text="@{itemModel.subjectName}"
+            android:text="@{itemModel.name}"
             android:textAlignment="viewStart"
             android:textColor="@android:color/black"
             android:textStyle="bold"

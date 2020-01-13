@@ -14,7 +14,7 @@ import com.smart.resources.schools_app.core.adapters.setTextFromDate
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.core.utils.hide
 import com.smart.resources.schools_app.core.utils.show
-import com.smart.resources.schools_app.core.utils.showErrorSnackbar
+import com.smart.resources.schools_app.core.utils.showSnackBar
 import com.smart.resources.schools_app.databinding.FragmentAddExamBinding
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import com.smart.resources.schools_app.features.profile.TeacherInfoModel
@@ -176,7 +176,7 @@ class AddExamFragment : Fragment(), PostListener {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onUploadComplete() {
+    override fun onUploadCompleted() {
         onBackPressed()
     }
 
@@ -188,6 +188,6 @@ class AddExamFragment : Fragment(), PostListener {
     override fun onError(errorMsg: String) {
         progressBar.hide()
         saveItem.isVisible = true
-        binding.constraintLayout.showErrorSnackbar(errorMsg)
+        binding.constraintLayout.showSnackBar(errorMsg)
     }
 }

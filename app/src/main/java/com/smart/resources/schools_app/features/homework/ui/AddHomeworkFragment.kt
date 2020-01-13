@@ -20,7 +20,6 @@ import com.smart.resources.schools_app.core.helpers.IntentHelper
 import com.smart.resources.schools_app.core.myTypes.PostListener
 import com.smart.resources.schools_app.core.utils.*
 import com.smart.resources.schools_app.databinding.FragmentAddHomeworkBinding
-import com.smart.resources.schools_app.features.homework.model.HomeworkModel
 import com.smart.resources.schools_app.features.homework.viewModel.AddHomeworkViewModel
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import com.smart.resources.schools_app.sharedUi.SectionActivity
@@ -204,7 +203,7 @@ class AddHomeworkFragment : Fragment(), PostListener {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onUploadComplete() {
+    override fun onUploadCompleted() {
         onBackPressed()
     }
 
@@ -216,7 +215,7 @@ class AddHomeworkFragment : Fragment(), PostListener {
     override fun onError(errorMsg: String) {
         progressBar.hide()
         saveItem.isVisible = true
-        binding.constraintLayout.showErrorSnackbar(errorMsg)
+        binding.constraintLayout.showSnackBar(errorMsg)
     }
 
 
