@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
+        <variable
+            name="listState"
+            type="com.smart.resources.schools_app.sharedUi.ListState" />
     </data>
 
     <FrameLayout
@@ -17,6 +20,7 @@
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:gravity="start"
+         android:text="@{listState.bodyError}"
          android:textAlignment="textStart"
          android:layout_margin="@dimen/error_text_margin"/>
 
@@ -24,7 +28,8 @@
             android:layout_gravity="center"
             android:id="@+id/progressIndicator"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:visibility="@{listState.loading? View.VISIBLE: View.GONE}"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -32,6 +37,7 @@
         android:layout_height="match_parent"
         android:clipChildren="false"
         android:clipToPadding="false"
+        android:visibility="@{listState.loading? View.GONE: View.VISIBLE}"
         android:padding="@dimen/item_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

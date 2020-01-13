@@ -30,7 +30,7 @@ class AddHomeworkViewModel  (application: Application) : AndroidViewModel(applic
                 when (val myRes = GlobalScope.async { HomeworkRepository.addHomework(
                     postHomeworkModel
                 ) as Response<HomeworkModel> }.toMyResult()) {
-                    is Success -> uploadListener?.onUploadComplete()
+                    is Success -> uploadListener?.onUploadCompleted()
 
                     is ResponseError -> uploadListener?.onError(myRes.combinedMsg)
                     is ConnectionError -> uploadListener?.onError(c.getString(R.string.connection_error))

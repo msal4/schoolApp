@@ -52,7 +52,7 @@
     <string name="advertising">الاعلانات</string>
     <string name="no_advertisements">لا توجد اعلانات</string>
     <string name="no_rating">لا توجد تقييمات</string>
-    <string name="role">الدور</string>
+    <string name="role">الدور</string>e
     <string name="subjects">المواد</string>
     <string name="notes">ملاحظات</string>
     <string name="homework_image_content_desc">صورة الواجب</string>
@@ -61,6 +61,9 @@
     <string name="rate">تقييم</string>
     <string name="subject">المادة</string>
     <string name="no_students">لا يوجد طلاب</string>
+    <string name="select_section">اختر شعبة</string>
+    <string name="no_student_selected">لم يتم اختيار طالب!</string>
+    <string name="done_successfully">تمت العملية بنجاح ✓</string>
     <string name="select_class">اختر صف</string>
     <string name="must_enter_dgree">يجب ادخال درجة الطالب</string>
 </resources>
