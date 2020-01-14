@@ -18,8 +18,6 @@ import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.core.utils.hide
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
-import com.smart.resources.schools_app.features.homework.model.HomeworkModel
-import com.smart.resources.schools_app.features.homework.viewModel.HomeworkViewModel
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 
 import com.smart.resources.schools_app.core.utils.*

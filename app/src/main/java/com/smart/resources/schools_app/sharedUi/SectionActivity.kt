@@ -76,10 +76,6 @@ class SectionActivity : AppCompatActivity() {
                     if(isStudent) RatingFragment.newInstance(this)
                     else AddRatingFragment.newInstance(this)
             }
-            else{
-                AddAbsenceFragment.newInstance(supportFragmentManager)
-            }
-            Section.RATING -> AddRatingFragment.newInstance(supportFragmentManager)
         }
     }
 

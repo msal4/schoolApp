@@ -76,7 +76,7 @@ class AddRatingBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun insertRating(it: View) {
-        if(addRatingModel.stars <0f) addRatingModel.stars= 0f
+        if(addRatingModel.rate <0f) addRatingModel.rate= 0f
         onRatingSet?.invoke(position, addRatingModel)
         Logger.i(addRatingModel.toString())
     }

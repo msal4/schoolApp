@@ -55,4 +55,3 @@ class HomeworkViewModel (application: Application) : AndroidViewModel(applicatio
     }
     }
 
-}

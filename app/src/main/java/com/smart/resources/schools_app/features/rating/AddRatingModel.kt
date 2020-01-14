@@ -7,12 +7,12 @@ import org.threeten.bp.LocalDateTime
 
 
 open class RatingModel (
-    var stars: Float,
+    var rate: Float,
     var note: String,
     var date: LocalDateTime
 ){
     override fun toString(): String {
-        return "RatingModel(stars=$stars, note='$note', date=$date)"
+        return "RatingModel(stars=$rate, note='$note', date=$date)"
     }
 }
 
@@ -33,9 +33,9 @@ class AddRatingModel  (
 
     constructor(student: Student):this(student.idStudent, student.name)
 
-    val isRated get() =  stars > -1.0F
+    val isRated get() =  rate > -1.0F
     fun reset(){
-        stars= -1.0F
+        rate= -1.0F
         note= ""
         date= LocalDateTime.now()
     }
@@ -43,7 +43,7 @@ class AddRatingModel  (
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(studentId)
         parcel.writeString(studentName)
-        parcel.writeFloat(stars)
+        parcel.writeFloat(rate)
         parcel.writeString(note)
         parcel.writeSerializable(date)
     }

@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:isIndicator="true"
             android:numStars="5"
-            android:rating="@{itemModel.stars}"
+            android:rating="@{itemModel.rate}"
             android:stepSize="0.1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/date"
