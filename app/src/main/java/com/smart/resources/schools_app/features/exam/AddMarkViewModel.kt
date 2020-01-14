@@ -1,43 +1,44 @@
-package com.smart.resources.schools_app.features.rating
+package com.smart.resources.schools_app.features.exam
 
 import android.app.Application
 import androidx.lifecycle.*
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.helpers.BackendHelper
 import com.smart.resources.schools_app.core.myTypes.*
+import com.smart.resources.schools_app.features.students.Student
 import kotlinx.coroutines.*
 
 
-class RatingViewModel(application: Application) : AndroidViewModel(application) {
+class AddMarkViewModel(application: Application) : AndroidViewModel(application) {
     private val c= application.applicationContext
     val listState = ListState()
 
-    private val rating: MutableLiveData<List<RatingModel>>
-            by lazy { MutableLiveData<List<RatingModel>>() }
+    private val exams: MutableLiveData<List<Student>>
+            by lazy { MutableLiveData<List<Student>>()
+            }
 
-    fun getRatings():
-            LiveData<List<RatingModel>> {
-        fetchRatings()
 
-        return rating
+    fun getStudents(examId: Int):
+            LiveData<List<Student>> {
+
+        fetchStudents(examId)
+        return exams
     }
 
-    private fun fetchRatings() {
+
+    fun fetchStudents(examId:Int){
         viewModelScope.launch {
             listState.apply {
                 setLoading(true)
 
-                val result = GlobalScope.async {
-                    BackendHelper.ratingDao.fetchRating()
-                }.toMyResult()
-
+                val result = GlobalScope.async {  BackendHelper.examDao.getResultsByExam(examId.toString()) }.toMyResult()
                 when (result) {
                     is Success -> {
                         if (result.data.isNullOrEmpty())
-                            setBodyError(c.getString(R.string.no_rating))
+                            setBodyError(c.getString(R.string.no_advertisements))
                         else {
                             setLoading(false)
-                            rating.value = result.data
+                            exams.value = result.data
                         }
 
                     }
@@ -47,4 +48,5 @@ class RatingViewModel(application: Application) : AndroidViewModel(application) 
             }
         }
     }
+
 }

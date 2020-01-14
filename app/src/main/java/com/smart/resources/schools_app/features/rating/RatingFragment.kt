@@ -7,12 +7,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.myTypes.ConnectionError
-import com.smart.resources.schools_app.core.myTypes.ResponseError
-import com.smart.resources.schools_app.core.myTypes.Success
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.sharedUi.SectionActivity
-import com.smart.resources.schools_app.core.utils.*
 
 class RatingFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
@@ -55,7 +51,7 @@ class RatingFragment : Fragment() {
     }
 
 
-    private  fun onHomeworkDownload(result: List<AddRatingModel>) {
+    private  fun onHomeworkDownload(result: List<RatingModel>) {
         binding.recyclerView.adapter= RatingAdapter(result)
     }
 }

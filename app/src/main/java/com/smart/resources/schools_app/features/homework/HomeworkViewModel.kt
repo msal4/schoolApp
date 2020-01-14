@@ -26,7 +26,7 @@ class HomeworkViewModel (application: Application) : AndroidViewModel(applicatio
             val result = GlobalScope.async { BackendHelper.homeworkDao.deleteHomework(homeworkId) }.toMyResult()
             when(result){
                 is Success -> {
-                    Toast.makeText(c,"deleted",Toast.LENGTH_LONG).show()
+                    //Toast.makeText(c,"deleted",Toast.LENGTH_LONG).show()
                 }
                 is ResponseError -> onError?.invoke(result.combinedMsg)
                 is ConnectionError -> onError?.invoke(c.getString(R.string.connection_error))

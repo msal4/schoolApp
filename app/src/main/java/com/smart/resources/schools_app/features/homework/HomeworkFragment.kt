@@ -54,6 +54,15 @@ class HomeworkFragment : Fragment(){
         setHasOptionsMenu(true)
 
         setupViewModel()
+
+        if(SharedPrefHelper.instance?.userType == UserType.TEACHER) {
+            val mIth = setupSwipe()
+            mIth.attachToRecyclerView(binding.recyclerView)
+        }
+        return binding.root
+    }
+
+    private fun setupSwipe(): ItemTouchHelper {
         val mIth = ItemTouchHelper(
             object : ItemTouchHelper.SimpleCallback(
                 0,
@@ -70,7 +79,12 @@ class HomeworkFragment : Fragment(){
                 ) {
 
                     val mBackground = ColorDrawable(Color.RED)
-                    val mIcon = context?.let { ContextCompat.getDrawable(it, R.drawable.ic_delete_white_24dp ) }
+                    val mIcon = context?.let {
+                        ContextCompat.getDrawable(
+                            it,
+                            R.drawable.ic_delete_white_24dp
+                        )
+                    }
                     val itemView = viewHolder.itemView
                     val backgroundCornerOffset =
                         25 //so mBackground is behind the rounded corners of itemView
@@ -142,8 +156,7 @@ class HomeworkFragment : Fragment(){
                 }
 
             })
-        mIth.attachToRecyclerView(binding.recyclerView)
-        return binding.root
+        return mIth
     }
 
     private fun setupViewModel() {

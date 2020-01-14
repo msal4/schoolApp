@@ -8,9 +8,9 @@ import retrofit2.http.POST
 
 interface RatingDao{
     @GET("studentBehaviors")
-    suspend fun fetchRating(): Response<List<AddRatingModel>>
+    suspend fun fetchRating(): Response<List<RatingModel>>
 
 
     @POST("multiBehavior")
-    suspend fun addRatings(@Body addRatingModels: List<AddRatingModel>): Response<Unit>
+    suspend fun addRatings(@Body ratingModels: List<RatingModel>): Response<Unit>
 }

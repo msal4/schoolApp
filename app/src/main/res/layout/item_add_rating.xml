@@ -8,7 +8,7 @@
         <import type="android.view.View"/>
         <variable
             name="ratingModel"
-            type="com.smart.resources.schools_app.features.rating.AddRatingModel" />
+            type="com.smart.resources.schools_app.features.rating.RatingModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,7 +30,7 @@
             android:layout_marginStart="24dp"
             android:fontFamily="@font/monadi"
             android:includeFontPadding="true"
-            android:text="@{ratingModel.studentName}"
+            android:text="@{ratingModel.name}"
             android:textAlignment="viewStart"
             android:textColor="@android:color/black"
             android:textSize="18sp"

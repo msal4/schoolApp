@@ -4,20 +4,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.databinding.ItemAddRatingBinding
-import com.smart.resources.schools_app.features.rating.AddRatingModel
+import com.smart.resources.schools_app.features.rating.RatingModel
 
-class AddRatingAdapter(private val onItemClicked: (AddRatingModel, Int) -> Unit) :
+class AddRatingAdapter(private val onItemClicked: (RatingModel, Int) -> Unit) :
     RecyclerView.Adapter<AddRatingAdapter.MyViewHolder>() {
-    private var ratingModels: MutableList<AddRatingModel>? = null
+    private var ratingModels: MutableList<RatingModel>? = null
 
-    fun updateData(ratingModels: MutableList<AddRatingModel>) {
+    fun updateData(ratingModels: MutableList<RatingModel>) {
         this.ratingModels = ratingModels
         notifyDataSetChanged()
     }
 
-    fun updateItem(position: Int, addRatingModel:AddRatingModel) {
+    fun updateItem(position: Int, ratingModel:RatingModel) {
         ratingModels?.also {
-            it[position] = addRatingModel
+            it[position] = ratingModel
             notifyDataSetChanged()
         }
     }
@@ -59,7 +59,7 @@ class AddRatingAdapter(private val onItemClicked: (AddRatingModel, Int) -> Unit)
     inner class MyViewHolder(val binding: ItemAddRatingBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(ratingModel: AddRatingModel) {
+        fun bind(ratingModel: RatingModel) {
             binding.ratingModel = ratingModel
         }
     }

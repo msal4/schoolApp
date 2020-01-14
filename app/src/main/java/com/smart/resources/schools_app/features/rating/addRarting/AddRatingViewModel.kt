@@ -6,7 +6,7 @@ import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.helpers.BackendHelper
 import com.smart.resources.schools_app.core.myTypes.*
-import com.smart.resources.schools_app.features.rating.AddRatingModel
+import com.smart.resources.schools_app.features.rating.RatingModel
 import com.smart.resources.schools_app.core.myTypes.ListState
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -24,14 +24,14 @@ class AddRatingViewModel(application: Application, private val postListener: Pos
     val sectionAndClassesErrorMsg: MutableLiveData<String> = MutableLiveData()
     var classId = MutableLiveData<String>()
 
-    val addRatingModels: LiveData<MutableList<AddRatingModel>?> =
+    val ratingModels: LiveData<MutableList<RatingModel>?> =
         classId.switchMap {
             liveData {
                 emit(fetchStudents(it))
             }
         }
 
-    private suspend fun fetchStudents(classId: String): MutableList<AddRatingModel>? {
+    private suspend fun fetchStudents(classId: String): MutableList<RatingModel>? {
         listState.setLoading(true)
 
         val studentsResult =
@@ -42,7 +42,7 @@ class AddRatingViewModel(application: Application, private val postListener: Pos
                 if (studentsResult.data.isNullOrEmpty()) listState.setBodyError(c.getString(R.string.no_students))
                 else {
                     listState.setLoading(false)
-                    return studentsResult.data.map { AddRatingModel(it)}.toMutableList()
+                    return studentsResult.data.map { RatingModel(it)}.toMutableList()
                 }
 
             }
@@ -55,7 +55,7 @@ class AddRatingViewModel(application: Application, private val postListener: Pos
     }
 
     fun addRatings() {
-        Logger.i(addRatingModels.value?.firstOrNull().toString())
+        Logger.i(ratingModels.value?.firstOrNull().toString())
         resetErrors()
 
         if (!isDataValid()) return
@@ -64,7 +64,7 @@ class AddRatingViewModel(application: Application, private val postListener: Pos
         postListener.onUploadStarted()
         viewModelScope.launch {
             val result =
-                async { BackendHelper.ratingDao.addRatings(addRatingModels.value.orEmpty()) }
+                async { BackendHelper.ratingDao.addRatings(ratingModels.value.orEmpty()) }
                     .toMyResult()
 
             when (result) {
@@ -93,7 +93,7 @@ class AddRatingViewModel(application: Application, private val postListener: Pos
         return true
     }
 
-    private fun noOneRatedYet() = addRatingModels.value?.find { it.isRated } == null
+    private fun noOneRatedYet() = ratingModels.value?.find { it.isRated } == null
 
     class Factory(private val mApplication: Application, private val postListener: PostListener) :
         ViewModelProvider.Factory {

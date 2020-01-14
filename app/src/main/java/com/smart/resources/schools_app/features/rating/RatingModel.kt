@@ -6,23 +6,13 @@ import com.smart.resources.schools_app.features.students.Student
 import org.threeten.bp.LocalDateTime
 
 
-open class RatingModel (
-    var rate: Float,
-    var note: String,
-    var date: LocalDateTime
-){
-    override fun toString(): String {
-        return "RatingModel(stars=$rate, note='$note', date=$date)"
-    }
-}
-
-class AddRatingModel  (
+class RatingModel  (
     val studentId: String,
-    @Transient val studentName: String,
-    stars: Float= -1.0f,
-    note: String= "",
-    date: LocalDateTime= LocalDateTime.now()
-): RatingModel(stars, note, date), Parcelable {
+    var name: String,
+    var rate: Float= -1.0f,
+    var note: String= "",
+    var date: LocalDateTime= LocalDateTime.now()
+):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()?: "",
         parcel.readString()?: "",
@@ -42,7 +32,7 @@ class AddRatingModel  (
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(studentId)
-        parcel.writeString(studentName)
+        parcel.writeString(name)
         parcel.writeFloat(rate)
         parcel.writeString(note)
         parcel.writeSerializable(date)
@@ -53,16 +43,16 @@ class AddRatingModel  (
     }
 
     override fun toString(): String {
-        return "${super.toString()}\nAddRatingModel(studentId='$studentId', studentName='$studentName')"
+        return "${super.toString()}\nAddRatingModel(studentId='$studentId', studentName='$name')"
     }
 
 
-    companion object CREATOR : Parcelable.Creator<AddRatingModel> {
-        override fun createFromParcel(parcel: Parcel): AddRatingModel {
-            return AddRatingModel(parcel)
+    companion object CREATOR : Parcelable.Creator<RatingModel> {
+        override fun createFromParcel(parcel: Parcel): RatingModel {
+            return RatingModel(parcel)
         }
 
-        override fun newArray(size: Int): Array<AddRatingModel?> {
+        override fun newArray(size: Int): Array<RatingModel?> {
             return arrayOfNulls(size)
         }
     }

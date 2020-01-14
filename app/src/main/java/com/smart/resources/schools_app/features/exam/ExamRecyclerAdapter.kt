@@ -4,10 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
+import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.databinding.ItemExamBinding
 
 class ExamRecyclerAdapter(private val exams: List<ExamModel>,
                           private val listener:OnItemClickListener) : RecyclerView.Adapter<ExamRecyclerAdapter.MyViewHolder>() {
+    private val isStudent= SharedPrefHelper.instance?.userType == UserType.STUDENT
 
     interface OnItemClickListener {
         fun onItemClick(examModel: ExamModel)
@@ -34,7 +37,8 @@ class ExamRecyclerAdapter(private val exams: List<ExamModel>,
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val exam= exams[position]
-        holder.itemView.setOnClickListener { listener.onItemClick(exam) }
+
+        if(!isStudent)holder.itemView.setOnClickListener { listener.onItemClick(exam) }
         holder.bind(exam)
     }
 

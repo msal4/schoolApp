@@ -16,7 +16,7 @@ import com.smart.resources.schools_app.core.utils.showSnackBar
 import com.smart.resources.schools_app.databinding.FragmentAddRatingBinding
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import com.smart.resources.schools_app.features.profile.TeacherInfoModel
-import com.smart.resources.schools_app.features.rating.AddRatingModel
+import com.smart.resources.schools_app.features.rating.RatingModel
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 import com.tiper.MaterialSpinner
 
@@ -87,12 +87,12 @@ class AddRatingFragment : Fragment(), MaterialSpinner.OnItemSelectedListener, Po
             .apply {
                 binding.viewState = listState
                 binding.sectionsError= sectionAndClassesErrorMsg
-                addRatingModels.observe(this@AddRatingFragment, ::onStudentsDownloadCompleted)
+                ratingModels.observe(this@AddRatingFragment, ::onStudentsDownloadCompleted)
 
             }
     }
 
-    private fun onStudentsDownloadCompleted(students: MutableList<AddRatingModel>?){
+    private fun onStudentsDownloadCompleted(students: MutableList<RatingModel>?){
         students?.let {
             adapter.updateData(it)
         }
@@ -115,9 +115,9 @@ class AddRatingFragment : Fragment(), MaterialSpinner.OnItemSelectedListener, Po
         return super.onOptionsItemSelected(item)
     }
 
-    private fun onRecyclerItemClicked(addRatingModel: AddRatingModel, position: Int ){
+    private fun onRecyclerItemClicked(ratingModel: RatingModel, position: Int ){
         fragmentManager?.let {fm ->
-           AddRatingBottomSheet.newInstance(addRatingModel, position).also {
+           AddRatingBottomSheet.newInstance(ratingModel, position).also {
                it.show(fm, "")
                it.onRatingSet= ::onRatingSet
            }
@@ -160,7 +160,7 @@ class AddRatingFragment : Fragment(), MaterialSpinner.OnItemSelectedListener, Po
         }
     }
 
-    private fun onRatingSet(position:Int, addRatingModel: AddRatingModel){
-        adapter.updateItem(position, addRatingModel)
+    private fun onRatingSet(position:Int, ratingModel: RatingModel){
+        adapter.updateItem(position, ratingModel)
     }
 }

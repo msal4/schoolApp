@@ -15,7 +15,7 @@ import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.core.utils.hide
 import com.smart.resources.schools_app.core.utils.show
 import com.smart.resources.schools_app.core.utils.showSnackBar
-import com.smart.resources.schools_app.databinding.FragmentAddMarkBinding
+import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.students.SendStudentResult
 import com.smart.resources.schools_app.features.students.Student
 import com.smart.resources.schools_app.sharedUi.SectionActivity
@@ -24,8 +24,8 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 
 class AddMarkFragment : Fragment() {
-    private lateinit var binding: FragmentAddMarkBinding
-    private lateinit var viewModel: FetchStudentViewModel
+    private lateinit var binding: FragmentRecyclerLoaderBinding
+    private lateinit var viewModel: AddMarkViewModel
     private lateinit var adapter: AddMarkRecyclerAdapter
     private lateinit var progressBar: ProgressBar
     private lateinit var saveItem: MenuItem
@@ -57,7 +57,9 @@ class AddMarkFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentAddMarkBinding.inflate(inflater, container, false)
+        binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner= this@AddMarkFragment
+        }
         setHasOptionsMenu(true)
 
         adapter = AddMarkRecyclerAdapter(listOf())
@@ -147,7 +149,7 @@ class AddMarkFragment : Fragment() {
 
                 }
             } else {
-                binding.addMarkLayout.showSnackBar("يجب ادخال درجة صحيحة")
+                binding.layout.showSnackBar("يجب ادخال درجة صحيحة")
             }
 
         }else{
@@ -158,9 +160,8 @@ class AddMarkFragment : Fragment() {
 
 
     private fun showErrorMsg(msg:String){
-        progressBar.hide()
-        saveItem.isVisible = true
-        binding.addMarkLayout.showSnackBar(msg)
+        setToolbarLoading(false)
+        binding.layout.showSnackBar(msg)
     }
     private fun setToolbarLoading(isLoading: Boolean) {
         if (isLoading) {
@@ -194,7 +195,8 @@ class AddMarkFragment : Fragment() {
 
     private fun setupViewModel(examId: Int) {
         viewModel = ViewModelProviders.of(this)
-            .get(FetchStudentViewModel::class.java).apply {
+            .get(AddMarkViewModel::class.java).apply {
+                binding.listState= listState
                 getStudents(examId).observe(
                     this@AddMarkFragment,
                     androidx.lifecycle.Observer { onExamsDownload(it) })
@@ -202,20 +204,8 @@ class AddMarkFragment : Fragment() {
 
     }
 
-// TODO: fix this
-    private fun onExamsDownload(result: MyResult<List<Student>>) {
-        var errorMsg = ""
-        when (result) {
-            is Success -> {
-                if (result.data.isNullOrEmpty()) errorMsg = getString(R.string.no_exams)
-                else {
-                    binding.recyclerView.adapter = AddMarkRecyclerAdapter(result.data)
-                }
-
-            }
-            is ResponseError -> errorMsg = result.combinedMsg
-            is ConnectionError -> errorMsg = getString(R.string.connection_error)
-        }
+    private fun onExamsDownload(result: List<Student>) {
+        binding.recyclerView.adapter = AddMarkRecyclerAdapter(result)
     }
 
 
