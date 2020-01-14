@@ -10,94 +10,131 @@
             type="com.smart.resources.schools_app.features.homework.model.HomeworkModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+    <ru.rhanza.constraintexpandablelayout.ExpandableLayout
+        android:clipToPadding="false"
+        android:clipChildren="false"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_item"
-        android:layoutDirection="rtl"
-        android:minHeight="@dimen/item_min_height"
-        android:orientation="vertical"
-        android:padding="@dimen/item_padding"
-        android:elevation="@dimen/item_elevation"
+        android:id="@+id/expandLayout"
+        android:layout_width="match_parent"
+        app:el_animationDuration="300"
+        app:el_initialState="collapsed"
+        app:el_collapsedHeight="@dimen/homework_collapsed_height"
+        app:el_moreText="Expand/Collapse"
+        app:el_shadowHeight="20dp"
+        app:el_showButton="false"
+        app:el_showShadow="false"
         android:layout_marginBottom="@dimen/item_margin">
 
-        <TextView
-            android:textAlignment="viewStart"
-            android:id="@+id/date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/schedule"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
-            mine:setDate="@{itemModel.date}"
-            tools:text="8/10/2019" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="271dp"
+            android:background="@drawable/background_item"
+            android:elevation="@dimen/item_elevation"
+            android:layoutDirection="rtl"
+            android:minHeight="@dimen/item_min_height"
+            android:orientation="vertical"
+            android:padding="@dimen/item_padding"
+            tools:layout_editor_absoluteY="1dp">
 
-        <TextView
-            android:id="@+id/schedule"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            tools:text="المادة"
-            android:textAlignment="viewStart"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/date"
-            app:layout_constraintStart_toStartOf="@+id/date"
-            app:layout_constraintTop_toBottomOf="@+id/date"
-            android:text="@{itemModel.assignmentName}" />
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                mine:setDate="@{itemModel.date}"
+                android:textAlignment="viewStart"
+                app:layout_constraintBottom_toTopOf="@+id/schedule"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="8/10/2019" />
 
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrier"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="right"
-            app:constraint_referenced_ids="schedule,date"
-            app:layout_constraintEnd_toEndOf="parent" />
+            <TextView
+                android:id="@+id/schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{itemModel.assignmentName}"
+                android:textAlignment="viewStart"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/date"
+                app:layout_constraintStart_toStartOf="@+id/date"
+                app:layout_constraintTop_toBottomOf="@+id/date"
+                tools:text="المادة" />
 
-        <ImageView
-            android:id="@+id/advertisementsIcon"
-            android:layout_width="@dimen/item_icon_size"
-            android:layout_height="@dimen/item_icon_size"
-            android:contentDescription="@string/desc_ic_exam"
-            android:src="@drawable/ic_homework"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="right"
+                app:constraint_referenced_ids="schedule,date"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-
-        <TextView
-            android:textAlignment="viewStart"
-            android:id="@+id/examName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:fontFamily="@font/monadi"
-            android:includeFontPadding="true"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/contentText"
-            app:layout_constraintStart_toEndOf="@+id/advertisementsIcon"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@{itemModel.subjectName}"
-            tools:text="العنوان" />
+            <ImageView
+                android:id="@+id/advertisementsIcon"
+                android:layout_width="@dimen/item_icon_size"
+                android:layout_height="@dimen/item_icon_size"
+                android:contentDescription="@string/desc_ic_exam"
+                android:src="@drawable/ic_homework"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.060000002" />
 
 
-        <TextView
-            android:textAlignment="viewStart"
-            android:id="@+id/contentText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:text="@{itemModel.note}"
-            tools:text="المحتوى هو هذا وها وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا المحتوى هو هذاالمحتوى هو هذا"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/barrier"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/advertisementsIcon"
-            app:layout_constraintTop_toBottomOf="@+id/examName" />
+            <TextView
+                android:id="@+id/examName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/monadi"
+                android:includeFontPadding="true"
+                android:text="@{itemModel.subjectName}"
+                android:textAlignment="viewStart"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/contentText"
+                app:layout_constraintStart_toEndOf="@+id/advertisementsIcon"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="العنوان" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/contentText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:minLines="2"
+                android:text="@{itemModel.note}"
+                android:textAlignment="viewStart"
+                app:layout_constraintEnd_toStartOf="@+id/barrier"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/advertisementsIcon"
+                app:layout_constraintTop_toBottomOf="@+id/examName"
+                tools:text="المحتوى هو هذا وها وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا المحتوى هو هذاالمحتوى هو هذا" />
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/contentText">
+
+                <ImageView
+                    android:id="@+id/imgAdv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:srcUrl="@{itemModel.attachment}"
+                    tools:srcCompat="@tools:sample/backgrounds/scenic" />
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ru.rhanza.constraintexpandablelayout.ExpandableLayout>
 </layout>

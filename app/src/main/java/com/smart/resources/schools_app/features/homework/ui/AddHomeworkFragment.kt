@@ -26,7 +26,7 @@ import com.smart.resources.schools_app.sharedUi.SectionActivity
 import com.smart.resources.schools_app.features.profile.TeacherInfoModel
 import com.smart.resources.schools_app.sharedUi.DatePickerFragment
 import com.tiper.MaterialSpinner
-import id.zelory.compressor.Compressor
+//import id.zelory.compressor.Compressor
 import org.threeten.bp.LocalDateTime
 import java.io.File
 
@@ -145,8 +145,8 @@ class AddHomeworkFragment : Fragment(), PostListener {
 
     private fun saveAsCompressedFile(it: Uri) {
         val originalFile: File = FileUtils.from(context, it)
-        val imageFile = Compressor(context).compressToFile(originalFile)
-        viewModel.postHomeworkModel.attachment = imageFile
+            //val imageFile = Compressor(context).compressToFile(originalFile)
+       // viewModel.postHomeworkModel.attachment = imageFile
     }
 
     private fun addImage(view: View) {

@@ -4,6 +4,8 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Student(
+class Student(
+    val mark:Int?,
     val idStudent: String,
     val name: String
 ):Parcelable {
@@ -32,3 +34,21 @@ data class Student(
         }
     }
 }
+
+class SendStudentResult(
+    val marks: List<Marks>,
+    val examId: Int
+)
+class Marks(
+    val mark: Int,
+    val studentId: String
+)
+)
+class SendStudentResult(
+    val marks: List<Marks>,
+    val examId: Int
+)
+class Marks(
+    val mark: Int,
+    val studentId: String
+)

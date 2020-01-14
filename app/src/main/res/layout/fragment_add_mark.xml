@@ -6,7 +6,11 @@
     <data>
 
     </data>
-
+    <LinearLayout
+        android:id="@+id/addMarkLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
@@ -22,5 +26,5 @@
         app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/item_add_mark"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
+    </LinearLayout>
 </layout>

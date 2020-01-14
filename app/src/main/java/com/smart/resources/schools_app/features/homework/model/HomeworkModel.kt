@@ -21,6 +21,7 @@ class HomeworkModel(
     assignmentName: String,
     date: LocalDateTime,
     note: String,
+    val attachment: String,
     subjectName: String
 
 ): BaseHomeworkModel(assignmentName, date, note, subjectName)

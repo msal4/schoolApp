@@ -11,7 +11,7 @@ import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.sharedUi.SectionActivity
-import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
+//import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
 
 class AbsenceFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
@@ -59,7 +59,7 @@ class AbsenceFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.addMenuItem-> fragmentManager?.let { AddAbsenceFragment.newInstance(it) }
+           // R.id.addMenuItem-> fragmentManager?.let { AddAbsenceFragment.newInstance(it) }
         }
         return super.onOptionsItemSelected(item)
     }

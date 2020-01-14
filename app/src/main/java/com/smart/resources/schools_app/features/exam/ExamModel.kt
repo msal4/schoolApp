@@ -10,6 +10,7 @@ abstract class Exam (
 )
 
 class ExamModel(
+    var idExam:Int?,
     var mark: Int?,
     subjectName: String,
     date: LocalDateTime,

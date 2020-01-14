@@ -15,9 +15,10 @@ import com.smart.resources.schools_app.core.myTypes.Section
 import com.smart.resources.schools_app.core.myTypes.Section.EXAM
 import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.features.absence.getAbsence.AbsenceFragment
-import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
+//import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
 import com.smart.resources.schools_app.features.advertising.AdvertisingFragment
 import com.smart.resources.schools_app.features.exam.AddMarkFragment
+import com.smart.resources.schools_app.features.exam.ExamFragment
 import com.smart.resources.schools_app.features.homework.ui.HomeworkFragment
 import com.smart.resources.schools_app.features.library.LibraryFragment
 import com.smart.resources.schools_app.features.rating.addRarting.AddRatingFragment
@@ -58,7 +59,7 @@ class SectionActivity : AppCompatActivity() {
         val userType= SharedPrefHelper.instance?.userType
 
         when(intent.getSerializableExtra(EXTRA_SECTION) as Section){
-            EXAM -> AddMarkFragment.newInstance(supportFragmentManager)
+            EXAM -> ExamFragment.newInstance(supportFragmentManager)
             Section.HOMEWORK -> HomeworkFragment.newInstance(supportFragmentManager)
             Section.NOTIFICATION -> NotificationFragment.newInstance(supportFragmentManager)
             Section.LIBRARY -> LibraryFragment.newInstance(supportFragmentManager)
@@ -68,7 +69,7 @@ class SectionActivity : AppCompatActivity() {
                 AbsenceFragment.newInstance(supportFragmentManager)
             }
             else{
-                AddAbsenceFragment.newInstance(supportFragmentManager)
+                //AddAbsenceFragment.newInstance(supportFragmentManager)
             }
             Section.RATING -> AddRatingFragment.newInstance(supportFragmentManager)
         }
