@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.databinding.ItemStudentRateBinding
 
-class RatingAdapter(private val it: List<RatingModel>) : RecyclerView.Adapter<RatingAdapter.MyViewHolder>() {
+class RatingAdapter(private val it: List<AddRatingModel>) : RecyclerView.Adapter<RatingAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(val binding: ItemStudentRateBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(ratingModel: RatingModel){
-            binding.itemModel=ratingModel
+        fun bind(addRatingModel: AddRatingModel){
+            binding.itemModel=addRatingModel
         }
     }
 

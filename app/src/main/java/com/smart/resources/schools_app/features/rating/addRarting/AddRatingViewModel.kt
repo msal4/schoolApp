@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.absence.addAbsence
+package com.smart.resources.schools_app.features.rating.addRarting
 
 import android.app.Application
 import androidx.lifecycle.*
@@ -6,15 +6,13 @@ import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.helpers.BackendHelper
 import com.smart.resources.schools_app.core.myTypes.*
-import com.smart.resources.schools_app.features.absence.AddAbsenceModel
-import com.smart.resources.schools_app.features.absence.PostAbsenceModel
+import com.smart.resources.schools_app.features.rating.AddRatingModel
 import com.smart.resources.schools_app.sharedUi.ListState
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 
-class AddAbsenceViewModel(application: Application, private val postListener: PostListener) :
+class AddRatingViewModel(application: Application, private val postListener: PostListener) :
     AndroidViewModel(application) {
     private val c = application.applicationContext
     val listState = ListState().apply {
@@ -22,23 +20,19 @@ class AddAbsenceViewModel(application: Application, private val postListener: Po
         setBodyError(c.getString(R.string.select_section))
     }
 
-    val addAbsenceException: AddAbsenceException = AddAbsenceException()
-
-    val postAbsenceModel = PostAbsenceModel()
+    val sectionAndClassesErrorMsg: MutableLiveData<String> = MutableLiveData()
     var classId = MutableLiveData<String>()
 
-    val addAbsenceModels: LiveData<List<AddAbsenceModel>?> =
+    val addRatingModels: LiveData<MutableList<AddRatingModel>?> =
         classId.switchMap {
             liveData {
-                postAbsenceModel.classId= it
                 emit(fetchStudents(it))
             }
         }
 
-    private suspend fun fetchStudents(classId: String): List<AddAbsenceModel>? {
+    private suspend fun fetchStudents(classId: String): MutableList<AddRatingModel>? {
         listState.setLoading(true)
 
-        Logger.i("absence model: $postAbsenceModel")
         val studentsResult =
             viewModelScope.async { BackendHelper.studentDao.getStudentsByClass(classId) }
                 .toMyResult()
@@ -47,7 +41,7 @@ class AddAbsenceViewModel(application: Application, private val postListener: Po
                 if (studentsResult.data.isNullOrEmpty()) listState.setBodyError(c.getString(R.string.no_students))
                 else {
                     listState.setLoading(false)
-                    return studentsResult.data.map { AddAbsenceModel(it.idStudent, name = it.name) }
+                    return studentsResult.data.map { AddRatingModel(it)}.toMutableList()
                 }
 
             }
@@ -59,18 +53,18 @@ class AddAbsenceViewModel(application: Application, private val postListener: Po
         return null
     }
 
-    fun addAbsences() {
-        Logger.i(addAbsenceModels.value?.firstOrNull().toString())
-        addAbsenceException.safeReset()
-        fillStudents()
-
+    fun addRatings() {
+        Logger.i(addRatingModels.value?.firstOrNull().toString())
+        resetErrors()
 
         if (!isDataValid()) return
+
         Logger.i("uploading started")
         postListener.onUploadStarted()
         viewModelScope.launch {
             val result =
-                GlobalScope.async { BackendHelper.absenceDao.addStudentAbsences(postAbsenceModel) }.toMyResult()
+                async { BackendHelper.ratingDao.addRatings(addRatingModels.value.orEmpty()) }
+                    .toMyResult()
 
             when (result) {
                 is Success -> postListener.onUploadCompleted()
@@ -80,35 +74,30 @@ class AddAbsenceViewModel(application: Application, private val postListener: Po
         }
     }
 
-    private fun fillStudents() {
-        addAbsenceModels.value?.filter { it.isChecked }?.map { it.idStudent }.let {
-            postAbsenceModel.studentsId= it?: listOf()
-        }
+    private fun resetErrors() {
+        if (!sectionAndClassesErrorMsg.value.isNullOrBlank()) sectionAndClassesErrorMsg.value = ""
     }
 
     private fun isDataValid(): Boolean {
         when {
-            postAbsenceModel.classId.isBlank() -> {
-                addAbsenceException.sectionAndClassesMsg.value= c.getString(R.string.field_required)
+            classId.value.isNullOrBlank() -> {
+                sectionAndClassesErrorMsg.value= c.getString(R.string.field_required)
                 return false
             }
-            postAbsenceModel.subjectName.isBlank() -> {
-                addAbsenceException.subjectMsg.value = c.getString(R.string.field_required)
-                return false
-            }
-            postAbsenceModel.studentsId.isEmpty() -> {
-                postListener.onError(c.getString(R.string.no_student_selected))
+            noOneRatedYet() -> {
+                postListener.onError(c.getString(R.string.no_student_rated))
                 return false
             }
         }
         return true
     }
 
+    private fun noOneRatedYet() = addRatingModels.value?.find { it.isRated } == null
 
     class Factory(private val mApplication: Application, private val postListener: PostListener) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return AddAbsenceViewModel(mApplication, postListener) as T
+            return AddRatingViewModel(mApplication, postListener) as T
         }
 
     }

@@ -9,7 +9,7 @@ import com.smart.resources.schools_app.core.myTypes.MyResult
 import com.smart.resources.schools_app.core.myTypes.toMyResult
 import kotlinx.coroutines.*
 
-typealias RatingResult= MyResult<List<RatingModel>>
+typealias RatingResult= MyResult<List<AddRatingModel>>
 
 class RatingViewModel : ViewModel() {
     private val homework: MutableLiveData<RatingResult>

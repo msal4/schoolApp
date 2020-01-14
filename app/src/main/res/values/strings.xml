@@ -63,5 +63,7 @@
     <string name="no_students">لا يوجد طلاب</string>
     <string name="select_section">اختر شعبة</string>
     <string name="no_student_selected">لم يتم اختيار طالب!</string>
+    <string name="no_student_rated">لم يتم تقييم طالب!</string>
     <string name="done_successfully">تمت العملية بنجاح ✓</string>
+    <string name="add_rating">اضافة تقييم</string>
 </resources>

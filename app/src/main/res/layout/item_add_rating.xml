@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:mine="http://schemas.android.com/apk/res/android">
 
     <data>
-
+        <import type="android.view.View"/>
+        <variable
+            name="ratingModel"
+            type="com.smart.resources.schools_app.features.rating.AddRatingModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,43 +16,49 @@
         android:layout_height="wrap_content"
         android:background="@drawable/background_item"
         android:layoutDirection="rtl"
-        android:minHeight="@dimen/item_min_height"
         android:orientation="vertical"
         android:elevation="@dimen/item_elevation"
         android:layout_marginBottom="@dimen/item_margin"
-        android:padding="@dimen/item_padding">
+        android:paddingTop="24dp"
+        android:paddingBottom="24dp">
 
 
         <TextView
-            android:id="@+id/studentNameR"
+            android:id="@+id/studentName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
             android:fontFamily="@font/monadi"
             android:includeFontPadding="true"
+            android:text="@{ratingModel.studentName}"
             android:textAlignment="viewStart"
             android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:text="اسم الطالب"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/rate"
-            app:layout_constraintHorizontal_bias="0.016"
+            app:layout_constraintEnd_toStartOf="@+id/ratingStars"
+            app:layout_constraintHorizontal_bias="0.51"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.539"
             tools:text="اسم الطالب" />
 
         <RatingBar
-            android:id="@+id/rate"
+            android:id="@+id/ratingStars"
+            style="@style/Widget.AppCompat.RatingBar.Indicator"
+            android:scaleX="0.7"
+            android:scaleY="0.7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Widget.AppCompat.RatingBar.Indicator"
-            app:layout_constraintBottom_toBottomOf="@+id/studentNameR"
+            android:rating="@{ratingModel.stars}"
+            android:visibility="@{ratingModel.rated? View.VISIBLE:View.GONE}"
+            android:isIndicator="true"
+            app:layout_constraintBottom_toBottomOf="@+id/studentName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/studentNameR"
-            app:layout_constraintVertical_bias="0.472"
-             />
+            app:layout_constraintHorizontal_bias="0.49"
+            app:layout_constraintStart_toEndOf="@+id/studentName"
+            app:layout_constraintTop_toTopOf="@+id/studentName"
+            app:layout_constraintVertical_bias="0.472" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

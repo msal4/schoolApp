@@ -30,6 +30,10 @@ fun setSpinnerError(spinner: MaterialSpinner, errorMsg:String?){
     spinner.error= errorMsg
 }
 
+@BindingAdapter("mine:setStars")
+fun setStars(ratingBar:  RatingBar, stars:Int?){
+    ratingBar.rating= (stars?:0).toFloat()
+}
 
 @BindingAdapter("mine:setDate")
 fun setTextFromDate(textView: TextView, date: LocalDateTime?){

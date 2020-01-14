@@ -5,8 +5,3 @@ interface PostListener{
     fun onUploadStarted()
     fun onError(errorMsg:String)
 }
-
-interface UploadListener{
-    fun onUploadCompleted()
-    fun onError(errorMsg:String)
-}

@@ -20,7 +20,7 @@ import com.smart.resources.schools_app.features.advertising.AdvertisingFragment
 import com.smart.resources.schools_app.features.exam.AddMarkFragment
 import com.smart.resources.schools_app.features.homework.ui.HomeworkFragment
 import com.smart.resources.schools_app.features.library.LibraryFragment
-import com.smart.resources.schools_app.features.rating.AddRatingFragment
+import com.smart.resources.schools_app.features.rating.addRarting.AddRatingFragment
 import com.smart.resources.schools_app.features.schedule.ScheduleFragment
 
 

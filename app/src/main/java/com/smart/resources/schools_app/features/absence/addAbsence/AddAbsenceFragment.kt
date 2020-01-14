@@ -123,13 +123,14 @@ class AddAbsenceFragment : Fragment(), MaterialSpinner.OnItemSelectedListener, P
     }
 
     override fun onError(errorMsg:String){
+        setToolbarLoading(false)
         binding.linearLayout.showSnackBar(errorMsg)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_save_btn, menu)
-
         saveMenuItem= menu.findItem(R.id.saveMenuItem)
+
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -151,7 +152,6 @@ class AddAbsenceFragment : Fragment(), MaterialSpinner.OnItemSelectedListener, P
             viewModel.postAbsenceModel.subjectName= parent.selectedItem as String
         }
     }
-
 
     override fun onNothingSelected(parent: MaterialSpinner) {
 

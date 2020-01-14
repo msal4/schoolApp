@@ -1,6 +1,5 @@
 package com.smart.resources.schools_app.features.exam
 
-import android.app.DatePickerDialog
 import android.os.Build
 import android.os.Bundle
 import android.view.*
@@ -9,23 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.adapters.dateTimeBackendFormatter
-import com.smart.resources.schools_app.features.profile.ClassInfoModel
-import com.smart.resources.schools_app.core.adapters.setSpinnerList
 import com.smart.resources.schools_app.core.myTypes.ConnectionError
 import com.smart.resources.schools_app.core.myTypes.MyResult
 import com.smart.resources.schools_app.core.myTypes.ResponseError
 import com.smart.resources.schools_app.core.myTypes.Success
-import com.smart.resources.schools_app.core.utils.hide
-import com.smart.resources.schools_app.core.utils.toast
-import com.smart.resources.schools_app.databinding.FragmentAddExamBinding
 import com.smart.resources.schools_app.databinding.FragmentAddMarkBinding
 import com.smart.resources.schools_app.sharedUi.SectionActivity
-import com.smart.resources.schools_app.features.profile.TeacherInfoModel
-import com.smart.resources.schools_app.features.rating.AddRatingAdapter
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
-import java.util.*
 
 class AddMarkFragment : Fragment() {
     private lateinit var binding: FragmentAddMarkBinding
