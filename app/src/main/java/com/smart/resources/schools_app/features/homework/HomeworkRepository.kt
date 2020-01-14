@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.homework.model
+package com.smart.resources.schools_app.features.homework
 
 import com.smart.resources.schools_app.core.adapters.dateTimeBackendSendFormatter
 import com.smart.resources.schools_app.core.helpers.BackendHelper

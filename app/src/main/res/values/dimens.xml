@@ -22,7 +22,7 @@
     <dimen name="profileAttributeTitleSize">22sp</dimen>
     <dimen name="profileAttributeSize">16sp</dimen>
     <dimen name="advertising_collapsed_height">120dp</dimen>
-    <dimen name="homework_collapsed_height">65dp</dimen>
+    <dimen name="homework_collapsed_height">80dp</dimen>
     <dimen name="error_text_margin">42dp</dimen>
     <dimen name="add_page_padding">24dp</dimen>
 </resources>

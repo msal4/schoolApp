@@ -1,22 +1,22 @@
 package com.smart.resources.schools_app.features.schedule
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.app.Application
+import androidx.lifecycle.*
+import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.helpers.BackendHelper
-import com.smart.resources.schools_app.core.myTypes.MyResult
-import com.smart.resources.schools_app.core.myTypes.toMyResult
+import com.smart.resources.schools_app.core.myTypes.*
 import kotlinx.coroutines.*
 
 typealias ScheduleResult= MyResult<List<List<String?>>>
 
-class ScheduleViewModel : ViewModel() {
-    private val schedule: MutableLiveData<ScheduleResult>
-            by lazy { MutableLiveData<ScheduleResult>() }
+class ScheduleViewModel(application: Application) : AndroidViewModel(application) {
+    private val c= application.applicationContext
+    val listState = ListState()
+    private val schedule: MutableLiveData<List<List<String?>>>
+            by lazy { MutableLiveData<List<List<String?>>>() }
 
     fun getSchedule():
-            LiveData<ScheduleResult> {
+            LiveData<List<List<String?>>> {
         fetchSchedule()
 
         return schedule
@@ -24,8 +24,24 @@ class ScheduleViewModel : ViewModel() {
 
     private fun fetchSchedule(){
         viewModelScope.launch {
-            val result = GlobalScope.async { BackendHelper.scheduleDao.fetchSchedule() }.toMyResult()
-            schedule.value = result
+            listState.apply {
+                setLoading(true)
+
+                val result = GlobalScope.async { BackendHelper.scheduleDao.fetchSchedule() }.toMyResult()
+                when (result) {
+                    is Success -> {
+                        if (result.data.isNullOrEmpty())
+                            setBodyError(c.getString(R.string.no_advertisements))
+                        else {
+                            setLoading(false)
+                            schedule.value = result.data
+                        }
+
+                    }
+                    is ResponseError -> setBodyError(result.combinedMsg)
+                    is ConnectionError -> setBodyError(c.getString(R.string.connection_error))
+                }
+            }
         }
     }
 }

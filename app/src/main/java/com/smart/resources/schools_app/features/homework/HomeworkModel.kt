@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.homework.model
+package com.smart.resources.schools_app.features.homework
 
 import org.threeten.bp.LocalDateTime
 import java.io.File

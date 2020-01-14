@@ -5,7 +5,7 @@ import com.smart.resources.schools_app.core.adapters.LocalDateTimeConverter
 import com.smart.resources.schools_app.features.absence.AbsenceDao
 import com.smart.resources.schools_app.features.advertising.AdvertisingDao
 import com.smart.resources.schools_app.features.exam.ExamDao
-import com.smart.resources.schools_app.features.homework.model.HomeworkDao
+import com.smart.resources.schools_app.features.homework.HomeworkDao
 import com.smart.resources.schools_app.features.library.LibraryDao
 import com.smart.resources.schools_app.features.login.AccountDao
 import com.smart.resources.schools_app.features.notification.NotificationsDao
@@ -61,7 +61,8 @@ object BackendHelper {
         )
     }
 
-    val homeworkDao: HomeworkDao by lazy{retrofitWithAuth.create(HomeworkDao::class.java)}
+    val homeworkDao: HomeworkDao by lazy{retrofitWithAuth.create(
+        HomeworkDao::class.java)}
     val examDao: ExamDao by lazy{retrofitWithAuth.create(ExamDao::class.java)}
     val libraryDao: LibraryDao by lazy{ retrofitWithAuth.create(LibraryDao::class.java)}
     val notificationDao: NotificationsDao by lazy{retrofitWithAuth.create(NotificationsDao::class.java)}

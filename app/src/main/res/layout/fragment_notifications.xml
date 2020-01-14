@@ -32,42 +32,12 @@
 
         </com.google.android.material.tabs.TabLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-     <TextView
-         android:layout_gravity="center"
-         android:id="@+id/errorText"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:gravity="start"
-         android:textAlignment="textStart"
-         android:layout_margin="@dimen/error_text_margin"/>
-
-        <ProgressBar
-            android:layout_gravity="center"
-            android:id="@+id/progressIndicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:padding="@dimen/item_margin"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/item_homework"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-    </FrameLayout>
+        <include
+            android:id="@+id/recyclerViewLoader"
+            layout="@layout/fragment_recycler_loader"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
     </LinearLayout>
 </layout>

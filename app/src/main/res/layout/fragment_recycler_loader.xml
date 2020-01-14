@@ -7,7 +7,7 @@
         <import type="android.view.View"/>
         <variable
             name="listState"
-            type="com.smart.resources.schools_app.sharedUi.ListState" />
+            type="com.smart.resources.schools_app.core.myTypes.ListState" />
     </data>
 
     <FrameLayout

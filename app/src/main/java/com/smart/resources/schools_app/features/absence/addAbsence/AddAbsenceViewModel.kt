@@ -8,7 +8,7 @@ import com.smart.resources.schools_app.core.helpers.BackendHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.absence.AddAbsenceModel
 import com.smart.resources.schools_app.features.absence.PostAbsenceModel
-import com.smart.resources.schools_app.sharedUi.ListState
+import com.smart.resources.schools_app.core.myTypes.ListState
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -43,6 +43,7 @@ class AddAbsenceViewModel(application: Application, private val postListener: Po
         val studentsResult =
             viewModelScope.async { BackendHelper.studentDao.getStudentsByClass(classId) }
                 .toMyResult()
+
         when (studentsResult) {
             is Success -> {
                 if (studentsResult.data.isNullOrEmpty()) listState.setBodyError(c.getString(R.string.no_students))
@@ -56,7 +57,6 @@ class AddAbsenceViewModel(application: Application, private val postListener: Po
             is ConnectionError -> listState.setBodyError(c.getString(R.string.connection_error))
         }
 
-        listState.setLoading(false)
         return null
     }
 

@@ -36,6 +36,9 @@ class RatingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false)
+            .apply {
+                lifecycleOwner= this@RatingFragment
+            }
         (activity as SectionActivity).setCustomTitle(R.string.rating)
         setHasOptionsMenu(true)
 
@@ -46,26 +49,13 @@ class RatingFragment : Fragment() {
     private fun setupViewModel() {
         viewModel = ViewModelProviders.of(this)
             .get(RatingViewModel::class.java).apply {
+                binding.listState= listState
                 getRatings().observe(this@RatingFragment, Observer{onHomeworkDownload(it)})
             }
     }
 
 
-    private  fun onHomeworkDownload(result: RatingResult) {
-        var errorMsg = ""
-        when (result) {
-            is Success -> {
-                if (result.data.isNullOrEmpty()) errorMsg = getString(R.string.no_rating)
-                else {
-                    binding.recyclerView.adapter= RatingAdapter(result.data)
-                }
-
-            }
-            is ResponseError -> errorMsg = result.combinedMsg
-            is ConnectionError -> errorMsg = getString(R.string.connection_error)
-        }
-
-        binding.errorText.text = errorMsg
-        binding.progressIndicator.hide()
+    private  fun onHomeworkDownload(result: List<AddRatingModel>) {
+        binding.recyclerView.adapter= RatingAdapter(result)
     }
 }

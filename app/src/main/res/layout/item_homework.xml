@@ -7,7 +7,7 @@
     <data>
         <variable
             name="itemModel"
-            type="com.smart.resources.schools_app.features.homework.model.HomeworkModel" />
+            type="com.smart.resources.schools_app.features.homework.HomeworkModel" />
     </data>
 
     <ru.rhanza.constraintexpandablelayout.ExpandableLayout
@@ -27,7 +27,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="271dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/background_item"
             android:elevation="@dimen/item_elevation"
             android:layoutDirection="rtl"
@@ -113,6 +113,8 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/advertisementsIcon"
                 app:layout_constraintTop_toBottomOf="@+id/examName"
+                app:layout_constraintBottom_toTopOf="@id/imageView"
+                android:layout_marginBottom="16dp"
                 tools:text="المحتوى هو هذا وها وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا المحتوى هو هذاالمحتوى هو هذا" />
 
 

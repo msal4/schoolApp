@@ -1,22 +1,23 @@
 package com.smart.resources.schools_app.features.advertising
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.app.Application
+import androidx.lifecycle.*
+import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.helpers.BackendHelper
-import com.smart.resources.schools_app.core.myTypes.MyResult
-import com.smart.resources.schools_app.core.myTypes.toMyResult
+import com.smart.resources.schools_app.core.myTypes.*
+import com.smart.resources.schools_app.core.utils.hide
 import kotlinx.coroutines.*
 
-typealias AdvertisingResult= MyResult<List<AdvertisingModel>>
 
-class HomeworkViewModel : ViewModel() {
-    private val advertisements: MutableLiveData<AdvertisingResult>
-            by lazy { MutableLiveData<AdvertisingResult>() }
+class HomeworkViewModel(application: Application) : AndroidViewModel(application) {
+    private val c= application.applicationContext
+    val listState = ListState()
+
+    private val advertisements: MutableLiveData<List<AdvertisingModel>>
+            by lazy { MutableLiveData<List<AdvertisingModel>>() }
 
     fun getExams():
-            LiveData<AdvertisingResult> {
+            LiveData<List<AdvertisingModel>> {
         fetchAdvertisements()
 
         return advertisements
@@ -25,8 +26,24 @@ class HomeworkViewModel : ViewModel() {
 
     private fun fetchAdvertisements(){
         viewModelScope.launch {
-            val result = GlobalScope.async { BackendHelper.advertisingDao.fetchAdvertisements() }.toMyResult()
-            advertisements.value = result
+            listState.apply {
+                setLoading(true)
+
+                val result = GlobalScope.async { BackendHelper.advertisingDao.fetchAdvertisements() }.toMyResult()
+                when (result) {
+                    is Success -> {
+                        if (result.data.isNullOrEmpty())
+                            setBodyError(c.getString(R.string.no_advertisements))
+                        else {
+                            setLoading(false)
+                            advertisements.value = result.data
+                        }
+
+                    }
+                    is ResponseError -> setBodyError(result.combinedMsg)
+                    is ConnectionError -> setBodyError(c.getString(R.string.connection_error))
+                }
+            }
         }
     }
 }

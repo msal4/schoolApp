@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.homework.ui;
+package com.smart.resources.schools_app.features.homework;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.orhanobut.logger.Logger;
 import com.smart.resources.schools_app.databinding.ItemHomeworkBinding;
-import com.smart.resources.schools_app.features.homework.model.HomeworkModel;
 
 import java.util.ArrayList;
 import java.util.List;

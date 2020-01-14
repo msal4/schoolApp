@@ -7,7 +7,7 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.helpers.BackendHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.rating.AddRatingModel
-import com.smart.resources.schools_app.sharedUi.ListState
+import com.smart.resources.schools_app.core.myTypes.ListState
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 

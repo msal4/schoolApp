@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.homework.ui
+package com.smart.resources.schools_app.features.homework
 
 import android.os.Bundle
 import android.view.*
@@ -12,7 +12,7 @@ import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 import com.smart.resources.schools_app.core.utils.*
-import com.smart.resources.schools_app.features.homework.viewModel.HomeworkViewModel
+import com.smart.resources.schools_app.features.homework.addHomework.AddHomeworkFragment
 
 class HomeworkFragment : Fragment(){
     private lateinit var binding: FragmentRecyclerLoaderBinding
@@ -39,7 +39,8 @@ class HomeworkFragment : Fragment(){
         binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false).apply {
             lifecycleOwner= this@HomeworkFragment
         }
-        adapter= HomeworkRecyclerAdapter()
+        adapter=
+            HomeworkRecyclerAdapter()
         binding.recyclerView.adapter= adapter
         (activity as SectionActivity).setCustomTitle(R.string.homework)
         setHasOptionsMenu(true)
@@ -51,15 +52,13 @@ class HomeworkFragment : Fragment(){
     private fun setupViewModel() {
         viewModel = ViewModelProviders.of(this)
             .get(HomeworkViewModel::class.java).apply {
-                onError= this@HomeworkFragment::onError
+                binding.listState= listState
                 fetchHomework() // TODO: improve performance by not fetching new data every time
 
                 getHomework.observe(this@HomeworkFragment, Observer{
                     if(it == null) return@Observer
 
                     adapter.updateData(it)
-                    binding.errorText.text= ""
-                    binding.progressIndicator.hide()
                 })
 
             }
@@ -79,11 +78,5 @@ class HomeworkFragment : Fragment(){
             R.id.addMenuItem-> fragmentManager?.let { AddHomeworkFragment.newInstance(it) }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-
-     private fun onError(errorMsg: String) {
-         binding.progressIndicator.hide()
-        binding.errorText.text = errorMsg
     }
 }
