@@ -9,7 +9,10 @@ import com.smart.resources.schools_app.features.login.LoginActivity
 
 interface CanLogout{
     fun logout(activity: AppCompatActivity){
-        SharedPrefHelper.instance?.accessToken= null
+        SharedPrefHelper.instance?.apply {
+            accessToken= null
+            imgUri= null
+        }
         activity.finishAffinity()
         LoginActivity.newInstance(activity)
     }

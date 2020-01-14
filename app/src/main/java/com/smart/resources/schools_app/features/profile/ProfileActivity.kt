@@ -90,7 +90,7 @@ class ProfileActivity : AppCompatActivity(),
     }
 
     fun selectImage(view: View) {
-            IntentHelper.selectImage(this)
+        IntentHelper.selectImage(this)
     }
 }
 

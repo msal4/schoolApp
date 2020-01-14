@@ -169,7 +169,6 @@ class AddExamFragment : Fragment(), PostListener {
         when (item.itemId) {
             R.id.saveMenuItem -> {
                 viewModel.addHomework()
-                true
             }
         }
 

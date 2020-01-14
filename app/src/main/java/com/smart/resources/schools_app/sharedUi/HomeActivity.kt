@@ -56,7 +56,6 @@ class HomeActivity : AppCompatActivity() {
         when(requestCode){
             ProfileActivity.REQUEST_IS_PROFILE_IMAGE_UPDATED -> {
                 if(resultCode == Activity.RESULT_OK){
-                    this.toast("result ok")
                     loadProfileImage()
                 }
             }

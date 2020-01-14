@@ -46,11 +46,9 @@ class ScheduleDayFragment : Fragment() {
 
         dayModel?.apply {
             (activity as SectionActivity).setCustomTitle(day)
-            binding.recyclerView.adapter= this.dayList?.let {
-                ScheduleDayRecyclerAdapter(
-                    it
-                )
-            }
+            binding.recyclerView.adapter= ScheduleDayRecyclerAdapter(
+                this.dayList
+            )
         }
 
         return binding.root

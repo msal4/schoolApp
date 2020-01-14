@@ -14,6 +14,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 
+@Suppress("UNCHECKED_CAST")
 class AddAbsenceViewModel(application: Application, private val postListener: PostListener) :
     AndroidViewModel(application) {
     private val c = application.applicationContext

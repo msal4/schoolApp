@@ -16,19 +16,24 @@ object IntentHelper {
         multiSelect: Boolean= false,
         neededForLaterUsage: Boolean= false
     ) {
+        if((activity != null && fragment != null) || (activity == null && fragment == null)) return
+
         val intent = Intent()
         intent.type = "image/*"
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, multiSelect)
         intent.action =
             if (neededForLaterUsage) Intent.ACTION_OPEN_DOCUMENT else Intent.ACTION_GET_CONTENT
 
-        activity?:fragment?.apply {
-            startActivityForResult(
-                Intent.createChooser(intent, "Select Picture"),
-                if (multiSelect) GET_MULTI_IMAGES_REQUEST else GET_IMAGE_REQUEST
-            )
-        }
+        activity?.startActivityForResult(
+            Intent.createChooser(intent, "Select Picture"),
+            if (multiSelect) GET_MULTI_IMAGES_REQUEST else GET_IMAGE_REQUEST)
 
+            ?: // if null
+
+        fragment?.startActivityForResult(
+            Intent.createChooser(intent, "Select Picture"),
+            if (multiSelect) GET_MULTI_IMAGES_REQUEST else GET_IMAGE_REQUEST
+        )
     }
 
     fun getImage(data: Intent): Uri? {
