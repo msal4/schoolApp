@@ -38,7 +38,9 @@ class NotificationFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+        binding = FragmentNotificationsBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner= this@NotificationFragment
+        }
         (activity as SectionActivity).setCustomTitle(R.string.notifications)
 
         setupViewModel()
@@ -72,6 +74,7 @@ class NotificationFragment : Fragment() {
     private fun setupViewModel() {
         viewModel = ViewModelProviders.of(this)
             .get(NotificationViewModel::class.java).apply {
+                binding.recyclerViewLoader.listState= listState
                 getNotifications(NotificationType.STUDENT)
                     .observe(this@NotificationFragment, Observer{onNotificationsDownloaded(it)})
             }
@@ -81,31 +84,17 @@ class NotificationFragment : Fragment() {
         NotificationRecyclerAdapter()
             .apply {
                 adapter = this
-                binding.recyclerView.adapter = this
+                binding.recyclerViewLoader.recyclerView.adapter = this
             }
     }
 
     private fun onTabClicked(type :NotificationType){
             adapter.clearData()
-            binding.errorText.text = ""
-            binding.progressIndicator.show()
             viewModel.fetchNotifications(type)
 
     }
 
-    private  fun onNotificationsDownloaded(result: MyResult<List<NotificationModel>>) {
-        var errorMsg = ""
-        when (result) {
-            is Success -> {
-                if (result.data.isNullOrEmpty()) errorMsg = getString(R.string.no_notifications)
-                else adapter.updateData(result.data)
-
-            }
-            is ResponseError -> errorMsg = result.combinedMsg
-            is ConnectionError -> errorMsg = getString(R.string.connection_error)
-        }
-
-        binding.errorText.text = errorMsg
-        binding.progressIndicator.hide()
+    private  fun onNotificationsDownloaded(result: List<NotificationModel>) {
+        adapter.updateData(result)
     }
 }

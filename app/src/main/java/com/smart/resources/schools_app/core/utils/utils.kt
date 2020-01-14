@@ -33,6 +33,9 @@ fun String.decodeToken(): String {
     return String(bytes, StandardCharsets.UTF_8)
 }
 
+fun String?.isImage()= (this != null && (this.toLowerCase().endsWith(".jpg")||this.toLowerCase().endsWith(".png")))
+
+
 fun String.withEngNums() = this
     .replace('٠', '0')
     .replace('١', '1')

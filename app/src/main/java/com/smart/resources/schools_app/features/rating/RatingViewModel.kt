@@ -1,32 +1,50 @@
 package com.smart.resources.schools_app.features.rating
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.app.Application
+import androidx.lifecycle.*
+import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.helpers.BackendHelper
-import com.smart.resources.schools_app.core.myTypes.MyResult
-import com.smart.resources.schools_app.core.myTypes.toMyResult
+import com.smart.resources.schools_app.core.myTypes.*
 import kotlinx.coroutines.*
 
-typealias RatingResult= MyResult<List<AddRatingModel>>
 
-class RatingViewModel : ViewModel() {
-    private val rating: MutableLiveData<RatingResult>
-            by lazy { MutableLiveData<RatingResult>() }
+class RatingViewModel(application: Application) : AndroidViewModel(application) {
+    private val c= application.applicationContext
+    val listState = ListState()
+
+    private val rating: MutableLiveData<List<AddRatingModel>>
+            by lazy { MutableLiveData<List<AddRatingModel>>() }
 
     fun getRatings():
-            LiveData<RatingResult> {
+            LiveData<List<AddRatingModel>> {
         fetchRatings()
 
         return rating
     }
 
-    private fun fetchRatings(){
+    private fun fetchRatings() {
         viewModelScope.launch {
-            val result = GlobalScope.async { BackendHelper
-                .ratingDao.fetchRating() }.toMyResult()
-            rating.value = result
+            listState.apply {
+                setLoading(true)
+
+                val result = GlobalScope.async {
+                    BackendHelper.ratingDao.fetchRating()
+                }.toMyResult()
+
+                when (result) {
+                    is Success -> {
+                        if (result.data.isNullOrEmpty())
+                            setBodyError(c.getString(R.string.no_rating))
+                        else {
+                            setLoading(false)
+                            rating.value = result.data
+                        }
+
+                    }
+                    is ResponseError -> setBodyError(result.combinedMsg)
+                    is ConnectionError -> setBodyError(c.getString(R.string.connection_error))
+                }
+            }
         }
     }
 }

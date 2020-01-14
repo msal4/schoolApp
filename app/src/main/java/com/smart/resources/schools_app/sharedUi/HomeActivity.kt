@@ -13,7 +13,6 @@ import com.smart.resources.schools_app.databinding.ActivityHomeBinding
 import com.smart.resources.schools_app.features.profile.ProfileActivity
 import com.smart.resources.schools_app.core.myTypes.Section
 import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
-import com.smart.resources.schools_app.core.utils.toast
 import java.net.URI
 
 
@@ -80,7 +79,7 @@ class HomeActivity : AppCompatActivity() {
                 this,
                 Section.NOTIFICATION
             )
-            R.id.schedule-> SectionActivity.newInstance(
+            R.id.homeworkType-> SectionActivity.newInstance(
                 this,
                 Section.SCHEDULE
             )

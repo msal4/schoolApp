@@ -80,7 +80,7 @@
                 android:text="@string/notifications"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/home_circle_text_size"
-                app:layout_constraintBottom_toTopOf="@+id/schedule"
+                app:layout_constraintBottom_toTopOf="@+id/homeworkType"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintStart_toStartOf="@+id/guideline4"
@@ -151,7 +151,7 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/schedule"
+                android:id="@+id/homeworkType"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginBottom="16dp"
@@ -183,11 +183,11 @@
                 android:elevation="6dp"
                 android:outlineProvider="none"
                 android:src="@drawable/ic_schedule"
-                app:layout_constraintBottom_toBottomOf="@+id/schedule"
+                app:layout_constraintBottom_toBottomOf="@+id/homeworkType"
                 app:layout_constraintDimensionRatio="h,1:1"
-                app:layout_constraintEnd_toEndOf="@+id/schedule"
-                app:layout_constraintStart_toStartOf="@+id/schedule"
-                app:layout_constraintTop_toTopOf="@+id/schedule"
+                app:layout_constraintEnd_toEndOf="@+id/homeworkType"
+                app:layout_constraintStart_toStartOf="@+id/homeworkType"
+                app:layout_constraintTop_toTopOf="@+id/homeworkType"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
@@ -249,7 +249,7 @@
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintStart_toStartOf="@+id/guideline4"
-                app:layout_constraintTop_toBottomOf="@+id/schedule" />
+                app:layout_constraintTop_toBottomOf="@+id/homeworkType" />
 
 
             <ImageView

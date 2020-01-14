@@ -5,6 +5,7 @@
     xmlns:mine="http://schemas.android.com/apk/res/android">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="itemModel"
             type="com.smart.resources.schools_app.features.advertising.AdvertisingModel" />
@@ -19,7 +20,7 @@
     app:el_initialState="collapsed"
     app:el_collapsedHeight="@dimen/advertising_collapsed_height"
     app:el_moreText="Expand/Collapse"
-    app:el_shadowHeight="20dp"
+    app:el_shadowHeight="0dp"
     app:el_showButton="false"
     app:el_showShadow="false"
     android:layout_marginBottom="@dimen/item_margin">
@@ -29,6 +30,8 @@
         android:layout_height="wrap_content"
         android:elevation="@dimen/item_elevation"
         android:layoutDirection="rtl"
+        android:background="@drawable/background_item"
+        android:padding="@dimen/item_padding"
         android:minHeight="@dimen/item_min_height"
         android:orientation="vertical">
 
@@ -71,22 +74,22 @@
 
 
         <LinearLayout
-            android:id="@+id/exisiLin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layoutDirection="rtl"
-            android:layout_marginTop="13dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            android:gravity="top">
 
             <TextView
                 android:id="@+id/contentText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="center|start"
                 android:minLines="2"
+                android:maxLines="2"
                 android:text="@{itemModel.note.trim()}"
                 android:textAlignment="viewStart"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -96,14 +99,17 @@
                 tools:text="تيست تيست تيست  تيست نص تيست" />
 
             <ImageView
-                android:id="@+id/imgExist"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/ic_img_exist" />
+                android:id="@+id/attachmentIcon"
+                android:visibility="@{itemModel.hasImage? View.VISIBLE:View.GONE}"
+                android:layout_marginTop="8dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_attach_file_black_24dp" />
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/imageView"
+            android:visibility="@{itemModel.hasImage? View.VISIBLE:View.GONE}"
             android:layout_width="match_parent"
             android:layout_height="140dp"
             android:layout_marginTop="16dp"

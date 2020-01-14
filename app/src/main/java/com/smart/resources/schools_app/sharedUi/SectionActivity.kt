@@ -18,10 +18,10 @@ import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFra
 import com.smart.resources.schools_app.features.absence.getAbsence.AbsenceFragment
 //import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
 import com.smart.resources.schools_app.features.advertising.AdvertisingFragment
-import com.smart.resources.schools_app.features.exam.AddMarkFragment
 import com.smart.resources.schools_app.features.exam.ExamFragment
-import com.smart.resources.schools_app.features.homework.ui.HomeworkFragment
+import com.smart.resources.schools_app.features.homework.HomeworkFragment
 import com.smart.resources.schools_app.features.library.LibraryFragment
+import com.smart.resources.schools_app.features.rating.RatingFragment
 import com.smart.resources.schools_app.features.rating.addRarting.AddRatingFragment
 import com.smart.resources.schools_app.features.schedule.ScheduleFragment
 
@@ -57,17 +57,24 @@ class SectionActivity : AppCompatActivity() {
     }
 
     private fun createFragment() {
-        val userType= SharedPrefHelper.instance?.userType
+        val isStudent= SharedPrefHelper.instance?.userType== UserType.STUDENT
 
-        when(intent.getSerializableExtra(EXTRA_SECTION) as Section){
-            EXAM -> ExamFragment.newInstance(supportFragmentManager)
-            Section.HOMEWORK -> HomeworkFragment.newInstance(supportFragmentManager)
-            Section.NOTIFICATION -> NotificationFragment.newInstance(supportFragmentManager)
-            Section.LIBRARY -> LibraryFragment.newInstance(supportFragmentManager)
-            Section.SCHEDULE -> ScheduleFragment.newInstance(supportFragmentManager)
-            Section.ADVERTISING -> AdvertisingFragment.newInstance(supportFragmentManager)
-            Section.ABSENCE -> if(userType== UserType.STUDENT){
-                AbsenceFragment.newInstance(supportFragmentManager)
+        supportFragmentManager.apply {
+            when(intent.getSerializableExtra(EXTRA_SECTION) as Section){
+                EXAM -> ExamFragment.newInstance(this)
+                Section.HOMEWORK -> HomeworkFragment.newInstance(this)
+                Section.NOTIFICATION -> NotificationFragment.newInstance(this)
+                Section.LIBRARY -> LibraryFragment.newInstance(this)
+                Section.SCHEDULE -> ScheduleFragment.newInstance(this)
+                Section.ADVERTISING -> AdvertisingFragment.newInstance(this)
+
+                Section.ABSENCE ->
+                    if(isStudent) AbsenceFragment.newInstance(this)
+                    else AddAbsenceFragment.newInstance(this)
+
+                Section.RATING ->
+                    if(isStudent) RatingFragment.newInstance(this)
+                    else AddRatingFragment.newInstance(this)
             }
             else{
                 AddAbsenceFragment.newInstance(supportFragmentManager)

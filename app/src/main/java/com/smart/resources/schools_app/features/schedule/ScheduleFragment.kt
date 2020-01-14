@@ -36,7 +36,9 @@ class ScheduleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false)
+        binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner= this@ScheduleFragment
+        }
         (activity as SectionActivity).setCustomTitle(R.string.schedule)
 
         setupViewModel()
@@ -46,29 +48,18 @@ class ScheduleFragment : Fragment() {
     private fun setupViewModel() {
         viewModel = ViewModelProviders.of(this)
             .get(ScheduleViewModel::class.java).apply {
+                binding.listState= listState
                 getSchedule().observe(this@ScheduleFragment, Observer{onScheduleDownloaded(it)})
             }
     }
 
-    private  fun onScheduleDownloaded(result: ScheduleResult) {
-        var errorMsg = ""
-        when (result) {
-            is Success -> {
-                if (result.data.isNullOrEmpty()) errorMsg = getString(R.string.no_schedule)
-                else {
-                    setupWeekRecycler(result)
-                }
-            }
-            is ResponseError -> errorMsg = result.combinedMsg
-            is ConnectionError -> errorMsg = getString(R.string.connection_error)
-        }
+    private  fun onScheduleDownloaded(result: List<List<String?>>) {
+        setupWeekRecycler(result)
 
-        binding.errorText.text = errorMsg
-        binding.progressIndicator.hide()
     }
 
 
-    private fun setupWeekRecycler(result: Success<List<Any>>) =
+    private fun setupWeekRecycler(result:List<List<String?>>) =
         binding
             .recyclerView
             .createGridLayout(
@@ -85,8 +76,8 @@ class ScheduleFragment : Fragment() {
         }
     }
 
-    private fun mapWeekRecyclerData(result: Success<List<Any>>) =
-        (result.data as List<List<String?>>)
+    private fun mapWeekRecyclerData(result: List<List<String?>>) =
+        (result)
             .mapIndexed { index, list ->
                 ScheduleDayModel(
                     WeekDays.getDayName(index),

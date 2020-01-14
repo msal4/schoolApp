@@ -9,6 +9,8 @@ import androidx.databinding.InverseBindingListener
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputLayout
 import com.orhanobut.logger.Logger
+import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
+import com.smart.resources.schools_app.core.myTypes.UserType
 import com.tiper.MaterialSpinner
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
@@ -82,7 +84,8 @@ fun loadImageUrl(iv: ImageView, url: String?) {
 
 @BindingAdapter("android:setMark")
 fun setMark(tv: TextView, mark:Int?) {
-    tv.text= mark?.toString() ?: "- "
+    val isStudent= SharedPrefHelper.instance?.userType== UserType.STUDENT
+        tv.text = mark?.toString() ?: if(isStudent)"- " else ""
 }
 
 

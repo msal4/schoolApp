@@ -36,6 +36,9 @@ class LibraryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false)
+            .apply {
+            lifecycleOwner= this@LibraryFragment
+        }
         (activity as SectionActivity).setCustomTitle(R.string.library)
 
         setupViewModel()
@@ -45,24 +48,13 @@ class LibraryFragment : Fragment() {
     private fun setupViewModel() {
         viewModel = ViewModelProviders.of(this)
             .get(LibraryViewModel::class.java).apply {
+                binding.listState= listState
                 getBooks().observe(this@LibraryFragment, Observer{onHomeworkDownload(it)})
             }
     }
 
-    private  fun onHomeworkDownload(result: LibraryResult) {
-        var errorMsg = ""
-        when (result) {
-            is Success -> {
-                if (result.data.isNullOrEmpty()) errorMsg = getString(R.string.no_library)
-                else {
-                    binding.recyclerView.createGridLayout(LibraryRecyclerAdapter(result.data))
-                }
-            }
-            is ResponseError -> errorMsg = result.combinedMsg
-            is ConnectionError -> errorMsg = getString(R.string.connection_error)
-        }
+    private  fun onHomeworkDownload(result: List<LibraryModel>) {
+        binding.recyclerView.createGridLayout(LibraryRecyclerAdapter(result))
 
-        binding.errorText.text = errorMsg
-        binding.progressIndicator.hide()
     }
 }

@@ -9,18 +9,14 @@ interface ExamDao {
     @GET("examResult")
     suspend fun fetchExams(): Response<List<ExamModel>>
 
-
     @GET("teacherExams")
     suspend fun fetchTeacherExams(): Response<List<ExamModel>>
 
     @POST("addExam")
     suspend fun addExam(@Body postExamModel: PostExamModel): Response<Unit>
 
-
-
     @POST("addMultiResult")
     suspend fun addMultiResult(@Body studentMark: SendStudentResult): Response<Unit>
-
 
     @GET("resultByExamId/{id}")
     suspend fun getResultsByExam(@Path("id") examId: String): Response<List<Student>>

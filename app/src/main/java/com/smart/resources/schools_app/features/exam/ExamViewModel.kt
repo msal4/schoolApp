@@ -1,46 +1,56 @@
 package com.smart.resources.schools_app.features.exam
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.app.Application
+import androidx.lifecycle.*
+import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.helpers.BackendHelper
-import com.smart.resources.schools_app.core.myTypes.MyResult
-import com.smart.resources.schools_app.core.myTypes.toMyResult
+import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
+import com.smart.resources.schools_app.core.myTypes.*
+import com.smart.resources.schools_app.core.utils.hide
 import kotlinx.coroutines.*
 
-typealias notificationsResult= MyResult<List<ExamModel>>
 
-class ExamViewModel : ViewModel() {
-    private val exams: MutableLiveData<notificationsResult>
-            by lazy { MutableLiveData<notificationsResult>()
+class ExamViewModel(application: Application) : AndroidViewModel(application) {
+    private val c= application.applicationContext
+
+    private val exams: MutableLiveData<List<ExamModel>>
+            by lazy { MutableLiveData<List<ExamModel>>()
             }
 
+    val listState= ListState()
 
 
     fun getExams():
-            LiveData<notificationsResult> {
-        fetchExams()
-        return exams
-    }
+            LiveData<List<ExamModel>> {
 
-    fun getTeacherExams():
-            LiveData<notificationsResult> {
-        fetchTeacherExams()
         return exams
     }
 
     fun fetchExams(){
-        viewModelScope.launch {
-            val result = GlobalScope.async { BackendHelper.examDao.fetchExams() }.toMyResult()
-            exams.value = result
-        }
-    }
+        val isStudent= SharedPrefHelper.instance?.userType== UserType.STUDENT
 
-    fun fetchTeacherExams(){
         viewModelScope.launch {
-            val result = GlobalScope.async { BackendHelper.examDao.fetchTeacherExams() }.toMyResult()
-            exams.value = result
+            listState.apply {
+
+                setLoading(true)
+                val result = GlobalScope.async {
+                    with(BackendHelper.examDao) { if (isStudent)fetchExams() else fetchTeacherExams() }
+                }.toMyResult()
+
+                when (result) {
+                    is Success -> {
+                        if (result.data.isNullOrEmpty())
+                            setBodyError(c.getString(R.string.no_exams))
+                        else {
+                            setLoading(false)
+                            exams.value = result.data
+                        }
+
+                    }
+                    is ResponseError -> setBodyError(result.combinedMsg)
+                    is ConnectionError -> setBodyError(c.getString(R.string.connection_error))
+                }
+            }
         }
     }
 

@@ -1,32 +1,50 @@
 package com.smart.resources.schools_app.features.library
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.app.Application
+import androidx.lifecycle.*
+import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.helpers.BackendHelper
-import com.smart.resources.schools_app.core.myTypes.MyResult
-import com.smart.resources.schools_app.core.myTypes.toMyResult
+import com.smart.resources.schools_app.core.myTypes.*
 import kotlinx.coroutines.*
 
-typealias LibraryResult= MyResult<List<LibraryModel>>
 
-class LibraryViewModel : ViewModel() {
-    private val books: MutableLiveData<LibraryResult>
-            by lazy { MutableLiveData<LibraryResult>() }
+class LibraryViewModel(application: Application) : AndroidViewModel(application) {
+    private val c= application.applicationContext
+    val listState = ListState()
+
+    private val books: MutableLiveData<List<LibraryModel>>
+            by lazy { MutableLiveData<List<LibraryModel>>() }
+
 
     fun getBooks():
-            LiveData<LibraryResult> {
+            LiveData<List<LibraryModel>> {
         fetchHomework()
 
         return books
     }
 
-
     private fun fetchHomework(){
         viewModelScope.launch {
-            val result = GlobalScope.async { BackendHelper.libraryDao.fetchLib() }.toMyResult()
-            books.value = result
+            val result =
+                GlobalScope.async { BackendHelper.libraryDao.fetchLib() }.toMyResult()
+
+            listState.apply {
+                when (result) {
+                    is Success -> {
+                        if (result.data.isNullOrEmpty())
+                            setBodyError(c.getString(R.string.no_library))
+                        else {
+                            setLoading(false)
+                            books.value = result.data
+                        }
+
+                    }
+                    is ResponseError -> setBodyError(result.combinedMsg)
+                    is ConnectionError -> setBodyError(c.getString(R.string.connection_error))
+                }
+            }
+
+
         }
     }
 }

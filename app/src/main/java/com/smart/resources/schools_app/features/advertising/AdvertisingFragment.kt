@@ -36,6 +36,9 @@ class AdvertisingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false)
+            .apply {
+            lifecycleOwner= this@AdvertisingFragment
+        }
         (activity as SectionActivity).setCustomTitle(R.string.advertising)
 
         setupViewModel()
@@ -45,26 +48,13 @@ class AdvertisingFragment : Fragment() {
     private fun setupViewModel() {
         viewModel = ViewModelProviders.of(this)
             .get(HomeworkViewModel::class.java).apply {
+                binding.listState= listState
                 getExams().observe(this@AdvertisingFragment, Observer{onHomeworkDownload(it)})
             }
     }
 
 
-    private  fun onHomeworkDownload(result: AdvertisingResult) {
-        var errorMsg = ""
-        when (result) {
-            is Success -> {
-                if (result.data.isNullOrEmpty()) errorMsg = getString(R.string.no_advertisements)
-                else {
-                    binding.recyclerView.adapter= AdvertisingRecyclerAdapter(result.data)
-                }
-
-            }
-            is ResponseError -> errorMsg = result.combinedMsg
-            is ConnectionError -> errorMsg = getString(R.string.connection_error)
-        }
-
-        binding.errorText.text = errorMsg
-        binding.progressIndicator.hide()
+    private  fun onHomeworkDownload(result: List<AdvertisingModel>) {
+       binding.recyclerView.adapter= AdvertisingRecyclerAdapter(result)
     }
 }

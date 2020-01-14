@@ -1,13 +1,13 @@
-package com.smart.resources.schools_app.features.homework.viewModel
+package com.smart.resources.schools_app.features.homework.addHomework
 
 import android.app.Application
 import androidx.lifecycle.*
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.*
-import com.smart.resources.schools_app.features.homework.model.HomeworkModel
-import com.smart.resources.schools_app.features.homework.model.HomeworkRepository
-import com.smart.resources.schools_app.features.homework.model.PostHomeworkModel
+import com.smart.resources.schools_app.features.homework.HomeworkModel
+import com.smart.resources.schools_app.features.homework.HomeworkRepository
+import com.smart.resources.schools_app.features.homework.PostHomeworkModel
 import kotlinx.coroutines.*
 import retrofit2.Response
 

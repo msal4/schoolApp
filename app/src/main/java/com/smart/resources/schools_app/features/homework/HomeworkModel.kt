@@ -1,5 +1,6 @@
-package com.smart.resources.schools_app.features.homework.model
+package com.smart.resources.schools_app.features.homework
 
+import com.smart.resources.schools_app.core.utils.isImage
 import org.threeten.bp.LocalDateTime
 import java.io.File
 
@@ -24,7 +25,9 @@ class HomeworkModel(
     val attachment: String,
     subjectName: String
 
-): BaseHomeworkModel(assignmentName, date, note, subjectName)
+): BaseHomeworkModel(assignmentName, date, note, subjectName){
+    val hasImage get() = attachment.isImage()
+}
 
 class PostHomeworkModel(
     var attachment: File?= null,

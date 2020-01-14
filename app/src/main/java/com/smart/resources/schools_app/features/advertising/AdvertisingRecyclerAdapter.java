@@ -84,12 +84,6 @@ public class AdvertisingRecyclerAdapter extends RecyclerView.Adapter<Advertising
 
         private void bind(AdvertisingModel model) {
             binding.setItemModel(model);
-
-            if(model.getAttachment().toLowerCase().endsWith(".jpg")|| model.getAttachment().toLowerCase().endsWith(".png")){
-                binding.imgExist.setVisibility(View.VISIBLE);
-            }else{
-                binding.imgExist.setVisibility(View.GONE);
-            }
         }
     }
 

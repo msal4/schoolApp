@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.homework.ui
+package com.smart.resources.schools_app.features.homework
 
 import android.graphics.Canvas
 import android.graphics.Color
@@ -22,16 +22,18 @@ import com.smart.resources.schools_app.features.homework.model.HomeworkModel
 import com.smart.resources.schools_app.features.homework.viewModel.HomeworkViewModel
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 
+import com.smart.resources.schools_app.core.utils.*
+import com.smart.resources.schools_app.features.homework.addHomework.AddHomeworkFragment
 
-class HomeworkFragment : Fragment() {
+class HomeworkFragment : Fragment(){
     private lateinit var binding: FragmentRecyclerLoaderBinding
     private lateinit var viewModel: HomeworkViewModel
     private lateinit var adapter: HomeworkRecyclerAdapter
 
 
     companion object {
-        fun newInstance(fm: FragmentManager) {
-            val fragment =
+        fun newInstance(fm:FragmentManager){
+            val fragment=
                 HomeworkFragment()
 
             fm.beginTransaction().apply {
@@ -41,16 +43,12 @@ class HomeworkFragment : Fragment() {
         }
     }
 
-    fun removeHomeWork(homeworkModel: HomeworkModel) {
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false).apply {
-            lifecycleOwner = this@HomeworkFragment
+            lifecycleOwner= this@HomeworkFragment
         }
         adapter = HomeworkRecyclerAdapter()
         binding.recyclerView.adapter = adapter
@@ -153,22 +151,20 @@ class HomeworkFragment : Fragment() {
     private fun setupViewModel() {
         viewModel = ViewModelProviders.of(this)
             .get(HomeworkViewModel::class.java).apply {
-                onError = this@HomeworkFragment::onError
+                binding.listState= listState
                 fetchHomework() // TODO: improve performance by not fetching new data every time
 
-                getHomework.observe(this@HomeworkFragment, Observer {
-                    if (it == null) return@Observer
+                getHomework.observe(this@HomeworkFragment, Observer{
+                    if(it == null) return@Observer
 
                     adapter.updateData(it)
-                    binding.errorText.text = ""
-                    binding.progressIndicator.hide()
                 })
 
             }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if (SharedPrefHelper.instance?.userType == UserType.TEACHER) {
+        if(SharedPrefHelper.instance?.userType == UserType.TEACHER) {
 
             inflater.inflate(R.menu.menu_add_btn, menu)
         }
@@ -177,15 +173,9 @@ class HomeworkFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.addMenuItem -> fragmentManager?.let { AddHomeworkFragment.newInstance(it) }
+        when(item.itemId){
+            R.id.addMenuItem-> fragmentManager?.let { AddHomeworkFragment.newInstance(it) }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-
-    private fun onError(errorMsg: String) {
-        binding.progressIndicator.hide()
-        binding.errorText.text = errorMsg
     }
 }
