@@ -60,7 +60,7 @@ public class HomeworkRecyclerAdapter extends RecyclerView.Adapter<HomeworkRecycl
                     /*if(binding.contentText.getLineCount()<3){
                         binding.contentText.append("\u2026");
                     }else {*/
-                    binding.contentText.setMaxLines(2);
+                    binding.contentText.setMaxLines(1);
                     // }
                 }else if(newState== State.Expanded|| newState == State.Expanding){
                     binding.contentText.setMaxLines(100);

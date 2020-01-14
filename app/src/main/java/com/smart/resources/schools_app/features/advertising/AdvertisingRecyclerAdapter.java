@@ -84,7 +84,6 @@ public class AdvertisingRecyclerAdapter extends RecyclerView.Adapter<Advertising
 
         private void bind(AdvertisingModel model) {
             binding.setItemModel(model);
-
         }
     }
 

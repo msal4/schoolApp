@@ -20,7 +20,7 @@
     app:el_initialState="collapsed"
     app:el_collapsedHeight="@dimen/advertising_collapsed_height"
     app:el_moreText="Expand/Collapse"
-    app:el_shadowHeight="20dp"
+    app:el_shadowHeight="0dp"
     app:el_showButton="false"
     app:el_showShadow="false"
     android:layout_marginBottom="@dimen/item_margin">
@@ -89,6 +89,7 @@
                 android:ellipsize="end"
                 android:gravity="center|start"
                 android:minLines="2"
+                android:maxLines="2"
                 android:text="@{itemModel.note.trim()}"
                 android:textAlignment="viewStart"
                 app:layout_constraintEnd_toEndOf="parent"
