@@ -9,6 +9,11 @@ interface HomeworkDao {
     @GET("classHomework")
     suspend fun fetchHomework(): Response<List<HomeworkModel>>
 
+
+    @DELETE("homework/{id}")
+    suspend fun deleteHomework(@Path("id") homeworkId: Int): Response<Unit>
+
+
     @Multipart
     @POST("addHomework")
     suspend fun addHomework(

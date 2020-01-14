@@ -25,8 +25,10 @@ public class HomeworkRecyclerAdapter extends RecyclerView.Adapter<HomeworkRecycl
         notifyItemInserted(0);
     }
 
+    static List<HomeworkModel> dataLis;
     public void updateData(List<HomeworkModel> dataList){
         this.dataList= dataList;
+        dataLis=dataList;
         notifyDataSetChanged();
     }
 
@@ -49,6 +51,9 @@ public class HomeworkRecyclerAdapter extends RecyclerView.Adapter<HomeworkRecycl
         return dataList.size();
     }
 
+    public static HomeworkModel getHomeworkAt(int position){
+        return dataLis.get(position);
+    }
     class MyViewHolder extends RecyclerView.ViewHolder{
         private ItemHomeworkBinding binding;
 

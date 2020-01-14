@@ -14,9 +14,9 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.core.utils.hide
+import com.smart.resources.schools_app.core.utils.show
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.sharedUi.SectionActivity
-
 
 
 class ExamFragment : Fragment(), ExamRecyclerAdapter.OnItemClickListener {
@@ -24,15 +24,14 @@ class ExamFragment : Fragment(), ExamRecyclerAdapter.OnItemClickListener {
     private lateinit var viewModel: ExamViewModel
 
 
-
     companion object {
-        var fragm:FragmentManager? = null
+        var fragm: FragmentManager? = null
         fun newInstance(fm: FragmentManager) {
 
             val fragment =
                 ExamFragment()
 
-            fragm=fm
+            fragm = fm
             fm.beginTransaction().apply {
                 add(R.id.fragmentContainer, fragment)
                 commit()
@@ -48,7 +47,7 @@ class ExamFragment : Fragment(), ExamRecyclerAdapter.OnItemClickListener {
         (activity as SectionActivity).setCustomTitle(R.string.exams)
         setHasOptionsMenu(true)
 
-
+        binding.progressIndicator.show()
         setupViewModel()
         return binding.root
     }
@@ -57,12 +56,10 @@ class ExamFragment : Fragment(), ExamRecyclerAdapter.OnItemClickListener {
         viewModel = ViewModelProviders.of(this)
             .get(ExamViewModel::class.java).apply {
                 if (SharedPrefHelper.instance?.userType == UserType.STUDENT) {
-                    fetchExams() // TODO: improve performance by not fetching new data every time
-
+                    // TODO: improve performance by not fetching new data every time
                     getExams().observe(this@ExamFragment, Observer { onExamsDownload(it) })
                 } else if (SharedPrefHelper.instance?.userType == UserType.TEACHER) {
-                    fetchTeacherExams() // TODO: improve performance by not fetching new data every time
-
+                    // TODO: improve performance by not fetching new data every time
                     getTeacherExams().observe(this@ExamFragment, Observer { onExamsDownload(it) })
                 }
             }
@@ -90,8 +87,10 @@ class ExamFragment : Fragment(), ExamRecyclerAdapter.OnItemClickListener {
             is Success -> {
                 if (result.data.isNullOrEmpty()) errorMsg = getString(R.string.no_exams)
                 else {
-                    binding.recyclerView.adapter = ExamRecyclerAdapter(result.data,
-                        this)
+                    binding.recyclerView.adapter = ExamRecyclerAdapter(
+                        result.data,
+                        this
+                    )
                 }
 
             }

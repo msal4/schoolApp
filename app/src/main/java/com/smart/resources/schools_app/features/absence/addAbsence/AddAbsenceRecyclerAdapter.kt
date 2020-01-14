@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.databinding.ItemAddAbsenceBinding
 import com.smart.resources.schools_app.features.absence.AddAbsenceModel
-import com.smart.resources.schools_app.features.students.Student
 
 class AddAbsenceRecyclerAdapter()
     : RecyclerView.Adapter<AddAbsenceRecyclerAdapter.MyViewHolder>() {
@@ -50,7 +49,7 @@ class AddAbsenceRecyclerAdapter()
 
 
         holder.binding.apply {
-            studentCheckBox.text= student.name
+            studentCheckBox.text= student.subjectName
             studentCheckBox.isChecked= student.isChecked
             studentCheckBox.setOnCheckedChangeListener { _, isChecked ->
                 student.isChecked= isChecked

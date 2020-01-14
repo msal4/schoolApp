@@ -10,6 +10,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ActivityPdfWebViewBinding
 
@@ -42,6 +43,7 @@ class PdfWebViewActivity : AppCompatActivity() {
 
             override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
+                Logger.d("pdfUrl ${url}")
                 binding.wb.visibility=View.GONE
                 binding.progressIndicator.visibility = View.VISIBLE
             }
@@ -59,7 +61,7 @@ class PdfWebViewActivity : AppCompatActivity() {
         val settings = binding.wb.settings
         settings.domStorageEnabled = true
 
-        binding.wb.loadUrl(intent.getStringExtra("attach"))
+        binding.wb.loadUrl("https://docs.google.com/gview?embedded=true&url="+intent.getStringExtra("attach"))
 
 
     }

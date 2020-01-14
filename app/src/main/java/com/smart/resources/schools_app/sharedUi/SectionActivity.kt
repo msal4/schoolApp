@@ -14,6 +14,7 @@ import com.smart.resources.schools_app.features.notification.NotificationFragmen
 import com.smart.resources.schools_app.core.myTypes.Section
 import com.smart.resources.schools_app.core.myTypes.Section.EXAM
 import com.smart.resources.schools_app.core.myTypes.UserType
+import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
 import com.smart.resources.schools_app.features.absence.getAbsence.AbsenceFragment
 //import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
 import com.smart.resources.schools_app.features.advertising.AdvertisingFragment
@@ -69,7 +70,7 @@ class SectionActivity : AppCompatActivity() {
                 AbsenceFragment.newInstance(supportFragmentManager)
             }
             else{
-                //AddAbsenceFragment.newInstance(supportFragmentManager)
+                AddAbsenceFragment.newInstance(supportFragmentManager)
             }
             Section.RATING -> AddRatingFragment.newInstance(supportFragmentManager)
         }

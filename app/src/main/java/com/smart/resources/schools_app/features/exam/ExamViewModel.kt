@@ -18,16 +18,15 @@ class ExamViewModel : ViewModel() {
 
 
 
-
     fun getExams():
             LiveData<notificationsResult> {
-
+        fetchExams()
         return exams
     }
 
     fun getTeacherExams():
             LiveData<notificationsResult> {
-
+        fetchTeacherExams()
         return exams
     }
 
