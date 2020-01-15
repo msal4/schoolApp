@@ -1,5 +1,6 @@
 package com.smart.resources.schools_app.core.adapters
 
+import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.*
@@ -79,6 +80,14 @@ fun loadImageUrl(iv: ImageView, url: String?) {
     Glide
         .with(iv.context)
         .load(url)
+        .into(iv)
+}
+
+@BindingAdapter("mine:setImage")
+fun loadImageDrawable(iv: ImageView, drawable: Drawable) {
+    Glide
+        .with(iv.context)
+        .load(drawable)
         .into(iv)
 }
 

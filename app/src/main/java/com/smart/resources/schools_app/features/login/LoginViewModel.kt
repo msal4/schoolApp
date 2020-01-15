@@ -24,8 +24,8 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     val isTeacherLogging = MutableLiveData<Boolean>()
     val isStudentLogging = MutableLiveData<Boolean>()
 
-    var phoneNumber: String? = "07808888888"
-    var password: String? = "passt2"
+    var phoneNumber: String? = null
+    var password: String? = null
 
 
     fun login(view: View) {
