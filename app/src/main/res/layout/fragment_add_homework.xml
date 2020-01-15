@@ -114,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:text="@={postModel.assignmentName}"
                 style="@style/MyEditText"
-                android:hint="@string/homework_name"
+                android:hint="@string/homework_type"
                 mine:errorMsg="@{e.typeMsg}"/>
 
         </com.google.android.material.textfield.TextInputLayout>

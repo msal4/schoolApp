@@ -35,7 +35,7 @@
     <string name="save">حفظ</string>
     <string name="subject_name">اسم المادة</string>
     <string name="exam_type">نوع الامتحان</string>
-    <string name="homework_name">اسم الواجب</string>
+    <string name="homework_type">نوع الواجب</string>
     <string name="no_schedule">لا يوجد جدول</string>
     <string name="add_homework">اضافة واجب</string>
     <string name="add_exam">اضافة امتحان</string>

@@ -19,7 +19,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object BackendHelper {
-    private const val API_BASE_URL = "http://kother.srittwo.me/api/" // TODO: change1: base url
+    private const val SCHOOL_NAME= "kother"     // TODO: change1: base url
+
+    private const val API_BASE_URL = "http://$SCHOOL_NAME.srittwo.me/api/"
     val gson = GsonBuilder()
         .registerTypeAdapter(
             LocalDateTime::class.java,
@@ -61,8 +63,7 @@ object BackendHelper {
         )
     }
 
-    val homeworkDao: HomeworkDao by lazy{retrofitWithAuth.create(
-        HomeworkDao::class.java)}
+    val homeworkDao: HomeworkDao by lazy{retrofitWithAuth.create(HomeworkDao::class.java)}
     val examDao: ExamDao by lazy{retrofitWithAuth.create(ExamDao::class.java)}
     val libraryDao: LibraryDao by lazy{ retrofitWithAuth.create(LibraryDao::class.java)}
     val notificationDao: NotificationsDao by lazy{retrofitWithAuth.create(NotificationsDao::class.java)}
