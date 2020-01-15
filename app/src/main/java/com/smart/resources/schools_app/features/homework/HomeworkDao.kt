@@ -11,7 +11,7 @@ interface HomeworkDao {
 
 
     @DELETE("homework/{id}")
-    suspend fun deleteHomework(@Path("id") homeworkId: Int): Response<Unit>
+    suspend fun deleteHomework(@Path("id") homeworkId: Int?): Response<Unit>
 
 
     @Multipart

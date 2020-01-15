@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.homework.addHomework
+package com.smart.resources.schools_app.features.homework
 
 import android.app.Activity
 import android.content.Intent
@@ -32,7 +32,7 @@ import java.io.File
 
 class AddHomeworkFragment : Fragment(), PostListener {
     private lateinit var binding: FragmentAddHomeworkBinding
-    private lateinit var viewModel: AddHomeworkViewModel
+    private lateinit var viewModel: HomeworkViewModel
     private lateinit var progressBar: ProgressBar
     private lateinit var saveItem: MenuItem
 
@@ -170,8 +170,8 @@ class AddHomeworkFragment : Fragment(), PostListener {
 
     private fun setupViewModel() {
         ViewModelProviders
-            .of(this)
-            .get(AddHomeworkViewModel::class.java)
+            .of(activity!!)
+            .get(HomeworkViewModel::class.java)
             .apply {
                 viewModel = this
                 binding.apply {

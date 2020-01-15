@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -16,12 +17,11 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.core.myTypes.UserType
-import com.smart.resources.schools_app.core.utils.hide
+import com.smart.resources.schools_app.core.utils.toast
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
+import com.smart.resources.schools_app.sharedUi.ImageViewerActivity
 import com.smart.resources.schools_app.sharedUi.SectionActivity
-
-import com.smart.resources.schools_app.core.utils.*
-import com.smart.resources.schools_app.features.homework.addHomework.AddHomeworkFragment
+import kotlinx.android.synthetic.main.item_homework.*
 
 class HomeworkFragment : Fragment(){
     private lateinit var binding: FragmentRecyclerLoaderBinding
@@ -48,7 +48,7 @@ class HomeworkFragment : Fragment(){
         binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false).apply {
             lifecycleOwner= this@HomeworkFragment
         }
-        adapter = HomeworkRecyclerAdapter()
+        adapter = HomeworkRecyclerAdapter(::onImageClick)
         binding.recyclerView.adapter = adapter
         (activity as SectionActivity).setCustomTitle(R.string.homework)
         setHasOptionsMenu(true)
@@ -60,6 +60,10 @@ class HomeworkFragment : Fragment(){
             mIth.attachToRecyclerView(binding.recyclerView)
         }
         return binding.root
+    }
+
+    private fun onImageClick(imageView: ImageView, imageUrl: String){
+        activity?.let { ImageViewerActivity.newInstance(it,imageView, imageUrl) }
     }
 
     private fun setupSwipe(): ItemTouchHelper {
@@ -146,13 +150,8 @@ class HomeworkFragment : Fragment(){
                     viewHolder: ViewHolder,
                     direction: Int
                 ) { // remove from adapter
-                    viewModel = ViewModelProviders.of(this@HomeworkFragment)
-                        .get(HomeworkViewModel::class.java).apply {
 
-                            deleteHomewrk(HomeworkRecyclerAdapter.getHomeworkAt(viewHolder.adapterPosition).idHomework)
-
-                        }
-                    adapter.notifyItemRemoved(viewHolder.adapterPosition)
+                        viewModel.deleteHomework(viewHolder.adapterPosition)
                 }
 
             })
@@ -160,15 +159,14 @@ class HomeworkFragment : Fragment(){
     }
 
     private fun setupViewModel() {
-        viewModel = ViewModelProviders.of(this)
+        viewModel = ViewModelProviders.of(activity!!)
             .get(HomeworkViewModel::class.java).apply {
                 binding.listState= listState
-                fetchHomework() // TODO: improve performance by not fetching new data every time
 
                 getHomework.observe(this@HomeworkFragment, Observer{
                     if(it == null) return@Observer
 
-                    adapter.updateData(it)
+                    adapter.submitList(it)
                 })
 
             }

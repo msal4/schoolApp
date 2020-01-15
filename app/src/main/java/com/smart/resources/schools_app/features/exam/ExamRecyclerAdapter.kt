@@ -3,13 +3,16 @@ package com.smart.resources.schools_app.features.exam
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.databinding.ItemExamBinding
+import com.smart.resources.schools_app.features.homework.HomeworkModel
 
-class ExamRecyclerAdapter(private val exams: List<ExamModel>,
-                          private val listener:OnItemClickListener) : RecyclerView.Adapter<ExamRecyclerAdapter.MyViewHolder>() {
+class ExamRecyclerAdapter(private val listener:OnItemClickListener
+) : ListAdapter<ExamModel, ExamRecyclerAdapter.MyViewHolder>(DIFF_CALLBACK) {
     private val isStudent= SharedPrefHelper.instance?.userType == UserType.STUDENT
 
     interface OnItemClickListener {
@@ -23,6 +26,10 @@ class ExamRecyclerAdapter(private val exams: List<ExamModel>,
         }
     }
 
+    override fun submitList(list: List<ExamModel>?) {
+        super.submitList(list?.toList())
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -33,13 +40,30 @@ class ExamRecyclerAdapter(private val exams: List<ExamModel>,
         return MyViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = exams.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val exam= exams[position]
+        val exam= getItem(position)
 
         if(!isStudent)holder.itemView.setOnClickListener { listener.onItemClick(exam) }
         holder.bind(exam)
     }
 
+    companion object {
+        private val DIFF_CALLBACK: DiffUtil.ItemCallback<ExamModel> =
+            object : DiffUtil.ItemCallback<ExamModel>() {
+                override fun areItemsTheSame(
+                    oldItem: ExamModel,
+                    newItem: ExamModel
+                ): Boolean {
+                    return oldItem.idExam == newItem.idExam
+                }
+
+                override fun areContentsTheSame(
+                    oldItem: ExamModel,
+                    newItem: ExamModel
+                ): Boolean {
+                    return oldItem.isContentSame(newItem)
+                }
+            }
+    }
 }

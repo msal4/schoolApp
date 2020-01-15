@@ -1,5 +1,6 @@
 package com.smart.resources.schools_app.features.exam
 
+import com.smart.resources.schools_app.features.homework.HomeworkModel
 import org.threeten.bp.LocalDateTime
 
 abstract class Exam (
@@ -16,7 +17,15 @@ class ExamModel(
     date: LocalDateTime,
     note: String,
     type: String
-) : Exam(subjectName, date, note, type)
+) : Exam(subjectName, date, note, type){
+
+    fun isContentSame(model: ExamModel) =
+        subjectName== model.subjectName &&
+                date== model.date &&
+                note== model.note &&
+                type == model.type &&
+                mark== model.mark
+}
 
 
 class PostExamModel(

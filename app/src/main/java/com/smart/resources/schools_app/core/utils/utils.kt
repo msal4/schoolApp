@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.net.Uri
 import android.util.Base64
+import androidx.lifecycle.MutableLiveData
 import com.orhanobut.logger.Logger
 import id.zelory.compressor.Compressor
 import okhttp3.MediaType
@@ -62,4 +63,8 @@ fun String.asRequestBody() :RequestBody= RequestBody.create(MediaType.parse("tex
 fun File.asBodyPart(fieldName:String) :MultipartBody.Part?{
     val requestBody = RequestBody.create(MediaType.parse("Image/*"), this)
     return MultipartBody.Part.createFormData(fieldName, name, requestBody)
+}
+
+fun <T> MutableLiveData<T>.notifyObservers() {
+    this.value = this.value
 }

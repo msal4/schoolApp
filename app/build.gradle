@@ -1,4 +1,4 @@
- apply plugin: 'com.android.application'
+apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 
@@ -58,6 +58,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-rc03'
+    implementation 'com.google.android.material:material:1.0.0'
     testImplementation 'junit:junit:4.12'
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
@@ -68,6 +69,7 @@ dependencies {
     implementation "androidx.multidex:multidex:$multidex_version"
     implementation 'com.orhanobut:logger:2.2.0'
     kapt "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+    implementation "com.github.chrisbanes:PhotoView:2.0.0"
 
     // Kotlin
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"

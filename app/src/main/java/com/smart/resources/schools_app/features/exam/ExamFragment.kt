@@ -19,8 +19,7 @@ import com.smart.resources.schools_app.sharedUi.SectionActivity
 class ExamFragment : Fragment(), ExamRecyclerAdapter.OnItemClickListener {
     private lateinit var binding: FragmentRecyclerLoaderBinding
     private lateinit var viewModel: ExamViewModel
-
-
+    private lateinit var adapter: ExamRecyclerAdapter
 
     companion object {
         fun newInstance(fm: FragmentManager) {
@@ -40,6 +39,8 @@ class ExamFragment : Fragment(), ExamRecyclerAdapter.OnItemClickListener {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false).apply {
+            adapter=  ExamRecyclerAdapter(this@ExamFragment)
+            recyclerView.adapter =adapter
             lifecycleOwner= this@ExamFragment
         }
         (activity as SectionActivity).setCustomTitle(R.string.exams)
@@ -51,11 +52,10 @@ class ExamFragment : Fragment(), ExamRecyclerAdapter.OnItemClickListener {
     }
 
     private fun setupViewModel() {
-        viewModel = ViewModelProviders.of(this)
+        viewModel = ViewModelProviders.of(activity!!)
             .get(ExamViewModel::class.java).apply {
                     binding.listState= listState
-                    fetchExams() // TODO: improve performance by not fetching new data every time
-                    getExams().observe(this@ExamFragment, Observer { onExamsDownload(it) })
+                    exams.observe(this@ExamFragment, Observer { onExamsDownload(it) })
                 }
         }
 
@@ -77,7 +77,7 @@ class ExamFragment : Fragment(), ExamRecyclerAdapter.OnItemClickListener {
 
 
     private fun onExamsDownload(result: List<ExamModel>) {
-        binding.recyclerView.adapter = ExamRecyclerAdapter(result, this)
+        adapter.submitList(result)
     }
 
     override fun onItemClick(examModel: ExamModel) {

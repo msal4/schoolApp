@@ -13,7 +13,7 @@ interface ExamDao {
     suspend fun fetchTeacherExams(): Response<List<ExamModel>>
 
     @POST("addExam")
-    suspend fun addExam(@Body postExamModel: PostExamModel): Response<Unit>
+    suspend fun addExam(@Body postExamModel: PostExamModel): Response<ExamModel>
 
     @POST("addMultiResult")
     suspend fun addMultiResult(@Body studentMark: SendStudentResult): Response<Unit>

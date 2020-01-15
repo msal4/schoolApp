@@ -69,4 +69,6 @@
     <string name="no_dgree_added">لم يتم اضافة ددرجة</string>
     <string name="mark">الدرجة</string>
     <string name="add_rating">اضافة تقييم</string>
+    <string name="title_activity_full_image">fullImageActivity</string>
+    <string name="image_trans">imageTransition</string>
 </resources>

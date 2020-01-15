@@ -13,18 +13,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".features.library.PdfWebViewActivity"/>
+        <activity
+            android:name=".sharedUi.ImageViewerActivity"
+            android:label="@string/title_activity_full_image"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".features.library.PdfWebViewActivity" />
         <activity
             android:name=".sharedUi.SectionActivity"
             android:label=""
             android:screenOrientation="portrait" />
         <activity
             android:name=".sharedUi.HomeActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".features.profile.ProfileActivity"
-            android:screenOrientation="portrait"
-            android:label=""/>
+            android:label=""
+            android:screenOrientation="portrait" />
         <activity
             android:name=".features.login.LoginActivity"
             android:noHistory="true"

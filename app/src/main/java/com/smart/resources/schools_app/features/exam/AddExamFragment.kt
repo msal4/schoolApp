@@ -25,7 +25,7 @@ import org.threeten.bp.LocalDateTime
 
 class AddExamFragment : Fragment(), PostListener {
     private lateinit var binding: FragmentAddExamBinding
-    private lateinit var viewModel: AddExamViewModel
+    private lateinit var viewModel: ExamViewModel
     private lateinit var progressBar: ProgressBar
     private lateinit var saveItem: MenuItem
 
@@ -145,8 +145,8 @@ class AddExamFragment : Fragment(), PostListener {
 
     private fun setupViewModel() {
         ViewModelProviders
-            .of(this)
-            .get(AddExamViewModel::class.java)
+            .of(activity!!)
+            .get(ExamViewModel::class.java)
             .apply {
                 viewModel = this
                 binding.apply {
