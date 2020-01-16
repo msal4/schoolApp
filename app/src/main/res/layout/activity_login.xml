@@ -76,7 +76,7 @@
                 mine:errorMsg="@{loginViewModel.loginException.phoneNumberMsg}"
                 android:hint="@string/phone_number"
                 android:inputType="phone"
-                android:maxLength="11"
+                android:maxLength="15"
                 android:padding="@dimen/edit_text_padding"
                 android:text="@={loginViewModel.phoneNumber}"
                 android:textAlignment="viewStart"

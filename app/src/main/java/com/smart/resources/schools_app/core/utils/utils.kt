@@ -1,12 +1,9 @@
 package com.smart.resources.schools_app.core.utils
 
-import android.content.Context
 import android.content.res.Resources
-import android.net.Uri
 import android.util.Base64
+import android.widget.EditText
 import androidx.lifecycle.MutableLiveData
-import com.orhanobut.logger.Logger
-import id.zelory.compressor.Compressor
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -19,7 +16,32 @@ fun pxToDp(px: Int): Int {
 }
 
 fun dpToPx(dp: Int): Int {
+
     return (dp * Resources.getSystem().displayMetrics.density).toInt()
+}
+
+
+/**
+ * this method completes validatePhone AND MUST BE CALLED AFTER IT TO ENSURE CORRECT INPUT
+ * it gets a valid phone number as entered by the user
+ * and convert it to the complete
+ * which is 964##########
+ * either
+ * by deleting "00" or "+"
+ * or by inserting 964
+ * or keeping it in its original form
+ * @param rawPhoneNo the phone number editable object as entered by the user
+ * @return complete phone number
+ */
+fun String.getFormattedPhone(): String {
+    return when (this.length) {
+        10 -> "+964$this"
+        11 -> "+964" + this.substring(1)
+        13 -> "+$this"
+        14 -> this
+        15 -> "+${this.substring(2)}"
+        else -> throw NumberFormatException()
+    }
 }
 
 fun String.decodeToken(): String {

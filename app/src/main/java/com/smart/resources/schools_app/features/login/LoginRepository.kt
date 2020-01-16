@@ -1,7 +1,9 @@
 package com.smart.resources.schools_app.features.login
 
+import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.core.helpers.BackendHelper
 import com.smart.resources.schools_app.core.myTypes.*
+import com.smart.resources.schools_app.core.utils.getFormattedPhone
 import java.lang.Exception
 
 
@@ -21,9 +23,10 @@ object LoginRepository{
         password: String,
         userType: UserType
     ): MyResult<String> {
-        val requestBody = hashMapOf("phone" to phoneNumber, "password" to password)
+        val requestBody = hashMapOf("phone" to phoneNumber.getFormattedPhone(), "password" to password)
         return try {
 
+            Logger.d("phone ${phoneNumber.getFormattedPhone()}")
             val myRes = getLoginResult(userType, requestBody)
             if (myRes is Success) Success(
                 myRes.data?.get("token")?.asString

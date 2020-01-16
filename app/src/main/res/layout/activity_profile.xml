@@ -52,6 +52,15 @@
                 android:text="@string/profile"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/profileAttributeTitleSize" />
+
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="top"
+                android:onClick="selectMultiAccount"
+                android:src="@drawable/ic_multi_account"/>
+
         </androidx.appcompat.widget.Toolbar>
 
         <de.hdodenhof.circleimageview.CircleImageView
