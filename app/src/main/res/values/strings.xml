@@ -73,4 +73,5 @@
     <string name="image_trans">imageTransition</string>
     <string name="add_account">اضافة حساب</string>
     <string name="choose_another_acc">اختر حساب اخر</string>
+    <string name="no_formatted_phone">خطا في رقم الهاتف</string>
 </resources>
