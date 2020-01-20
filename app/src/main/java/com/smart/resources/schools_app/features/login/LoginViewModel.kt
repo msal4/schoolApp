@@ -13,6 +13,7 @@ import com.smart.resources.schools_app.features.profile.*
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
@@ -94,10 +95,18 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             return false
         }
 
+        try{
+            phoneNumber=   phoneNumber?.getFormattedPhone()
+        }catch (e:Exception){
+            loginException.phoneNumberMsg.postValue(context.getString(R.string.no_formatted_phone))
+            return false
+        }
+
         if (password.isNullOrEmpty()) {
             loginException.passwordMsg.postValue(context.getString(R.string.field_required))
             return false
         }
+
 
         return true
     }

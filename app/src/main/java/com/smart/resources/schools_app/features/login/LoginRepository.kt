@@ -23,7 +23,7 @@ object LoginRepository{
         password: String,
         userType: UserType
     ): MyResult<String> {
-        val requestBody = hashMapOf("phone" to phoneNumber.getFormattedPhone(), "password" to password)
+        val requestBody = hashMapOf("phone" to phoneNumber, "password" to password)
         return try {
 
             Logger.d("phone ${phoneNumber.getFormattedPhone()}")
