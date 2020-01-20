@@ -16,6 +16,7 @@ import com.smart.resources.schools_app.core.utils.hide
 import com.smart.resources.schools_app.core.utils.show
 import com.smart.resources.schools_app.core.utils.showSnackBar
 import com.smart.resources.schools_app.databinding.FragmentAddExamBinding
+import com.smart.resources.schools_app.features.profile.AccountManager
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import com.smart.resources.schools_app.features.profile.TeacherInfoModel
 import com.smart.resources.schools_app.sharedUi.DatePickerFragment
@@ -117,7 +118,9 @@ class AddExamFragment : Fragment(), PostListener {
         binding = FragmentAddExamBinding
             .inflate(inflater, container, false)
             .apply {
-                TeacherInfoModel.instance?.apply {
+                val currentUser=AccountManager.instance?.getCurrentUser()
+                val teacherInfoModel= currentUser?.accessToken?.let { TeacherInfoModel.fromToken(it) }
+                teacherInfoModel?.apply {
                     setSpinnerList(classAndSectionSpinner, classesInfo)
                     setSpinnerList(examTypeSpinner, examType)
                 }

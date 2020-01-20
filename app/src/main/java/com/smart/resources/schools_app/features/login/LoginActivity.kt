@@ -1,4 +1,5 @@
 package com.smart.resources.schools_app.features.login
+
 import android.content.Context
 import android.content.Intent
 import android.graphics.Point
@@ -13,26 +14,27 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ActivityLoginBinding
 import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.core.utils.showSnackBar
+import com.smart.resources.schools_app.features.profile.*
 import com.smart.resources.schools_app.sharedUi.HomeActivity
 
 
-class LoginActivity : AppCompatActivity(){
+class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var viewModel: LoginViewModel
 
-    companion object Factory{
-        fun newInstance(context: Context){
-            val intent= Intent(context, LoginActivity::class.java)
+    companion object Factory {
+        fun newInstance(context: Context) {
+            val intent = Intent(context, LoginActivity::class.java)
             context.startActivity(intent)
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding= DataBindingUtil.setContentView(this, R.layout.activity_login)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
         initComponents()
-        if(SharedPrefHelper.instance?.accessToken != null){
+        if (SharedPrefHelper.instance?.currentUser != -1) {
             HomeActivity.newInstance(this)
         }
         setupConstraintLayoutHeight()
@@ -50,6 +52,7 @@ class LoginActivity : AppCompatActivity(){
         AndroidThreeTen.init(this)
         SharedPrefHelper.init(this)
         Logger.addLogAdapter(AndroidLogAdapter())
+        AccountManager.init(this)
     }
 
     private fun setupViewModel() {
@@ -61,11 +64,14 @@ class LoginActivity : AppCompatActivity(){
                     it.onLoginError = ::onLoginError
                 }
             loginViewModel = viewModel
-            lifecycleOwner= this@LoginActivity
+            lifecycleOwner = this@LoginActivity
         }
     }
 
+
+
     private fun onLogin() {
+
         HomeActivity.newInstance(
             this
         )

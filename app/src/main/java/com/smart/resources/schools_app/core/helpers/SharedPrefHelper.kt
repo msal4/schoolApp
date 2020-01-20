@@ -1,45 +1,29 @@
 package com.smart.resources.schools_app.core.helpers
 
+import android.accounts.Account
 import android.content.Context
 import android.content.SharedPreferences
 import com.smart.resources.schools_app.core.myTypes.UserType
+import com.smart.resources.schools_app.features.profile.AccountModel
 
 class SharedPrefHelper private constructor(context: Context) {
     private val mSharedPreferences: SharedPreferences
 
-    var imgUri: String?
-        get() = mSharedPreferences.getString(IMG_URI, null)
-        set(accessToken) {
-            mSharedPreferences.edit().putString(IMG_URI, accessToken).apply()
-        }
 
-    var accessToken: String?
-        get() = mSharedPreferences.getString(ACCESS_TOKEN, null)
-        set(accessToken) {
-            mSharedPreferences.edit().putString(ACCESS_TOKEN, accessToken)
-                .apply()
-        }
-
-    var userType: UserType?
-        get() {
-            return  when(mSharedPreferences.getInt(USER_TYPE, -1)){
-                0-> UserType.STUDENT
-                1-> UserType.TEACHER
-                else -> null
+    var currentUser: Int?
+        get() = mSharedPreferences.getInt(ACCOUNT, -1)
+        set(uid) {
+            if (uid != null) {
+                mSharedPreferences.edit().putInt(ACCOUNT, uid).apply()
             }
         }
-        set(userType) {
-            if (userType != null) {
-                mSharedPreferences.edit().putInt(USER_TYPE, userType.ordinal).apply()
-            }
-        }
+
 
     companion object {
         var instance: SharedPrefHelper? = null
         private const val PREF_NAME = "mySettingsPref"
-        private const val IMG_URI = "myImage"
-        private const val ACCESS_TOKEN = "accessToken"
-        private const val USER_TYPE = "userType"
+        private const val ACCOUNT = "Account"
+
 
         fun init(context: Context) {
             instance =

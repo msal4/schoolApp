@@ -9,6 +9,7 @@ import com.smart.resources.schools_app.features.homework.HomeworkDao
 import com.smart.resources.schools_app.features.library.LibraryDao
 import com.smart.resources.schools_app.features.login.AccountDao
 import com.smart.resources.schools_app.features.notification.NotificationsDao
+import com.smart.resources.schools_app.features.profile.AccountManager
 import com.smart.resources.schools_app.features.rating.RatingDao
 import com.smart.resources.schools_app.features.schedule.ScheduleDao
 import com.smart.resources.schools_app.features.students.StudentDao
@@ -54,7 +55,7 @@ object BackendHelper {
         addInterceptor(
             Interceptor { chain ->
                 val token =
-                    SharedPrefHelper.instance?.accessToken ?: return@Interceptor null
+                    AccountManager.instance?.getCurrentUser()?.accessToken ?: return@Interceptor null
                 val newRequest = chain.request().newBuilder()
                     .addHeader("Authorization", "Baerer $token")
                     .build()

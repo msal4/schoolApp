@@ -16,6 +16,7 @@ import com.smart.resources.schools_app.core.utils.showSnackBar
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 import com.smart.resources.schools_app.databinding.FragmentAddAbsenceBinding
 import com.smart.resources.schools_app.features.absence.AddAbsenceModel
+import com.smart.resources.schools_app.features.profile.AccountManager
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import com.smart.resources.schools_app.features.profile.TeacherInfoModel
 import com.tiper.MaterialSpinner
@@ -73,11 +74,17 @@ class AddAbsenceFragment : Fragment(), MaterialSpinner.OnItemSelectedListener, P
                 }
 
                 // setup spinner
-                TeacherInfoModel.instance?.let {
-                    setSpinnerList(classAndSectionSpinner, it.classesInfo)
-                    classAndSectionSpinner.onItemSelectedListener = this@AddAbsenceFragment
-                    setSpinnerList(subjectsSpinner, it.subjects)
-                    subjectsSpinner.onItemSelectedListener = this@AddAbsenceFragment
+                val currentUser=AccountManager.instance?.getCurrentUser()
+                if (currentUser != null) {
+                    if(currentUser.userType==1) {
+                        val tracherInfo= currentUser?.accessToken?.let { TeacherInfoModel.fromToken(it) }
+                        tracherInfo?.let {
+                            setSpinnerList(classAndSectionSpinner, it.classesInfo)
+                            classAndSectionSpinner.onItemSelectedListener = this@AddAbsenceFragment
+                            setSpinnerList(subjectsSpinner, it.subjects)
+                            subjectsSpinner.onItemSelectedListener = this@AddAbsenceFragment
+                        }
+                    }
                 }
 
                 // set lifecycle owner

@@ -12,6 +12,7 @@ import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.core.utils.hide
 import com.smart.resources.schools_app.core.utils.show
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
+import com.smart.resources.schools_app.features.profile.AccountManager
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 
 
@@ -61,7 +62,7 @@ class ExamFragment : Fragment(), ExamRecyclerAdapter.OnItemClickListener {
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if (SharedPrefHelper.instance?.userType == UserType.TEACHER) {
+        if (AccountManager.instance?.getCurrentUser()?.userType == 1) {
             inflater.inflate(R.menu.menu_add_btn, menu)
         }
 
