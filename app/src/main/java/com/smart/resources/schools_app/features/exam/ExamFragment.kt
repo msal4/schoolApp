@@ -76,8 +76,11 @@ class ExamFragment : Fragment(), ExamRecyclerAdapter.OnItemClickListener {
     }
 
 
-    private fun onExamsDownload(result: List<ExamModel>) {
-        adapter.submitList(result)
+    private fun onExamsDownload(result: List<ExamModel>?) {
+        result?.let {
+            binding.errorText.text= ""
+            adapter.submitList(result)
+        }
     }
 
     override fun onItemClick(examModel: ExamModel) {

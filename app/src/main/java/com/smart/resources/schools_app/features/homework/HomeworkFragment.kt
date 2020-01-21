@@ -166,6 +166,7 @@ class HomeworkFragment : Fragment(){
                 getHomework.observe(this@HomeworkFragment, Observer{
                     if(it == null) return@Observer
 
+                    binding.errorText.text= ""
                     adapter.submitList(it)
                 })
 

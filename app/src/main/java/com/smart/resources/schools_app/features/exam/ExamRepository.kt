@@ -15,7 +15,7 @@ import kotlinx.coroutines.async
 import retrofit2.Response
 
 class ExamRepository{
-    val exams: MutableLiveData<MutableList<ExamModel>> = MutableLiveData()
+    val exams: MutableLiveData<MutableList<ExamModel>> = MutableLiveData(mutableListOf())
 
     suspend fun downloadExams(): MyResult<List<ExamModel>> {
         val isStudent= SharedPrefHelper.instance?.userType== UserType.STUDENT

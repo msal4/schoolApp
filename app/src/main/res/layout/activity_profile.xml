@@ -52,6 +52,9 @@
                 android:text="@string/profile"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/profileAttributeTitleSize" />
+
+
+
         </androidx.appcompat.widget.Toolbar>
 
         <de.hdodenhof.circleimageview.CircleImageView

@@ -1,12 +1,9 @@
 package com.smart.resources.schools_app.core.utils
 
-import android.content.Context
 import android.content.res.Resources
-import android.net.Uri
 import android.util.Base64
+import android.widget.EditText
 import androidx.lifecycle.MutableLiveData
-import com.orhanobut.logger.Logger
-import id.zelory.compressor.Compressor
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -19,6 +16,7 @@ fun pxToDp(px: Int): Int {
 }
 
 fun dpToPx(dp: Int): Int {
+
     return (dp * Resources.getSystem().displayMetrics.density).toInt()
 }
 

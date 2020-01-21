@@ -29,7 +29,7 @@ class HomeworkRecyclerAdapter(val onItemClick: (ImageView, String)-> Unit) :
     ) {
         val model = getItem(position)
         holder.bind(model)
-        holder.binding.imgAdv.setOnClickListener {
+        holder.binding.image.setOnClickListener {
             if(it is ImageView) onItemClick(it, model.attachment)
         }
     }

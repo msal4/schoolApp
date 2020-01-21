@@ -17,11 +17,9 @@ class ExamViewModel(application: Application) : AndroidViewModel(application) {
                 examRepo.exams
             }
     val listState= ListState()
-    val examRepo= ExamRepository()
+    private val examRepo= ExamRepository()
 
     private fun fetchExams(){
-
-
         viewModelScope.launch {
             listState.apply {
 

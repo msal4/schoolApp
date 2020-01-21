@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">مدرسة الكوثر</string>  <!-- TODO change2: app name-->
+    <string name="app_name">المصادر الذكية</string>  <!-- TODO change2: app name-->
     <string name="password">كلمة السر</string>
     <string name="phone_number">رقم الهاتف</string>
     <string name="login_as_teacher">تسجيل الدخول كمدرس</string>
@@ -71,4 +71,5 @@
     <string name="add_rating">اضافة تقييم</string>
     <string name="title_activity_full_image">fullImageActivity</string>
     <string name="image_trans">imageTransition</string>
+    <string name="no_formatted_phone">رقم الهاتف غير صالح</string>
 </resources>

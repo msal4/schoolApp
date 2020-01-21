@@ -15,13 +15,12 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 
 class HomeworkRepository{
-     val homework: MutableLiveData<MutableList<HomeworkModel>> = MutableLiveData()
+     val homework: MutableLiveData<MutableList<HomeworkModel>> = MutableLiveData(mutableListOf())
 
 
     suspend fun downloadHomework(): MyResult<List<HomeworkModel>>{
-        val myRes= GlobalScope.async {  BackendHelper.homeworkDao.fetchHomework()}.toMyResult()
+        val myRes= GlobalScope.async { BackendHelper.homeworkDao.fetchHomework()}.toMyResult()
         if(myRes is Success) homework.value= myRes.data?.toMutableList()
-        Logger.i("sotp")
         return  myRes
     }
 

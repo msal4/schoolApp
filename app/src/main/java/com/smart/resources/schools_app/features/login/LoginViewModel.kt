@@ -12,6 +12,7 @@ import com.smart.resources.schools_app.core.utils.*
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
@@ -82,10 +83,12 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             return false
         }
 
+
         if (password.isNullOrEmpty()) {
             loginException.passwordMsg.postValue(context.getString(R.string.field_required))
             return false
         }
+
 
         return true
     }
