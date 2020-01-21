@@ -10,10 +10,11 @@ import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.databinding.ItemExamBinding
 import com.smart.resources.schools_app.features.homework.HomeworkModel
+import com.smart.resources.schools_app.features.profile.AccountManager
 
 class ExamRecyclerAdapter(private val listener:OnItemClickListener
 ) : ListAdapter<ExamModel, ExamRecyclerAdapter.MyViewHolder>(DIFF_CALLBACK) {
-    private val isStudent= SharedPrefHelper.instance?.userType == UserType.STUDENT
+    private val isStudent= AccountManager.instance?.getCurrentUser()?.userType==0
 
     interface OnItemClickListener {
         fun onItemClick(examModel: ExamModel)

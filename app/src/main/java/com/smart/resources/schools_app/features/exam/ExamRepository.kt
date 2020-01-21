@@ -10,6 +10,7 @@ import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.core.myTypes.toMyResult
 import com.smart.resources.schools_app.core.utils.notifyObservers
 import com.smart.resources.schools_app.features.homework.HomeworkModel
+import com.smart.resources.schools_app.features.profile.AccountManager
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import retrofit2.Response
@@ -18,7 +19,7 @@ class ExamRepository{
     val exams: MutableLiveData<MutableList<ExamModel>> = MutableLiveData(mutableListOf())
 
     suspend fun downloadExams(): MyResult<List<ExamModel>> {
-        val isStudent= SharedPrefHelper.instance?.userType== UserType.STUDENT
+        val isStudent= AccountManager.instance?.getCurrentUser()?.userType==0
 
         val myRes= getExamsResult(isStudent)
         if(myRes is Success) exams.value= myRes.data?.toMutableList()

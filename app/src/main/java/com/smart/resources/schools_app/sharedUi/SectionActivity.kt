@@ -21,6 +21,7 @@ import com.smart.resources.schools_app.features.advertising.AdvertisingFragment
 import com.smart.resources.schools_app.features.exam.ExamFragment
 import com.smart.resources.schools_app.features.homework.HomeworkFragment
 import com.smart.resources.schools_app.features.library.LibraryFragment
+import com.smart.resources.schools_app.features.profile.AccountManager
 import com.smart.resources.schools_app.features.rating.RatingFragment
 import com.smart.resources.schools_app.features.rating.addRarting.AddRatingFragment
 import com.smart.resources.schools_app.features.schedule.ScheduleFragment
@@ -57,7 +58,7 @@ class SectionActivity : AppCompatActivity() {
     }
 
     private fun createFragment() {
-        val isStudent= SharedPrefHelper.instance?.userType== UserType.STUDENT
+        val isStudent= AccountManager.instance?.getCurrentUser()?.userType == 0
 
         supportFragmentManager.apply {
             when(intent.getSerializableExtra(EXTRA_SECTION) as Section){

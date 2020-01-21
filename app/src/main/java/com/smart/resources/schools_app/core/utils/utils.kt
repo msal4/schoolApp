@@ -20,6 +20,30 @@ fun dpToPx(dp: Int): Int {
     return (dp * Resources.getSystem().displayMetrics.density).toInt()
 }
 
+
+/**
+ * this method completes validatePhone AND MUST BE CALLED AFTER IT TO ENSURE CORRECT INPUT
+ * it gets a valid phone number as entered by the user
+ * and convert it to the complete
+ * which is 964##########
+ * either
+ * by deleting "00" or "+"
+ * or by inserting 964
+ * or keeping it in its original form
+ * @param rawPhoneNo the phone number editable object as entered by the user
+ * @return complete phone number
+ */
+fun String.getFormattedPhone(): String {
+    return when (this.length) {
+        10 -> "+964$this"
+        11 -> "+964" + this.substring(1)
+        13 -> "+$this"
+        14 -> this
+        15 -> "+${this.substring(2)}"
+        else -> throw NumberFormatException()
+    }
+}
+
 fun String.decodeToken(): String {
     val splitString = this.split('.')
 //    val base64EncodedHeader = splitString[0]

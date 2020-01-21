@@ -9,6 +9,7 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.core.utils.*
+import com.smart.resources.schools_app.features.profile.*
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -17,8 +18,8 @@ import java.lang.Exception
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
     private val context = getApplication<Application>().applicationContext
-    var onLogin: (()->Unit)?= null
-    var onLoginError: ((errorMsg:String)->Unit)?= null
+    var onLogin: (() -> Unit)? = null
+    var onLoginError: ((errorMsg: String) -> Unit)? = null
 
 
     val loginException = LoginException()
@@ -28,19 +29,23 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     var phoneNumber: String? = null
     var password: String? = null
 
+    var isStudent: Boolean = false
 
     fun login(view: View) {
         if (!isDataValid()) return
 
-        val userType=
-        if (view.id == R.id.loginAsTeacherBtn){
-            isTeacherLogging.postValue(true)
-            UserType.TEACHER
-        }
-        else {
-            isStudentLogging.postValue(true)
-            UserType.STUDENT
-        }
+        val userType =
+            if (view.id == R.id.loginAsTeacherBtn) {
+                isTeacherLogging.postValue(true)
+                isStudent = false
+                UserType.TEACHER
+
+            } else {
+                isStudentLogging.postValue(true)
+                isStudent = true
+                UserType.STUDENT
+
+            }
 
         viewModelScope.launch {
             val phone = phoneNumber.toString().withEngNums()
@@ -48,7 +53,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
             when (val token = getToken(userType, phone, pass)) {
                 is Success -> {
-                    setupSharedPrefs(userType, token)
+                    setupCurrentUser(userType, token)
                     withContext(Main) { onLogin?.invoke() }
                 }
                 is ResponseError -> onLoginError?.invoke(context.getString(R.string.wrong_login_info))
@@ -67,14 +72,21 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             else loginTeacher(phone, pass)
         }
 
-    private fun setupSharedPrefs(
+    private fun setupCurrentUser(
         userType: UserType,
         result: Success<String>
     ) {
-        SharedPrefHelper.instance?.apply {
-            this.userType = if (userType== UserType.TEACHER) UserType.TEACHER else UserType.STUDENT
-            accessToken = result.data
+        val isTeacher = userType == UserType.TEACHER
+        val a = result.data?.let {
+            if (isTeacher) TeacherInfoModel.fromToken(it)
+            else StudentInfoModel.fromToken(it)
         }
+        if (a != null) {
+
+            AccountManager.instance?.insertCurrentUser(User(a.id.toInt(), result.data, "", a.name, if (isTeacher) 1 else 0))
+        }
+
+
     }
 
     private fun isDataValid(): Boolean {
@@ -83,12 +95,10 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             return false
         }
 
-
         if (password.isNullOrEmpty()) {
             loginException.passwordMsg.postValue(context.getString(R.string.field_required))
             return false
         }
-
 
         return true
     }

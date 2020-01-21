@@ -8,11 +8,14 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.adapters.loadImageUrl
+import com.smart.resources.schools_app.core.adapters.setAccountImage
 import com.smart.resources.schools_app.databinding.ActivityHomeBinding
 import com.smart.resources.schools_app.features.profile.ProfileActivity
 import com.smart.resources.schools_app.core.myTypes.Section
 import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
+import com.smart.resources.schools_app.core.myTypes.UserType
+import com.smart.resources.schools_app.features.login.LoginActivity
+import com.smart.resources.schools_app.features.profile.AccountManager
 import java.net.URI
 
 
@@ -29,14 +32,18 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= DataBindingUtil.setContentView(this, R.layout.activity_home)
-        binding.userType= SharedPrefHelper.instance?.userType
+        if(SharedPrefHelper.instance?.currentUser==-1){
+            LoginActivity.newInstance(this)
+            return
+        }
+        binding.userType= if(AccountManager.instance?.getCurrentUser()?.userType==0) UserType.STUDENT else UserType.TEACHER
 
         loadProfileImage()
     }
 
     private fun loadProfileImage() {
-        SharedPrefHelper.instance?.imgUri?.let {
-            loadImageUrl(
+        AccountManager.instance?.getCurrentUser()?.img?.let {
+            setAccountImage(
                 binding.profileImage,
                 URI.create(it).toString()
             )

@@ -22,16 +22,10 @@ class TeacherInfoModel(
 
 
     companion object {
-        var instance: TeacherInfoModel? = null
-            get() {
-                if (field == null)
-                    field = fromToken(TeacherInfoModel::class.java)
-                return field
-            }
-
+        fun fromToken(accessToken: String): TeacherInfoModel? {
+            return fromToken(TeacherInfoModel::class.java, accessToken)
+        }
     }
-
-
     override val classesAsString: String? get()= classesInfo.concatStrings()
     val subjectsAsString: String? get()= subjects.concatStrings()
 }

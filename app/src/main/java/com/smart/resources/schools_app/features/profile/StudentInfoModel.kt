@@ -17,16 +17,14 @@ class StudentInfoModel(
 ) : PersonModel(name, email, phone, gender, dob) {
 
 
+
+
     override val classesAsString: String
         get() = classInfo.getClassSection
 
     companion object {
-        var instance: StudentInfoModel? = null
-            get() {
-                if (field == null) field =
-                    fromToken(StudentInfoModel::class.java)
-                return field
-            }
-            private set
+        fun fromToken(accessToken: String): StudentInfoModel? {
+            return fromToken(StudentInfoModel::class.java, accessToken)
+        }
     }
 }

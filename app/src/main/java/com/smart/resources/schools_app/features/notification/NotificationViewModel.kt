@@ -6,6 +6,7 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.helpers.BackendHelper
 import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.core.myTypes.*
+import com.smart.resources.schools_app.features.profile.AccountManager
 import kotlinx.coroutines.*
 
 
@@ -23,7 +24,7 @@ class NotificationViewModel(application: Application) : AndroidViewModel(applica
         return notifications
     }
 
-    val userType= SharedPrefHelper.instance?.userType
+    val userType= if(AccountManager.instance?.getCurrentUser()?.userType==0) UserType.STUDENT else UserType.TEACHER
 
 
     fun fetchNotifications(notificationType: NotificationType){

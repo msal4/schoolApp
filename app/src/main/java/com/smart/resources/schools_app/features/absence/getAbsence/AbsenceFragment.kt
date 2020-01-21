@@ -15,6 +15,7 @@ import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.absence.StudentAbsenceModel
 import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
 import com.smart.resources.schools_app.features.exam.ExamModel
+import com.smart.resources.schools_app.features.profile.AccountManager
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 //import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
 
@@ -59,7 +60,7 @@ class AbsenceFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if(SharedPrefHelper.instance?.userType == UserType.TEACHER) {
+        if(AccountManager.instance?.getCurrentUser()?.userType == 1) {
             inflater.inflate(R.menu.menu_add_btn, menu)
         }
 

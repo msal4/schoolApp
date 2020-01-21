@@ -71,5 +71,7 @@
     <string name="add_rating">اضافة تقييم</string>
     <string name="title_activity_full_image">fullImageActivity</string>
     <string name="image_trans">imageTransition</string>
-    <string name="no_formatted_phone">رقم الهاتف غير صالح</string>
+    <string name="add_account">اضافة حساب</string>
+    <string name="choose_another_acc">اختر حساب اخر</string>
+
 </resources>
