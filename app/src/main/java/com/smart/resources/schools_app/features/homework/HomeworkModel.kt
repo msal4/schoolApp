@@ -27,6 +27,7 @@ class HomeworkModel(
 
 ): BaseHomeworkModel(assignmentName, date, note, subjectName){
     val hasImage get() = attachment.isImage()
+    val hasNote  get() = !note.isBlank()
 
     fun isContentSame(model: HomeworkModel) =
         assignmentName== model.assignmentName &&

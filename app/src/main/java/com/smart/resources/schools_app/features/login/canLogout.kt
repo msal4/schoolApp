@@ -1,24 +1,23 @@
 package com.smart.resources.schools_app.features.login
 
-import android.app.Activity
+import android.accounts.AccountManager
+import android.content.Context
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
-import com.smart.resources.schools_app.features.profile.AccountManager
+import com.smart.resources.schools_app.features.users.UsersRepository
 
 
 interface CanLogout{
-    fun logout(activity: AppCompatActivity){
-        SharedPrefHelper.instance?.currentUser =-1
-        //if(SharedPrefHelper.instance?.userType==UserType.TEACHER)
-        activity.setResult(Activity.RESULT_CANCELED)
-        activity.finishAffinity()
-        LoginActivity.newInstance(activity)
+    fun logout(context: Context){
+        SharedPrefHelper.instance.currentUserId= null
+        LoginActivity.newInstance(context)
     }
 
-    fun expireLogout(activity: AppCompatActivity){
-        Toast.makeText(activity, activity.getString(R.string.account_expire), Toast.LENGTH_LONG).show()
-        logout(activity)
+    fun expireLogout(context: Context){
+        Toast.makeText(context, context.getString(R.string.account_expire), Toast.LENGTH_LONG).show()
+        UsersRepository.instance.deleteCurrentUser()
+        logout(context)
     }
 }

@@ -18,9 +18,10 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         android:gravity="center"
+        android:theme="@style/AppTheme"
         android:padding="@dimen/add_page_padding">
 
-        <RatingBar
+        <androidx.appcompat.widget.AppCompatRatingBar
             android:id="@+id/ratingStars"
             android:layout_gravity="start"
             android:elevation="4dp"

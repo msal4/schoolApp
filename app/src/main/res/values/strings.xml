@@ -65,13 +65,15 @@
     <string name="no_student_selected">لم يتم اختيار طالب!</string>
     <string name="no_student_rated">لم يتم تقييم طالب!</string>
     <string name="done_successfully">تمت العملية بنجاح ✓</string>
-    <string name="must_enter_dgree">يجب ادخال درجة الطالب</string>
-    <string name="no_dgree_added">لم يتم اضافة ددرجة</string>
+    <string name="must_enter_degree">يجب ادخال درجة الطالب</string>
+    <string name="no_degree_added">لم يتم اضافة درجة</string>
     <string name="mark">الدرجة</string>
     <string name="add_rating">اضافة تقييم</string>
     <string name="title_activity_full_image">fullImageActivity</string>
     <string name="image_trans">imageTransition</string>
     <string name="add_account">اضافة حساب</string>
     <string name="choose_another_acc">اختر حساب اخر</string>
+    <string name="max_accounts_error">الحد الاقصى هو 6 حسابات (لحذف حساب اسحبه للجانب)</string>
+    <string name="invalid_pdf_url">الكتاب غير صالح!</string>
 
 </resources>

@@ -7,7 +7,7 @@
     </data>
 
     <LinearLayout
-        android:id="@+id/linear_id"
+        android:id="@+id/rootLayout"
         android:orientation="vertical"
         android:background="@drawable/background_item"
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ls"
+            android:id="@+id/accountsRecycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipChildren="false"
@@ -25,7 +25,7 @@
             tools:listitem="@layout/item_account" />
 
         <Button
-            android:id="@+id/add_account_btn"
+            android:id="@+id/addAccountBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/add_account"

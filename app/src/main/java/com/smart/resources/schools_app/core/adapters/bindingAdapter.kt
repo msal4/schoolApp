@@ -11,10 +11,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputLayout
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
-import com.smart.resources.schools_app.core.myTypes.UserType
-import com.smart.resources.schools_app.features.profile.AccountManager
-import com.smart.resources.schools_app.features.profile.AccountModel
+import com.smart.resources.schools_app.features.users.UsersRepository
 import com.tiper.MaterialSpinner
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
@@ -101,7 +98,7 @@ fun setAccountImage(iv: ImageView, url: String?) {
     if(url==""){
         Glide
             .with(iv.context)
-            .load(R.drawable.ic_userdefault)
+            .load(R.drawable.ic_profile_place_holder)
             .into(iv)
     }else {
         Glide
@@ -121,20 +118,21 @@ fun loadImageDrawable(iv: ImageView, drawable: Drawable) {
 
 @BindingAdapter("android:setMark")
 fun setMark(tv: TextView, mark:Int?) {
-    val isStudent= AccountManager.instance?.getCurrentUser()?.userType==0
+    val isStudent= UsersRepository.instance?.getCurrentUser()?.userType==0
         tv.text = mark?.toString() ?: if(isStudent)"- " else ""
 }
 
 
 @BindingAdapter("android:setList")
 fun <T>setSpinnerList(spinner: MaterialSpinner, list:List<T>) {
-
-
-    val adapter = ArrayAdapter<T>(
+     ArrayAdapter<T>(
         spinner.context,
         android.R.layout.simple_spinner_item, list
-    )
+    ).apply {
+        setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter= this
+    }
 
-    spinner.adapter= adapter
+
 }
 

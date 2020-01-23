@@ -22,9 +22,11 @@
     <dimen name="item_elevation">4dp</dimen>
     <dimen name="profileAttributeTitleSize">20sp</dimen>
     <dimen name="profileAttributeSize">14sp</dimen>
-    <dimen name="advertising_collapsed_height">120dp</dimen>
-    <dimen name="homework_collapsed_height">90dp</dimen>
+    <dimen name="advertising_collapsed_height">116dp</dimen>
+    <dimen name="homework_collapsed_height">91dp</dimen>
     <dimen name="error_text_margin">42dp</dimen>
     <dimen name="add_page_padding">24dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="account_item_spacing">20dp</dimen>
+    <dimen name="min_homework_height">67dp</dimen>
 </resources>

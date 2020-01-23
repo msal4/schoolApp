@@ -15,7 +15,7 @@ import com.smart.resources.schools_app.core.myTypes.Section
 import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.features.login.LoginActivity
-import com.smart.resources.schools_app.features.profile.AccountManager
+import com.smart.resources.schools_app.features.users.UsersRepository
 import java.net.URI
 
 
@@ -32,17 +32,13 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= DataBindingUtil.setContentView(this, R.layout.activity_home)
-        if(SharedPrefHelper.instance?.currentUser==-1){
-            LoginActivity.newInstance(this)
-            return
-        }
-        binding.userType= if(AccountManager.instance?.getCurrentUser()?.userType==0) UserType.STUDENT else UserType.TEACHER
+        binding.userType= if(UsersRepository.instance.getCurrentUser()?.userType==0) UserType.STUDENT else UserType.TEACHER
 
         loadProfileImage()
     }
 
     private fun loadProfileImage() {
-        AccountManager.instance?.getCurrentUser()?.img?.let {
+        UsersRepository.instance.getCurrentUser()?.img?.let {
             setAccountImage(
                 binding.profileImage,
                 URI.create(it).toString()

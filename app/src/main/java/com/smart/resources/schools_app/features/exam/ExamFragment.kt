@@ -7,12 +7,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
-import com.smart.resources.schools_app.core.myTypes.*
-import com.smart.resources.schools_app.core.utils.hide
-import com.smart.resources.schools_app.core.utils.show
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
-import com.smart.resources.schools_app.features.profile.AccountManager
+import com.smart.resources.schools_app.features.users.UsersRepository
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 
 
@@ -62,7 +58,7 @@ class ExamFragment : Fragment(), ExamRecyclerAdapter.OnItemClickListener {
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if (AccountManager.instance?.getCurrentUser()?.userType == 1) {
+        if (UsersRepository.instance?.getCurrentUser()?.userType == 1) {
             inflater.inflate(R.menu.menu_add_btn, menu)
         }
 

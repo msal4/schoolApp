@@ -8,12 +8,10 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.databinding.ActivitySectionBinding
 import com.smart.resources.schools_app.features.notification.NotificationFragment
 import com.smart.resources.schools_app.core.myTypes.Section
 import com.smart.resources.schools_app.core.myTypes.Section.EXAM
-import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
 import com.smart.resources.schools_app.features.absence.getAbsence.AbsenceFragment
 //import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
@@ -21,7 +19,7 @@ import com.smart.resources.schools_app.features.advertising.AdvertisingFragment
 import com.smart.resources.schools_app.features.exam.ExamFragment
 import com.smart.resources.schools_app.features.homework.HomeworkFragment
 import com.smart.resources.schools_app.features.library.LibraryFragment
-import com.smart.resources.schools_app.features.profile.AccountManager
+import com.smart.resources.schools_app.features.users.UsersRepository
 import com.smart.resources.schools_app.features.rating.RatingFragment
 import com.smart.resources.schools_app.features.rating.addRarting.AddRatingFragment
 import com.smart.resources.schools_app.features.schedule.ScheduleFragment
@@ -58,7 +56,7 @@ class SectionActivity : AppCompatActivity() {
     }
 
     private fun createFragment() {
-        val isStudent= AccountManager.instance?.getCurrentUser()?.userType == 0
+        val isStudent= UsersRepository.instance.getCurrentUser()?.userType == 0
 
         supportFragmentManager.apply {
             when(intent.getSerializableExtra(EXTRA_SECTION) as Section){

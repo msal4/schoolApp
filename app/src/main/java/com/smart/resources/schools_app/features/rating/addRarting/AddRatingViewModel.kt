@@ -8,13 +8,12 @@ import com.smart.resources.schools_app.core.helpers.BackendHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.rating.RatingModel
 import com.smart.resources.schools_app.core.myTypes.ListState
+import com.smart.resources.schools_app.features.login.CanLogout
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-
-@Suppress("UNCHECKED_CAST")
 class AddRatingViewModel(application: Application, private val postListener: PostListener) :
-    AndroidViewModel(application) {
+    AndroidViewModel(application), CanLogout {
     private val c = application.applicationContext
     val listState = ListState().apply {
         setLoading(false)
@@ -46,6 +45,7 @@ class AddRatingViewModel(application: Application, private val postListener: Pos
                 }
 
             }
+            Unauthorized-> expireLogout(c)
             is ResponseError -> listState.setBodyError(studentsResult.combinedMsg)
             is ConnectionError -> listState.setBodyError(c.getString(R.string.connection_error))
         }
@@ -61,19 +61,26 @@ class AddRatingViewModel(application: Application, private val postListener: Pos
         if (!isDataValid()) return
 
         Logger.i("uploading started")
-        postListener.onUploadStarted()
-        viewModelScope.launch {
-            val result =
-                async { BackendHelper.ratingDao.addRatings(ratingModels.value.orEmpty()) }
-                    .toMyResult()
 
-            when (result) {
-                is Success -> postListener.onUploadCompleted()
-                is ResponseError -> postListener.onError(result.combinedMsg)
-                is ConnectionError -> postListener.onError(c.getString(R.string.connection_error))
+        getRatings()?.let {
+            postListener.onUploadStarted()
+            viewModelScope.launch {
+                Logger.i("ratings: $it")
+                val result =
+                    async { BackendHelper.ratingDao.addRatings(it) }
+                        .toMyResult()
+
+                when (result) {
+                    is Success -> postListener.onUploadCompleted()
+                    Unauthorized-> expireLogout(c)
+                    is ResponseError -> postListener.onError(result.combinedMsg)
+                    is ConnectionError -> postListener.onError(c.getString(R.string.connection_error))
+                }
             }
         }
     }
+
+
 
     private fun resetErrors() {
         if (!sectionAndClassesErrorMsg.value.isNullOrBlank()) sectionAndClassesErrorMsg.value = ""
@@ -93,6 +100,7 @@ class AddRatingViewModel(application: Application, private val postListener: Pos
         return true
     }
 
+    private fun getRatings() = ratingModels.value?.filter { it.isRated }
     private fun noOneRatedYet() = ratingModels.value?.find { it.isRated } == null
 
     class Factory(private val mApplication: Application, private val postListener: PostListener) :

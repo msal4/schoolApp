@@ -14,7 +14,7 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ActivityLoginBinding
 import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.core.utils.showSnackBar
-import com.smart.resources.schools_app.features.profile.*
+import com.smart.resources.schools_app.features.users.UsersRepository
 import com.smart.resources.schools_app.sharedUi.HomeActivity
 
 
@@ -24,8 +24,11 @@ class LoginActivity : AppCompatActivity() {
 
     companion object Factory {
         fun newInstance(context: Context) {
-            val intent = Intent(context, LoginActivity::class.java)
-            context.startActivity(intent)
+             Intent(context, LoginActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                context.startActivity(this)
+            }
         }
     }
 
@@ -34,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
         initComponents()
-        if (SharedPrefHelper.instance?.currentUser != -1) {
+        if (!SharedPrefHelper.instance.currentUserId.isNullOrBlank()) {
             HomeActivity.newInstance(this)
         }
         setupConstraintLayoutHeight()
@@ -52,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
         AndroidThreeTen.init(this)
         SharedPrefHelper.init(this)
         Logger.addLogAdapter(AndroidLogAdapter())
-        AccountManager.init(this)
+        UsersRepository.init(this)
     }
 
     private fun setupViewModel() {

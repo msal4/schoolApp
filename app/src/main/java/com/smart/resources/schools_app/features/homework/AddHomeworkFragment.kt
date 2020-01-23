@@ -20,7 +20,7 @@ import com.smart.resources.schools_app.core.helpers.IntentHelper
 import com.smart.resources.schools_app.core.myTypes.PostListener
 import com.smart.resources.schools_app.core.utils.*
 import com.smart.resources.schools_app.databinding.FragmentAddHomeworkBinding
-import com.smart.resources.schools_app.features.profile.AccountManager
+import com.smart.resources.schools_app.features.users.UsersRepository
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 import com.smart.resources.schools_app.features.profile.TeacherInfoModel
@@ -108,7 +108,7 @@ class AddHomeworkFragment : Fragment(), PostListener {
     ) {
         binding = FragmentAddHomeworkBinding
             .inflate(inflater, container, false).apply {
-                val currentUser= AccountManager.instance?.getCurrentUser()
+                val currentUser= UsersRepository.instance?.getCurrentUser()
                 val teacherInfoModel= currentUser?.accessToken?.let { TeacherInfoModel.fromToken(it) }
                 teacherInfoModel?.classesInfo
                     ?.let {

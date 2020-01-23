@@ -9,6 +9,7 @@ import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.absence.AddAbsenceModel
 import com.smart.resources.schools_app.features.absence.PostAbsenceModel
 import com.smart.resources.schools_app.core.myTypes.ListState
+import com.smart.resources.schools_app.features.login.CanLogout
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -16,7 +17,7 @@ import kotlinx.coroutines.launch
 
 @Suppress("UNCHECKED_CAST")
 class AddAbsenceViewModel(application: Application, private val postListener: PostListener) :
-    AndroidViewModel(application) {
+    AndroidViewModel(application), CanLogout {
     private val c = application.applicationContext
     val listState = ListState().apply {
         setLoading(false)
@@ -53,6 +54,7 @@ class AddAbsenceViewModel(application: Application, private val postListener: Po
                 }
 
             }
+            Unauthorized-> expireLogout(c)
             is ResponseError -> listState.setBodyError(studentsResult.combinedMsg)
             is ConnectionError -> listState.setBodyError(c.getString(R.string.connection_error))
         }
@@ -76,6 +78,7 @@ class AddAbsenceViewModel(application: Application, private val postListener: Po
             when (result) {
                 is Success -> postListener.onUploadCompleted()
                 is ResponseError -> postListener.onError(result.combinedMsg)
+                Unauthorized-> expireLogout(c)
                 is ConnectionError -> postListener.onError(c.getString(R.string.connection_error))
             }
         }

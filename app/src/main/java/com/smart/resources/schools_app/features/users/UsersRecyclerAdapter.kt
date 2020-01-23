@@ -1,18 +1,16 @@
-package com.smart.resources.schools_app.features.profile
+package com.smart.resources.schools_app.features.users
 
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.databinding.ItemAccountBinding
+import com.smart.resources.schools_app.features.profile.User
 
-class AccountsRecyclerAdapter(private val users:MutableList<User>, private val listener: AccountsRecyclerAdapter.OnItemClickListener) : RecyclerView.Adapter<AccountsRecyclerAdapter.MyViewHolder>(){
-
-
-
+class UsersRecyclerAdapter(private val users:MutableList<User>?, private val listener: OnItemClickListener) : RecyclerView.Adapter<UsersRecyclerAdapter.MyViewHolder>(){
     interface OnItemClickListener {
         fun onItemClick(user: User)
     }
@@ -25,9 +23,8 @@ class AccountsRecyclerAdapter(private val users:MutableList<User>, private val l
         }
     }
 
-
     fun removeItem(position: Int){
-        users.removeAt(position)
+        users?.removeAt(position)
         notifyItemRemoved(position)
     }
 
@@ -41,22 +38,27 @@ class AccountsRecyclerAdapter(private val users:MutableList<User>, private val l
         return MyViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = users.size
+    override fun getItemCount(): Int = users?.size?:0
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        users?.get(position)?.let { user ->
 
-        holder.itemView.setOnClickListener{
-            listener.onItemClick(users[position])
+            holder.itemView.setOnClickListener{
+                listener.onItemClick(user)
+            }
+            holder.bind(user)
+
+            if(user.uid== UsersRepository.instance.getCurrentUser()?.uid){
+
+                holder.binding.profileImage.apply {
+                    borderColor= ContextCompat.getColor(holder.itemView.context, R.color.green)
+                    borderWidth= 2
+                }
+
+            }
+
         }
-        holder.bind(users[position])
-
-        if(users[position].uid== SharedPrefHelper.instance?.currentUser){
-            holder.binding.profileImage.borderColor= holder.itemView.context.getColor(R.color.green)
-            holder.binding.profileImage.borderWidth=10
-        }
-
-
     }
 
 }

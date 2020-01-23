@@ -2,6 +2,7 @@ package com.smart.resources.schools_app.features.advertising
 
 import android.os.Bundle
 import android.view.*
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
@@ -13,6 +14,7 @@ import com.smart.resources.schools_app.core.myTypes.Success
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 import com.smart.resources.schools_app.core.utils.*
+import com.smart.resources.schools_app.sharedUi.ImageViewerActivity
 
 class AdvertisingFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
@@ -53,8 +55,11 @@ class AdvertisingFragment : Fragment() {
             }
     }
 
+    private fun onImageClick(imageView: ImageView, imageUrl: String){
+        activity?.let { ImageViewerActivity.newInstance(it,imageView, imageUrl) }
+    }
 
     private  fun onHomeworkDownload(result: List<AdvertisingModel>) {
-       binding.recyclerView.adapter= AdvertisingRecyclerAdapter(result)
+       binding.recyclerView.adapter= AdvertisingRecyclerAdapter(result, ::onImageClick)
     }
 }

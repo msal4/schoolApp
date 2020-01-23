@@ -5,10 +5,11 @@ import androidx.lifecycle.*
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.*
+import com.smart.resources.schools_app.features.login.CanLogout
 import kotlinx.coroutines.*
 
 
-class ExamViewModel(application: Application) : AndroidViewModel(application) {
+class ExamViewModel(application: Application) : AndroidViewModel(application), CanLogout {
     private val c= application.applicationContext
 
     val exams: LiveData<MutableList<ExamModel>>
@@ -29,6 +30,7 @@ class ExamViewModel(application: Application) : AndroidViewModel(application) {
                         if (result.data.isNullOrEmpty()) setBodyError(c.getString(R.string.no_exams))
                         else setLoading(false)
                     }
+                    Unauthorized-> expireLogout(c)
                     is ResponseError -> setBodyError(result.combinedMsg)
                     is ConnectionError -> setBodyError(c.getString(R.string.connection_error))
                 }
@@ -51,6 +53,7 @@ class ExamViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             when(val myRes= examRepo.addExam(postExamModel)){
                 is Success -> listener?.onUploadCompleted()
+                Unauthorized-> expireLogout(c)
                 is ResponseError -> listener?.onError(myRes.combinedMsg)
                 is ConnectionError -> listener?.onError(c.getString(R.string.connection_error))
             }

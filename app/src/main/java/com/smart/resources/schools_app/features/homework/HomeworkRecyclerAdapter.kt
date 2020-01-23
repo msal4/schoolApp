@@ -47,7 +47,7 @@ class HomeworkRecyclerAdapter(val onItemClick: (ImageView, String)-> Unit) :
 
         init {
             binding.expandLayout.onStateChangeListener =
-                { oldState: State?, newState: State ->
+                { _: State?, newState: State ->
                     if (newState == State.Collapsed) { /*if(binding.contentText.getLineCount()<3){
                         binding.contentText.append("\u2026");
                     }else {*/
@@ -59,7 +59,7 @@ class HomeworkRecyclerAdapter(val onItemClick: (ImageView, String)-> Unit) :
                     binding.contentText.setText(text.replace('\u2026',' ').trim());*/
                     }
                 }
-            binding.expandLayout.setOnClickListener { v: View? ->
+            binding.expandLayout.setOnClickListener {
                 binding.expandLayout.toggle(
                     true
                 )

@@ -7,11 +7,12 @@ import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.helpers.BackendHelper
 import com.smart.resources.schools_app.core.myTypes.*
+import com.smart.resources.schools_app.features.login.CanLogout
 import kotlinx.coroutines.*
 import retrofit2.Response
 
 
-class HomeworkViewModel (application: Application) : AndroidViewModel(application) {
+class HomeworkViewModel (application: Application) : AndroidViewModel(application), CanLogout{
     val listState = ListState()
     var postHomeworkModel= PostHomeworkModel()
     val postException= PostException()
@@ -30,11 +31,11 @@ class HomeworkViewModel (application: Application) : AndroidViewModel(applicatio
 
     fun deleteHomework(position: Int){
         viewModelScope.launch {
-            val result = homeworkRepo.deleteHomework(position)
-            when(result){
+            when(val result = homeworkRepo.deleteHomework(position)){
                 is Success -> {
 
                 }
+                Unauthorized-> expireLogout(c)
                 is ResponseError -> onError?.invoke(result.combinedMsg)
                 is ConnectionError -> onError?.invoke(c.getString(R.string.connection_error))
             }
@@ -51,6 +52,7 @@ class HomeworkViewModel (application: Application) : AndroidViewModel(applicatio
                     else listState.setLoading(false)
 
                 }
+                Unauthorized-> expireLogout(c)
                 is ResponseError -> listState.setBodyError(result.combinedMsg)
                 is ConnectionError -> listState.setBodyError(c.getString(R.string.connection_error))
             }
@@ -72,6 +74,7 @@ class HomeworkViewModel (application: Application) : AndroidViewModel(applicatio
                     uploadListener?.onUploadCompleted()
                     //postHomeworkModel= PostHomeworkModel()
                 }
+                Unauthorized-> expireLogout(c)
                 is ResponseError -> uploadListener?.onError(myRes.combinedMsg)
                 is ConnectionError -> uploadListener?.onError(c.getString(R.string.connection_error))
             }

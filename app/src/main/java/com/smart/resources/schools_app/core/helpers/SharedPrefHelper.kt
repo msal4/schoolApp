@@ -10,17 +10,15 @@ class SharedPrefHelper private constructor(context: Context) {
     private val mSharedPreferences: SharedPreferences
 
 
-    var currentUser: Int?
-        get() = mSharedPreferences.getInt(ACCOUNT, -1)
+    var currentUserId: String?
+        get() = mSharedPreferences.getString(ACCOUNT, "")
         set(uid) {
-            if (uid != null) {
-                mSharedPreferences.edit().putInt(ACCOUNT, uid).apply()
-            }
+                mSharedPreferences.edit().putString(ACCOUNT, uid).apply()
         }
 
 
     companion object {
-        var instance: SharedPrefHelper? = null
+        lateinit var instance: SharedPrefHelper
         private const val PREF_NAME = "mySettingsPref"
         private const val ACCOUNT = "Account"
 

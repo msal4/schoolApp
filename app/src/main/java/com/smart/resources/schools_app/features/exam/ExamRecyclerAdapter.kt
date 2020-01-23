@@ -1,20 +1,16 @@
 package com.smart.resources.schools_app.features.exam
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
-import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.databinding.ItemExamBinding
-import com.smart.resources.schools_app.features.homework.HomeworkModel
-import com.smart.resources.schools_app.features.profile.AccountManager
+import com.smart.resources.schools_app.features.users.UsersRepository
 
 class ExamRecyclerAdapter(private val listener:OnItemClickListener
 ) : ListAdapter<ExamModel, ExamRecyclerAdapter.MyViewHolder>(DIFF_CALLBACK) {
-    private val isStudent= AccountManager.instance?.getCurrentUser()?.userType==0
+    private val isStudent= UsersRepository.instance.getCurrentUser()?.userType==0
 
     interface OnItemClickListener {
         fun onItemClick(examModel: ExamModel)

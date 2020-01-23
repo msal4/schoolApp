@@ -59,9 +59,11 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:minHeight="@dimen/min_homework_height"
                 android:baselineAligned="false"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:gravity="start|center">
 
                     <TextView
                         android:id="@+id/examName"
@@ -89,6 +91,8 @@
                     android:layout_marginEnd="16dp"
                     android:minLines="1"
                     android:maxLines="1"
+                    android:visibility="@{itemModel.hasNote? View.VISIBLE: View.GONE}"
+                    android:ellipsize="end"
                     android:text="@{itemModel.note}"
                     android:textAlignment="viewStart"
                     android:layout_marginBottom="16dp"

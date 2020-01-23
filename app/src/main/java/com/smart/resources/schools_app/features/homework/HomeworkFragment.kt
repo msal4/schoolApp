@@ -11,8 +11,9 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.adapters.SwipeAdapter
+import com.smart.resources.schools_app.core.utils.showSnackBar
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
-import com.smart.resources.schools_app.features.profile.AccountManager
+import com.smart.resources.schools_app.features.users.UsersRepository
 import com.smart.resources.schools_app.sharedUi.ImageViewerActivity
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 
@@ -48,7 +49,7 @@ class HomeworkFragment : Fragment(){
 
         setupViewModel()
 
-        if(AccountManager.instance?.getCurrentUser()?.userType==1) {
+        if(UsersRepository.instance.getCurrentUser()?.userType==1) {
 
             val touchHelper =ItemTouchHelper( SwipeAdapter(::onSwipe))
 
@@ -70,6 +71,7 @@ class HomeworkFragment : Fragment(){
         viewModel = ViewModelProviders.of(activity!!)
             .get(HomeworkViewModel::class.java).apply {
                 binding.listState= listState
+                onError= ::onError
 
                 getHomework.observe(this@HomeworkFragment, Observer{
                     if(it == null) return@Observer
@@ -81,8 +83,13 @@ class HomeworkFragment : Fragment(){
             }
     }
 
+    fun onError(errorMsg: String){
+        binding.layout.showSnackBar(errorMsg)
+        adapter.notifyDataSetChanged()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if(AccountManager.instance?.getCurrentUser()?.userType==1) {
+        if(UsersRepository.instance.getCurrentUser()?.userType==1) {
 
             inflater.inflate(R.menu.menu_add_btn, menu)
         }

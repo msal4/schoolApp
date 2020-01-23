@@ -4,13 +4,13 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.helpers.BackendHelper
-import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.core.myTypes.*
-import com.smart.resources.schools_app.features.profile.AccountManager
+import com.smart.resources.schools_app.features.login.CanLogout
+import com.smart.resources.schools_app.features.users.UsersRepository
 import kotlinx.coroutines.*
 
 
-class NotificationViewModel(application: Application) : AndroidViewModel(application) {
+class NotificationViewModel(application: Application) : AndroidViewModel(application), CanLogout {
     private val c= application.applicationContext
     val listState = ListState()
 
@@ -24,7 +24,7 @@ class NotificationViewModel(application: Application) : AndroidViewModel(applica
         return notifications
     }
 
-    val userType= if(AccountManager.instance?.getCurrentUser()?.userType==0) UserType.STUDENT else UserType.TEACHER
+    val userType= if(UsersRepository.instance.getCurrentUser()?.userType==0) UserType.STUDENT else UserType.TEACHER
 
 
     fun fetchNotifications(notificationType: NotificationType){
@@ -50,6 +50,7 @@ class NotificationViewModel(application: Application) : AndroidViewModel(applica
                         }
 
                     }
+                    Unauthorized-> expireLogout(c)
                     is ResponseError -> setBodyError(result.combinedMsg)
                     is ConnectionError -> setBodyError(c.getString(R.string.connection_error))
                 }

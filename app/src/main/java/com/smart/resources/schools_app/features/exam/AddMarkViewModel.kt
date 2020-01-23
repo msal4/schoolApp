@@ -5,11 +5,12 @@ import androidx.lifecycle.*
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.helpers.BackendHelper
 import com.smart.resources.schools_app.core.myTypes.*
+import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.students.Student
 import kotlinx.coroutines.*
 
 
-class AddMarkViewModel(application: Application) : AndroidViewModel(application) {
+class AddMarkViewModel(application: Application) : AndroidViewModel(application), CanLogout {
     private val c= application.applicationContext
     val listState = ListState()
 
@@ -42,6 +43,7 @@ class AddMarkViewModel(application: Application) : AndroidViewModel(application)
                         }
 
                     }
+                    Unauthorized-> expireLogout(c)
                     is ResponseError -> setBodyError(result.combinedMsg)
                     is ConnectionError -> setBodyError(c.getString(R.string.connection_error))
                 }

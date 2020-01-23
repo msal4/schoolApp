@@ -33,8 +33,6 @@ class HomeworkRepository{
                 homework.value?.removeAt(position)
                 homework.notifyObservers()
             }
-        }else{
-            homework.notifyObservers()
         }
 
         return myRes

@@ -6,20 +6,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.core.utils.hide
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.absence.StudentAbsenceModel
 import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
-import com.smart.resources.schools_app.features.exam.ExamModel
-import com.smart.resources.schools_app.features.profile.AccountManager
+import com.smart.resources.schools_app.features.login.CanLogout
+import com.smart.resources.schools_app.features.users.UsersRepository
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 //import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
 
-class AbsenceFragment : Fragment() {
+class AbsenceFragment : Fragment(), CanLogout {
     private lateinit var binding: FragmentRecyclerLoaderBinding
     private lateinit var viewModel: AbsenceViewModel
 
@@ -60,7 +58,7 @@ class AbsenceFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if(AccountManager.instance?.getCurrentUser()?.userType == 1) {
+        if(UsersRepository.instance.getCurrentUser()?.userType == 1) {
             inflater.inflate(R.menu.menu_add_btn, menu)
         }
 
@@ -83,6 +81,7 @@ class AbsenceFragment : Fragment() {
                     binding.recyclerView.adapter= AbsenceRecyclerAdapter(result.data)
                 }
             }
+            Unauthorized-> context?.let { expireLogout(it) }
             is ResponseError -> errorMsg = result.combinedMsg
             is ConnectionError -> errorMsg = getString(R.string.connection_error)
         }

@@ -6,14 +6,13 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.core.utils.*
 import com.smart.resources.schools_app.features.profile.*
+import com.smart.resources.schools_app.features.users.UsersRepository
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
@@ -58,7 +57,6 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                 }
                 is ResponseError -> onLoginError?.invoke(context.getString(R.string.wrong_login_info))
                 is ConnectionError -> onLoginError?.invoke(context.getString(R.string.connection_error))
-
             }
 
             isTeacherLogging.postValue(false)
@@ -77,16 +75,25 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         result: Success<String>
     ) {
         val isTeacher = userType == UserType.TEACHER
-        val a = result.data?.let {
-            if (isTeacher) TeacherInfoModel.fromToken(it)
-            else StudentInfoModel.fromToken(it)
+
+
+        result.data?.let {
+            var id= ""
+
+            val person= if (isTeacher) {
+                TeacherInfoModel.fromToken(it)?.apply {
+                    id= "t${this.id}"
+                }
+            }
+            else {
+                StudentInfoModel.fromToken(it)?.apply {
+                    id= "s${this.id}"
+                }
+            }
+            person?.apply {
+                UsersRepository.instance.insertCurrentUser(User(id, result.data, "", name, if (isTeacher) 1 else 0))
+            }
         }
-        if (a != null) {
-
-            AccountManager.instance?.insertCurrentUser(User(a.id.toInt(), result.data, "", a.name, if (isTeacher) 1 else 0))
-        }
-
-
     }
 
     private fun isDataValid(): Boolean {

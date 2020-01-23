@@ -6,10 +6,11 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.helpers.BackendHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.core.utils.hide
+import com.smart.resources.schools_app.features.login.CanLogout
 import kotlinx.coroutines.*
 
 
-class HomeworkViewModel(application: Application) : AndroidViewModel(application) {
+class HomeworkViewModel(application: Application) : AndroidViewModel(application), CanLogout {
     private val c= application.applicationContext
     val listState = ListState()
 
@@ -40,6 +41,7 @@ class HomeworkViewModel(application: Application) : AndroidViewModel(application
                         }
 
                     }
+                    Unauthorized-> expireLogout(c)
                     is ResponseError -> setBodyError(result.combinedMsg)
                     is ConnectionError -> setBodyError(c.getString(R.string.connection_error))
                 }

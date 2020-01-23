@@ -3,6 +3,9 @@ package com.smart.resources.schools_app.features.library
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.utils.isPdf
+import com.smart.resources.schools_app.core.utils.showSnackBar
 import com.smart.resources.schools_app.databinding.ItemLibraryBinding
 
 class LibraryRecyclerAdapter(private val listLib: List<LibraryModel>) : RecyclerView.Adapter<LibraryRecyclerAdapter.MyViewHolder>() {
@@ -35,7 +38,9 @@ class LibraryRecyclerAdapter(private val listLib: List<LibraryModel>) : Recycler
 
         val attach=listLib[position].attachment
         holder.itemView.setOnClickListener {
-            PdfWebViewActivity.newInstance(it.context,attach)
+            if(attach.isPdf()) PdfWebViewActivity.newInstance(it.context,attach)
+            else (holder.itemView as ViewGroup)
+                .showSnackBar(it.context.getString(R.string.invalid_pdf_url))
         }
     }
 

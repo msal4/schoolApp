@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.lifecycleScope
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.helpers.BackendHelper
 import com.smart.resources.schools_app.core.myTypes.*
@@ -16,6 +17,7 @@ import com.smart.resources.schools_app.core.utils.hide
 import com.smart.resources.schools_app.core.utils.show
 import com.smart.resources.schools_app.core.utils.showSnackBar
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
+import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.students.SendStudentResult
 import com.smart.resources.schools_app.features.students.Student
 import com.smart.resources.schools_app.sharedUi.SectionActivity
@@ -23,14 +25,12 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 
-class AddMarkFragment : Fragment() {
+class AddMarkFragment : Fragment(), CanLogout {
     private lateinit var binding: FragmentRecyclerLoaderBinding
     private lateinit var viewModel: AddMarkViewModel
     private lateinit var adapter: AddMarkRecyclerAdapter
     private lateinit var progressBar: ProgressBar
     private lateinit var saveItem: MenuItem
-
-    private var job: Job? = null
 
     companion object {
         private const val ADD_EXAM_FRAGMENT = "addExamFragment"
@@ -116,7 +116,7 @@ class AddMarkFragment : Fragment() {
         if (studebtResult.marks.isNotEmpty()){
 
             if (validateMark(studebtResult)) {
-                job = CoroutineScope(IO).launch {
+                lifecycleScope.launch {
                     withContext(Main) {
                         setToolbarLoading(true)
 
@@ -131,16 +131,14 @@ class AddMarkFragment : Fragment() {
                                 onBackPressed()
 
                             }
+                            Unauthorized-> context?.let { expireLogout(it) }
                             is ResponseError -> {
                                 showErrorMsg(result.combinedMsg)
                             }
                             is ConnectionError -> {
                                 context?.getString(R.string.connection_error)?.let { showErrorMsg(it) }
 
-
                             }
-
-
                         }
 
                         setToolbarLoading(false)
@@ -153,7 +151,7 @@ class AddMarkFragment : Fragment() {
             }
 
         }else{
-            showErrorMsg(getString(R.string.no_dgree_added))
+            showErrorMsg(getString(R.string.no_degree_added))
         }
 
     }
@@ -183,15 +181,6 @@ class AddMarkFragment : Fragment() {
         return x
     }
 
-    override fun onStop() {
-        super.onStop()
-        job?.cancel()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        job?.start()
-    }
 
     private fun setupViewModel(examId: Int) {
         viewModel = ViewModelProviders.of(this)

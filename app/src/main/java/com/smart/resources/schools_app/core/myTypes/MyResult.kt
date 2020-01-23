@@ -5,11 +5,15 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.coroutineScope
 import org.json.JSONObject
 import retrofit2.Response
+import java.net.HttpURLConnection
 
 sealed class MyResult<out T>
 class Success<out T>(val data: T?) : MyResult<T>()
+object Unauthorized : MyResult<Nothing>()
 class ResponseError(val statusCode: Int, val errorBody: String, val combinedMsg: String = "status code: $statusCode\nmessage: $errorBody") : MyResult<Nothing>()
 class ConnectionError(val exception: Throwable, val message: String = exception.localizedMessage as String) : MyResult<Nothing>()
+
+
 
 suspend fun <T> Deferred<Response<T>?>.toMyResult(): MyResult<T> =
     try {
@@ -30,10 +34,8 @@ fun <T> Response<T>.toMyResult(): MyResult<T> =
             val errorMsg= extractMessageIfExists(errorString)
 
             Logger.e("error code: ${code()} - msg: $errorMsg")
-            ResponseError(
-                code(),
-                errorMsg
-            )
+            if(code() == HttpURLConnection.HTTP_UNAUTHORIZED) Unauthorized
+            else ResponseError(code(), errorMsg)
         }
     }
 

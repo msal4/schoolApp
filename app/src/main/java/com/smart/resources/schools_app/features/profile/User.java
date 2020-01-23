@@ -4,21 +4,20 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import org.jetbrains.annotations.NotNull;
+
 @Entity
 public class User {
+    @NotNull
     @PrimaryKey
-    public int uid;
-    @ColumnInfo(name = "access_token")
+    public String uid;
     public String accessToken;
-    @ColumnInfo(name = "img")
     public String img;
-    @ColumnInfo(name = "username")
     public String username;
-    @ColumnInfo(name = "user_type")
     public int userType;
 
 
-    public User(int uid,String accessToken, String img, String username, int userType) {
+    public User(@NotNull String uid,String accessToken, String img, String username, int userType) {
         this.uid=uid;
         this.accessToken = accessToken;
         this.img = img;
