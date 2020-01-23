@@ -30,18 +30,18 @@ object BackendHelper {
         )
         .create()
 
-    
+
     private val mBuilder = Retrofit.Builder()
         .baseUrl(API_BASE_URL)
         .addConverterFactory(GsonConverterFactory.create(gson))
 
-    val retrofit: Retrofit
+    private val retrofit: Retrofit
             get() =
                 mBuilder
                     .client(OkHttpClient.Builder().build())
                     .build()
 
-    val retrofitWithAuth: Retrofit
+    private val retrofitWithAuth: Retrofit
             by lazy {
                 with(OkHttpClient.Builder()) {
                     addTokenHeader()
