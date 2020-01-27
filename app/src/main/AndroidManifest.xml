@@ -17,7 +17,7 @@
         <activity
             android:name=".sharedUi.ImageViewerActivity"
             android:label="@string/title_activity_full_image"></activity>
-        <activity android:name=".features.library.PdfWebViewActivity" />
+
         <activity
             android:name=".sharedUi.SectionActivity"
             android:label=""

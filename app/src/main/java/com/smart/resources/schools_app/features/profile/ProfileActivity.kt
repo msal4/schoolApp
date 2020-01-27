@@ -19,6 +19,7 @@ class ProfileActivity : AppCompatActivity(),
     CanLogout {
     private lateinit var binding: ActivityProfileBinding
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile)

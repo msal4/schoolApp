@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.exam
+package com.smart.resources.schools_app.features.addMark
 
 import android.os.Build
 import android.os.Bundle
@@ -22,7 +22,6 @@ import com.smart.resources.schools_app.features.students.SendStudentResult
 import com.smart.resources.schools_app.features.students.Student
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 import kotlinx.coroutines.*
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 
 class AddMarkFragment : Fragment(), CanLogout {
@@ -62,7 +61,10 @@ class AddMarkFragment : Fragment(), CanLogout {
         }
         setHasOptionsMenu(true)
 
-        adapter = AddMarkRecyclerAdapter(listOf())
+        adapter =
+            AddMarkRecyclerAdapter(
+                listOf()
+            )
         binding.recyclerView.adapter = adapter
 
         setupViewModel(examId1)
@@ -194,7 +196,10 @@ class AddMarkFragment : Fragment(), CanLogout {
     }
 
     private fun onExamsDownload(result: List<Student>) {
-        binding.recyclerView.adapter = AddMarkRecyclerAdapter(result)
+        binding.recyclerView.adapter =
+            AddMarkRecyclerAdapter(
+                result
+            )
     }
 
 

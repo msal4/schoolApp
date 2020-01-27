@@ -1,6 +1,7 @@
 package com.smart.resources.schools_app.core.helpers
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.fragment.app.Fragment
@@ -56,4 +57,13 @@ object IntentHelper {
         }
         return images
     }
+
+
+
+}
+
+fun Context.openPdfViewer(url:String){
+    val pdfIntent = Intent(Intent.ACTION_VIEW)
+    pdfIntent.setDataAndType(Uri.parse(url) , "application/pdf")
+    startActivity(pdfIntent)
 }
