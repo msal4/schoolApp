@@ -26,7 +26,6 @@ class ProfileActivity : AppCompatActivity(),
         setupItemModel()
     }
 
-
     private fun setupItemModel(){
         binding.apply {
             val personModel = getPerson()
@@ -72,7 +71,8 @@ class ProfileActivity : AppCompatActivity(),
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (IntentHelper.GET_IMAGE_REQUEST == requestCode && resultCode == Activity.RESULT_OK && data != null) {
+        if (IntentHelper.GET_IMAGE_REQUEST == requestCode &&
+            resultCode == Activity.RESULT_OK && data != null) {
             IntentHelper.getImage(data).toString().let {
                 UsersRepository.instance.updateCurrentUser(it)
                 loadImageUrl(
@@ -94,11 +94,11 @@ class ProfileActivity : AppCompatActivity(),
     fun selectMultiAccount(view: View) {
         UsersDialog.newInstance().apply {
             show(this@ProfileActivity.supportFragmentManager, "")
-            setOnFinish {
+            setOnAccountChanged {
+                setResult(Activity.RESULT_OK)
                 setupItemModel()
             }
         }
-
     }
 }
 

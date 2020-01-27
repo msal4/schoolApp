@@ -49,7 +49,10 @@ class UsersRepository(context: Context) {
 
     fun updateCurrentUser(imageLocation: String){
         CoroutineScope(IO).launch {
-            currentUser?.uid?.let { userDao?.updateImg(it, imageLocation) }
+            currentUser?.uid?.let {
+                userDao?.updateImg(it, imageLocation)
+                currentUser?.img= imageLocation
+            }
         }
     }
 
@@ -64,5 +67,4 @@ class UsersRepository(context: Context) {
                 )
         }
     }
-
 }
