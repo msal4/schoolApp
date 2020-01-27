@@ -13,7 +13,7 @@ import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ActivityLoginBinding
 import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
-import com.smart.resources.schools_app.core.utils.showSnackBar
+import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.features.users.UsersRepository
 import com.smart.resources.schools_app.sharedUi.HomeActivity
 

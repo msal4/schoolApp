@@ -4,11 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.helpers.openPdfViewer
-import com.smart.resources.schools_app.core.utils.isPdf
-import com.smart.resources.schools_app.core.utils.showSnackBar
+import com.smart.resources.schools_app.core.extentions.openPdfViewer
+import com.smart.resources.schools_app.core.extentions.isPdf
+import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.databinding.ItemLibraryBinding
-
 
 class LibraryRecyclerAdapter(private val listLib: List<LibraryModel>) : RecyclerView.Adapter<LibraryRecyclerAdapter.MyViewHolder>() {
 
@@ -31,7 +30,6 @@ class LibraryRecyclerAdapter(private val listLib: List<LibraryModel>) : Recycler
     }
 
     override fun getItemCount(): Int = listLib.size
-
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val eBook= listLib[position]
 

@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.*
-import com.smart.resources.schools_app.core.utils.*
+import com.smart.resources.schools_app.core.extentions.*
 import com.smart.resources.schools_app.features.profile.*
 import com.smart.resources.schools_app.features.users.UsersRepository
 import kotlinx.coroutines.Dispatchers.Main

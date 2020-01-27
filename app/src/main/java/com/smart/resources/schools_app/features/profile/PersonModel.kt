@@ -1,12 +1,8 @@
 package com.smart.resources.schools_app.features.profile
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.smart.resources.schools_app.core.helpers.BackendHelper
-import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.core.myTypes.UserType
-import com.smart.resources.schools_app.core.utils.decodeToken
+import com.smart.resources.schools_app.core.extentions.decodeToken
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.Period
 

@@ -13,9 +13,9 @@ import androidx.lifecycle.lifecycleScope
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.helpers.BackendHelper
 import com.smart.resources.schools_app.core.myTypes.*
-import com.smart.resources.schools_app.core.utils.hide
-import com.smart.resources.schools_app.core.utils.show
-import com.smart.resources.schools_app.core.utils.showSnackBar
+import com.smart.resources.schools_app.core.extentions.hide
+import com.smart.resources.schools_app.core.extentions.show
+import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.students.SendStudentResult

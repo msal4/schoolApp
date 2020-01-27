@@ -5,7 +5,6 @@ import androidx.lifecycle.*
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.helpers.BackendHelper
 import com.smart.resources.schools_app.core.myTypes.*
-import com.smart.resources.schools_app.core.utils.hide
 import com.smart.resources.schools_app.features.login.CanLogout
 import kotlinx.coroutines.*
 

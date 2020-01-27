@@ -16,9 +16,10 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.adapters.loadImageUrl
 import com.smart.resources.schools_app.core.adapters.setTextFromDate
 import com.smart.resources.schools_app.core.adapters.setSpinnerList
-import com.smart.resources.schools_app.core.helpers.IntentHelper
+import com.smart.resources.schools_app.core.extentions.getImage
 import com.smart.resources.schools_app.core.myTypes.PostListener
-import com.smart.resources.schools_app.core.utils.*
+import com.smart.resources.schools_app.core.extentions.*
+import com.smart.resources.schools_app.core.helpers.FileUtils
 import com.smart.resources.schools_app.databinding.FragmentAddHomeworkBinding
 import com.smart.resources.schools_app.features.users.UsersRepository
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
@@ -124,11 +125,11 @@ class AddHomeworkFragment : Fragment(), PostListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == IntentHelper.GET_IMAGE_REQUEST &&
+        if (requestCode == GET_IMAGE_REQUEST &&
             resultCode == Activity.RESULT_OK &&
             data != null
         ) {
-            IntentHelper.getImage(data)?.let {
+            data.getImage()?.let {
                 saveAsCompressedFile(it)
 
                 binding.apply {
@@ -153,7 +154,7 @@ class AddHomeworkFragment : Fragment(), PostListener {
     }
 
     private fun addImage(view: View) {
-        IntentHelper.selectImage(fragment = this)
+        selectImage()
     }
 
     private fun onDateClicked(dateField: View) {
