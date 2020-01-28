@@ -5,8 +5,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE " />
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!-- TODO: change3: app icon -->
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,9 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".features.login.ListOfSchools" android:theme="@style/AppTheme.NoActionBar">
+            <meta-data android:name="android.app.searchable" android:resource="@xml/searchable"/>
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".sharedUi.ImageViewerActivity"
-            android:label="@string/title_activity_full_image"></activity>
+            android:label="@string/title_activity_full_image" />
         <activity android:name=".features.library.PdfWebViewActivity" />
         <activity
             android:name=".sharedUi.SectionActivity"
