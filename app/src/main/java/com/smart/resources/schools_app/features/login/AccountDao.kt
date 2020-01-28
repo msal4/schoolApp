@@ -2,6 +2,7 @@ package com.smart.resources.schools_app.features.login
 
 import com.google.gson.JsonObject
 import com.smart.resources.schools_app.features.advertising.AdvertisingModel
+import com.smart.resources.schools_app.features.schools.SchoolModel
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET

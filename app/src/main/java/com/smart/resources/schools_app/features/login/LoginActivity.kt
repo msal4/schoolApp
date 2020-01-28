@@ -15,6 +15,7 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ActivityLoginBinding
 import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.core.extentions.showSnackBar
+import com.smart.resources.schools_app.features.schools.SchoolsActivity
 import com.smart.resources.schools_app.features.users.UsersRepository
 import com.smart.resources.schools_app.sharedUi.HomeActivity
 
@@ -86,7 +87,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun chooseSchool(view: View) {
-        ListOfSchools.newInstance(this)
+        SchoolsActivity.newInstance(this)
     }
 
 }

@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.login;
+package com.smart.resources.schools_app.features.schools;
 
 public class SchoolModel {
 

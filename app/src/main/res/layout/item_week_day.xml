@@ -6,7 +6,7 @@
     <data>
         <variable
             name="dayOfWeek"
-            type="com.smart.resources.schools_app.core.myTypes.WeekDays" />
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +28,7 @@
             android:padding="14dp"
             android:text="اليوم"
             android:textColor="@android:color/white"
-            app:layout_constraintBottom_toTopOf="@+id/textView1"
+            app:layout_constraintBottom_toTopOf="@+id/dayOfWeek"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +48,7 @@
             app:layout_constraintTop_toTopOf="@+id/textView9" />
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/dayOfWeek"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:gravity="center"
@@ -56,7 +56,6 @@
             android:fontFamily="@font/monadi"
             android:includeFontPadding="true"
             tools:text="السبت"
-            android:text="@{dayOfWeek.dayName}"
             android:textSize="24sp"
             android:textColor="@android:color/black"
             android:textStyle="bold"

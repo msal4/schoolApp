@@ -81,5 +81,6 @@ class ScheduleFragment : Fragment() {
                     list
                 )
             }
-            .filter {!it.dayList.isNullOrEmpty()}
+             // filter list with empty strings
+            .filter {!it.dayList.filter { item-> !item.isNullOrBlank()}.isNullOrEmpty()}
 }

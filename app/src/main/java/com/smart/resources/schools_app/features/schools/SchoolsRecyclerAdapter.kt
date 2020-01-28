@@ -1,16 +1,21 @@
-package com.smart.resources.schools_app.features.login
+package com.smart.resources.schools_app.features.schools
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.RecyclerView
+import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ItemSchoolBinding
+import jp.wasabeef.blurry.Blurry
 
 class SchoolsRecyclerAdapter(private val dataList: List<SchoolModel>) :
     RecyclerView.Adapter<SchoolsRecyclerAdapter.MyViewHolder>(),Filterable {
 
-    var filterListSchools:List<SchoolModel>
+    lateinit var filterListSchools:List<SchoolModel>
     init {
         this.filterListSchools=dataList
     }
@@ -32,6 +37,8 @@ class SchoolsRecyclerAdapter(private val dataList: List<SchoolModel>) :
     ) {
         val model = filterListSchools[position]
         holder.bind(model)
+
+        val rootLayout= holder.binding.circleImageView
 
     }
 

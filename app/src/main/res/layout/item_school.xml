@@ -1,42 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:mine="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="itemModel"
-            type="com.smart.resources.schools_app.features.login.SchoolModel" />
+            type="com.smart.resources.schools_app.features.schools.SchoolModel" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rootLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_item"
-        android:layoutDirection="rtl"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:textDirection="rtl">
+        android:layout_marginBottom="@dimen/item_margin"
+        android:layout_marginStart="@dimen/item_margin">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:srcUrl="@{itemModel.image}" />
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/circleImageView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:elevation="12dp"
+
+            app:civ_border="true"
+            android:srcUrl="@{itemModel.image}"
+            app:layout_constraintDimensionRatio="h,1:1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_gravity="center"
-            android:layout_marginStart="24dp"
-            android:layout_weight="1"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="24dp"
+            android:elevation="100dp"
             android:fontFamily="@font/monadi"
-            android:includeFontPadding="true"
+            android:gravity="center"
+            android:shadowColor="@android:color/white"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="2"
             android:text="@{itemModel.name}"
-            android:textColor="@android:color/black"
-            android:textSize="18sp" />
-    </LinearLayout>
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

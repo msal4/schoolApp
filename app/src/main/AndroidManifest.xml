@@ -12,16 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".features.login.ListOfSchools" android:theme="@style/AppTheme.NoActionBar">
-            <meta-data android:name="android.app.searchable" android:resource="@xml/searchable"/>
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH"/>
-            </intent-filter>
+        <activity android:name=".features.schools.SchoolsActivity" >android:resource="@xml/searchable"/>
+
         </activity>
         <activity
             android:name=".sharedUi.ImageViewerActivity"
             android:label="@string/title_activity_full_image" />
-        <activity android:name=".features.library.PdfWebViewActivity" />
         <activity
             android:name=".sharedUi.SectionActivity"
             android:label=""
@@ -40,7 +36,6 @@
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

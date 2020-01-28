@@ -25,7 +25,8 @@ class ScheduleDayRecyclerAdapter(private val daySchedule:List<String?>) : Recycl
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.binding.apply {
-            subjectName.text = daySchedule[position]?: "   -"
+            val lesson=  daySchedule[position]
+            subjectName.text = if(lesson.isNullOrBlank()) "   -" else lesson
             itemPos.text= (position+1).toString()
         }
     }
