@@ -6,17 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.view.Window
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.adapters.SwipeAdapter
-import com.smart.resources.schools_app.core.utils.showSnackBar
+import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.databinding.DialogAccountsBinding
 import com.smart.resources.schools_app.features.login.CanLogout
-import com.smart.resources.schools_app.features.profile.ProfileActivity
 import com.smart.resources.schools_app.features.profile.User
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
@@ -28,10 +26,10 @@ class UsersDialog : DialogFragment(), CanLogout,
     private lateinit var binding: DialogAccountsBinding
     private lateinit var adapter: UsersRecyclerAdapter
     private val accountsManager = UsersRepository.instance
-    private var onFinish: (() -> Unit)? = null
+    private var onAccountChanged: (() -> Unit)? = null
 
-    fun setOnFinish(onFinish: (() -> Unit)) {
-        this.onFinish = onFinish
+    fun setOnAccountChanged(onFinish: (() -> Unit)) {
+        this.onAccountChanged = onFinish
     }
 
     companion object {
@@ -107,11 +105,10 @@ class UsersDialog : DialogFragment(), CanLogout,
     override fun onItemClick(user: User) {
         if (user != accountsManager.getCurrentUser()) {
             UsersRepository.instance.setCurrentUser(user)
+            onAccountChanged?.invoke()
         }
 
         dismiss()
-        onFinish?.invoke()
-
     }
 }
 

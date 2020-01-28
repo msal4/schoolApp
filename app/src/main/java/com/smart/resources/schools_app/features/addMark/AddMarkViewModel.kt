@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.exam
+package com.smart.resources.schools_app.features.addMark
 
 import android.app.Application
 import androidx.lifecycle.*

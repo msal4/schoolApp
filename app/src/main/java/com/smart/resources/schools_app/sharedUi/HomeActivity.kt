@@ -32,9 +32,14 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= DataBindingUtil.setContentView(this, R.layout.activity_home)
-        binding.userType= if(UsersRepository.instance.getCurrentUser()?.userType==0) UserType.STUDENT else UserType.TEACHER
+        setUserType()
 
         loadProfileImage()
+    }
+
+    private fun setUserType() {
+        binding.userType =
+            if (UsersRepository.instance.getCurrentUser()?.userType == 0) UserType.STUDENT else UserType.TEACHER
     }
 
     private fun loadProfileImage() {
@@ -44,6 +49,8 @@ class HomeActivity : AppCompatActivity() {
                 URI.create(it).toString()
             )
         }
+
+
     }
 
     fun imageClick(view: View){
@@ -58,10 +65,15 @@ class HomeActivity : AppCompatActivity() {
         when(requestCode){
             ProfileActivity.REQUEST_IS_PROFILE_IMAGE_UPDATED -> {
                 if(resultCode == Activity.RESULT_OK){
-                    loadProfileImage()
+                    refreshUi()
                 }
             }
         }
+    }
+
+    private fun refreshUi() {
+        loadProfileImage()
+        setUserType()
     }
 
     fun navigate(view: View) {

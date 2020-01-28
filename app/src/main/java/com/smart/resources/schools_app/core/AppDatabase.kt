@@ -27,18 +27,5 @@ abstract class AppDatabase : RoomDatabase() {
             }
             return instance
         }
-
-//        val MIGRATION_1_2: Migration = object : Migration(1, 2) {
-//            override fun migrate(database: SupportSQLiteDatabase) {
-//                database.execSQL(
-//                    "CREATE TABLE `user` (`uid` INTEGER, "
-//                            + "`access_token` TEXT," +
-//                            "`img` TEXT," +
-//                            "`username` TEXT," +
-//                            "`user_type` INTEGER," +
-//                            " PRIMARY KEY (`uid`))"
-//                )
-//            }
-//        }
     }
 }

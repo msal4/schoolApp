@@ -8,12 +8,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.tabs.TabLayout
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.helpers.IntentHelper
-import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.core.myTypes.*
-import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.sharedUi.SectionActivity
-import com.smart.resources.schools_app.core.utils.*
 import com.smart.resources.schools_app.databinding.FragmentNotificationsBinding
 
 class NotificationFragment : Fragment() {

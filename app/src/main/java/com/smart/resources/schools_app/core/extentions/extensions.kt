@@ -1,8 +1,7 @@
-package com.smart.resources.schools_app.core.utils
+package com.smart.resources.schools_app.core.extentions
 
 import android.content.res.Resources
 import android.util.Base64
-import android.widget.EditText
 import androidx.lifecycle.MutableLiveData
 import okhttp3.MediaType
 import okhttp3.MultipartBody

@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.core.utils;
+package com.smart.resources.schools_app.core.helpers;
 
 import android.content.Context;
 import android.database.Cursor;

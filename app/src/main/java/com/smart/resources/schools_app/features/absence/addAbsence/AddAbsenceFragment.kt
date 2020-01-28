@@ -10,9 +10,9 @@ import androidx.lifecycle.observe
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.adapters.setSpinnerList
 import com.smart.resources.schools_app.core.myTypes.PostListener
-import com.smart.resources.schools_app.core.utils.hide
-import com.smart.resources.schools_app.core.utils.show
-import com.smart.resources.schools_app.core.utils.showSnackBar
+import com.smart.resources.schools_app.core.extentions.hide
+import com.smart.resources.schools_app.core.extentions.show
+import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 import com.smart.resources.schools_app.databinding.FragmentAddAbsenceBinding
 import com.smart.resources.schools_app.features.absence.AddAbsenceModel

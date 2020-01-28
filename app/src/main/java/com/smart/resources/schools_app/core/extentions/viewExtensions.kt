@@ -1,14 +1,12 @@
-package com.smart.resources.schools_app.core.utils
+package com.smart.resources.schools_app.core.extentions
 
 import android.content.Context
 import android.graphics.Color
-import android.graphics.Color.green
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.graphics.green
 import androidx.core.view.forEach
 import androidx.core.view.get
 import androidx.recyclerview.widget.GridLayoutManager

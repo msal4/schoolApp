@@ -1,16 +1,14 @@
 package com.smart.resources.schools_app.features.homework
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.core.adapters.dateTimeBackendSendFormatter
 import com.smart.resources.schools_app.core.helpers.BackendHelper
 import com.smart.resources.schools_app.core.myTypes.MyResult
 import com.smart.resources.schools_app.core.myTypes.Success
 import com.smart.resources.schools_app.core.myTypes.toMyResult
-import com.smart.resources.schools_app.core.utils.asBodyPart
-import com.smart.resources.schools_app.core.utils.asRequestBody
-import com.smart.resources.schools_app.core.utils.notifyObservers
+import com.smart.resources.schools_app.core.extentions.asBodyPart
+import com.smart.resources.schools_app.core.extentions.asRequestBody
+import com.smart.resources.schools_app.core.extentions.notifyObservers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 
