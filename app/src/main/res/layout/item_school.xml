@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mine="http://schemas.android.com/tools">
 
     <data>
 
@@ -24,7 +25,7 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@mipmap/ic_launcher" />
+            android:srcUrl="@{itemModel.image}" />
 
         <TextView
             android:layout_width="0dp"
@@ -34,7 +35,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/monadi"
             android:includeFontPadding="true"
-            android:text="School name"
+            android:text="@{itemModel.name}"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
     </LinearLayout>

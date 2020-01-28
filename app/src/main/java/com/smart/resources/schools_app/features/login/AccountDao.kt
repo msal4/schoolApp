@@ -1,6 +1,7 @@
 package com.smart.resources.schools_app.features.login
 
 import com.google.gson.JsonObject
+import com.smart.resources.schools_app.features.advertising.AdvertisingModel
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -17,4 +18,7 @@ interface AccountDao{
 
     @POST("teacherLogin")
     suspend fun loginTeacher(@Body body: HashMap<String, String>): Response<JsonObject>
+
+    @GET("contacts.json")
+    suspend fun getSchools(): Response<List<SchoolModel>>
 }

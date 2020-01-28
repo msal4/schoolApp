@@ -1,20 +1,16 @@
 package com.smart.resources.schools_app.features.login
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.smart.resources.schools_app.databinding.ItemAdvertisingBinding
 import com.smart.resources.schools_app.databinding.ItemSchoolBinding
-import ru.rhanza.constraintexpandablelayout.State
 
 class SchoolsRecyclerAdapter(private val dataList: List<SchoolModel>) :
     RecyclerView.Adapter<SchoolsRecyclerAdapter.MyViewHolder>(),Filterable {
 
-    lateinit var filterListSchools:List<SchoolModel>
+    var filterListSchools:List<SchoolModel>
     init {
         this.filterListSchools=dataList
     }
@@ -34,7 +30,7 @@ class SchoolsRecyclerAdapter(private val dataList: List<SchoolModel>) :
         holder: MyViewHolder,
         position: Int
     ) {
-        val model = dataList[position]
+        val model = filterListSchools[position]
         holder.bind(model)
 
     }
@@ -56,18 +52,21 @@ class SchoolsRecyclerAdapter(private val dataList: List<SchoolModel>) :
         return object :Filter(){
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val str=constraint.toString()
+                com.orhanobut.logger.Logger.d("mySearch $str")
                 if(str.isEmpty()){
                     filterListSchools=dataList
                 }else{
                     val result=ArrayList<SchoolModel>()
                     for(row in dataList){
-                        if(row.title.toLowerCase().contains(str.toLowerCase())){
+
+                        if(row.name.toLowerCase().contains(str.toLowerCase())){
+
                             result.add(row)
                         }
                         filterListSchools=result
                     }
                 }
-                val filterResults=Filter.FilterResults()
+                val filterResults=FilterResults()
                 filterResults.values=filterListSchools
                 return filterResults
             }

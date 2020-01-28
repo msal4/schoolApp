@@ -3,18 +3,18 @@ package com.smart.resources.schools_app.features.login;
 public class SchoolModel {
 
 
-    private String title, url;
+    private String name, image;
 
     public SchoolModel(String title, String url) {
-        this.title = title;
-        this.url = url;
+        this.name = title;
+        this.image = url;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public String getUrl() {
-        return url;
+    public String getImage() {
+        return image;
     }
 }

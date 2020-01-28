@@ -51,6 +51,7 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/monadi"
                 android:gravity="center"
+                android:onClick="chooseSchool"
                 android:includeFontPadding="true"
                 android:shadowColor="@color/shadowColor"
                 android:shadowDx="2"

@@ -7,11 +7,12 @@
 
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.smart.resources.schools_app.features.login.ListOfSchools">
-
+        tools:context="com.smart.resources.schools_app.features.login.ListOfSchools"
+        android:orientation="vertical">
+<!--
         <com.google.android.material.appbar.AppBarLayout
             android:theme="@style/AppTheme.AppBarOverlay"
             android:layout_width="match_parent"
@@ -26,6 +27,21 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <include layout="@layout/content_schools" />
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+-->
+
+
+        <EditText
+            android:id="@+id/searchid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:hint="Search"
+            />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/schools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_school" />
+    </LinearLayout>
 </layout>
