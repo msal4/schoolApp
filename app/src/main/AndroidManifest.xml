@@ -12,9 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".features.schools.SchoolsActivity" >android:resource="@xml/searchable"/>
-
-        </activity>
+        <activity android:name=".features.schools.SchoolsActivity" />
         <activity
             android:name=".sharedUi.ImageViewerActivity"
             android:label="@string/title_activity_full_image" />

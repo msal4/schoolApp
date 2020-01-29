@@ -10,9 +10,7 @@ class WeekRecyclerAdapter(private val schedule: List<ScheduleDayModel>)
     : RecyclerView.Adapter<WeekRecyclerAdapter.MyViewHolder>() {
     var onClick: ((ScheduleDayModel)->Unit)?= null
 
-    inner class MyViewHolder(val binding: ItemWeekDayBinding) : RecyclerView.ViewHolder(binding.root) {
-
-    }
+    inner class MyViewHolder(val binding: ItemWeekDayBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -27,13 +25,13 @@ class WeekRecyclerAdapter(private val schedule: List<ScheduleDayModel>)
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
             val scheduleDay= schedule[position]
-
             holder.binding.apply {
-                dayOfWeek.text= scheduleDay.day
 
+                dayOfWeek.text= scheduleDay.day
                 root.setOnClickListener {
                     onClick?.invoke(scheduleDay)
                 }
+
             }
     }
 

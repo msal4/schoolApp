@@ -33,11 +33,3 @@ abstract class PersonModel(
         }
     }
 }
-
-
-class AccountModel(
-    val img: String,
-    val username: String,
-    val accessToken: String,
-    val userType: UserType
-)

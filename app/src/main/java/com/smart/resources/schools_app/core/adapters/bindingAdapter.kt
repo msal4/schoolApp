@@ -85,46 +85,60 @@ fun setListeners(
 fun loadImageUrl(iv: ImageView, url: String?) {
     //iv.context.toast(url.toString())
 
-    if(url==""){
+    loadUrl(url, iv)
+}
+@BindingAdapter("android:blurrySrc")
+fun loadBlurryImageUrl(iv: ImageView, url: String?) {
+    loadUrl(url, iv, true)
+}
+
+private fun loadUrl(url: String?, iv: ImageView, blurry:Boolean= false) {
+    if (url == "") {
         Glide
             .with(iv.context)
             .clear(iv)
-    }else {
+    } else {
         Glide
             .with(iv.context)
-            .load(url).addListener(object: RequestListener<Drawable>{
-                override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    Blurry
-                        .with(iv.context)
-                        .radius(10)
-                        .sampling(2)
-                        .color(ResourcesCompat.getColor(iv.context.resources, R.color.shadowColor, null))
-                        .from(resource?.toBitmap())
-                        .into(iv)
+            .load(url).apply {
+                if(blurry)
+                    addListener(object: RequestListener<Drawable>{
+                        override fun onResourceReady(
+                            resource: Drawable?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            dataSource: DataSource?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            Blurry
+                                .with(iv.context)
+                                .radius(10)
+                                .sampling(2)
+                                .color(ResourcesCompat.getColor(iv.context.resources, R.color.shadowColor, null))
+                                .from(resource?.toBitmap())
+                                .into(iv)
 
-                    return true
-                }
+                            return true
+                        }
 
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                }
+                        override fun onLoadFailed(
+                            e: GlideException?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            return true
+                        }
 
-            })
+                    })
+            }
             .into(iv)
 
     }
 }
+
+
+
 
 
 @BindingAdapter("android:accountUrl")

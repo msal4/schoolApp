@@ -59,7 +59,7 @@ class ExamFragment : Fragment(), ExamRecyclerAdapter.OnItemClickListener {
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if (UsersRepository.instance?.getCurrentUser()?.userType == 1) {
+        if (UsersRepository.instance.getCurrentUser()?.userType == 1) {
             inflater.inflate(R.menu.menu_add_btn, menu)
         }
 

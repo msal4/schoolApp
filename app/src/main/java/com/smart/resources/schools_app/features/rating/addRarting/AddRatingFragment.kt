@@ -66,7 +66,7 @@ class AddRatingFragment : Fragment(), MaterialSpinner.OnItemSelectedListener, Po
     ) {
         binding = FragmentAddRatingBinding
             .inflate(inflater, container, false).apply {
-                val currentUser= UsersRepository.instance?.getCurrentUser()
+                val currentUser= UsersRepository.instance.getCurrentUser()
                 val teacherInfoModel= currentUser?.accessToken?.let { TeacherInfoModel.fromToken(it) }
                 teacherInfoModel?.let {
                     setSpinnerList(classAndSectionSpinner, it.classesInfo)

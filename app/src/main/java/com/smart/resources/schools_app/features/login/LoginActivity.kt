@@ -49,7 +49,7 @@ class LoginActivity : AppCompatActivity() {
     private fun setupConstraintLayoutHeight() {
         val point = Point()
         windowManager.defaultDisplay.getSize(point)
-        binding.constraintLayout.minHeight = (point.y * 0.9).toInt()
+        binding.constraintLayout.minHeight = point.y
     }
 
 
@@ -76,10 +76,7 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun onLogin() {
-
-        HomeActivity.newInstance(
-            this
-        )
+        HomeActivity.newInstance(this)
     }
 
     private fun onLoginError(errorMsg: String) {
@@ -87,7 +84,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun chooseSchool(view: View) {
-        SchoolsActivity.newInstance(this)
+        SchoolsActivity.newInstance(this) // TODO: deal with this
     }
 
 }

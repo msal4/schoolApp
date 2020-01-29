@@ -1,6 +1,7 @@
 package com.smart.resources.schools_app.features.profile
 
 import com.google.gson.annotations.SerializedName
+import com.smart.resources.schools_app.core.CharSymbols
 import com.smart.resources.schools_app.core.extentions.concatStrings
 import org.threeten.bp.LocalDateTime
 
@@ -20,12 +21,13 @@ class TeacherInfoModel(
     override val id: String
 ) : PersonModel(name, email, phone, gender, dob) {
 
-
     companion object {
         fun fromToken(accessToken: String): TeacherInfoModel? {
             return fromToken(TeacherInfoModel::class.java, accessToken)
         }
     }
-    override val classesAsString: String? get()= classesInfo.concatStrings()
+    override val classesAsString: String? get()= classesInfo.joinToString(separator = "\n ${CharSymbols.FILLED_CIRCLE}") {
+        it.toString()
+    }
     val subjectsAsString: String? get()= subjects.concatStrings()
 }

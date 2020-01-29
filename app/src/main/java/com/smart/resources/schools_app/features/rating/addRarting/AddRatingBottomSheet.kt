@@ -67,7 +67,7 @@ class AddRatingBottomSheet : BottomSheetDialogFragment() {
             .apply {
                 onDateSet = { _, year, month, dayOfMonth ->
                     val localDateTime = LocalDateTime
-                        .of(year, month, dayOfMonth, 0, 0)
+                        .of(year, month+1, dayOfMonth, 0, 0)
                     setTextFromDate(dateField as TextView, localDateTime)
                 }
 
