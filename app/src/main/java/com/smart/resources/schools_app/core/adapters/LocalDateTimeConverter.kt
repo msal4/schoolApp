@@ -5,6 +5,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
+import java.lang.Exception
 import java.lang.reflect.Type
 import java.util.*
 
@@ -21,13 +22,16 @@ class LocalDateTimeConverter : JsonDeserializer<LocalDateTime>, JsonSerializer<L
         json: JsonElement,
         typeOfT: Type?,
         context: JsonDeserializationContext?
-    ):
-            LocalDateTime = if (json.asString.contains('T'))
-        LocalDateTime.parse(json.asString, dateTimeBackendFormatter)
-    else LocalDateTime.of(
-        LocalDate.parse(json.asString, dateTimeBackendSendFormatter),
-        LocalTime.now()
-    )
+    ): LocalDateTime = try {
+        if (json.asString.contains('T'))
+            LocalDateTime.parse(json.asString, dateTimeBackendFormatter)
+        else LocalDateTime.of(
+            LocalDate.parse(json.asString, dateTimeBackendSendFormatter),
+            LocalTime.now()
+        )
+    } catch (e: Exception) {
+        LocalDateTime.now()
+    }
 
     override fun serialize(
         src: LocalDateTime,

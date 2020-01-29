@@ -20,6 +20,9 @@ abstract class PersonModel(
     abstract val classesAsString: String?
     abstract val id: String
 
+
+    val isEmailEmpty:Boolean get() = email.isBlank()
+
     companion object Factory {
         fun <T : PersonModel> fromToken(classType: Class<T>,accessToken: String): T? {
             return try {

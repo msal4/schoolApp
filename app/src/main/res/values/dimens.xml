@@ -29,4 +29,6 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="account_item_spacing">20dp</dimen>
     <dimen name="min_homework_height">67dp</dimen>
+    <dimen name="profile_attribute_margin">24dp</dimen>
+    <dimen name="margin_null">0dp</dimen>
 </resources>

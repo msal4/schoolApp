@@ -2,7 +2,6 @@ package com.smart.resources.schools_app.features.profile
 
 import com.google.gson.annotations.SerializedName
 import com.smart.resources.schools_app.core.CharSymbols
-import com.smart.resources.schools_app.core.extentions.concatStrings
 import org.threeten.bp.LocalDateTime
 
 class TeacherInfoModel(
@@ -26,8 +25,13 @@ class TeacherInfoModel(
             return fromToken(TeacherInfoModel::class.java, accessToken)
         }
     }
-    override val classesAsString: String? get()= classesInfo.joinToString(separator = "\n ${CharSymbols.FILLED_CIRCLE}") {
+    override val classesAsString: String? get()= classesInfo
+        .joinToString (
+            separator = " ${CharSymbols.FILLED_CIRCLE}\n",
+            postfix = " ${CharSymbols.FILLED_CIRCLE}") {
         it.toString()
     }
-    val subjectsAsString: String? get()= subjects.concatStrings()
+    val subjectsAsString: String? get()= subjects.joinToString(
+        separator = " ${CharSymbols.FILLED_CIRCLE}\n",
+        postfix = " ${CharSymbols.FILLED_CIRCLE}")
 }

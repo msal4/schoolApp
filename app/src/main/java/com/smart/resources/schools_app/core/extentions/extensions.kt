@@ -7,6 +7,7 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
+import java.lang.StringBuilder
 import java.nio.charset.StandardCharsets
 
 
@@ -48,14 +49,6 @@ fun String.withEngNums() = this
     .replace('٨', '8')
     .replace('٩', '9')
 
-fun List<Any>.concatStrings(): String{
-    val sb= StringBuilder()
-    this.map { it.toString() }.forEach {
-        sb.append(it).append(',')
-    }
-
-    return sb.substring(0, sb.length-1)
-}
 
 fun String.asRequestBody() :RequestBody= RequestBody.create(MediaType.parse("text/plain"),this.trim())
 

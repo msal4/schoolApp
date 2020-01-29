@@ -1,5 +1,10 @@
 
-1.5.0:
 
+1.5.0:
 1- fixed month value in date fetched from dialog
-2-
+2- fixed the format of multi-value attributes (subjects and classes) in teacher profile
+3- fixed crash on wrong database date format
+4- fixed pdfViewer (changed to intent)
+5- fixed homepage not updating on account change from teacher to student and vice versa
+6- fixed profile image not updated until device restart
+7- fixed empty schedule shown

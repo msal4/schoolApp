@@ -8,7 +8,12 @@ class SharedPrefHelper private constructor(context: Context) {
 
 
     var currentUserId: String?
-        get() = mSharedPreferences.getString(ACCOUNT, "")
+        get() = try{
+            mSharedPreferences.getString(ACCOUNT, "")
+        }catch (e:ClassCastException){
+            // in case of value with same key is stored but with different type like INT-> this happens in older versions of app
+            ""
+        }
         set(uid) {
                 mSharedPreferences.edit().putString(ACCOUNT, uid).apply()
         }
