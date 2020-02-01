@@ -27,6 +27,8 @@ class SchoolsActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_schools)
+        binding.schoolsPlaceHolder.recyclerView.isNestedScrollingEnabled= false
+
         setupViewModel()
 //        binding.searchid.addTextChangedListener(object : TextWatcher {
 //            override fun afterTextChanged(p0: Editable?) {

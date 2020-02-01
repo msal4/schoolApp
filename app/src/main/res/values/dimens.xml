@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="login_padding">34dp</dimen>
-    <dimen name="btn_corner_radius">12dp</dimen>
+    <dimen name="btn_corner_radius">200dp</dimen>
     <dimen name="add_btn_corner_radius">5dp</dimen>
     <dimen name="edit_text_padding">12dp</dimen>
     <dimen name="edit_text_drawable_padding">12dp</dimen>
     <dimen name="btn_padding">12dp</dimen>
     <dimen name="login_text_size">20sp</dimen>
     <dimen name="home_circle_size">150dp</dimen>
-    <dimen name="home_circle_padding">14dp</dimen>
+    <dimen name="home_circle_padding">18dp</dimen>
     <dimen name="home_circle_text_size">16sp</dimen>
     <dimen name="home_circle_elevation">4dp</dimen>
     <dimen name="home_circle_top_padding">28dp</dimen>

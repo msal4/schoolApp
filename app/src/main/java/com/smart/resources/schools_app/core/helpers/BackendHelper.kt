@@ -20,10 +20,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object BackendHelper {
-    private const val SCHOOL_NAME= "ameerp"     // TODO: change1: base url
+    private const val SCHOOL_NAME= "smart"     // TODO: change1: base url
 
     private const val API_BASE_URL = "http://$SCHOOL_NAME.srittwo.me/api/"
-    //private const val API_BASE_URL = "https://api.androidhive.info/json/"
+//    private const val API_BASE_URL = "https://api.androidhive.info/json/"
     val gson = GsonBuilder()
         .registerTypeAdapter(
             LocalDateTime::class.java,

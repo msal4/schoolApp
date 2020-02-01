@@ -17,8 +17,7 @@ import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.users.UsersDialog
 import com.smart.resources.schools_app.features.users.UsersRepository
 
-class ProfileActivity : AppCompatActivity(),
-    CanLogout {
+class ProfileActivity : AppCompatActivity(){
     private lateinit var binding: ActivityProfileBinding
 
 

@@ -15,6 +15,7 @@ import com.smart.resources.schools_app.core.adapters.SwipeAdapter
 import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.databinding.DialogAccountsBinding
 import com.smart.resources.schools_app.features.login.CanLogout
+import com.smart.resources.schools_app.features.login.LoginActivity
 import com.smart.resources.schools_app.features.profile.User
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
@@ -65,7 +66,7 @@ class UsersDialog : DialogFragment(), CanLogout,
             if (adapter.itemCount >= MAX_ACCOUNTS) {
                 binding.rootLayout.showSnackBar(getString(R.string.max_accounts_error))
             } else {
-                context?.let { con -> logout(con) }
+                context?.let { LoginActivity.newInstance(it, true) }
             }
         }
 

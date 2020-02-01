@@ -2,11 +2,15 @@ package com.smart.resources.schools_app.core.extentions
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.LinearGradient
+import android.graphics.Shader
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.ColorInt
+import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
 import androidx.core.view.get
 import androidx.recyclerview.widget.GridLayoutManager
@@ -45,4 +49,18 @@ fun RecyclerView.createGridLayout(adapter: RecyclerView.Adapter<out RecyclerView
         setPadding(itemMargin, itemMargin, 0, itemMargin)
         layoutManager = GridLayoutManager(context, 2)
         this.adapter = adapter
+}
+
+fun TextView.applyGradient(@ColorInt vararg colors: Int){
+    measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+    val textShader: Shader = LinearGradient(
+        x+ measuredWidth,
+        0f,
+        x,
+        textSize,
+        colors,
+        null,
+        Shader.TileMode.CLAMP
+    )
+    paint.shader = textShader
 }

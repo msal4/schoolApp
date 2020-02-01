@@ -4,6 +4,9 @@
 
     <size android:width="24dp" android:height="24dp"/>
 
-    <solid android:color="@android:color/white"/>
+    <gradient
+        android:angle="90"
+        android:startColor="@color/colorPrimary"
+        android:endColor="@color/colorAccent"/>
 
 </shape>
