@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -23,26 +24,28 @@ class SchoolsActivity : AppCompatActivity(),
     private lateinit var binding: ActivitySchoolsBinding
     private lateinit var viewModel: SchoolsViewModel
     private lateinit var adapter: SchoolsRecyclerAdapter
+    private lateinit var listState1: ListState
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_schools)
+        binding.schoolsPlaceHolder.progressIndicator.visibility=View.VISIBLE
         setupViewModel()
-//        binding.searchid.addTextChangedListener(object : TextWatcher {
-//            override fun afterTextChanged(p0: Editable?) {
-//
-//            }
-//
-//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//
-//            }
-//
-//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//                adapter.filter.filter(p0)
-//                //Logger.d("mySearch ${p0.toString()}")
-//                binding.schools.adapter=adapter
-//            }
-//        })
+        binding.searchText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                adapter.filter.filter(p0)
+                //Logger.d("mySearch ${p0.toString()}")
+                binding.schoolsPlaceHolder.recyclerView.adapter=adapter
+            }
+        })
     }
 
 
@@ -58,6 +61,10 @@ class SchoolsActivity : AppCompatActivity(),
     private fun setupViewModel() {
         viewModel = ViewModelProviders.of(this)
             .get(SchoolsViewModel::class.java).apply {
+                listState1=listState
+                listState1.setLoading(true)
+                binding.schoolsPlaceHolder.listState= listState1
+
                 getSchools().observe(this@SchoolsActivity, Observer{onSchoolsDownload(it)})
             }
     }
@@ -70,6 +77,8 @@ class SchoolsActivity : AppCompatActivity(),
                 if (result.data.isNullOrEmpty())
                     Logger.d("listOfScoolsAmmar result is empty")
                 else {
+                    listState1.setLoading(false)
+                    binding.schoolsPlaceHolder.listState= listState1
                     Logger.d("listOfScoolsAmmar ${result.data.size}")
                     adapter=SchoolsRecyclerAdapter(result.data)
                     binding.schoolsPlaceHolder.recyclerView.createGridLayout(adapter)
@@ -79,6 +88,7 @@ class SchoolsActivity : AppCompatActivity(),
             is ResponseError -> Logger.d("listOfScoolsAmmar ResponseError")
             is ConnectionError -> errorMsg = getString(R.string.connection_error)
         }
+
 
     }
 
