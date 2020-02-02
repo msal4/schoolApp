@@ -38,7 +38,7 @@ class SchoolsRecyclerAdapter(private val dataList: List<SchoolModel>) :
         val model = filterListSchools[position]
         holder.bind(model)
 
-        val rootLayout= holder.binding.circleImageView
+        //val rootLayout= holder.binding.circleImageView
 
     }
 

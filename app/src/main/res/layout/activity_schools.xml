@@ -28,6 +28,7 @@
                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                <com.google.android.material.textfield.TextInputEditText
+                   android:id="@+id/search_text"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:drawablePadding="12dp"
@@ -37,6 +38,8 @@
            </com.google.android.material.textfield.TextInputLayout>
 
             <include
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:id="@+id/schoolsPlaceHolder"
                 layout="@layout/fragment_recycler_loader"/>
 
