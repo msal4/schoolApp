@@ -2,9 +2,13 @@
 <resources>
 
     // old one
-    <color name="colorPrimary">#29719B</color>
-    <color name="colorPrimaryDark">#13547a</color>
-    <color name="colorAccent">#80d0c7</color>
+    <color name="colorPrimary">#6f86d6</color>
+    <color name="colorPrimaryDark">#5F76C7</color>
+    <color name="colorPrimaryLight">#48c6ef</color>
+
+    <color name="colorAccent">#D81B60</color>
+
+
 
     <color name="green">#3ED81B</color>
     <color name="lightRed">#DE6865</color>

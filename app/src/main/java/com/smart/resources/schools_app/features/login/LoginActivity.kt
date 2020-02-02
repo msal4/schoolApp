@@ -52,7 +52,6 @@ class LoginActivity : AppCompatActivity() {
         setupViewModel()
 
 
-
         binding.schoolName.applyGradient(*defaultGradient())
     }
 

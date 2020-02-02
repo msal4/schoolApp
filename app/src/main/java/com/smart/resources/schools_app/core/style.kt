@@ -5,5 +5,5 @@ import androidx.core.content.ContextCompat
 import com.smart.resources.schools_app.R
 
 fun Context.defaultGradient() = intArrayOf(
-    ContextCompat.getColor(this, R.color.colorPrimary),
-    ContextCompat.getColor(this, R.color.colorAccent))
+    ContextCompat.getColor(this, R.color.colorPrimaryDark),
+    ContextCompat.getColor(this, R.color.colorPrimaryLight))
