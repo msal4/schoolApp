@@ -76,5 +76,9 @@
     <string name="choose_another_acc">اختر حساب اخر</string>
     <string name="max_accounts_error">الحد الاقصى هو 6 حسابات (لحذف حساب اسحبه للجانب)</string>
     <string name="invalid_pdf_url">الكتاب غير صالح!</string>
+    <string name="no_schools">لا توجد مدارس</string>
+    <string name="schoolName">ابحث عن المدرسة</string>
+    <string name="logo_trans">logoTransition</string>
+    <string name="school_name_trans">schoolNameTransition</string>
 
 </resources>

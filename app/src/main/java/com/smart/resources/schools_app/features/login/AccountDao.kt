@@ -1,15 +1,11 @@
 package com.smart.resources.schools_app.features.login
 
 import com.google.gson.JsonObject
-import com.smart.resources.schools_app.features.advertising.AdvertisingModel
-import com.smart.resources.schools_app.features.schools.SchoolModel
+import com.smart.resources.schools_app.features.schools.School
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
-import retrofit2.http.Path
-
-
 
 
 interface AccountDao{
@@ -21,5 +17,5 @@ interface AccountDao{
     suspend fun loginTeacher(@Body body: HashMap<String, String>): Response<JsonObject>
 
     @GET("contacts.json")
-    suspend fun getSchools(): Response<List<SchoolModel>>
+    suspend fun getSchools(): Response<List<School>>
 }

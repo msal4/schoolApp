@@ -1,7 +1,6 @@
 package com.smart.resources.schools_app.features.users
 
 import androidx.room.*
-import com.smart.resources.schools_app.features.profile.User
 
 @Dao
 interface UserDao {

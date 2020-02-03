@@ -13,6 +13,7 @@ import com.smart.resources.schools_app.features.rating.RatingModel
 import com.smart.resources.schools_app.sharedUi.DatePickerFragment
 import org.threeten.bp.LocalDateTime
 
+// TODO: add scrolling when page opens
 class AddRatingBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetAddRatingBinding
     private lateinit var ratingModel: RatingModel

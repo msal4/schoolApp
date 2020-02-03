@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ItemAccountBinding
-import com.smart.resources.schools_app.features.profile.User
 
 class UsersRecyclerAdapter(private val users:MutableList<User>?, private val listener: OnItemClickListener) : RecyclerView.Adapter<UsersRecyclerAdapter.MyViewHolder>(){
     interface OnItemClickListener {

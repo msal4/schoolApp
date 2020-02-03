@@ -12,7 +12,7 @@ import com.smart.resources.schools_app.features.users.UsersRepository
 interface CanLogout{
     fun logout(context: Context){
         SharedPrefHelper.instance.currentUserId= null
-        LoginActivity.newInstance(context)
+        LoginActivity.newInstance(context, true)
     }
 
     fun expireLogout(context: Context){

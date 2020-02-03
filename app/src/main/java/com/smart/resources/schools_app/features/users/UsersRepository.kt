@@ -3,7 +3,6 @@ package com.smart.resources.schools_app.features.users
 import android.content.Context
 import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.core.AppDatabase
-import com.smart.resources.schools_app.features.profile.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -11,7 +10,6 @@ import kotlinx.coroutines.launch
 class UsersRepository(context: Context) {
     private var userDao: UserDao? = AppDatabase.getAppDatabase(context)?.userDao()
     private val sharedPref= SharedPrefHelper.instance
-
     private var currentUser: User? = null
 
     suspend fun getUsers()= userDao?.getUsers()

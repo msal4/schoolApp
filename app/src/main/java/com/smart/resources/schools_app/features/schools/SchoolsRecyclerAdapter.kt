@@ -1,21 +1,19 @@
 package com.smart.resources.schools_app.features.schools
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.RecyclerView
-import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ItemSchoolBinding
-import jp.wasabeef.blurry.Blurry
 
-class SchoolsRecyclerAdapter(private val dataList: List<SchoolModel>) :
+
+class SchoolsRecyclerAdapter(
+    private val dataList: List<School>,
+    private val onItemClick: (School, ItemSchoolBinding)-> Unit) :
     RecyclerView.Adapter<SchoolsRecyclerAdapter.MyViewHolder>(),Filterable {
 
-    lateinit var filterListSchools:List<SchoolModel>
+    var filterListSchools:List<School>
     init {
         this.filterListSchools=dataList
     }
@@ -36,10 +34,11 @@ class SchoolsRecyclerAdapter(private val dataList: List<SchoolModel>) :
         position: Int
     ) {
         val model = filterListSchools[position]
-        holder.bind(model)
 
-        //val rootLayout= holder.binding.circleImageView
-
+        holder.apply {
+            bind(model)
+            itemView.setOnClickListener{onItemClick(model, binding)}
+        }
     }
 
     override fun getItemCount(): Int {
@@ -49,7 +48,7 @@ class SchoolsRecyclerAdapter(private val dataList: List<SchoolModel>) :
     class MyViewHolder(val binding: ItemSchoolBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(model: SchoolModel) {
+        fun bind(model: School) {
             binding.itemModel = model
         }
 
@@ -59,27 +58,25 @@ class SchoolsRecyclerAdapter(private val dataList: List<SchoolModel>) :
         return object :Filter(){
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val str=constraint.toString()
-                com.orhanobut.logger.Logger.d("mySearch $str")
                 if(str.isEmpty()){
                     filterListSchools=dataList
                 }else{
-                    val result=ArrayList<SchoolModel>()
-                    for(row in dataList){
-
-                        if(row.name.toLowerCase().contains(str.toLowerCase())){
-
-                            result.add(row)
+                    val result=ArrayList<School>()
+                    for(model in dataList){
+                        if(model.name.toLowerCase().contains(str.toLowerCase())){
+                            result.add(model)
                         }
                         filterListSchools=result
                     }
                 }
+
                 val filterResults=FilterResults()
                 filterResults.values=filterListSchools
                 return filterResults
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-
+                notifyDataSetChanged()
             }
 
         }

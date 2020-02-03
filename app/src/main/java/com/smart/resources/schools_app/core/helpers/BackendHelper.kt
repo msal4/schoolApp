@@ -1,5 +1,6 @@
 package com.smart.resources.schools_app.core.helpers
 
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.smart.resources.schools_app.core.adapters.LocalDateTimeConverter
 import com.smart.resources.schools_app.features.absence.AbsenceDao
@@ -12,6 +13,7 @@ import com.smart.resources.schools_app.features.notification.NotificationsDao
 import com.smart.resources.schools_app.features.users.UsersRepository
 import com.smart.resources.schools_app.features.rating.RatingDao
 import com.smart.resources.schools_app.features.schedule.ScheduleDao
+import com.smart.resources.schools_app.features.schools.SchoolsRepository
 import com.smart.resources.schools_app.features.students.StudentDao
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -20,11 +22,12 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object BackendHelper {
-    private const val SCHOOL_NAME= "smart"     // TODO: change1: base url
+    // TODO: handle with multiple account
+    private  val SCHOOL_NAME= SchoolsRepository.instance.currentSchool?.baseUrl   // TODO: change1: base url
 
-//    private const val API_BASE_URL = "http://$SCHOOL_NAME.srittwo.me/api/"
-    private const val API_BASE_URL = "https://api.androidhive.info/json/"
-    val gson = GsonBuilder()
+//  private  val API_BASE_URL get() =  "http://$SCHOOL_NAME.srittwo.me/api/"
+    private  val API_BASE_URL get() =  "https://api.androidhive.info/json/"
+    val gson: Gson = GsonBuilder()
         .registerTypeAdapter(
             LocalDateTime::class.java,
             LocalDateTimeConverter()
@@ -32,7 +35,7 @@ object BackendHelper {
         .create()
 
 
-    private val mBuilder = Retrofit.Builder()
+    private val mBuilder get () = Retrofit.Builder()
         .baseUrl(API_BASE_URL)
         .addConverterFactory(GsonConverterFactory.create(gson))
 
@@ -43,7 +46,7 @@ object BackendHelper {
                     .build()
 
     private val retrofitWithAuth: Retrofit
-            by lazy {
+            get() =
                 with(OkHttpClient.Builder()) {
                     addTokenHeader()
                     mBuilder
@@ -51,7 +54,6 @@ object BackendHelper {
                         .build()
                 }
 
-            }
 
     private fun OkHttpClient.Builder.addTokenHeader() {
         addInterceptor(
@@ -66,14 +68,14 @@ object BackendHelper {
         )
     }
 
-    val homeworkDao: HomeworkDao by lazy{retrofitWithAuth.create(HomeworkDao::class.java)}
-    val examDao: ExamDao by lazy{retrofitWithAuth.create(ExamDao::class.java)}
-    val libraryDao: LibraryDao by lazy{ retrofitWithAuth.create(LibraryDao::class.java)}
-    val notificationDao: NotificationsDao by lazy{retrofitWithAuth.create(NotificationsDao::class.java)}
-    val absenceDao: AbsenceDao by lazy{retrofitWithAuth.create(AbsenceDao::class.java)}
-    val advertisingDao: AdvertisingDao by lazy{ retrofitWithAuth.create(AdvertisingDao::class.java)}
-    val scheduleDao: ScheduleDao by lazy{ retrofitWithAuth.create(ScheduleDao::class.java)}
-    val ratingDao: RatingDao by lazy{ retrofitWithAuth.create(RatingDao::class.java)}
-    val studentDao: StudentDao by lazy{ retrofitWithAuth.create(StudentDao::class.java)}
-    val accountDao: AccountDao by lazy{ retrofit.create(AccountDao::class.java)}
+    val homeworkDao: HomeworkDao get() =  retrofitWithAuth.create(HomeworkDao::class.java)
+    val examDao: ExamDao get() = retrofitWithAuth.create(ExamDao::class.java)
+    val libraryDao: LibraryDao get() =  retrofitWithAuth.create(LibraryDao::class.java)
+    val notificationDao: NotificationsDao get() =  retrofitWithAuth.create(NotificationsDao::class.java)
+    val absenceDao: AbsenceDao get() = retrofitWithAuth.create(AbsenceDao::class.java)
+    val advertisingDao: AdvertisingDao get() =  retrofitWithAuth.create(AdvertisingDao::class.java)
+    val scheduleDao: ScheduleDao get() =  retrofitWithAuth.create(ScheduleDao::class.java)
+    val ratingDao: RatingDao get() =  retrofitWithAuth.create(RatingDao::class.java)
+    val studentDao: StudentDao get() =  retrofitWithAuth.create(StudentDao::class.java)
+    val accountDao: AccountDao get() =  retrofit.create(AccountDao::class.java)
 }

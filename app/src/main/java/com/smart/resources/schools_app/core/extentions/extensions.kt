@@ -3,6 +3,8 @@ package com.smart.resources.schools_app.core.extentions
 import android.content.res.Resources
 import android.util.Base64
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -60,3 +62,6 @@ fun File.asBodyPart(fieldName:String) :MultipartBody.Part?{
 fun <T> MutableLiveData<T>.notifyObservers() {
     this.value = this.value
 }
+
+fun Any.toJsonString(): String? = Gson().toJson(this)
+fun <T:Any>String.toModel(type: Class<T>):T = Gson().fromJson(this, type)

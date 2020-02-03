@@ -5,14 +5,13 @@
     <color name="colorPrimary">#6f86d6</color>
     <color name="colorPrimaryDark">#5F76C7</color>
     <color name="colorPrimaryLight">#48c6ef</color>
-
     <color name="colorAccent">#D81B60</color>
-
 
 
     <color name="green">#3ED81B</color>
     <color name="lightRed">#DE6865</color>
     <color name="darkRed">#964745</color>
+
 
     <color name="shadowColor">#40000000</color>
     <color name="white">#FFFFFF</color>

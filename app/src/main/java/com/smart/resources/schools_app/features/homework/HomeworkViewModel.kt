@@ -18,9 +18,7 @@ class HomeworkViewModel (application: Application) : AndroidViewModel(applicatio
     val postException= PostException()
     var uploadListener: PostListener?= null
 
-
     private val homeworkRepo= HomeworkRepository()
-
     val getHomework: LiveData<MutableList<HomeworkModel>>
             by lazy {
                 fetchHomework()
@@ -50,7 +48,6 @@ class HomeworkViewModel (application: Application) : AndroidViewModel(applicatio
                 is Success -> {
                     if (result.data.isNullOrEmpty()) listState.setBodyError(c.getString(R.string.no_homework))
                     else listState.setLoading(false)
-
                 }
                 Unauthorized-> expireLogout(c)
                 is ResponseError -> listState.setBodyError(result.combinedMsg)

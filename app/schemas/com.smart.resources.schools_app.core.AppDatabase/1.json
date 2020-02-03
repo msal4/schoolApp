@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "f5ca15c68a1cb873c8f238768be84076",
+    "identityHash": "1a420a834f7fd413143db1e243dbef9f",
     "entities": [
       {
         "tableName": "User",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` TEXT NOT NULL, `accessToken` TEXT, `img` TEXT, `username` TEXT, `userType` INTEGER NOT NULL, PRIMARY KEY(`uid`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` TEXT NOT NULL, `accessToken` TEXT NOT NULL, `img` TEXT NOT NULL, `username` TEXT NOT NULL, `userType` INTEGER NOT NULL, `schoolId` TEXT NOT NULL, PRIMARY KEY(`uid`), FOREIGN KEY(`schoolId`) REFERENCES `School`(`schoolId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "uid",
@@ -18,30 +18,95 @@
             "fieldPath": "accessToken",
             "columnName": "accessToken",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "img",
             "columnName": "img",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "username",
             "columnName": "username",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "userType",
             "columnName": "userType",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "schoolId",
+            "columnName": "schoolId",
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
             "uid"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_User_schoolId",
+            "unique": false,
+            "columnNames": [
+              "schoolId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_User_schoolId` ON `${TABLE_NAME}` (`schoolId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "School",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "schoolId"
+            ],
+            "referencedColumns": [
+              "schoolId"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "School",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`schoolId` TEXT NOT NULL, `name` TEXT NOT NULL, `logo` TEXT NOT NULL, `baseUrl` TEXT NOT NULL, PRIMARY KEY(`schoolId`))",
+        "fields": [
+          {
+            "fieldPath": "schoolId",
+            "columnName": "schoolId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "logo",
+            "columnName": "logo",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "baseUrl",
+            "columnName": "baseUrl",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "schoolId"
           ],
           "autoGenerate": false
         },
@@ -52,7 +117,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f5ca15c68a1cb873c8f238768be84076')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1a420a834f7fd413143db1e243dbef9f')"
     ]
   }
 }
