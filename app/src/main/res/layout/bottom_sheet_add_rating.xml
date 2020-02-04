@@ -9,12 +9,16 @@
             type="com.smart.resources.schools_app.features.rating.RatingModel" />
     </data>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layoutDirection="rtl">
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layoutDirection="rtl"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:gravity="center"
@@ -97,4 +101,5 @@
             android:textColor="@android:color/white" />
 
     </LinearLayout>
+    </ScrollView>
 </layout>

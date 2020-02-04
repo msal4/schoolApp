@@ -1,9 +1,7 @@
 package com.smart.resources.schools_app.features.login
 
-import android.accounts.AccountManager
 import android.content.Context
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.features.users.UsersRepository

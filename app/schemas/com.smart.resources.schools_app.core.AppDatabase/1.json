@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "1a420a834f7fd413143db1e243dbef9f",
+    "identityHash": "a2e11ece35f3b2eb9c05c0e44a5a0496",
     "entities": [
       {
         "tableName": "User",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` TEXT NOT NULL, `accessToken` TEXT NOT NULL, `img` TEXT NOT NULL, `username` TEXT NOT NULL, `userType` INTEGER NOT NULL, `schoolId` TEXT NOT NULL, PRIMARY KEY(`uid`), FOREIGN KEY(`schoolId`) REFERENCES `School`(`schoolId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` TEXT NOT NULL, `accessToken` TEXT, `img` TEXT, `username` TEXT, `userType` INTEGER NOT NULL, `schoolId` TEXT, PRIMARY KEY(`uid`), FOREIGN KEY(`schoolId`) REFERENCES `School`(`schoolId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "uid",
@@ -18,19 +18,19 @@
             "fieldPath": "accessToken",
             "columnName": "accessToken",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "img",
             "columnName": "img",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "username",
             "columnName": "username",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "userType",
@@ -42,7 +42,7 @@
             "fieldPath": "schoolId",
             "columnName": "schoolId",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -117,7 +117,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1a420a834f7fd413143db1e243dbef9f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a2e11ece35f3b2eb9c05c0e44a5a0496')"
     ]
   }
 }

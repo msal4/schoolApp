@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.widget.*
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.graphics.drawable.toDrawable
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
@@ -59,8 +60,6 @@ fun setDateFomText(textView: TextView): LocalDateTime{
     return LocalDateTime.of(LocalDate.parse(textView.text, dateDisFormatter), LocalTime.of(0, 0))
 }
 
-
-
 @BindingAdapter("mine:setDateAttrChanged")
 fun setListeners(
     view: TextView,
@@ -100,7 +99,8 @@ private fun loadUrl(url: String?, iv: ImageView, blurry:Boolean= false) {
     } else {
         Glide
             .with(iv.context)
-            .load(url).apply {
+            .load(url)
+            .apply {
                 if(blurry)
                     addListener(object: RequestListener<Drawable>{
                         override fun onResourceReady(
@@ -133,13 +133,8 @@ private fun loadUrl(url: String?, iv: ImageView, blurry:Boolean= false) {
                     })
             }
             .into(iv)
-
     }
 }
-
-
-
-
 
 @BindingAdapter("android:accountUrl")
 fun setAccountImage(iv: ImageView, url: String?) {
@@ -151,6 +146,7 @@ fun setAccountImage(iv: ImageView, url: String?) {
             .load(R.drawable.ic_profile_place_holder)
             .into(iv)
     }else {
+
         Glide
             .with(iv.context)
             .load(url)
@@ -168,7 +164,7 @@ fun loadImageDrawable(iv: ImageView, drawable: Drawable) {
 
 @BindingAdapter("android:setMark")
 fun setMark(tv: TextView, mark:Int?) {
-    val isStudent= UsersRepository.instance?.getCurrentUser()?.userType==0
+    val isStudent= UsersRepository.instance.getCurrentUser()?.userType==0
         tv.text = mark?.toString() ?: if(isStudent)"- " else ""
 }
 
@@ -182,7 +178,5 @@ fun <T>setSpinnerList(spinner: MaterialSpinner, list:List<T>) {
         setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter= this
     }
-
-
 }
 

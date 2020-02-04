@@ -22,11 +22,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object BackendHelper {
-    // TODO: handle with multiple account
-    private  val SCHOOL_NAME= SchoolsRepository.instance.currentSchool?.baseUrl   // TODO: change1: base url
 
-//  private  val API_BASE_URL get() =  "http://$SCHOOL_NAME.srittwo.me/api/"
-    private  val API_BASE_URL get() =  "https://api.androidhive.info/json/"
+  private  val SCHOOL_NAME get() = SchoolsRepository.instance.currentSchool?.baseUrl
+  private  val API_BASE_URL get() =  "http://$SCHOOL_NAME.srittwo.me/api/"
+//    private  val API_BASE_URL get() =  "https://api.androidhive.info/json/"
     val gson: Gson = GsonBuilder()
         .registerTypeAdapter(
             LocalDateTime::class.java,

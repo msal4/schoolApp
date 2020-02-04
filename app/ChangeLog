@@ -1,4 +1,9 @@
 
+1.6.0:
+1- add screen to select school first before login
+2- changed image loading icon
+3- changed colors, added some gradients
+4- make add rating bottom sheet scrollable, handle keyboard open
 
 1.5.0:
 1- fixed month value in date fetched from dialog

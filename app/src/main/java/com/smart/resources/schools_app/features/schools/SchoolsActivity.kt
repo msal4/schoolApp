@@ -51,6 +51,12 @@ class SchoolsActivity : AppCompatActivity(), CanLogout {
         }
         setupBinding()
         setupViewModel()
+
+        // TODO: remove below
+        val temp= School("0", "المصادر الذكية", "", "smart")
+        adapter = SchoolsRecyclerAdapter(listOf(temp), ::onItemClick)
+        binding.schoolsPlaceHolder.recyclerView.createGridLayout(adapter)
+        // TODO: remove above
     }
 
     private fun setupBinding() {

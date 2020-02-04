@@ -32,4 +32,5 @@
     <dimen name="profile_attribute_margin">24dp</dimen>
     <dimen name="margin_null">0dp</dimen>
     <dimen name="max_value">500dp</dimen>
+    <dimen name="image_loader_padding">32dp</dimen>
 </resources>

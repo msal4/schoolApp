@@ -18,9 +18,7 @@ class AdvertisingRecyclerAdapter(private val dataList: List<AdvertisingModel>, v
         val inflater = LayoutInflater.from(parent.context)
         val binding =
             ItemAdvertisingBinding.inflate(inflater, parent, false)
-        return MyViewHolder(
-            binding
-        )
+        return MyViewHolder(binding)
     }
 
     override fun onBindViewHolder(
@@ -49,7 +47,8 @@ class AdvertisingRecyclerAdapter(private val dataList: List<AdvertisingModel>, v
         init {
             binding.expandLayout.onStateChangeListener =
                 { _: State?, newState: State ->
-                    if (newState == State.Collapsed) { /*if(binding.contentText.getLineCount()<3){
+                    if (newState == State.Collapsed) {
+                        /*if(binding.contentText.getLineCount()<3){
                         binding.contentText.append("\u2026");
                     }else {*/
                         binding.contentText.maxLines = 2
@@ -61,9 +60,7 @@ class AdvertisingRecyclerAdapter(private val dataList: List<AdvertisingModel>, v
                     }
                 }
             binding.expandLayout.setOnClickListener {
-                binding.expandLayout.toggle(
-                    true
-                )
+                binding.expandLayout.toggle(true)
             }
         }
     }
