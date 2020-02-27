@@ -11,12 +11,16 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
+import com.jakewharton.threetenabp.AndroidThreeTen
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.defaultGradient
 import com.smart.resources.schools_app.core.extentions.applyGradient
 import com.smart.resources.schools_app.core.extentions.showSnackBar
+import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.databinding.ActivityLoginBinding
-import com.smart.resources.schools_app.features.schools.SchoolsActivity
+import com.smart.resources.schools_app.features.users.UsersRepository
 import com.smart.resources.schools_app.sharedUi.HomeActivity
 
 
@@ -52,9 +56,20 @@ class LoginActivity : AppCompatActivity() {
             binding = this
         }
 
+
+        initComponents()
         setupConstraintLayoutHeight()
         setupViewModel()
         binding.schoolName.applyGradient(*defaultGradient())
+}
+
+    private fun initComponents() {
+        applicationContext.apply {
+            AndroidThreeTen.init(this)
+            SharedPrefHelper.init(this)
+            Logger.addLogAdapter(AndroidLogAdapter())
+            UsersRepository.init(this)
+        }
     }
 
 
@@ -91,16 +106,6 @@ class LoginActivity : AppCompatActivity() {
         binding.scrollView.showSnackBar(errorMsg)
     }
 
-    fun chooseSchool(view: View) {
-        if (isTaskRoot) {
-            binding.apply {
-                SchoolsActivity.newInstance(this@LoginActivity)
-            }
-            finish()
-        } else {
-            onBackPressed()
-        }
-    }
 
     override fun onBackPressed() {
         if (isTaskRoot) {

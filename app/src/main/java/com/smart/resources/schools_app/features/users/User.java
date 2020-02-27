@@ -1,26 +1,10 @@
 package com.smart.resources.schools_app.features.users;
 
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
-import androidx.room.Index;
 import androidx.room.PrimaryKey;
-
-import com.smart.resources.schools_app.features.schools.School;
-
 import org.jetbrains.annotations.NotNull;
 
-@Entity(
-        foreignKeys = {
-                @ForeignKey(
-                        entity = School.class,
-                        parentColumns = "schoolId",
-                        childColumns = "schoolId",
-                        onDelete = ForeignKey.CASCADE)
-        },
-        indices = {
-                @Index("schoolId")
-        }
-)
+@Entity()
 public class User {
     @NotNull
     @PrimaryKey
@@ -29,7 +13,6 @@ public class User {
     private String img;
     private String username;
     private int userType;
-    private String schoolId;
 
     @NotNull
     public String getUid() {
@@ -72,21 +55,13 @@ public class User {
         this.userType = userType;
     }
 
-    public String getSchoolId() {
-        return schoolId;
-    }
 
-    public void setSchoolId(String schoolId) {
-        this.schoolId = schoolId;
-    }
-
-    public User(@NotNull String uid, String accessToken, String img, String username, int userType, String schoolId) {
+    public User(@NotNull String uid, String accessToken, String img, String username, int userType) {
         this.uid = uid;
         this.accessToken = accessToken;
         this.img = img;
         this.username = username;
         this.userType = userType;
-        this.schoolId = schoolId;
     }
 
     @Override
@@ -97,7 +72,6 @@ public class User {
                 ", img='" + img + '\'' +
                 ", username='" + username + '\'' +
                 ", userType=" + userType +
-                ", schoolId=" + schoolId +
                 '}';
     }
 }

@@ -7,13 +7,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.extentions.withEngNums
-import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.profile.StudentInfoModel
 import com.smart.resources.schools_app.features.profile.TeacherInfoModel
 import com.smart.resources.schools_app.features.users.User
-import com.smart.resources.schools_app.features.schools.School
-import com.smart.resources.schools_app.features.schools.SchoolsRepository
 import com.smart.resources.schools_app.features.users.UsersRepository
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
@@ -25,7 +22,6 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     var onLogin: (() -> Unit)? = null
     var onLoginError: ((errorMsg: String) -> Unit)? = null
 
-    val school: School? = SchoolsRepository.instance.currentSchool
     val loginException = LoginException()
     val isTeacherLogging = MutableLiveData<Boolean>()
     val isStudentLogging = MutableLiveData<Boolean>()
@@ -97,18 +93,15 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
             person?.apply {
-                school?.let {s ->
                     UsersRepository.instance.insertCurrentUser(
                         User(
                             id,
                             result.data,
                             "",
                             name,
-                            if (isTeacher) 1 else 0,
-                            s.schoolId
-                        )
+                            if (isTeacher) 1 else 0
+                            )
                     )
-                }
             }
         }
     }

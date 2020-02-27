@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.adapters.setSpinnerList
-import com.smart.resources.schools_app.core.adapters.setTextFromDate
+import com.smart.resources.schools_app.core.bindingAdapters.setSpinnerList
+import com.smart.resources.schools_app.core.bindingAdapters.setTextFromDate
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.core.extentions.hide
 import com.smart.resources.schools_app.core.extentions.show
@@ -122,8 +122,14 @@ class AddExamFragment : Fragment(), PostListener {
                     UsersRepository.instance.getCurrentUser()
                 val teacherInfoModel= currentUser?.accessToken?.let { TeacherInfoModel.fromToken(it) }
                 teacherInfoModel?.apply {
-                    setSpinnerList(classAndSectionSpinner, classesInfo)
-                    setSpinnerList(examTypeSpinner, examType)
+                    setSpinnerList(
+                        classAndSectionSpinner,
+                        classesInfo
+                    )
+                    setSpinnerList(
+                        examTypeSpinner,
+                        examType
+                    )
                 }
 
                 dateField.setOnClickListener(::onDateClicked)
@@ -138,7 +144,10 @@ class AddExamFragment : Fragment(), PostListener {
                 onDateSet = { _, year, month, dayOfMonth ->
                     val localDateTime = LocalDateTime.of(year, month+1, dayOfMonth, 0, 0)
 
-                    setTextFromDate(dateField as TextView, localDateTime)
+                    setTextFromDate(
+                        dateField as TextView,
+                        localDateTime
+                    )
                     viewModel.postExamModel.date = localDateTime
                 }
 

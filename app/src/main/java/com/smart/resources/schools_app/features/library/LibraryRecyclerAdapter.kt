@@ -12,8 +12,6 @@ import com.smart.resources.schools_app.databinding.ItemLibraryBinding
 class LibraryRecyclerAdapter(private val listLib: List<LibraryModel>) : RecyclerView.Adapter<LibraryRecyclerAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(private val binding: ItemLibraryBinding) : RecyclerView.ViewHolder(binding.root) {
-
-
         fun bind(libraryModel: LibraryModel){
             binding.itemModel=libraryModel
         }
@@ -41,5 +39,4 @@ class LibraryRecyclerAdapter(private val listLib: List<LibraryModel>) : Recycler
                 .showSnackBar(it.context.getString(R.string.invalid_pdf_url))
         }
     }
-
 }

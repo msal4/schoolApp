@@ -13,9 +13,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.adapters.loadImageUrl
-import com.smart.resources.schools_app.core.adapters.setTextFromDate
-import com.smart.resources.schools_app.core.adapters.setSpinnerList
+import com.smart.resources.schools_app.core.bindingAdapters.loadImageUrl
+import com.smart.resources.schools_app.core.bindingAdapters.setTextFromDate
+import com.smart.resources.schools_app.core.bindingAdapters.setSpinnerList
 import com.smart.resources.schools_app.core.extentions.getImage
 import com.smart.resources.schools_app.core.myTypes.PostListener
 import com.smart.resources.schools_app.core.extentions.*
@@ -109,11 +109,14 @@ class AddHomeworkFragment : Fragment(), PostListener {
     ) {
         binding = FragmentAddHomeworkBinding
             .inflate(inflater, container, false).apply {
-                val currentUser= UsersRepository.instance?.getCurrentUser()
+                val currentUser= UsersRepository.instance.getCurrentUser()
                 val teacherInfoModel= currentUser?.accessToken?.let { TeacherInfoModel.fromToken(it) }
                 teacherInfoModel?.classesInfo
                     ?.let {
-                        setSpinnerList(classAndSectionSpinner, it)
+                        setSpinnerList(
+                            classAndSectionSpinner,
+                            it
+                        )
                     }
 
                 dateField.setOnClickListener(::onDateClicked)
@@ -133,7 +136,10 @@ class AddHomeworkFragment : Fragment(), PostListener {
                 saveAsCompressedFile(it)
 
                 binding.apply {
-                    loadImageUrl(homeworkImage, it.toString())
+                    loadImageUrl(
+                        homeworkImage,
+                        it.toString()
+                    )
                     homeworkImageCard.visibility = View.VISIBLE
                     addImageIcon.imageTintList =
                         context?.let { c ->
@@ -163,7 +169,10 @@ class AddHomeworkFragment : Fragment(), PostListener {
                 onDateSet = { _, year, month, dayOfMonth ->
                     val localDateTime = LocalDateTime.of(year, month+1, dayOfMonth, 0, 0)
 
-                    setTextFromDate(dateField as TextView, localDateTime)
+                    setTextFromDate(
+                        dateField as TextView,
+                        localDateTime
+                    )
                     viewModel.postHomeworkModel.date = localDateTime
                 }
 

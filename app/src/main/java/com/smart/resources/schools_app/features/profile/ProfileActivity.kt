@@ -7,13 +7,12 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.adapters.loadImageUrl
-import com.smart.resources.schools_app.core.adapters.setAccountImage
+import com.smart.resources.schools_app.core.bindingAdapters.loadImageUrl
+import com.smart.resources.schools_app.core.bindingAdapters.setAccountImage
 import com.smart.resources.schools_app.core.extentions.GET_IMAGE_REQUEST
 import com.smart.resources.schools_app.core.extentions.getImage
 import com.smart.resources.schools_app.core.extentions.selectImage
 import com.smart.resources.schools_app.databinding.ActivityProfileBinding
-import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.users.UsersDialog
 import com.smart.resources.schools_app.features.users.UsersRepository
 

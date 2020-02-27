@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.databinding.DataBindingUtil
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.adapters.loadImageUrl
+import com.smart.resources.schools_app.core.bindingAdapters.loadImageUrl
 import com.smart.resources.schools_app.databinding.ActivityImageViewerBinding
 
 
@@ -42,7 +42,10 @@ class ImageViewerActivity : AppCompatActivity() {
         binding=  DataBindingUtil.setContentView(this, R.layout.activity_image_viewer)
 
         val url= intent.getStringExtra(EXTRA_IMAGE_URL)
-        loadImageUrl(binding.photoView, url)
+        loadImageUrl(
+            binding.photoView,
+            url
+        )
     }
 
 }

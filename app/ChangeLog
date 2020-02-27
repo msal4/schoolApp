@@ -4,6 +4,7 @@
 2- changed image loading icon
 3- changed colors, added some gradients
 4- make add rating bottom sheet scrollable, handle keyboard open
+5- fixed memory leaks on homework and exams !!!? not yet completed
 
 1.5.0:
 1- fixed month value in date fetched from dialog

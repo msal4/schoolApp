@@ -16,13 +16,13 @@ class LibraryViewModel(application: Application) : AndroidViewModel(application)
     private val books: MutableLiveData<List<LibraryModel>>
             by lazy { MutableLiveData<List<LibraryModel>>() }
 
-
     fun getBooks():
             LiveData<List<LibraryModel>> {
         fetchHomework()
 
         return books
     }
+
 
     private fun fetchHomework(){
         viewModelScope.launch {
@@ -45,8 +45,6 @@ class LibraryViewModel(application: Application) : AndroidViewModel(application)
                     is ConnectionError -> setBodyError(c.getString(R.string.connection_error))
                 }
             }
-
-
         }
     }
 }

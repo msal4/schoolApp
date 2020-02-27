@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.observe
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.adapters.setSpinnerList
+import com.smart.resources.schools_app.core.bindingAdapters.setSpinnerList
 import com.smart.resources.schools_app.core.myTypes.PostListener
 import com.smart.resources.schools_app.core.extentions.hide
 import com.smart.resources.schools_app.core.extentions.show
@@ -69,7 +69,10 @@ class AddRatingFragment : Fragment(), MaterialSpinner.OnItemSelectedListener, Po
                 val currentUser= UsersRepository.instance.getCurrentUser()
                 val teacherInfoModel= currentUser?.accessToken?.let { TeacherInfoModel.fromToken(it) }
                 teacherInfoModel?.let {
-                    setSpinnerList(classAndSectionSpinner, it.classesInfo)
+                    setSpinnerList(
+                        classAndSectionSpinner,
+                        it.classesInfo
+                    )
                     classAndSectionSpinner.onItemSelectedListener = this@AddRatingFragment
                 }
 

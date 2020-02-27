@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.orhanobut.logger.Logger
-import com.smart.resources.schools_app.core.adapters.setTextFromDate
+import com.smart.resources.schools_app.core.bindingAdapters.setTextFromDate
 import com.smart.resources.schools_app.databinding.BottomSheetAddRatingBinding
 import com.smart.resources.schools_app.features.rating.RatingModel
 import com.smart.resources.schools_app.sharedUi.DatePickerFragment
@@ -69,7 +69,10 @@ class AddRatingBottomSheet : BottomSheetDialogFragment() {
                 onDateSet = { _, year, month, dayOfMonth ->
                     val localDateTime = LocalDateTime
                         .of(year, month+1, dayOfMonth, 0, 0)
-                    setTextFromDate(dateField as TextView, localDateTime)
+                    setTextFromDate(
+                        dateField as TextView,
+                        localDateTime
+                    )
                 }
 
                 this@AddRatingBottomSheet.fragmentManager?.let { show(it, "") }

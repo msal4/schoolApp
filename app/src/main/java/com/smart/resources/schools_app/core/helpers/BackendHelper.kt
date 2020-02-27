@@ -13,7 +13,6 @@ import com.smart.resources.schools_app.features.notification.NotificationsDao
 import com.smart.resources.schools_app.features.users.UsersRepository
 import com.smart.resources.schools_app.features.rating.RatingDao
 import com.smart.resources.schools_app.features.schedule.ScheduleDao
-import com.smart.resources.schools_app.features.schools.SchoolsRepository
 import com.smart.resources.schools_app.features.students.StudentDao
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -23,8 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object BackendHelper {
 
-  private  val SCHOOL_NAME get() = SchoolsRepository.instance.currentSchool?.baseUrl
-  private  val API_BASE_URL get() =  "http://$SCHOOL_NAME.srittwo.me/api/"
+  private  val API_BASE_URL get() =  "http://smart.srittwo.me/api/"
 //    private  val API_BASE_URL get() =  "https://api.androidhive.info/json/"
     val gson: Gson = GsonBuilder()
         .registerTypeAdapter(
