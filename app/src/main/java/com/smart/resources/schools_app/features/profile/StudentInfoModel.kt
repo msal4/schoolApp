@@ -13,11 +13,10 @@ class StudentInfoModel(
     gender: String,
     dob: LocalDateTime,
     @SerializedName("idStudent")
-    override val id: String
-) : PersonModel(name, email, phone, gender, dob) {
-
-
-
+    override val id: String,
+    schoolName: String,
+    schoolImage: String
+) : PersonModel(name, email, phone, gender, dob, schoolName, schoolImage) {
 
     override val classesAsString: String
         get() = classInfo.getClassSection

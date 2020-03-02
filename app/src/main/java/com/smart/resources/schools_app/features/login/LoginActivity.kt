@@ -1,14 +1,10 @@
 package com.smart.resources.schools_app.features.login
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityOptionsCompat
-import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.jakewharton.threetenabp.AndroidThreeTen
@@ -29,23 +25,12 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var viewModel: LoginViewModel
 
     companion object Factory {
+        private const val EXTRA_MULTI_ACCOUNT= "extraMultiAccount"
 
-        fun newInstance(context: Context, clearPrevActivities: Boolean = false) {
+        fun newInstance(context: Context, isMultiAccount: Boolean = false) {
             Intent(context, LoginActivity::class.java).apply {
-                if (clearPrevActivities) {
-                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-
+                putExtra(EXTRA_MULTI_ACCOUNT, isMultiAccount)
                 context.startActivity(this)
-            }
-        }
-
-        fun newInstanceWithTrans(activity: Activity, vararg pairs: Pair<View, String>) {
-            Intent(activity, LoginActivity::class.java).apply {
-                val ao =
-                    ActivityOptionsCompat.makeSceneTransitionAnimation(activity, *pairs)
-                activity.startActivity(this, ao.toBundle())
             }
         }
     }
@@ -58,6 +43,7 @@ class LoginActivity : AppCompatActivity() {
 
 
         initComponents()
+        selectNavigation()
         setupConstraintLayoutHeight()
         setupViewModel()
         binding.schoolName.applyGradient(*defaultGradient())
@@ -69,6 +55,14 @@ class LoginActivity : AppCompatActivity() {
             SharedPrefHelper.init(this)
             Logger.addLogAdapter(AndroidLogAdapter())
             UsersRepository.init(this)
+        }
+    }
+
+
+    private fun selectNavigation() {
+        if (!intent.getBooleanExtra(EXTRA_MULTI_ACCOUNT, false) &&
+            !SharedPrefHelper.instance.currentUserId.isNullOrBlank()) {
+            HomeActivity.newInstance(this)
         }
     }
 

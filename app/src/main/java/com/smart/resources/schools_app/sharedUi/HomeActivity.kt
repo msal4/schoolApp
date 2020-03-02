@@ -7,13 +7,19 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.google.gson.JsonObject
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.bindingAdapters.setAccountImage
+import com.smart.resources.schools_app.core.extentions.decodeToken
 import com.smart.resources.schools_app.databinding.ActivityHomeBinding
 import com.smart.resources.schools_app.features.profile.ProfileActivity
 import com.smart.resources.schools_app.core.myTypes.Section
 import com.smart.resources.schools_app.core.myTypes.UserType
+import com.smart.resources.schools_app.features.profile.PersonModel
+import com.smart.resources.schools_app.features.profile.StudentInfoModel
+import com.smart.resources.schools_app.features.profile.TeacherInfoModel
 import com.smart.resources.schools_app.features.users.UsersRepository
+import org.json.JSONObject
 import java.net.URI
 
 
@@ -30,9 +36,8 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= DataBindingUtil.setContentView(this, R.layout.activity_home)
-        setUserType()
 
-        loadProfileImage()
+        refreshUi()
     }
 
     private fun setUserType() {
@@ -47,9 +52,16 @@ class HomeActivity : AppCompatActivity() {
                 URI.create(it).toString()
             )
         }
-
-
     }
+
+    private fun setSchoolName(){
+        UsersRepository.instance.getCurrentUser()?.apply {
+                JSONObject(accessToken.decodeToken()).getString("schoolName").apply {
+                    binding.schoolName.text= this
+                }
+        }
+    }
+
 
     fun imageClick(view: View){
         ProfileActivity.newInstance(
@@ -70,8 +82,9 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun refreshUi() {
-        loadProfileImage()
         setUserType()
+        loadProfileImage()
+        setSchoolName()
     }
 
     fun navigate(view: View) {

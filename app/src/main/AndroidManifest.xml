@@ -33,6 +33,7 @@
         <activity
             android:name=".features.login.LoginActivity"
             android:screenOrientation="portrait"
+            android:noHistory="true"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

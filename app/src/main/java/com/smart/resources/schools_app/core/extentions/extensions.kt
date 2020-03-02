@@ -6,6 +6,7 @@ import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.text.BidiFormatter
 import android.util.Base64
 import androidx.lifecycle.MutableLiveData
 import okhttp3.MediaType
@@ -64,3 +65,5 @@ fun File.asBodyPart(fieldName:String) :MultipartBody.Part?{
 fun <T> MutableLiveData<T>.notifyObservers() {
     this.value = this.value
 }
+
+fun String.toUnicodeString(): String = BidiFormatter.getInstance().unicodeWrap(this)

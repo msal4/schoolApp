@@ -1,15 +1,15 @@
 package com.smart.resources.schools_app.features.profile
 
 import com.smart.resources.schools_app.core.helpers.BackendHelper
-import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.core.extentions.decodeToken
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.Period
 
 abstract class PersonModel(
-    val name: String, val email: String, val phone: String,
-    val gender: String, private val dob: LocalDateTime
-) {
+    val name: String, val email: String?, val phone: String,
+    val gender: String, private val dob: LocalDateTime,
+    val schoolName: String,
+    val schoolImage: String) {
 
     val age: String
         get() = Period.between(
@@ -20,8 +20,7 @@ abstract class PersonModel(
     abstract val classesAsString: String?
     abstract val id: String
 
-
-    val isEmailEmpty:Boolean get() = email.isBlank()
+    val isEmailEmpty:Boolean get() = email.isNullOrBlank()
 
     companion object Factory {
         fun <T : PersonModel> fromToken(classType: Class<T>,accessToken: String): T? {

@@ -1,5 +1,7 @@
 package com.smart.resources.schools_app.features.users
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -43,7 +45,7 @@ class UsersDialog : DialogFragment(), CanLogout,
 
     override fun onStart() {
         super.onStart()
-        val width = (resources.displayMetrics.widthPixels * 0.90).toInt()
+        val width = (resources.displayMetrics.widthPixels * 0.80).toInt()
         dialog?.window?.setLayout(width, WRAP_CONTENT)
     }
 
@@ -51,7 +53,12 @@ class UsersDialog : DialogFragment(), CanLogout,
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        dialog?.apply {
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            window?.setBackgroundDrawable( ColorDrawable(Color.TRANSPARENT))
+        }
+
 
         binding = DialogAccountsBinding.inflate(inflater, container, false)
         setupUsers()
@@ -65,7 +72,7 @@ class UsersDialog : DialogFragment(), CanLogout,
             if (adapter.itemCount >= MAX_ACCOUNTS) {
                 binding.rootLayout.showSnackBar(getString(R.string.max_accounts_error))
             } else {
-                context?.let { LoginActivity.newInstance(it) }
+                context?.let { LoginActivity.newInstance(it, true) }
             }
         }
 

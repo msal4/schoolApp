@@ -273,7 +273,7 @@
 
             <TextView
                 android:id="@+id/subjects_spinner"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="24dp"
@@ -291,21 +291,61 @@
                 tools:text="رياضيات ,انكليزي" />
 
 
+            <LinearLayout
+                android:id="@+id/schoolCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/background_outline"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingStart="16dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profileImage">
+
+                <ImageView
+                    android:id="@+id/schoolImage"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_marginEnd="16dp"
+                    android:srcUrl="@{itemModel.schoolImage}"
+                    tools:src="@drawable/logo" />
+
+                <TextView
+                    android:id="@+id/schoolNameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/monadi"
+                    android:text="@{itemModel.schoolName}"
+                    android:textSize="24sp"
+                    tools:text="مدرسة المصادر الذكية" />
+
+            </LinearLayout>
+
+
+
+
             <View
                 android:id="@+id/chainHolder"
                 android:layout_width="1dp"
                 android:layout_height="1dp"
                 app:layout_constraintEnd_toEndOf="@+id/profileImage"
                 app:layout_constraintStart_toStartOf="@+id/profileImage"
-                app:layout_constraintTop_toBottomOf="@+id/profileImage"
+                app:layout_constraintTop_toBottomOf="@+id/schoolCard"
                 app:layout_constraintBottom_toTopOf="@+id/teacherResponsibility"
                 app:layout_constraintVertical_chainStyle="spread"/>
+
 
             <TextView
                 android:id="@+id/teacherResponsibility"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="24dp"
                 android:text="@{teacherModel.responsibility}"
                 android:textColor="@android:color/black"
@@ -321,7 +361,7 @@
 
             <TextView
                 android:id="@+id/studentSection"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="@dimen/profile_attribute_margin"
@@ -373,13 +413,14 @@
 
             <TextView
                 android:id="@+id/studentEmail"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="32dp"
                 android:text="@{itemModel.email}"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/profileAttributeSize"
+                android:textAlignment="viewEnd"
                 android:visibility="@{itemModel.emailEmpty? View.GONE: View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
