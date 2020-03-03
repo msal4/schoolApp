@@ -19,19 +19,11 @@ class SharedPrefHelper private constructor(context: Context) {
                 mSharedPreferences.edit().putString(USER_ID, uid).apply()
         }
 
-    var currentSchoolId:String?
-        get() = mSharedPreferences.getString(SCHOOL_ID, "")
-    set(sid){
-        mSharedPreferences.edit().putString(SCHOOL_ID, sid).apply()
-    }
-
 
     companion object {
         lateinit var instance: SharedPrefHelper
         private const val PREF_NAME = "mySettingsPref"
         private const val USER_ID = "userID"
-        private const val SCHOOL_ID= "schoolId"
-
 
         fun init(context: Context) {
             instance =

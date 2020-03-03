@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object BackendHelper {
 
   private  val API_BASE_URL get() =  "http://directorates.srittwo.me/api/"
-//    private  val API_BASE_URL get() =  "https://api.androidhive.info/json/"
+//  private  val API_BASE_URL get() =  "https://api.androidhive.info/json/"
     val gson: Gson = GsonBuilder()
         .registerTypeAdapter(
             LocalDateTime::class.java,

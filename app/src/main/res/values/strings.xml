@@ -79,6 +79,5 @@
     <string name="no_schools">لا توجد مدارس</string>
     <string name="schoolName">ابحث عن المدرسة</string>
     <string name="logo_trans">logoTransition</string>
-    <string name="school_name_trans">schoolNameTransition</string>
 
 </resources>
