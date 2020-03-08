@@ -74,7 +74,10 @@ class ScheduleFragment : Fragment() {
     }
 
     private fun mapWeekRecyclerData(result: List<List<String?>>) =
-        (result)
+        (result).run {
+            val daysPerWeek= 7
+            if(size > daysPerWeek) subList(0, daysPerWeek) else this
+        }
             .mapIndexed { index, list ->
                 ScheduleDayModel(
                     WeekDays.getDayName(index),

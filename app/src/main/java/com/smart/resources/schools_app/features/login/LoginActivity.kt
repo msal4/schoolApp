@@ -64,7 +64,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-
     override fun onEnterAnimationComplete() {
         super.onEnterAnimationComplete()
         binding.logo.transitionName= ""

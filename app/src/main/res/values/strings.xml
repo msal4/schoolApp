@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">المدارس الذكية</string>
-    <string name="school_name">نظام المدارس للمصادر الذكية</string>  <!-- TODO change2: app name && school name-->
     <string name="password">كلمة السر</string>
     <string name="phone_number">رقم الهاتف</string>
     <string name="login_as_teacher">تسجيل الدخول كمدرس</string>

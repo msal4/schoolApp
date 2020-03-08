@@ -57,7 +57,7 @@
                 android:shadowDx="2"
                 android:shadowDy="8"
                 android:shadowRadius="16"
-                android:text="@string/school_name"
+                android:text="@string/app_name"
                 android:textColor="@color/colorPrimary"
                 android:textSize="38sp"
                 android:textStyle="bold"
