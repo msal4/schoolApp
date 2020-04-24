@@ -39,6 +39,7 @@
     <string name="no_schedule">لا يوجد جدول</string>
     <string name="add_homework">اضافة واجب</string>
     <string name="add_exam">اضافة امتحان</string>
+    <string name="add_mark">اضافة درجة</string>
     <string name="add_absence">اضافة غياب</string>
     <string name="username">اسم الطالب</string>
     <string name="profile">الحساب</string>

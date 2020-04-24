@@ -20,6 +20,7 @@ import com.smart.resources.schools_app.features.profile.StudentInfoModel
 import com.smart.resources.schools_app.features.profile.TeacherInfoModel
 import com.smart.resources.schools_app.features.users.UsersRepository
 import org.json.JSONObject
+import java.lang.Exception
 import java.net.URI
 
 
@@ -56,9 +57,13 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setSchoolName(){
         UsersRepository.instance.getCurrentUser()?.apply {
+            try {
                 JSONObject(accessToken.decodeToken()).getString("schoolName").apply {
-                    binding.schoolName.text= this
+                    binding.schoolName.text = this
                 }
+            }catch (e:Exception){
+                binding.schoolName.text= ""
+            }
         }
     }
 

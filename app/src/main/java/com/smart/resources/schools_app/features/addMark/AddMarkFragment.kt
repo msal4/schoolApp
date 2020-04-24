@@ -69,7 +69,7 @@ class AddMarkFragment : Fragment(), CanLogout {
 
         setupViewModel(examId1)
         (activity as SectionActivity).apply {
-            setCustomTitle(R.string.add_exam)
+            setCustomTitle(R.string.add_mark)
 
             progressBar = getToolbarProgressBar()
             onBackPressedDispatcher

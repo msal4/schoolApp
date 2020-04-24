@@ -36,7 +36,7 @@ class AddMarkViewModel(application: Application) : AndroidViewModel(application)
                 when (result) {
                     is Success -> {
                         if (result.data.isNullOrEmpty())
-                            setBodyError(c.getString(R.string.no_advertisements))
+                            setBodyError(c.getString(R.string.no_students))
                         else {
                             setLoading(false)
                             exams.value = result.data
