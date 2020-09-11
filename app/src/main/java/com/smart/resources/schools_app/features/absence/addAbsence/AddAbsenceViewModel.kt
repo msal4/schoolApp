@@ -42,7 +42,7 @@ class AddAbsenceViewModel(application: Application, private val postListener: Po
 
         Logger.i("absence model: $postAbsenceModel")
         val studentsResult =
-            viewModelScope.async { BackendHelper.studentDao.getStudentsByClass(classId) }
+            viewModelScope.async { BackendHelper.studentService.getStudentsByClass(classId) }
                 .toMyResult()
 
         when (studentsResult) {

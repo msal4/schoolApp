@@ -11,7 +11,7 @@
 
         <variable
             name="itemModel"
-            type="com.smart.resources.schools_app.features.homework.getHomeworkAnswers.HomeworkAnswerModel" />
+            type="com.smart.resources.schools_app.features.homeworkAnswer.getHomeworkAnswers.HomeworkAnswerModel" />
     </data>
 
     <ru.rhanza.constraintexpandablelayout.ExpandableLayout

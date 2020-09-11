@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.homework.addHomeworkAnswer
+package com.smart.resources.schools_app.features.homeworkAnswer.addHomeworkAnswer
 
 import android.app.Activity
 import android.content.Intent

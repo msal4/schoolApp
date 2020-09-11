@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey;
 import org.jetbrains.annotations.NotNull;
 
 @Entity()
-public class User {
+public class UserAccount {
     @NotNull
     @PrimaryKey
     private String uid;
@@ -62,7 +62,7 @@ public class User {
     }
 
 
-    public User(@NotNull String uid, String accessToken, String img, String username, int userType) {
+    public UserAccount(@NotNull String uid, String accessToken, String img, String username, int userType) {
         this.uid = uid;
         this.accessToken = accessToken;
         this.img = img;

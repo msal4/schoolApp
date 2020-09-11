@@ -5,7 +5,7 @@ import org.threeten.bp.LocalDateTime
 
 
 
-class StudentInfoModel(
+class StudentModel(
     val classInfo: ClassInfoModel,
     name: String,
     email: String,
@@ -14,16 +14,17 @@ class StudentInfoModel(
     dob: LocalDateTime,
     @SerializedName("idStudent")
     override val id: String,
+    schoolId: String,
     schoolName: String,
     schoolImage: String
-) : PersonModel(name, email, phone, gender, dob, schoolName, schoolImage) {
+) : UserModel(name, email, phone, gender, dob,schoolId, schoolName, schoolImage) {
 
     override val classesAsString: String
         get() = classInfo.getClassSection
 
     companion object {
-        fun fromToken(accessToken: String): StudentInfoModel? {
-            return fromToken(StudentInfoModel::class.java, accessToken)
+        fun fromToken(accessToken: String): StudentModel? {
+            return fromToken(StudentModel::class.java, accessToken)
         }
     }
 }

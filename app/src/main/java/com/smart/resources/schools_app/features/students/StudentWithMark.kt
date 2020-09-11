@@ -3,7 +3,7 @@ package com.smart.resources.schools_app.features.students
 import android.os.Parcel
 import android.os.Parcelable
 
-class Student(
+class StudentWithMark(
     val mark:Int?, // TODO: remove mark !!!!
     val idStudent: String,
     val name: String

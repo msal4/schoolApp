@@ -12,11 +12,11 @@
 
         <variable
             name="itemModel"
-            type="com.smart.resources.schools_app.features.profile.PersonModel" />
+            type="com.smart.resources.schools_app.features.profile.UserModel" />
 
         <variable
             name="teacherModel"
-            type="com.smart.resources.schools_app.features.profile.TeacherInfoModel" />
+            type="com.smart.resources.schools_app.features.profile.TeacherModel" />
 
         <variable
             name="model"

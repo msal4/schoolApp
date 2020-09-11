@@ -30,7 +30,7 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
 
     val certificateState = liveData {
         emit(CertificateState.UNKNOWN)
-        val userId = UsersRepository.instance.getCurrentUser()?.originalId
+        val userId = UsersRepository.instance.getCurrentUserAccount()?.originalId
         if (userId == null) {
             emit(CertificateState.UNAVAILABLE)
             return@liveData

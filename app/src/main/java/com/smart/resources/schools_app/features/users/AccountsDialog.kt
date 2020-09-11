@@ -23,10 +23,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class UsersDialog : DialogFragment(), CanLogout,
-    UsersRecyclerAdapter.OnItemClickListener {
+class AccountsDialog : DialogFragment(), CanLogout,
+    AccountsRecyclerAdapter.OnItemClickListener {
     private lateinit var binding: DialogAccountsBinding
-    private lateinit var adapter: UsersRecyclerAdapter
+    private lateinit var adapter: AccountsRecyclerAdapter
     private val accountsManager = UsersRepository.instance
     private var onAccountChanged: (() -> Unit)? = null
 
@@ -37,9 +37,9 @@ class UsersDialog : DialogFragment(), CanLogout,
     companion object {
         private const val MAX_ACCOUNTS = 6
 
-        fun newInstance(): UsersDialog {
+        fun newInstance(): AccountsDialog {
 
-            return UsersDialog()
+            return AccountsDialog()
         }
     }
 
@@ -84,7 +84,7 @@ class UsersDialog : DialogFragment(), CanLogout,
             val users = accountsManager.getUsers()?.toMutableList()
             withContext(Main) {
                 adapter =
-                    UsersRecyclerAdapter(users, this@UsersDialog)
+                    AccountsRecyclerAdapter(users, this@AccountsDialog)
                 binding.accountsRecycler.adapter = adapter
             }
         }
@@ -92,7 +92,7 @@ class UsersDialog : DialogFragment(), CanLogout,
 
 
     private fun onSwipe(viewHolder: RecyclerView.ViewHolder) {
-        if (viewHolder is UsersRecyclerAdapter.MyViewHolder) {
+        if (viewHolder is AccountsRecyclerAdapter.MyViewHolder) {
             viewHolder.binding.itemModel?.uid?.let {
                 accountsManager.deleteUser(it)
                 adapter.removeItem(viewHolder.adapterPosition)
@@ -101,17 +101,17 @@ class UsersDialog : DialogFragment(), CanLogout,
         }
     }
 
-    private fun logoutIfCurrentUser(viewHolder: UsersRecyclerAdapter.MyViewHolder) {
+    private fun logoutIfCurrentUser(viewHolder: AccountsRecyclerAdapter.MyViewHolder) {
         lifecycleScope.launch {
-            if (viewHolder.binding.itemModel?.uid == accountsManager.getCurrentUser()?.uid) {
+            if (viewHolder.binding.itemModel?.uid == accountsManager.getCurrentUserAccount()?.uid) {
                 withContext(Main) { context?.let { logout(it) } }
             }
         }
     }
 
-    override fun onItemClick(user: User) {
-        if (user != accountsManager.getCurrentUser()) {
-            UsersRepository.instance.setCurrentUser(user)
+    override fun onItemClick(UserAccount: UserAccount) {
+        if (UserAccount != accountsManager.getCurrentUserAccount()) {
+            UsersRepository.instance.setCurrentUser(UserAccount)
             onAccountChanged?.invoke()
         }
 

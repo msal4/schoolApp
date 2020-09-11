@@ -6,7 +6,7 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.helpers.BackendHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.login.CanLogout
-import com.smart.resources.schools_app.features.students.Student
+import com.smart.resources.schools_app.features.students.StudentWithMark
 import kotlinx.coroutines.*
 
 
@@ -14,13 +14,13 @@ class AddMarkViewModel(application: Application) : AndroidViewModel(application)
     private val c= application.applicationContext
     val listState = ListState()
 
-    private val exams: MutableLiveData<List<Student>>
-            by lazy { MutableLiveData<List<Student>>()
+    private val exams: MutableLiveData<List<StudentWithMark>>
+            by lazy { MutableLiveData<List<StudentWithMark>>()
             }
 
 
     fun getStudents(examId: Int):
-            LiveData<List<Student>> {
+            LiveData<List<StudentWithMark>> {
 
         fetchStudents(examId)
         return exams

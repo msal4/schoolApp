@@ -8,9 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.extentions.withEngNums
 import com.smart.resources.schools_app.core.myTypes.*
-import com.smart.resources.schools_app.features.profile.StudentInfoModel
-import com.smart.resources.schools_app.features.profile.TeacherInfoModel
-import com.smart.resources.schools_app.features.users.User
+import com.smart.resources.schools_app.features.profile.StudentModel
+import com.smart.resources.schools_app.features.profile.TeacherModel
+import com.smart.resources.schools_app.features.users.UserAccount
 import com.smart.resources.schools_app.features.users.UsersRepository
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
@@ -83,24 +83,24 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             var id= ""
 
             val person= if (isTeacher) {
-                TeacherInfoModel.fromToken(it)?.apply {
+                TeacherModel.fromToken(it)?.apply {
                     id= "t${this.id}"
                 }
             }
             else {
-                StudentInfoModel.fromToken(it)?.apply {
+                StudentModel.fromToken(it)?.apply {
                     id= "s${this.id}"
                 }
             }
             person?.apply {
                     UsersRepository.instance.insertCurrentUser(
-                        User(
+                        UserAccount(
                             id,
                             result.data,
                             "",
                             name,
                             if (isTeacher) 1 else 0
-                            )
+                        )
                     )
             }
         }

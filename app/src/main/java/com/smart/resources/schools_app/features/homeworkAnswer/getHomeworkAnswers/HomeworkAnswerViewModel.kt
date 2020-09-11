@@ -1,15 +1,12 @@
-package com.smart.resources.schools_app.features.homework.getHomeworkAnswers
+package com.smart.resources.schools_app.features.homeworkAnswer.getHomeworkAnswers
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
-import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.login.CanLogout
-import com.smart.resources.schools_app.features.users.UsersRepository
 import org.threeten.bp.LocalDateTime
-import java.net.HttpURLConnection
 
 
 class HomeworkAnswerViewModel(application: Application) : AndroidViewModel(application), CanLogout {

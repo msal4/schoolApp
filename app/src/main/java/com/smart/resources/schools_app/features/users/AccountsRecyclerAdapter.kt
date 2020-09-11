@@ -9,13 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ItemAccountBinding
 
-class UsersRecyclerAdapter(private val users:MutableList<User>?, private val listener: OnItemClickListener) : RecyclerView.Adapter<UsersRecyclerAdapter.MyViewHolder>(){
+class AccountsRecyclerAdapter(private val UserAccounts:MutableList<UserAccount>?, private val listener: OnItemClickListener) : RecyclerView.Adapter<AccountsRecyclerAdapter.MyViewHolder>(){
     interface OnItemClickListener {
-        fun onItemClick(user: User)
+        fun onItemClick(UserAccount: UserAccount)
     }
 
     inner class MyViewHolder(val binding: ItemAccountBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(accountModel: User) {
+        fun bind(accountModel: UserAccount) {
 
             binding.itemModel = accountModel
 
@@ -23,7 +23,7 @@ class UsersRecyclerAdapter(private val users:MutableList<User>?, private val lis
     }
 
     fun removeItem(position: Int){
-        users?.removeAt(position)
+        UserAccounts?.removeAt(position)
         notifyItemRemoved(position)
     }
 
@@ -37,18 +37,18 @@ class UsersRecyclerAdapter(private val users:MutableList<User>?, private val lis
         return MyViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = users?.size?:0
+    override fun getItemCount(): Int = UserAccounts?.size?:0
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        users?.get(position)?.let { user ->
+        UserAccounts?.get(position)?.let { user ->
 
             holder.itemView.setOnClickListener{
                 listener.onItemClick(user)
             }
             holder.bind(user)
 
-            if(user.uid== UsersRepository.instance.getCurrentUser()?.uid){
+            if(user.uid== UsersRepository.instance.getCurrentUserAccount()?.uid){
 
                 holder.binding.profileImage.apply {
                     borderColor= ContextCompat.getColor(holder.itemView.context, R.color.green)

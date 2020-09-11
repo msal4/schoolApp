@@ -34,7 +34,7 @@ class AddRatingViewModel(application: Application, private val postListener: Pos
         listState.setLoading(true)
 
         val studentsResult =
-            viewModelScope.async { BackendHelper.studentDao.getStudentsByClass(classId) }
+            viewModelScope.async { BackendHelper.studentService.getStudentsByClass(classId) }
                 .toMyResult()
         when (studentsResult) {
             is Success -> {

@@ -1,0 +1,7 @@
+student UserAccount
+phone: 770332233
+password: 12334
+================
+teacher
+phone: +9640
+password: 12345

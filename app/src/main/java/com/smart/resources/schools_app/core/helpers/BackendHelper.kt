@@ -14,7 +14,7 @@ import com.smart.resources.schools_app.features.notification.NotificationsDao
 import com.smart.resources.schools_app.features.profile.certificate.CertificateService
 import com.smart.resources.schools_app.features.rating.RatingDao
 import com.smart.resources.schools_app.features.schedule.ScheduleDao
-import com.smart.resources.schools_app.features.students.StudentDao
+import com.smart.resources.schools_app.features.students.StudentService
 import com.smart.resources.schools_app.features.users.UsersRepository
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -64,7 +64,7 @@ object BackendHelper {
         addInterceptor(
             Interceptor { chain ->
                 val token =
-                    UsersRepository.instance.getCurrentUser()?.accessToken
+                    UsersRepository.instance.getCurrentUserAccount()?.accessToken
                 val newRequest = chain.request().newBuilder()
                     .addHeader("Authorization", "Baerer $token")
                     .build()
@@ -83,6 +83,6 @@ object BackendHelper {
     val advertisingDao: AdvertisingDao get() =  retrofitWithAuth.create(AdvertisingDao::class.java)
     val scheduleDao: ScheduleDao get() =  retrofitWithAuth.create(ScheduleDao::class.java)
     val ratingDao: RatingDao get() =  retrofitWithAuth.create(RatingDao::class.java)
-    val studentDao: StudentDao get() =  retrofitWithAuth.create(StudentDao::class.java)
+    val studentService: StudentService get() =  retrofitWithAuth.create(StudentService::class.java)
     val accountDao: AccountDao get() =  retrofit.create(AccountDao::class.java)
 }

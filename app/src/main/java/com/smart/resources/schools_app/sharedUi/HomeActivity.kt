@@ -39,11 +39,11 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setUserType() {
         binding.userType =
-            if (UsersRepository.instance.getCurrentUser()?.userType == 0) UserType.STUDENT else UserType.TEACHER
+            if (UsersRepository.instance.getCurrentUserAccount()?.userType == 0) UserType.STUDENT else UserType.TEACHER
     }
 
     private fun loadProfileImage() {
-        UsersRepository.instance.getCurrentUser()?.img?.let {
+        UsersRepository.instance.getCurrentUserAccount()?.img?.let {
             setAccountImage(
                 binding.profileImage,
                 URI.create(it).toString()
@@ -52,7 +52,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setSchoolName(){
-        UsersRepository.instance.getCurrentUser()?.apply {
+        UsersRepository.instance.getCurrentUserAccount()?.apply {
             try {
                 JSONObject(accessToken.decodeToken()).getString("schoolName").apply {
                     binding.schoolName.text = this

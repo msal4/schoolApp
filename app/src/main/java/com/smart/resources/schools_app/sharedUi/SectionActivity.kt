@@ -57,7 +57,7 @@ class SectionActivity : AppCompatActivity() {
     }
 
     private fun createFragment() {
-        val isStudent= UsersRepository.instance.getCurrentUser()?.userType == 0
+        val isStudent= UsersRepository.instance.getCurrentUserAccount()?.userType == 0
 
         supportFragmentManager.apply {
             when(intent.getSerializableExtra(EXTRA_SECTION) as Section){

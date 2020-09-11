@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.homework.getHomeworkAnswers
+package com.smart.resources.schools_app.features.homeworkAnswer.getHomeworkAnswers
 
 import org.threeten.bp.LocalDateTime
 

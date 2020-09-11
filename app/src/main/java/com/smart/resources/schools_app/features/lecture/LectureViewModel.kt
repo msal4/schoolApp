@@ -7,6 +7,7 @@ import androidx.lifecycle.liveData
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.login.CanLogout
+import com.smart.resources.schools_app.features.profile.StudentModel
 import com.smart.resources.schools_app.features.users.UsersRepository
 import java.net.HttpURLConnection
 
@@ -19,13 +20,14 @@ class LectureViewModel(application: Application) : AndroidViewModel(application)
     }
     val listState = ListState()
     private val lectureRepository:ILectureRepository= LectureRepository()
-
+    private val user= UsersRepository.instance.getUser()
 
     private suspend fun fetchLectures(): List<LectureModel> {
+        if(user == null || user !is StudentModel) return listOf()
         listState.apply {
 
             setLoading(true)
-            when (val result = lectureRepository.getLectures(schoolId = "2",classId = "3")) {
+            when (val result = lectureRepository.getLectures(schoolId = user.schoolId,classId = user.classInfo.classId.toString())) {
                 is Success -> {
                     if (result.data.isNullOrEmpty()) setBodyError(c.getString(R.string.no_lectures))
                     else {

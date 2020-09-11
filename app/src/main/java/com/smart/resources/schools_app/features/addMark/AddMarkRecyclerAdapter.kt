@@ -8,11 +8,11 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.databinding.ItemAddMarkBinding
-import com.smart.resources.schools_app.features.students.Student
+import com.smart.resources.schools_app.features.students.StudentWithMark
 import com.smart.resources.schools_app.features.students.Marks
 import java.util.*
 
-class AddMarkRecyclerAdapter(private val exams: List<Student>) :
+class AddMarkRecyclerAdapter(private val exams: List<StudentWithMark>) :
     RecyclerView.Adapter<AddMarkRecyclerAdapter.MyViewHolder>() {
 
     companion object {
@@ -77,7 +77,7 @@ class AddMarkRecyclerAdapter(private val exams: List<Student>) :
         }
 
 
-        fun bind(examModel: Student) {
+        fun bind(examModel: StudentWithMark) {
             binding.itemModel = examModel
         }
     }

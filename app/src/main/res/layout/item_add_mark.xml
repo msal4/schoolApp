@@ -8,7 +8,7 @@
 
 <variable
     name="itemModel"
-    type="com.smart.resources.schools_app.features.students.Student" />
+    type="com.smart.resources.schools_app.features.students.StudentWithMark" />
 
 
     </data>

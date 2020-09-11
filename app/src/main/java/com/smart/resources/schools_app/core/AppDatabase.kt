@@ -4,12 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.smart.resources.schools_app.features.users.User
-import com.smart.resources.schools_app.features.users.UserDao
+import com.smart.resources.schools_app.features.users.UserAccount
+import com.smart.resources.schools_app.features.users.AccountDao
 
-@Database(entities = [User::class], version = 1)
+@Database(entities = [UserAccount::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun userDao(): UserDao
+    abstract fun userDao(): AccountDao
 
     companion object {
         private var instance: AppDatabase? = null

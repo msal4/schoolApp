@@ -18,7 +18,7 @@ import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.databinding.FragmentAddExamBinding
 import com.smart.resources.schools_app.features.users.UsersRepository
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
-import com.smart.resources.schools_app.features.profile.TeacherInfoModel
+import com.smart.resources.schools_app.features.profile.TeacherModel
 import com.smart.resources.schools_app.sharedUi.DatePickerFragment
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 import com.tiper.MaterialSpinner
@@ -119,8 +119,8 @@ class AddExamFragment : Fragment(), PostListener {
             .inflate(inflater, container, false)
             .apply {
                 val currentUser=
-                    UsersRepository.instance.getCurrentUser()
-                val teacherInfoModel= currentUser?.accessToken?.let { TeacherInfoModel.fromToken(it) }
+                    UsersRepository.instance.getCurrentUserAccount()
+                val teacherInfoModel= currentUser?.accessToken?.let { TeacherModel.fromToken(it) }
                 teacherInfoModel?.apply {
                     setSpinnerList(
                         classAndSectionSpinner,

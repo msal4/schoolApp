@@ -10,7 +10,7 @@ import com.smart.resources.schools_app.features.users.UsersRepository
 
 class ExamRecyclerAdapter(private val listener:OnItemClickListener
 ) : ListAdapter<ExamModel, ExamRecyclerAdapter.MyViewHolder>(DIFF_CALLBACK) {
-    private val isStudent= UsersRepository.instance.getCurrentUser()?.userType==0
+    private val isStudent= UsersRepository.instance.getCurrentUserAccount()?.userType==0
 
     interface OnItemClickListener {
         fun onItemClick(examModel: ExamModel)

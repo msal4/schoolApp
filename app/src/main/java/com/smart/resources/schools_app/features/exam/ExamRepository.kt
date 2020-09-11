@@ -14,7 +14,7 @@ class ExamRepository{
     val exams: MutableLiveData<MutableList<ExamModel>> = MutableLiveData(mutableListOf())
 
     suspend fun downloadExams(): MyResult<List<ExamModel>> {
-        val isStudent= UsersRepository.instance.getCurrentUser()?.userType==0
+        val isStudent= UsersRepository.instance.getCurrentUserAccount()?.userType==0
 
         val myRes= getExamsResult(isStudent)
         if(myRes is Success) exams.value= myRes.data?.toMutableList()

@@ -16,7 +16,7 @@ import java.lang.Exception
 
 @BindingAdapter("android:setMark")
 fun setMark(tv: TextView, mark:Int?) {
-    val isStudent= UsersRepository.instance.getCurrentUser()?.userType==0
+    val isStudent= UsersRepository.instance.getCurrentUserAccount()?.userType==0
     tv.text = mark?.toString() ?: if(isStudent)"- " else ""
 }
 

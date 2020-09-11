@@ -8,7 +8,6 @@ import com.smart.resources.schools_app.core.helpers.BackendHelper
 import com.smart.resources.schools_app.core.myTypes.MyResult
 import com.smart.resources.schools_app.core.myTypes.toMyResult
 import com.smart.resources.schools_app.features.absence.StudentAbsenceModel
-import com.smart.resources.schools_app.features.students.Student
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch

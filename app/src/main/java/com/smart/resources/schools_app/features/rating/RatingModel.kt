@@ -2,7 +2,7 @@ package com.smart.resources.schools_app.features.rating
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.smart.resources.schools_app.features.students.Student
+import com.smart.resources.schools_app.features.students.StudentWithMark
 import org.threeten.bp.LocalDateTime
 
 
@@ -21,7 +21,7 @@ class RatingModel  (
         parcel.readSerializable() as LocalDateTime
     )
 
-    constructor(student: Student):this(student.idStudent, student.name)
+    constructor(student: StudentWithMark):this(student.idStudent, student.name)
 
     val isRated get() =  rate > -1.0F
     fun reset(){

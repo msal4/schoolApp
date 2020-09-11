@@ -19,7 +19,7 @@ import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.students.SendStudentResult
-import com.smart.resources.schools_app.features.students.Student
+import com.smart.resources.schools_app.features.students.StudentWithMark
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
@@ -195,7 +195,7 @@ class AddMarkFragment : Fragment(), CanLogout {
 
     }
 
-    private fun onExamsDownload(result: List<Student>) {
+    private fun onExamsDownload(result: List<StudentWithMark>) {
         binding.recyclerView.adapter =
             AddMarkRecyclerAdapter(
                 result

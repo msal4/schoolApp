@@ -24,7 +24,7 @@ class NotificationViewModel(application: Application) : AndroidViewModel(applica
         return notifications
     }
 
-    val userType= if(UsersRepository.instance.getCurrentUser()?.userType==0) UserType.STUDENT else UserType.TEACHER
+    val userType= if(UsersRepository.instance.getCurrentUserAccount()?.userType==0) UserType.STUDENT else UserType.TEACHER
 
 
     fun fetchNotifications(notificationType: NotificationType){
