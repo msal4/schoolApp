@@ -41,9 +41,10 @@ fun <T> Response<T>.toMyResult(): MyResult<T> =
 
 private fun extractMessageIfExists(errorString: String?): String {
     return if (errorString.isNullOrBlank()) ""
-    else JSONObject(errorString).run {
+    else errorString.run {
         try {
-            getString("message")
+            val jsonObj= JSONObject(this)
+            jsonObj.getString("message")
         } catch (e: Exception) {
             errorString.toString()
         }

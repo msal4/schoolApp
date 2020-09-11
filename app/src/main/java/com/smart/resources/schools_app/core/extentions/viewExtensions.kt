@@ -35,11 +35,11 @@ fun ViewGroup.showSnackBar(msg:String, isError: Boolean= true){
     val snackBar = Snackbar.make(this, msg, Snackbar.LENGTH_LONG)
     val snackView: ViewGroup = snackBar.view as ViewGroup
     snackView.layoutDirection = View.LAYOUT_DIRECTION_RTL
-    snackView.setBackgroundColor(Color.WHITE)
+    snackView.setBackgroundColor(Color.rgb(50,50,50))
     (snackView[0] as ViewGroup).forEach {
         Logger.i("type " + it.javaClass.name)
         if (it is TextView) {
-            it.setTextColor(if(isError) Color.rgb(150, 0, 0) else Color.rgb(0, 120, 0))
+            it.setTextColor(if(isError) Color.rgb(250, 50, 50) else Color.rgb(0, 120, 0))
         }
     }
     snackBar.show()

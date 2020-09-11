@@ -124,7 +124,7 @@ class AddMarkFragment : Fragment(), CanLogout {
 
 
                         val result =
-                            GlobalScope.async { BackendHelper.examDao.addMultiResult(studebtResult) }
+                            GlobalScope.async { BackendHelper.examService.addMultiResult(studebtResult) }
                                 .toMyResult()
 
 

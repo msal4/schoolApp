@@ -5,7 +5,7 @@ import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
 
-interface HomeworkDao {
+interface HomeworkService {
     @GET("classHomework")
     suspend fun fetchHomework(): Response<List<HomeworkModel>>
 

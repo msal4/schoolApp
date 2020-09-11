@@ -59,7 +59,7 @@
             mine:setDate="@{itemModel.date}"
             android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="@+id/examName"
-            app:layout_constraintEnd_toStartOf="@+id/homeworkType"
+            app:layout_constraintEnd_toStartOf="@+id/schedule"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/textView5"
             app:layout_constraintTop_toTopOf="@+id/examName"
@@ -88,7 +88,7 @@
             android:layout_marginEnd="16dp"
             android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/homeworkType"
+            app:layout_constraintEnd_toStartOf="@+id/schedule"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/advertisementsIcon"
             app:layout_constraintTop_toBottomOf="@+id/examName"
@@ -97,7 +97,7 @@
             />
 
         <TextView
-            android:id="@+id/homeworkType"
+            android:id="@+id/schedule"
             android:textAlignment="viewStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

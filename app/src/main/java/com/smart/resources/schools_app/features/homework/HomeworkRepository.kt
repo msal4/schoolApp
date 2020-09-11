@@ -16,8 +16,9 @@ class HomeworkRepository{
      val homework: MutableLiveData<MutableList<HomeworkModel>> = MutableLiveData(mutableListOf())
 
 
+
     suspend fun downloadHomework(): MyResult<List<HomeworkModel>>{
-        val myRes= GlobalScope.async { BackendHelper.homeworkDao.fetchHomework()}.toMyResult()
+        val myRes= GlobalScope.async { BackendHelper.homeworkService.fetchHomework()}.toMyResult()
         if(myRes is Success) homework.value= myRes.data?.toMutableList()
         return  myRes
     }
@@ -25,7 +26,7 @@ class HomeworkRepository{
     suspend fun deleteHomework(position:Int): MyResult<Unit> {
         val model= homework.value?.get(position)
 
-        val myRes= GlobalScope.async {BackendHelper.homeworkDao.deleteHomework(model?.idHomework)}.toMyResult()
+        val myRes= GlobalScope.async {BackendHelper.homeworkService.deleteHomework(model?.idHomework)}.toMyResult()
         if(myRes is Success){
             myRes.data?.let {
                 homework.value?.removeAt(position)
@@ -51,7 +52,7 @@ class HomeworkRepository{
     private suspend fun fireRequest(postHomeworkModel: PostHomeworkModel) =
         with( postHomeworkModel) {
             date?.format(dateTimeBackendSendFormatter)?.asRequestBody()?.run {
-                BackendHelper.homeworkDao.addHomework(
+                BackendHelper.homeworkService.addHomework(
                     subjectName.asRequestBody(),
                     assignmentName.asRequestBody(),
                     this,

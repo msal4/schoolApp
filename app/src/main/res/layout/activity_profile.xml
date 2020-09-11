@@ -8,6 +8,7 @@
     <data>
 
         <import type="android.view.View" />
+        <import type="com.smart.resources.schools_app.features.profile.CertificateState" />
 
         <variable
             name="itemModel"
@@ -16,13 +17,23 @@
         <variable
             name="teacherModel"
             type="com.smart.resources.schools_app.features.profile.TeacherInfoModel" />
+
+        <variable
+            name="model"
+            type="com.smart.resources.schools_app.features.profile.ProfileViewModel" />
     </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layoutDirection="rtl">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:fillViewport="true">
-
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/rootLayout"
@@ -30,9 +41,7 @@
             android:layout_height="wrap_content"
             android:clipChildren="false"
             android:clipToPadding="false"
-            android:layoutDirection="rtl"
             tools:context=".features.profile.ProfileActivity">
-
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -54,7 +63,6 @@
                     android:text="@string/profile"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/profileAttributeTitleSize" />
-
 
                 <ImageView
                     android:layout_width="32dp"
@@ -429,7 +437,69 @@
                 app:layout_constraintTop_toBottomOf="@+id/studentPhone"
                 tools:text="test@gmail.com" />
 
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/certificateProgressIndicator"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:visibility="@{model.certificateState == CertificateState.UNKNOWN? View.VISIBLE: View.GONE}"
+                android:layout_gravity="end|center"
+                android:layout_marginEnd="@dimen/profile_bottom_bar_padding"
+                android:outlineProvider="none"
+                android:elevation="8dp"
+                />
+
+            <LinearLayout
+                android:id="@+id/certificateBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:elevation="4dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/profile_bottom_bar_padding"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:visibility="@{teacherModel == null? View.VISIBLE: View.GONE}">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.87"
+                    android:fontFamily="@font/monadi"
+                    android:text="@string/the_certificate"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/profileAttributeTitleSize" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/availabilityText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.87"
+                    android:textColor="@{model.certificateState == CertificateState.AVAILABLE? @color/white: @color/darkRed}"
+                    android:textSize="@dimen/profileAttributeSize"
+                    android:text="@{model.certificateStatusMsg}"
+                    android:visibility="@{model.certificateState == CertificateState.UNKNOWN? View.GONE: View.VISIBLE}"
+                    />
+
+            </LinearLayout>
+
+
+        </FrameLayout>
+    </LinearLayout>
 </layout>

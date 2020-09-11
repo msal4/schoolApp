@@ -69,8 +69,10 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.90999997" />
 
+
             <TextView
-                android:id="@+id/notifications"
+                android:id="@+id/lectures"
+                android:visibility="@{userType == UserType.STUDENT? View.VISIBLE: View.GONE}"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="16dp"
@@ -80,15 +82,16 @@
                 android:gravity="center|bottom"
                 android:onClick="navigate"
                 android:padding="@dimen/home_circle_padding"
-                android:text="@string/notifications"
+                android:text="@string/lectures"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/home_circle_text_size"
-                app:layout_constraintBottom_toTopOf="@+id/homeworkType"
+                app:layout_constraintBottom_toTopOf="@+id/schedule"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintStart_toStartOf="@+id/guideline4"
                 app:layout_constraintTop_toBottomOf="@+id/topPart"
-                app:layout_constraintVertical_chainStyle="spread_inside" />
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintVertical_chainStyle="packed" />
 
             <ImageView
                 android:id="@+id/imageView4"
@@ -101,12 +104,12 @@
                 android:contentDescription="@string/section_icon_desc"
                 android:elevation="6dp"
                 android:outlineProvider="none"
-                android:src="@drawable/ic_notification"
-                app:layout_constraintBottom_toBottomOf="@+id/notifications"
+                android:src="@drawable/ic_lecture"
+                app:layout_constraintBottom_toBottomOf="@+id/lectures"
                 app:layout_constraintDimensionRatio="h,1:1"
-                app:layout_constraintEnd_toEndOf="@+id/notifications"
-                app:layout_constraintStart_toStartOf="@+id/notifications"
-                app:layout_constraintTop_toTopOf="@+id/notifications"
+                app:layout_constraintEnd_toEndOf="@+id/lectures"
+                app:layout_constraintStart_toStartOf="@+id/lectures"
+                app:layout_constraintTop_toTopOf="@+id/lectures"
                 app:layout_constraintVertical_bias="0.0" />
 
 
@@ -116,7 +119,6 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-
                 android:background="@drawable/background_circle_white"
                 android:elevation="@dimen/home_circle_elevation"
                 android:gravity="center|bottom"
@@ -132,7 +134,8 @@
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toBottomOf="@+id/topPart"
-                app:layout_constraintVertical_chainStyle="spread" />
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintVertical_chainStyle="packed" />
 
             <ImageView
                 android:id="@+id/imageView3"
@@ -154,7 +157,7 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/homeworkType"
+                android:id="@+id/schedule"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginBottom="16dp"
@@ -167,11 +170,11 @@
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/home_circle_text_size"
                 android:visibility="@{userType == UserType.STUDENT? View.VISIBLE: View.GONE}"
-                app:layout_constraintBottom_toTopOf="@+id/absence"
+                app:layout_constraintBottom_toTopOf="@+id/notifications"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintStart_toStartOf="@+id/guideline4"
-                app:layout_constraintTop_toBottomOf="@+id/notifications" />
+                app:layout_constraintTop_toBottomOf="@+id/lectures" />
 
             <ImageView
                 android:id="@+id/imageView6"
@@ -185,11 +188,11 @@
                 android:elevation="6dp"
                 android:outlineProvider="none"
                 android:src="@drawable/ic_schedule"
-                app:layout_constraintBottom_toBottomOf="@+id/homeworkType"
+                app:layout_constraintBottom_toBottomOf="@+id/schedule"
                 app:layout_constraintDimensionRatio="h,1:1"
-                app:layout_constraintEnd_toEndOf="@+id/homeworkType"
-                app:layout_constraintStart_toStartOf="@+id/homeworkType"
-                app:layout_constraintTop_toTopOf="@+id/homeworkType"
+                app:layout_constraintEnd_toEndOf="@+id/schedule"
+                app:layout_constraintStart_toStartOf="@+id/schedule"
+                app:layout_constraintTop_toTopOf="@+id/schedule"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
@@ -233,6 +236,44 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
+                android:id="@+id/notifications"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/background_circle_white"
+                android:elevation="@dimen/home_circle_elevation"
+                android:gravity="center|bottom"
+                android:onClick="navigate"
+                android:padding="@dimen/home_circle_padding"
+                android:text="@string/notifications"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/home_circle_text_size"
+                app:layout_constraintTop_toBottomOf="@+id/schedule"
+                app:layout_constraintDimensionRatio="h,1:1"
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
+                app:layout_constraintBottom_toTopOf="@id/absence" />
+
+            <ImageView
+                android:id="@+id/notificationsIcon"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/home_circle_padding"
+                android:layout_marginTop="@dimen/home_circle_top_padding"
+                android:layout_marginEnd="@dimen/home_circle_padding"
+                android:layout_marginBottom="48dp"
+                android:contentDescription="@string/section_icon_desc"
+                android:elevation="6dp"
+                android:outlineProvider="none"
+                android:src="@drawable/ic_notification"
+                app:layout_constraintBottom_toBottomOf="@+id/notifications"
+                app:layout_constraintDimensionRatio="h,1:1"
+                app:layout_constraintEnd_toEndOf="@+id/notifications"
+                app:layout_constraintStart_toStartOf="@+id/notifications"
+                app:layout_constraintTop_toTopOf="@+id/notifications"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
                 android:id="@+id/absence"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -249,8 +290,7 @@
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintStart_toStartOf="@+id/guideline4"
-                app:layout_constraintTop_toBottomOf="@+id/homeworkType" />
-
+                app:layout_constraintTop_toBottomOf="@+id/notifications" />
 
             <ImageView
                 android:id="@+id/imageView8"
@@ -394,6 +434,8 @@
                 app:layout_constraintTop_toTopOf="@+id/ratings"
                 app:layout_constraintVertical_bias="0.0" />
 
+
+
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline"
                 android:layout_width="wrap_content"
@@ -413,7 +455,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.92" />
+                app:layout_constraintGuide_percent="0.91" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline4"

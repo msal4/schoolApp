@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.homework
+package com.smart.resources.schools_app.features.homework.getHomeworks
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,12 +7,17 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ItemHomeworkBinding
-import kotlinx.android.synthetic.main.item_homework.view.*
+import com.smart.resources.schools_app.features.homework.HomeworkModel
+import com.smart.resources.schools_app.features.users.UsersRepository
 import ru.rhanza.constraintexpandablelayout.State
 
-class HomeworkRecyclerAdapter(val onItemClick: (ImageView, String)-> Unit) :
+class HomeworkRecyclerAdapter(private val isStudent:Boolean) :
     ListAdapter<HomeworkModel, HomeworkRecyclerAdapter.MyViewHolder>(DIFF_CALLBACK) {
+
+    var onImageClicked: ((ImageView, String) -> Unit)? = null
+    var onAnswerClicked: ((homeworkModel:HomeworkModel) -> Unit)? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -29,8 +34,15 @@ class HomeworkRecyclerAdapter(val onItemClick: (ImageView, String)-> Unit) :
     ) {
         val model = getItem(position)
         holder.bind(model)
-        holder.binding.image.setOnClickListener {
-            if(it is ImageView) onItemClick(it, model.attachment)
+        holder.binding.apply {
+            image.setOnClickListener {
+                if (it is ImageView) onImageClicked?.invoke(it, model.attachment)
+            }
+
+            answerButton.apply {
+                setOnClickListener { onAnswerClicked?.invoke(model) }
+                text= context.getString(if(isStudent) R.string.answer else R.string.answers)
+            }
         }
     }
 
@@ -46,23 +58,14 @@ class HomeworkRecyclerAdapter(val onItemClick: (ImageView, String)-> Unit) :
         }
 
         init {
-            binding.expandLayout.onStateChangeListener =
-                { _: State?, newState: State ->
-                    if (newState == State.Collapsed) { /*if(binding.contentText.getLineCount()<3){
-                        binding.contentText.append("\u2026");
-                    }else {*/
-                        binding.contentText.maxLines = 1
-                        // }
-                    } else if (newState == State.Expanded || newState == State.Expanding) {
-                        binding.contentText.maxLines = 100
-                        /* String text=binding.contentText.getText().toString();
-                    binding.contentText.setText(text.replace('\u2026',' ').trim());*/
+            binding.expandLayout.apply {
+                onStateChangeListener =
+                    { _: State?, newState: State ->
+                        binding.contentText.maxLines =
+                            if (newState == State.Expanded || newState == State.Expanding) 500 else 1
                     }
-                }
-            binding.expandLayout.setOnClickListener {
-                binding.expandLayout.toggle(
-                    true
-                )
+                setOnClickListener {
+                    toggle(true) }
             }
         }
     }

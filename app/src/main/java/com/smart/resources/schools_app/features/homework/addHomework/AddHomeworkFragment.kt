@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.homework
+package com.smart.resources.schools_app.features.homework.addHomework
 
 import android.app.Activity
 import android.content.Intent
@@ -21,6 +21,7 @@ import com.smart.resources.schools_app.core.myTypes.PostListener
 import com.smart.resources.schools_app.core.extentions.*
 import com.smart.resources.schools_app.core.helpers.FileUtils
 import com.smart.resources.schools_app.databinding.FragmentAddHomeworkBinding
+import com.smart.resources.schools_app.features.homework.HomeworkViewModel
 import com.smart.resources.schools_app.features.users.UsersRepository
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import com.smart.resources.schools_app.sharedUi.SectionActivity

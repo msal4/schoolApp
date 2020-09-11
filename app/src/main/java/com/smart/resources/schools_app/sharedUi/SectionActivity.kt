@@ -17,11 +17,12 @@ import com.smart.resources.schools_app.features.absence.getAbsence.AbsenceFragme
 //import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
 import com.smart.resources.schools_app.features.advertising.AdvertisingFragment
 import com.smart.resources.schools_app.features.exam.ExamFragment
-import com.smart.resources.schools_app.features.homework.HomeworkFragment
+import com.smart.resources.schools_app.features.homework.getHomeworks.HomeworkFragment
+import com.smart.resources.schools_app.features.lecture.LectureFragment
 import com.smart.resources.schools_app.features.library.LibraryFragment
 import com.smart.resources.schools_app.features.users.UsersRepository
 import com.smart.resources.schools_app.features.rating.RatingFragment
-import com.smart.resources.schools_app.features.rating.addRarting.AddRatingFragment
+import com.smart.resources.schools_app.features.ratingAdd.AddRatingFragment
 import com.smart.resources.schools_app.features.schedule.ScheduleFragment
 
 
@@ -66,6 +67,7 @@ class SectionActivity : AppCompatActivity() {
                 Section.LIBRARY -> LibraryFragment.newInstance(this)
                 Section.SCHEDULE -> ScheduleFragment.newInstance(this)
                 Section.ADVERTISING -> AdvertisingFragment.newInstance(this)
+                Section.LECTURE -> LectureFragment.newInstance(this)
 
                 Section.ABSENCE ->
                     if(isStudent) AbsenceFragment.newInstance(this)

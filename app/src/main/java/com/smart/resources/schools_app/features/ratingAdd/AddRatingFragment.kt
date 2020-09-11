@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.rating.addRarting
+package com.smart.resources.schools_app.features.ratingAdd
 
 import android.os.Bundle
 import android.view.*

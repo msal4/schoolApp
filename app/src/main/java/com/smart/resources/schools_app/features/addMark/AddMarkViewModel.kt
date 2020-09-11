@@ -32,7 +32,7 @@ class AddMarkViewModel(application: Application) : AndroidViewModel(application)
             listState.apply {
                 setLoading(true)
 
-                val result = GlobalScope.async {  BackendHelper.examDao.getResultsByExam(examId.toString()) }.toMyResult()
+                val result = GlobalScope.async {  BackendHelper.examService.getResultsByExam(examId.toString()) }.toMyResult()
                 when (result) {
                     is Success -> {
                         if (result.data.isNullOrEmpty())

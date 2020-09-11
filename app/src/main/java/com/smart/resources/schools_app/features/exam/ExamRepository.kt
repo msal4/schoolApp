@@ -22,10 +22,10 @@ class ExamRepository{
     }
 
     private suspend fun getExamsResult(isStudent: Boolean) =
-        GlobalScope.async { with(BackendHelper.examDao) { if (isStudent) fetchExams() else fetchTeacherExams() } }.toMyResult()
+        GlobalScope.async { with(BackendHelper.examService) { if (isStudent) fetchExams() else fetchTeacherExams() } }.toMyResult()
 
     suspend fun addExam(postExamModel: PostExamModel): MyResult<ExamModel> {
-        val myRes= GlobalScope.async {BackendHelper.examDao.addExam(postExamModel)}.toMyResult()
+        val myRes= GlobalScope.async {BackendHelper.examService.addExam(postExamModel)}.toMyResult()
         if(myRes is Success){
             myRes.data?.let {
                 exams.value?.add(0, it)

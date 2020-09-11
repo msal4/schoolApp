@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.rating.addRarting
+package com.smart.resources.schools_app.features.ratingAdd
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -44,7 +44,8 @@ class AddRatingBottomSheet : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = BottomSheetAddRatingBinding.inflate(layoutInflater, container, false)
+        // TODO: check if working
+        binding = BottomSheetAddRatingBinding.inflate(inflater, container, false)
 
         arguments?.apply {
             getParcelable<RatingModel>(EXTRA_ADD_RATING_MODEL)?.let { ratingModel= it }

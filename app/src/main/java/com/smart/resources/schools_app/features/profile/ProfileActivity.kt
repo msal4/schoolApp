@@ -6,32 +6,40 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.observe
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.Event
 import com.smart.resources.schools_app.core.bindingAdapters.loadImageUrl
 import com.smart.resources.schools_app.core.bindingAdapters.setAccountImage
 import com.smart.resources.schools_app.core.extentions.GET_IMAGE_REQUEST
 import com.smart.resources.schools_app.core.extentions.getImage
 import com.smart.resources.schools_app.core.extentions.selectImage
+import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.databinding.ActivityProfileBinding
 import com.smart.resources.schools_app.features.users.UsersDialog
 import com.smart.resources.schools_app.features.users.UsersRepository
+import com.smart.resources.schools_app.sharedUi.ImageViewerActivity
 
-class ProfileActivity : AppCompatActivity(){
+class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
+    private lateinit var viewModel: ProfileViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile)
 
+        setupViewModel()
         setupItemModel()
     }
 
-    private fun setupItemModel(){
+    private fun setupItemModel() {
         binding.apply {
+            lifecycleOwner = this@ProfileActivity
             val personModel = getPerson()
             itemModel = personModel
-            teacherModel = if (personModel is TeacherInfoModel)personModel else null
+            teacherModel = if (personModel is TeacherInfoModel) personModel else null
 
             UsersRepository.instance.getCurrentUser()?.img?.let {
                 setAccountImage(
@@ -41,14 +49,27 @@ class ProfileActivity : AppCompatActivity(){
             }
             setResult(Activity.RESULT_OK)
             setSupportActionBar(binding.toolbar)
+
+            certificateBar.setOnClickListener(::openCertificateImage)
+            model= viewModel
         }
     }
 
-    private fun getPerson():PersonModel?{
+    private fun openCertificateImage(view:View){
+        viewModel.certificateModel?.url?.let { ImageViewerActivity.newInstance(this,null, it) }
+    }
+
+
+    private fun setupViewModel() {
+        viewModel = ViewModelProviders.of(this)
+            .get(ProfileViewModel::class.java)
+    }
+
+    private fun getPerson(): PersonModel? {
         UsersRepository.instance.getCurrentUser()?.apply {
-            return if(userType==0){
+            return if (userType == 0) {
                 StudentInfoModel.fromToken(accessToken)
-            }else{
+            } else {
                 TeacherInfoModel.fromToken(accessToken)
             }
         }
@@ -73,7 +94,8 @@ class ProfileActivity : AppCompatActivity(){
         super.onActivityResult(requestCode, resultCode, data)
 
         if (GET_IMAGE_REQUEST == requestCode &&
-            resultCode == Activity.RESULT_OK && data != null) {
+            resultCode == Activity.RESULT_OK && data != null
+        ) {
             data.getImage().toString().let {
                 UsersRepository.instance.updateCurrentUser(it)
                 loadImageUrl(
@@ -81,7 +103,6 @@ class ProfileActivity : AppCompatActivity(){
                     it
                 )
             }
-
             setResult(Activity.RESULT_OK)
         }
     }
@@ -102,5 +123,6 @@ class ProfileActivity : AppCompatActivity(){
         }
     }
 }
+
 
 

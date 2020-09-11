@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.google.gson.JsonObject
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.bindingAdapters.setAccountImage
 import com.smart.resources.schools_app.core.extentions.decodeToken
@@ -15,9 +14,6 @@ import com.smart.resources.schools_app.databinding.ActivityHomeBinding
 import com.smart.resources.schools_app.features.profile.ProfileActivity
 import com.smart.resources.schools_app.core.myTypes.Section
 import com.smart.resources.schools_app.core.myTypes.UserType
-import com.smart.resources.schools_app.features.profile.PersonModel
-import com.smart.resources.schools_app.features.profile.StudentInfoModel
-import com.smart.resources.schools_app.features.profile.TeacherInfoModel
 import com.smart.resources.schools_app.features.users.UsersRepository
 import org.json.JSONObject
 import java.lang.Exception
@@ -110,7 +106,7 @@ class HomeActivity : AppCompatActivity() {
                 this,
                 Section.NOTIFICATION
             )
-            R.id.homeworkType-> SectionActivity.newInstance(
+            R.id.schedule-> SectionActivity.newInstance(
                 this,
                 Section.SCHEDULE
             )
@@ -127,7 +123,10 @@ class HomeActivity : AppCompatActivity() {
                 Section.ADVERTISING
             )
 
-
+            R.id.lectures-> SectionActivity.newInstance(
+                this,
+                Section.LECTURE
+            )
         }
     }
 }

@@ -18,6 +18,9 @@ public class User {
     public String getUid() {
         return uid;
     }
+    public String getOriginalId(){
+        return uid.substring(1);
+    }
 
     public void setUid(@NotNull String uid) {
         this.uid = uid;
@@ -51,6 +54,9 @@ public class User {
         return userType;
     }
 
+    public Boolean isStudent() {
+        return userType==0;
+    }
     public void setUserType(int userType) {
         this.userType = userType;
     }

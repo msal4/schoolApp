@@ -8,7 +8,8 @@ enum class Section{
     RATING,
     ADVERTISING,
     EXAM,
-    NOTIFICATION
+    NOTIFICATION,
+    LECTURE
 }
 
 enum class WeekDays(val dayName:String) {

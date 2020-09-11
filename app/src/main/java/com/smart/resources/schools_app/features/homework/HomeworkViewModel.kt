@@ -8,15 +8,21 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.helpers.BackendHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.login.CanLogout
+import com.smart.resources.schools_app.features.users.UsersRepository
 import kotlinx.coroutines.*
 import retrofit2.Response
 
-
 class HomeworkViewModel (application: Application) : AndroidViewModel(application), CanLogout{
+
+
     val listState = ListState()
     var postHomeworkModel= PostHomeworkModel()
     val postException= PostException()
     var uploadListener: PostListener?= null
+    val isStudent by lazy {
+        UsersRepository.instance.getCurrentUser()?.isStudent == true
+    }
+
 
     private val homeworkRepo= HomeworkRepository()
     val getHomework: LiveData<MutableList<HomeworkModel>>
