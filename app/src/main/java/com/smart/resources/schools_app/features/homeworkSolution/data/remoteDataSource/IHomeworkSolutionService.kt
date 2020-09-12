@@ -1,6 +1,7 @@
 package com.smart.resources.schools_app.features.homeworkSolution.data.remoteDataSource
 
 import com.smart.resources.schools_app.core.myTypes.MyResult
+import com.smart.resources.schools_app.features.homeworkSolution.domain.model.HomeworkSolutionModel
 import java.io.File
 
 interface IHomeworkSolutionService {
@@ -9,5 +10,9 @@ interface IHomeworkSolutionService {
         homeworkId: String,
         solution: String,
         attachmentImage: File?
-    ): MyResult<Unit>
+    ): MyResult<HomeworkSolutionModel>
+
+    suspend fun getSolution(
+        homeworkId: String,
+    ): MyResult<HomeworkSolutionModel>
 }

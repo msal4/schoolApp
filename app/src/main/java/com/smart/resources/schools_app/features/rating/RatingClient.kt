@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 
-interface RatingDao{
+interface RatingClient{
     @GET("studentBehaviors")
     suspend fun fetchRating(): Response<List<RatingModel>>
 

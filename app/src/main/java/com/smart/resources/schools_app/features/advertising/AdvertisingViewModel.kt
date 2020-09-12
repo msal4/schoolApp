@@ -29,7 +29,7 @@ class HomeworkViewModel(application: Application) : AndroidViewModel(application
             listState.apply {
                 setLoading(true)
 
-                val result = GlobalScope.async { RetrofitHelper.advertisingDao.fetchAdvertisements() }.toMyResult()
+                val result = GlobalScope.async { RetrofitHelper.advertisingClient.fetchAdvertisements() }.toMyResult()
                 when (result) {
                     is Success -> {
                         if (result.data.isNullOrEmpty())

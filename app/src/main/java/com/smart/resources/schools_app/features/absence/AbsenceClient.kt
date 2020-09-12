@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 
-interface AbsenceDao {
+interface AbsenceClient {
     @GET("studentAbsence")
     suspend fun fetchStudentAbsence(): Response<List<StudentAbsenceModel>>
 

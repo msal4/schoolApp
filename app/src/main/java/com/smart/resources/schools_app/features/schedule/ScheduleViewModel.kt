@@ -27,7 +27,7 @@ class ScheduleViewModel(application: Application) : AndroidViewModel(application
             listState.apply {
                 setLoading(true)
 
-                val result = GlobalScope.async { RetrofitHelper.scheduleDao.fetchSchedule() }.toMyResult()
+                val result = GlobalScope.async { RetrofitHelper.scheduleClient.fetchSchedule() }.toMyResult()
                 when (result) {
                     is Success -> {
                         if (result.data.isNullOrEmpty())

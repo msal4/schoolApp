@@ -37,6 +37,7 @@
     <string name="date">التاريخ</string>
     <string name="classAndDivision">الصف والشعبة</string>
     <string name="add">اضافة</string>
+    <string name="solution_added_successfully">تمت اضافة الجواب بنجاح</string>
     <string name="save">حفظ</string>
     <string name="subject_name">اسم المادة</string>
     <string name="exam_type">نوع الامتحان</string>

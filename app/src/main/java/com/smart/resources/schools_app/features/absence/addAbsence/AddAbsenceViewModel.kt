@@ -73,7 +73,7 @@ class AddAbsenceViewModel(application: Application, private val postListener: Po
         postListener.onUploadStarted()
         viewModelScope.launch {
             val result =
-                GlobalScope.async { RetrofitHelper.absenceDao.addStudentAbsences(postAbsenceModel) }.toMyResult()
+                GlobalScope.async { RetrofitHelper.absenceClient.addStudentAbsences(postAbsenceModel) }.toMyResult()
 
             when (result) {
                 is Success -> postListener.onUploadCompleted()

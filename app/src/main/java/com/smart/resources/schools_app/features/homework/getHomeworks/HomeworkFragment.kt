@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.adapters.SwipeAdapter
 import com.smart.resources.schools_app.core.extentions.showSnackBar
@@ -16,6 +17,7 @@ import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.homework.HomeworkModel
 import com.smart.resources.schools_app.features.homework.HomeworkViewModel
 import com.smart.resources.schools_app.features.homework.addHomework.AddHomeworkFragment
+import com.smart.resources.schools_app.features.homeworkSolution.domain.model.HomeworkSolutionModel
 import com.smart.resources.schools_app.features.homeworkSolution.presentation.fragments.HomeworkSolutionBottomSheet
 import com.smart.resources.schools_app.features.homeworkSolution.presentation.fragments.HomeworkAnswerFragment
 import com.smart.resources.schools_app.features.users.UsersRepository
@@ -84,14 +86,18 @@ class HomeworkFragment : Fragment() {
     private fun onAnswerClicked(homeworkModel: HomeworkModel) {
         fragmentManager?.let {
             if (viewModel.isStudent) {
-                HomeworkSolutionBottomSheet.newInstance(homeworkModel.idHomework.toString()).show(it, "")
+                HomeworkSolutionBottomSheet.newInstance(homeworkModel.idHomework.toString()).apply {
+                    show(it, "")
+                    onSolutionAdded= ::onHomeworkSolutionAdded
+                }
             } else {
                 HomeworkAnswerFragment.newInstance(it)
             }
         }
     }
-
-
+    private fun onHomeworkSolutionAdded(homeworkSolution: HomeworkSolutionModel) {
+        binding.layout.showSnackBar(getString(R.string.solution_added_successfully), false)
+    }
     fun onError(errorMsg: String) {
         binding.layout.showSnackBar(errorMsg)
         adapter.notifyDataSetChanged()

@@ -16,11 +16,14 @@ import com.smart.resources.schools_app.core.extentions.getImage
 import com.smart.resources.schools_app.core.extentions.selectImage
 import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.databinding.BottomSheetAnswerHomeworkBinding
+import com.smart.resources.schools_app.features.homeworkSolution.domain.model.HomeworkSolutionModel
 import com.smart.resources.schools_app.features.homeworkSolution.domain.viewModel.AddHomeworkSolutionViewModel
 
+typealias solutionAddedCallback= (homeworkSolution:HomeworkSolutionModel)->Unit
 class HomeworkSolutionBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetAnswerHomeworkBinding
     private lateinit var viewModel: AddHomeworkSolutionViewModel
+    var onSolutionAdded: solutionAddedCallback?= null
 
     companion object Factory {
         private const val EXTRA_HOMEWORK_ID = "extraHomeworkId"
@@ -57,15 +60,16 @@ class HomeworkSolutionBottomSheet : BottomSheetDialogFragment() {
         return binding.root
     }
 
-    fun onError(errorEvent: Event<String>?) {
+    private fun onError(errorEvent: Event<String>?) {
         errorEvent?.getContentIfNotHandled()?.let {
             binding.coordinatorLayout.showSnackBar(it)
         }
     }
 
-    fun onSolutionSent(errorEvent: Event<Boolean>?) {
-        errorEvent?.getContentIfNotHandled()?.let {
+    private fun onSolutionSent(solutionSentEvent: Event<HomeworkSolutionModel>?) {
+        solutionSentEvent?.getContentIfNotHandled()?.let {
             dismiss()
+            onSolutionAdded?.invoke(it)
         }
     }
 

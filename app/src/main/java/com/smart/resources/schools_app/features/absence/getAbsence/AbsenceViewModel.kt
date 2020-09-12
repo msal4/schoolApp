@@ -27,7 +27,7 @@ class AbsenceViewModel : ViewModel() {
 
     private fun fetchAbsences(){
        viewModelScope.launch {
-            val result = GlobalScope.async { RetrofitHelper.absenceDao.fetchStudentAbsence() }.toMyResult()
+            val result = GlobalScope.async { RetrofitHelper.absenceClient.fetchStudentAbsence() }.toMyResult()
            absences.value = result
         }
     }

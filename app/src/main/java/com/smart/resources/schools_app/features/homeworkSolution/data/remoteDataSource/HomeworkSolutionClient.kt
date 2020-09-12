@@ -1,5 +1,8 @@
 package com.smart.resources.schools_app.features.homeworkSolution.data.remoteDataSource
 
+import com.smart.resources.schools_app.features.homework.HomeworkModel
+import com.smart.resources.schools_app.features.homeworkSolution.domain.model.HomeworkSolutionModel
+import com.smart.resources.schools_app.features.homeworkSolution.presentation.fragments.HomeworkAnswerFragment
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -14,6 +17,8 @@ interface HomeworkSolutionClient {
         @Part("studentId") studentId: RequestBody,
         @Part solutionImage: MultipartBody.Part?,
         @Part("solutionText") solutionText: RequestBody
-    ): Response<Unit>
+    ): Response<HomeworkSolutionModel>
 
+    @GET("homeworkSolution/homeworkId")
+    suspend fun getHomeworkSolution(@Path("homeworkId") homeworkId:String): Response<HomeworkSolutionModel>
 }

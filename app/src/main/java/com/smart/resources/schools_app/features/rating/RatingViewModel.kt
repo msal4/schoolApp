@@ -29,7 +29,7 @@ class RatingViewModel(application: Application) : AndroidViewModel(application),
                 setLoading(true)
 
                 val result = GlobalScope.async {
-                    RetrofitHelper.ratingDao.fetchRating()
+                    RetrofitHelper.ratingClient.fetchRating()
                 }.toMyResult()
 
                 when (result) {

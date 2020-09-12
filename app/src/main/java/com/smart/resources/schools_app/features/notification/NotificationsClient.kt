@@ -3,7 +3,7 @@ package com.smart.resources.schools_app.features.notification
 import retrofit2.Response
 import retrofit2.http.GET
 
-interface NotificationsDao{
+interface NotificationsClient{
 
 
     @GET("studentNotifications")

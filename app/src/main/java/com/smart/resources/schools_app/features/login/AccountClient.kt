@@ -7,7 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 
-interface AccountDao{
+interface AccountClient{
 
     @POST("studentLogin")
     suspend fun loginStudent(@Body body: HashMap<String, String>): Response<JsonObject>

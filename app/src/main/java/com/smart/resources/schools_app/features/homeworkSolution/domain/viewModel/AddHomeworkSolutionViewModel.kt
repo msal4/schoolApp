@@ -15,6 +15,7 @@ import com.smart.resources.schools_app.core.myTypes.Success
 import com.smart.resources.schools_app.core.myTypes.Unauthorized
 import com.smart.resources.schools_app.features.homeworkSolution.data.repository.HomeworkSolutionRepository
 import com.smart.resources.schools_app.features.homeworkSolution.domain.model.AddHomeworkSolutionModel
+import com.smart.resources.schools_app.features.homeworkSolution.domain.model.HomeworkSolutionModel
 import com.smart.resources.schools_app.features.homeworkSolution.domain.repository.IHomeworkSolutionRepository
 import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.users.UsersRepository
@@ -29,15 +30,15 @@ class AddHomeworkSolutionViewModel(application: Application) : AndroidViewModel(
 
     private val _error = MutableLiveData<Event<String>>()
     val error: LiveData<Event<String>> = _error
-    private val _solutionSent = MutableLiveData<Event<Boolean>>()
-    val solutionSent: LiveData<Event<Boolean>> = _solutionSent
+    private val _solutionSent = MutableLiveData<Event<HomeworkSolutionModel>>()
+    val solutionSent: LiveData<Event<HomeworkSolutionModel>> = _solutionSent
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
 
-    lateinit var homeworkId:String
+    lateinit var homeworkId: String
     var description: String = ""
     private var attachmentImage: File? = null
-    private val studentId= UsersRepository.instance.getUser()?.id
+    private val studentId = UsersRepository.instance.getUser()?.id
 
     fun saveUri(uri: Uri) {
         val originalFile: File = FileUtils.from(c, uri)
@@ -46,21 +47,25 @@ class AddHomeworkSolutionViewModel(application: Application) : AndroidViewModel(
 
     fun sendSolution() {
         if (!isDataValid()) return
-        val model= AddHomeworkSolutionModel(
+        val model = AddHomeworkSolutionModel(
             solution = description,
             attachmentImage = attachmentImage
         )
 
         viewModelScope.launch {
             _isLoading.postValue(true)
-            val res= solutionRepository.addSolution(
+            val res = solutionRepository.addSolution(
                 studentId = studentId.toString(),
                 homeworkId = homeworkId,
                 addHomeworkSolutionModel = model
             )
-            when(res){
+            when (res) {
                 is Success -> {
-                    _solutionSent.postValue(Event(true))
+                    if (res.data != null) {
+                        _solutionSent.postValue(Event(res.data))
+                    } else {
+                        _error.postValue(Event(c.getString(R.string.unexpected_error)))
+                    }
                 }
                 Unauthorized -> {
                     expireLogout(c)

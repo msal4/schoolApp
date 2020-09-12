@@ -11,15 +11,15 @@ import com.smart.resources.schools_app.features.homeworkSolution.domain.model.Ho
 class HomeworkSolutionRepository : IHomeworkSolutionRepository {
     private val solutionService: IHomeworkSolutionService = HomeworkSolutionService()
 
-    override suspend fun getHomeworkSolutions(homeworkId: String): MyResult<List<HomeworkSolutionModel>> {
-        return Success(listOf())
+    override suspend fun getSolution(homeworkId: String): MyResult<HomeworkSolutionModel> {
+        return solutionService.getSolution(homeworkId)
     }
 
     override suspend fun addSolution(
         studentId: String,
         homeworkId: String,
         addHomeworkSolutionModel: AddHomeworkSolutionModel
-    ):MyResult<Unit> {
+    ):MyResult<HomeworkSolutionModel> {
        return solutionService.addSolution(
             studentId,
             homeworkId,

@@ -85,7 +85,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:minLines="1"
-                android:text="@{itemModel.answer}"
+                android:text="@{itemModel.solution}"
                 android:textAlignment="viewStart"
                 android:visibility="@{itemModel.hasAnswer? View.VISIBLE: View.GONE}"
                 tools:text="المحتوى هو هذا وها وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا المحتوى هو هذاالمحتوى هو هذا" />
@@ -114,7 +114,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:srcUrl="@{itemModel.attachmentUrl}"
+                    android:srcUrl="@{itemModel.imageUrl}"
                     android:transitionName="@string/image_trans" />
             </androidx.cardview.widget.CardView>
 

@@ -36,7 +36,7 @@ class NotificationViewModel(application: Application) : AndroidViewModel(applica
 
             val result = GlobalScope.async {
                 if(userType == UserType.STUDENT)getStudentNotifications(notificationType)
-                else  RetrofitHelper.notificationDao.fetchTeacherNotifications()
+                else  RetrofitHelper.notificationClient.fetchTeacherNotifications()
             }.toMyResult()
 
 
@@ -61,7 +61,7 @@ class NotificationViewModel(application: Application) : AndroidViewModel(applica
     }
 
     private suspend fun getStudentNotifications(notificationType: NotificationType) =
-        with(RetrofitHelper.notificationDao){
+        with(RetrofitHelper.notificationClient){
             if (notificationType == NotificationType.STUDENT) fetchNotifications()
             else fetchSectionNotifications()
         }

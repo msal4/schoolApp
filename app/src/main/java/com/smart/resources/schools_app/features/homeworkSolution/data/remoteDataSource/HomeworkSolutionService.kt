@@ -5,6 +5,7 @@ import com.smart.resources.schools_app.core.extentions.asRequestBody
 import com.smart.resources.schools_app.core.helpers.RetrofitHelper
 import com.smart.resources.schools_app.core.myTypes.MyResult
 import com.smart.resources.schools_app.core.myTypes.toMyResult
+import com.smart.resources.schools_app.features.homeworkSolution.domain.model.HomeworkSolutionModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import java.io.File
@@ -21,7 +22,7 @@ class HomeworkSolutionService : IHomeworkSolutionService {
         homeworkId: String,
         solution: String,
         attachmentImage: File?
-    ): MyResult<Unit> {
+    ): MyResult<HomeworkSolutionModel> {
         return GlobalScope.async {
             homeworkSolutionClient.addSolution(
                 studentId = studentId.asRequestBody(),
@@ -30,5 +31,9 @@ class HomeworkSolutionService : IHomeworkSolutionService {
                 solutionImage = attachmentImage?.asBodyPart(IMAGE_FILED_NAME)
             )
         }.toMyResult()
+    }
+
+    override suspend fun getSolution(homeworkId: String): MyResult<HomeworkSolutionModel> {
+        return GlobalScope.async { homeworkSolutionClient.getHomeworkSolution(homeworkId) }.toMyResult()
     }
 }

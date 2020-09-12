@@ -3,18 +3,18 @@ package com.smart.resources.schools_app.core.helpers
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.smart.resources.schools_app.core.adapters.LocalDateTimeConverter
-import com.smart.resources.schools_app.features.absence.AbsenceDao
-import com.smart.resources.schools_app.features.advertising.AdvertisingDao
+import com.smart.resources.schools_app.features.absence.AbsenceClient
+import com.smart.resources.schools_app.features.advertising.AdvertisingClient
 import com.smart.resources.schools_app.features.exam.ExamClient
 import com.smart.resources.schools_app.features.homework.HomeworkClient
 import com.smart.resources.schools_app.features.homeworkSolution.data.remoteDataSource.HomeworkSolutionClient
 import com.smart.resources.schools_app.features.lecture.LectureClient
-import com.smart.resources.schools_app.features.library.LibraryDao
-import com.smart.resources.schools_app.features.login.AccountDao
-import com.smart.resources.schools_app.features.notification.NotificationsDao
+import com.smart.resources.schools_app.features.library.LibraryClient
+import com.smart.resources.schools_app.features.login.AccountClient
+import com.smart.resources.schools_app.features.notification.NotificationsClient
 import com.smart.resources.schools_app.features.profile.certificate.CertificateClient
-import com.smart.resources.schools_app.features.rating.RatingDao
-import com.smart.resources.schools_app.features.schedule.ScheduleDao
+import com.smart.resources.schools_app.features.rating.RatingClient
+import com.smart.resources.schools_app.features.schedule.ScheduleClient
 import com.smart.resources.schools_app.features.students.StudentClient
 import com.smart.resources.schools_app.features.users.UsersRepository
 import com.snakydesign.watchtower.WatchTower
@@ -85,12 +85,12 @@ object RetrofitHelper {
     val examClient: ExamClient get() = retrofitWithAuth.create(ExamClient::class.java)
     val lectureClient: LectureClient get() = retrofitWithAuth.create(LectureClient::class.java)
     val certificateClient: CertificateClient get() = retrofitWithAuth.create(CertificateClient::class.java)
-    val libraryDao: LibraryDao get() =  retrofitWithAuth.create(LibraryDao::class.java)
-    val notificationDao: NotificationsDao get() =  retrofitWithAuth.create(NotificationsDao::class.java)
-    val absenceDao: AbsenceDao get() = retrofitWithAuth.create(AbsenceDao::class.java)
-    val advertisingDao: AdvertisingDao get() =  retrofitWithAuth.create(AdvertisingDao::class.java)
-    val scheduleDao: ScheduleDao get() =  retrofitWithAuth.create(ScheduleDao::class.java)
-    val ratingDao: RatingDao get() =  retrofitWithAuth.create(RatingDao::class.java)
+    val libraryClient: LibraryClient get() =  retrofitWithAuth.create(LibraryClient::class.java)
+    val notificationClient: NotificationsClient get() =  retrofitWithAuth.create(NotificationsClient::class.java)
+    val absenceClient: AbsenceClient get() = retrofitWithAuth.create(AbsenceClient::class.java)
+    val advertisingClient: AdvertisingClient get() =  retrofitWithAuth.create(AdvertisingClient::class.java)
+    val scheduleClient: ScheduleClient get() =  retrofitWithAuth.create(ScheduleClient::class.java)
+    val ratingClient: RatingClient get() =  retrofitWithAuth.create(RatingClient::class.java)
     val studentClient: StudentClient get() =  retrofitWithAuth.create(StudentClient::class.java)
-    val accountDao: AccountDao get() =  retrofit.create(AccountDao::class.java)
+    val accountClient: AccountClient get() =  retrofit.create(AccountClient::class.java)
 }

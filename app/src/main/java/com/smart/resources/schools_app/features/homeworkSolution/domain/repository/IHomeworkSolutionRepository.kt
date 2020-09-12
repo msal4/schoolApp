@@ -5,6 +5,6 @@ import com.smart.resources.schools_app.features.homeworkSolution.domain.model.Ad
 import com.smart.resources.schools_app.features.homeworkSolution.domain.model.HomeworkSolutionModel
 
 interface IHomeworkSolutionRepository {
-    suspend fun getHomeworkSolutions(homeworkId:String): MyResult<List<HomeworkSolutionModel>>
-    suspend fun addSolution(studentId: String, homeworkId: String, addHomeworkSolutionModel: AddHomeworkSolutionModel): MyResult<Unit>
+    suspend fun getSolution(homeworkId:String): MyResult<HomeworkSolutionModel>
+    suspend fun addSolution(studentId: String, homeworkId: String, addHomeworkSolutionModel: AddHomeworkSolutionModel): MyResult<HomeworkSolutionModel>
 }

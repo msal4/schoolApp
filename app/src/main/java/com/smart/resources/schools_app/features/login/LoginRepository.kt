@@ -7,7 +7,7 @@ import java.lang.Exception
 
 
 object LoginRepository{
-    private val accountDao=  RetrofitHelper.accountDao
+    private val accountDao=  RetrofitHelper.accountClient
 
     suspend fun loginStudent(phoneNumber:String, password:String): MyResult<String> {
         return login(phoneNumber, password, UserType.STUDENT)

@@ -27,7 +27,7 @@ class LibraryViewModel(application: Application) : AndroidViewModel(application)
     private fun fetchHomework(){
         viewModelScope.launch {
             val result =
-                GlobalScope.async { RetrofitHelper.libraryDao.fetchLib() }.toMyResult()
+                GlobalScope.async { RetrofitHelper.libraryClient.fetchLib() }.toMyResult()
 
             listState.apply {
                 when (result) {

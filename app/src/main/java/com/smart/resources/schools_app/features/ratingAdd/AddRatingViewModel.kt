@@ -67,7 +67,7 @@ class AddRatingViewModel(application: Application, private val postListener: Pos
             viewModelScope.launch {
                 Logger.i("ratings: $it")
                 val result =
-                    async { RetrofitHelper.ratingDao.addRatings(it) }
+                    async { RetrofitHelper.ratingClient.addRatings(it) }
                         .toMyResult()
 
                 when (result) {
