@@ -3,7 +3,7 @@ package com.smart.resources.schools_app.features.notification
 import android.app.Application
 import androidx.lifecycle.*
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.helpers.BackendHelper
+import com.smart.resources.schools_app.core.helpers.RetrofitHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.users.UsersRepository
@@ -36,7 +36,7 @@ class NotificationViewModel(application: Application) : AndroidViewModel(applica
 
             val result = GlobalScope.async {
                 if(userType == UserType.STUDENT)getStudentNotifications(notificationType)
-                else  BackendHelper.notificationDao.fetchTeacherNotifications()
+                else  RetrofitHelper.notificationDao.fetchTeacherNotifications()
             }.toMyResult()
 
 
@@ -61,7 +61,7 @@ class NotificationViewModel(application: Application) : AndroidViewModel(applica
     }
 
     private suspend fun getStudentNotifications(notificationType: NotificationType) =
-        with(BackendHelper.notificationDao){
+        with(RetrofitHelper.notificationDao){
             if (notificationType == NotificationType.STUDENT) fetchNotifications()
             else fetchSectionNotifications()
         }

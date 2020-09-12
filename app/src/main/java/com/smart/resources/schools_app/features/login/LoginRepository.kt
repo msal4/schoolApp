@@ -1,13 +1,13 @@
 package com.smart.resources.schools_app.features.login
 
 import com.orhanobut.logger.Logger
-import com.smart.resources.schools_app.core.helpers.BackendHelper
+import com.smart.resources.schools_app.core.helpers.RetrofitHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import java.lang.Exception
 
 
 object LoginRepository{
-    private val accountDao=  BackendHelper.accountDao
+    private val accountDao=  RetrofitHelper.accountDao
 
     suspend fun loginStudent(phoneNumber:String, password:String): MyResult<String> {
         return login(phoneNumber, password, UserType.STUDENT)

@@ -3,7 +3,7 @@ package com.smart.resources.schools_app.features.library
 import android.app.Application
 import androidx.lifecycle.*
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.helpers.BackendHelper
+import com.smart.resources.schools_app.core.helpers.RetrofitHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.login.CanLogout
 import kotlinx.coroutines.*
@@ -27,7 +27,7 @@ class LibraryViewModel(application: Application) : AndroidViewModel(application)
     private fun fetchHomework(){
         viewModelScope.launch {
             val result =
-                GlobalScope.async { BackendHelper.libraryDao.fetchLib() }.toMyResult()
+                GlobalScope.async { RetrofitHelper.libraryDao.fetchLib() }.toMyResult()
 
             listState.apply {
                 when (result) {

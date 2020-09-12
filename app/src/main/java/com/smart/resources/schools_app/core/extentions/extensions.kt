@@ -7,11 +7,9 @@ import android.net.Uri
 import android.text.BidiFormatter
 import android.util.Base64
 import androidx.lifecycle.MutableLiveData
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.nio.charset.StandardCharsets
 
@@ -69,11 +67,13 @@ fun String.withEngNums() = this
     .replace('٩', '9')
 
 
-fun String.asRequestBody(): RequestBody =
-    this.trim().toRequestBody("text/plain".toMediaTypeOrNull())
+fun String.asRequestBody(): RequestBody {
+    return RequestBody.create(MediaType.parse("text/plain"), this.trim())
+}
+
 
 fun File.asBodyPart(fieldName: String): MultipartBody.Part? {
-    val requestBody = this.asRequestBody("Image/*".toMediaTypeOrNull())
+    val requestBody= RequestBody.create(MediaType.parse("Image/*"), this)
     return MultipartBody.Part.createFormData(fieldName, name, requestBody)
 }
 

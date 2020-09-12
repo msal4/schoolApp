@@ -3,7 +3,7 @@ package com.smart.resources.schools_app.features.rating
 import android.app.Application
 import androidx.lifecycle.*
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.helpers.BackendHelper
+import com.smart.resources.schools_app.core.helpers.RetrofitHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.login.CanLogout
 import kotlinx.coroutines.*
@@ -29,7 +29,7 @@ class RatingViewModel(application: Application) : AndroidViewModel(application),
                 setLoading(true)
 
                 val result = GlobalScope.async {
-                    BackendHelper.ratingDao.fetchRating()
+                    RetrofitHelper.ratingDao.fetchRating()
                 }.toMyResult()
 
                 when (result) {

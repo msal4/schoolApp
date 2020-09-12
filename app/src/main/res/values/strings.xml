@@ -90,5 +90,7 @@
     <string name="available">متوفرة</string>
     <string name="send_answer">ارسال الاجابة</string>
     <string name="answer">اجابة</string>
+    <string name="empty_answer_msg">يرجى اضافة وصف او صورة!</string>
+    <string name="unexpected_error">لقد حدث خطأ غير متوقع!</string>
 
 </resources>

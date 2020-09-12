@@ -3,7 +3,7 @@ package com.smart.resources.schools_app.features.advertising
 import android.app.Application
 import androidx.lifecycle.*
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.helpers.BackendHelper
+import com.smart.resources.schools_app.core.helpers.RetrofitHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.login.CanLogout
 import kotlinx.coroutines.*
@@ -29,7 +29,7 @@ class HomeworkViewModel(application: Application) : AndroidViewModel(application
             listState.apply {
                 setLoading(true)
 
-                val result = GlobalScope.async { BackendHelper.advertisingDao.fetchAdvertisements() }.toMyResult()
+                val result = GlobalScope.async { RetrofitHelper.advertisingDao.fetchAdvertisements() }.toMyResult()
                 when (result) {
                     is Success -> {
                         if (result.data.isNullOrEmpty())

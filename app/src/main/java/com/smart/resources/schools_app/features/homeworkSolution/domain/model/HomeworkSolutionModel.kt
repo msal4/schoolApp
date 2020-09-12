@@ -1,9 +1,9 @@
-package com.smart.resources.schools_app.features.homeworkAnswer.getHomeworkAnswers
+package com.smart.resources.schools_app.features.homeworkSolution.domain.model
 
 import org.threeten.bp.LocalDateTime
 
 
-data class HomeworkAnswerModel(
+data class HomeworkSolutionModel(
     val id: String?,
     val studentName: String?,
     val answer: String?,

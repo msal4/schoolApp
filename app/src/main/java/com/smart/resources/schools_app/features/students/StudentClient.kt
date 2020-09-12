@@ -4,7 +4,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface StudentService {
+interface StudentClient {
     @GET("studentsByClass/{id}")
     suspend fun getStudentsByClass(@Path("id") classId: String): Response<List<StudentWithMark>>
 }

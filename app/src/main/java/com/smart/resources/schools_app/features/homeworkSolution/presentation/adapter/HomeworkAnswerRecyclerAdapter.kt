@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.homeworkAnswer.getHomeworkAnswers
+package com.smart.resources.schools_app.features.homeworkSolution.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,10 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.databinding.ItemHomeworkAnswerBinding
+import com.smart.resources.schools_app.features.homeworkSolution.domain.model.HomeworkSolutionModel
 import ru.rhanza.constraintexpandablelayout.State
 
 class HomeworkAnswerRecyclerAdapter :
-    ListAdapter<HomeworkAnswerModel, HomeworkAnswerRecyclerAdapter.MyViewHolder>(DIFF_CALLBACK) {
+    ListAdapter<HomeworkSolutionModel, HomeworkAnswerRecyclerAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
 
     override fun onCreateViewHolder(
@@ -30,14 +31,14 @@ class HomeworkAnswerRecyclerAdapter :
 
     }
 
-    override fun submitList(list: List<HomeworkAnswerModel>?) {
+    override fun submitList(list: List<HomeworkSolutionModel>?) {
         super.submitList(list?.toList())
     }
 
     class MyViewHolder(var binding: ItemHomeworkAnswerBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(model: HomeworkAnswerModel) {
+        fun bind(model: HomeworkSolutionModel) {
             binding.itemModel = model
         }
 
@@ -57,18 +58,18 @@ class HomeworkAnswerRecyclerAdapter :
     }
 
     companion object {
-        private val DIFF_CALLBACK: DiffUtil.ItemCallback<HomeworkAnswerModel> =
-            object : DiffUtil.ItemCallback<HomeworkAnswerModel>() {
+        private val DIFF_CALLBACK: DiffUtil.ItemCallback<HomeworkSolutionModel> =
+            object : DiffUtil.ItemCallback<HomeworkSolutionModel>() {
                 override fun areItemsTheSame(
-                    oldItem: HomeworkAnswerModel,
-                    newItem: HomeworkAnswerModel
+                    oldItem: HomeworkSolutionModel,
+                    newItem: HomeworkSolutionModel
                 ): Boolean {
                     return oldItem.id == newItem.id
                 }
 
                 override fun areContentsTheSame(
-                    oldItem: HomeworkAnswerModel,
-                    newItem: HomeworkAnswerModel
+                    oldItem: HomeworkSolutionModel,
+                    newItem: HomeworkSolutionModel
                 ): Boolean {
                     return oldItem == newItem
                 }

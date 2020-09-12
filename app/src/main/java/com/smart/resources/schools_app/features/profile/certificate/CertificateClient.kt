@@ -4,7 +4,7 @@ import com.smart.resources.schools_app.features.profile.certificate.CertificateM
 import retrofit2.Response
 import retrofit2.http.*
 
-interface CertificateService {
+interface CertificateClient {
     @GET("certificateStudent/{id}")
     suspend fun getCertificate(@Path("id") studentId:String): Response<CertificateModel>
 

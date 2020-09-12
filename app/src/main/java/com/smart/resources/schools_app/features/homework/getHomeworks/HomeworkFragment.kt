@@ -16,8 +16,8 @@ import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.homework.HomeworkModel
 import com.smart.resources.schools_app.features.homework.HomeworkViewModel
 import com.smart.resources.schools_app.features.homework.addHomework.AddHomeworkFragment
-import com.smart.resources.schools_app.features.homeworkAnswer.addHomeworkAnswer.AnswerHomeworkBottomSheet
-import com.smart.resources.schools_app.features.homeworkAnswer.getHomeworkAnswers.HomeworkAnswerFragment
+import com.smart.resources.schools_app.features.homeworkSolution.presentation.fragments.HomeworkSolutionBottomSheet
+import com.smart.resources.schools_app.features.homeworkSolution.presentation.fragments.HomeworkAnswerFragment
 import com.smart.resources.schools_app.features.users.UsersRepository
 import com.smart.resources.schools_app.sharedUi.ImageViewerActivity
 import com.smart.resources.schools_app.sharedUi.SectionActivity
@@ -84,7 +84,7 @@ class HomeworkFragment : Fragment() {
     private fun onAnswerClicked(homeworkModel: HomeworkModel) {
         fragmentManager?.let {
             if (viewModel.isStudent) {
-                AnswerHomeworkBottomSheet.newInstance().show(it, "")
+                HomeworkSolutionBottomSheet.newInstance(homeworkModel.idHomework.toString()).show(it, "")
             } else {
                 HomeworkAnswerFragment.newInstance(it)
             }

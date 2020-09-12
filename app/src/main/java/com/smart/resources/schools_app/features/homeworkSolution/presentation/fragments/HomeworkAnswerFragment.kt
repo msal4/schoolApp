@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.homeworkAnswer.getHomeworkAnswers
+package com.smart.resources.schools_app.features.homeworkSolution.presentation.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,11 +10,14 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.observe
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
+import com.smart.resources.schools_app.features.homeworkSolution.domain.viewModel.HomeworkSolutionViewModel
+import com.smart.resources.schools_app.features.homeworkSolution.domain.model.HomeworkSolutionModel
+import com.smart.resources.schools_app.features.homeworkSolution.presentation.adapter.HomeworkAnswerRecyclerAdapter
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 
 class HomeworkAnswerFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
-    private lateinit var viewModel: HomeworkAnswerViewModel
+    private lateinit var viewModel: HomeworkSolutionViewModel
     private lateinit var adapter: HomeworkAnswerRecyclerAdapter
 
 
@@ -41,7 +44,7 @@ class HomeworkAnswerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProviders.of(activity!!).get(HomeworkAnswerViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity!!).get(HomeworkSolutionViewModel::class.java)
         binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = this@HomeworkAnswerFragment
             listState = viewModel.listState
@@ -56,8 +59,8 @@ class HomeworkAnswerFragment : Fragment() {
         return binding.root
     }
 
-    private fun onAnswersReceived(answers:List<HomeworkAnswerModel>?){
-            adapter.submitList(answers)
+    private fun onAnswersReceived(solutions:List<HomeworkSolutionModel>?){
+            adapter.submitList(solutions)
     }
 
 }

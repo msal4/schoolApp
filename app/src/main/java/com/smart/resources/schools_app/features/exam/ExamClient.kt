@@ -5,7 +5,7 @@ import com.smart.resources.schools_app.features.students.StudentWithMark
 import retrofit2.Response
 import retrofit2.http.*
 
-interface ExamService {
+interface ExamClient {
     @GET("examResult")
     suspend fun fetchExams(): Response<List<ExamModel>>
 

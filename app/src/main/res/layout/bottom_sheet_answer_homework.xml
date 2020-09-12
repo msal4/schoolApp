@@ -4,19 +4,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <import type="android.view.View"/>
+        <variable
+            name="model"
+            type="com.smart.resources.schools_app.features.homeworkSolution.domain.viewModel.AddHomeworkSolutionViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layoutDirection="rtl">
+        android:layoutDirection="rtl"
+        android:layout_gravity="bottom">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom">
+            android:layout_height="wrap_content">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -34,8 +37,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    >
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/noteField"
@@ -43,6 +45,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/description_optional"
+                        android:text="@={model.description}"
                         android:inputType="textMultiLine" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -71,8 +74,6 @@
 
                 </androidx.cardview.widget.CardView>
 
-
-
                 <Button
                     android:id="@+id/sendAnswerButton"
                     android:layout_width="wrap_content"
@@ -83,9 +84,10 @@
                     android:fontFamily="@font/monadi"
                     android:paddingStart="32dp"
                     android:paddingEnd="32dp"
-                    android:text="@string/send_answer"
+                    android:text='@{model.isLoading()? "": @string/send_answer}'
                     android:textColor="@android:color/white"
                     android:textStyle="bold"
+                    android:onClick="@{()->model.sendSolution()}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/imageCard" />
 
@@ -96,7 +98,7 @@
                     android:layout_gravity="center"
                     android:elevation="12dp"
                     android:indeterminateTint="@color/white"
-                    android:visibility="gone"
+                    android:visibility="@{model.isLoading()? View.VISIBLE:View.GONE}"
                     app:layout_constraintBottom_toBottomOf="@+id/sendAnswerButton"
                     app:layout_constraintEnd_toEndOf="@+id/sendAnswerButton"
                     app:layout_constraintStart_toStartOf="@+id/sendAnswerButton"

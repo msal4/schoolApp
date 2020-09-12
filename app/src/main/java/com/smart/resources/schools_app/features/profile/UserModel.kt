@@ -1,7 +1,7 @@
 package com.smart.resources.schools_app.features.profile
 
 import com.smart.resources.schools_app.core.extentions.decodeToken
-import com.smart.resources.schools_app.core.helpers.BackendHelper
+import com.smart.resources.schools_app.core.helpers.RetrofitHelper
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.Period
 
@@ -31,7 +31,7 @@ abstract class UserModel(
         fun <T : UserModel> fromToken(classType: Class<T>, accessToken: String): T? {
             return try {
                 val body = accessToken.decodeToken()
-                val gson = BackendHelper.gson
+                val gson = RetrofitHelper.gson
                 gson.fromJson(body, classType)
             } catch (e: Exception) {
                 e.printStackTrace()

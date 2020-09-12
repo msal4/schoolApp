@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.smart.resources.schools_app.core.helpers.BackendHelper
+import com.smart.resources.schools_app.core.helpers.RetrofitHelper
 import com.smart.resources.schools_app.core.myTypes.MyResult
 import com.smart.resources.schools_app.core.myTypes.toMyResult
 import com.smart.resources.schools_app.features.absence.StudentAbsenceModel
@@ -27,7 +27,7 @@ class AbsenceViewModel : ViewModel() {
 
     private fun fetchAbsences(){
        viewModelScope.launch {
-            val result = GlobalScope.async { BackendHelper.absenceDao.fetchStudentAbsence() }.toMyResult()
+            val result = GlobalScope.async { RetrofitHelper.absenceDao.fetchStudentAbsence() }.toMyResult()
            absences.value = result
         }
     }

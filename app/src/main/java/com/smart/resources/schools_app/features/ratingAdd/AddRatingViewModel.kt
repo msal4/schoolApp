@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.helpers.BackendHelper
+import com.smart.resources.schools_app.core.helpers.RetrofitHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.rating.RatingModel
 import com.smart.resources.schools_app.core.myTypes.ListState
@@ -34,7 +34,7 @@ class AddRatingViewModel(application: Application, private val postListener: Pos
         listState.setLoading(true)
 
         val studentsResult =
-            viewModelScope.async { BackendHelper.studentService.getStudentsByClass(classId) }
+            viewModelScope.async { RetrofitHelper.studentClient.getStudentsByClass(classId) }
                 .toMyResult()
         when (studentsResult) {
             is Success -> {
@@ -67,7 +67,7 @@ class AddRatingViewModel(application: Application, private val postListener: Pos
             viewModelScope.launch {
                 Logger.i("ratings: $it")
                 val result =
-                    async { BackendHelper.ratingDao.addRatings(it) }
+                    async { RetrofitHelper.ratingDao.addRatings(it) }
                         .toMyResult()
 
                 when (result) {

@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.helpers.BackendHelper
+import com.smart.resources.schools_app.core.helpers.RetrofitHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.absence.AddAbsenceModel
 import com.smart.resources.schools_app.features.absence.PostAbsenceModel
@@ -42,7 +42,7 @@ class AddAbsenceViewModel(application: Application, private val postListener: Po
 
         Logger.i("absence model: $postAbsenceModel")
         val studentsResult =
-            viewModelScope.async { BackendHelper.studentService.getStudentsByClass(classId) }
+            viewModelScope.async { RetrofitHelper.studentClient.getStudentsByClass(classId) }
                 .toMyResult()
 
         when (studentsResult) {
@@ -73,7 +73,7 @@ class AddAbsenceViewModel(application: Application, private val postListener: Po
         postListener.onUploadStarted()
         viewModelScope.launch {
             val result =
-                GlobalScope.async { BackendHelper.absenceDao.addStudentAbsences(postAbsenceModel) }.toMyResult()
+                GlobalScope.async { RetrofitHelper.absenceDao.addStudentAbsences(postAbsenceModel) }.toMyResult()
 
             when (result) {
                 is Success -> postListener.onUploadCompleted()

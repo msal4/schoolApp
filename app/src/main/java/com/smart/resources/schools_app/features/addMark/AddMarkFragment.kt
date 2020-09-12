@@ -11,7 +11,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.helpers.BackendHelper
+import com.smart.resources.schools_app.core.helpers.RetrofitHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.core.extentions.hide
 import com.smart.resources.schools_app.core.extentions.show
@@ -124,7 +124,7 @@ class AddMarkFragment : Fragment(), CanLogout {
 
 
                         val result =
-                            GlobalScope.async { BackendHelper.examService.addMultiResult(studebtResult) }
+                            GlobalScope.async { RetrofitHelper.examClient.addMultiResult(studebtResult) }
                                 .toMyResult()
 
 

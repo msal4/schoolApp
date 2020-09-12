@@ -3,7 +3,7 @@ package com.smart.resources.schools_app.features.addMark
 import android.app.Application
 import androidx.lifecycle.*
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.helpers.BackendHelper
+import com.smart.resources.schools_app.core.helpers.RetrofitHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.students.StudentWithMark
@@ -32,7 +32,7 @@ class AddMarkViewModel(application: Application) : AndroidViewModel(application)
             listState.apply {
                 setLoading(true)
 
-                val result = GlobalScope.async {  BackendHelper.examService.getResultsByExam(examId.toString()) }.toMyResult()
+                val result = GlobalScope.async {  RetrofitHelper.examClient.getResultsByExam(examId.toString()) }.toMyResult()
                 when (result) {
                     is Success -> {
                         if (result.data.isNullOrEmpty())

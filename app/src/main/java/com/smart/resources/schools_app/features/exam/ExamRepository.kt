@@ -1,7 +1,7 @@
 package com.smart.resources.schools_app.features.exam
 
 import androidx.lifecycle.MutableLiveData
-import com.smart.resources.schools_app.core.helpers.BackendHelper
+import com.smart.resources.schools_app.core.helpers.RetrofitHelper
 import com.smart.resources.schools_app.core.myTypes.MyResult
 import com.smart.resources.schools_app.core.myTypes.Success
 import com.smart.resources.schools_app.core.myTypes.toMyResult
@@ -22,10 +22,10 @@ class ExamRepository{
     }
 
     private suspend fun getExamsResult(isStudent: Boolean) =
-        GlobalScope.async { with(BackendHelper.examService) { if (isStudent) fetchExams() else fetchTeacherExams() } }.toMyResult()
+        GlobalScope.async { with(RetrofitHelper.examClient) { if (isStudent) fetchExams() else fetchTeacherExams() } }.toMyResult()
 
     suspend fun addExam(postExamModel: PostExamModel): MyResult<ExamModel> {
-        val myRes= GlobalScope.async {BackendHelper.examService.addExam(postExamModel)}.toMyResult()
+        val myRes= GlobalScope.async {RetrofitHelper.examClient.addExam(postExamModel)}.toMyResult()
         if(myRes is Success){
             myRes.data?.let {
                 exams.value?.add(0, it)
