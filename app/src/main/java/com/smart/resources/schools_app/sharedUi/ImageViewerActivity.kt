@@ -36,11 +36,7 @@ class ImageViewerActivity : AppCompatActivity() {
                     startActivity(intent, activityOptionsCompat.toBundle())
                 }
             }
-
-
         }
-
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

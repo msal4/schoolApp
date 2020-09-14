@@ -1,7 +1,6 @@
 package com.smart.resources.schools_app.features.homework.getHomeworks
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
@@ -10,14 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ItemHomeworkBinding
 import com.smart.resources.schools_app.features.homework.HomeworkModel
-import com.smart.resources.schools_app.features.users.UsersRepository
 import ru.rhanza.constraintexpandablelayout.State
 
 class HomeworkRecyclerAdapter(private val isStudent:Boolean) :
     ListAdapter<HomeworkModel, HomeworkRecyclerAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     var onImageClicked: ((ImageView, String) -> Unit)? = null
-    var onAnswerClicked: ((homeworkModel:HomeworkModel) -> Unit)? = null
+    var onAnswerClicked: ((homeworkModel: HomeworkModel) -> Unit)? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -41,10 +39,17 @@ class HomeworkRecyclerAdapter(private val isStudent:Boolean) :
 
             answerButton.apply {
                 setOnClickListener { onAnswerClicked?.invoke(model) }
-                text= context.getString(if(isStudent) R.string.answer else R.string.answers)
+                text = context.getString(getBtnText(model))
             }
         }
     }
+
+    private fun getBtnText(model: HomeworkModel) =
+        if (isStudent) {
+            if (model.solution == null) R.string.answer else R.string.show_answer
+        } else {
+            R.string.answers
+        }
 
     override fun submitList(list: List<HomeworkModel>?) {
         super.submitList(list?.toList())
@@ -65,7 +70,8 @@ class HomeworkRecyclerAdapter(private val isStudent:Boolean) :
                             if (newState == State.Expanded || newState == State.Expanding) 500 else 1
                     }
                 setOnClickListener {
-                    toggle(true) }
+                    toggle(true)
+                }
             }
         }
     }
@@ -84,7 +90,7 @@ class HomeworkRecyclerAdapter(private val isStudent:Boolean) :
                     oldItem: HomeworkModel,
                     newItem: HomeworkModel
                 ): Boolean {
-                    return oldItem.isContentSame(newItem)
+                    return oldItem == newItem
                 }
             }
     }

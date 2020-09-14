@@ -6,13 +6,14 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface HomeworkClient {
+    @GET("classHomeworkStudent")
+    suspend fun fetchHomeworkWithSolution(): Response<List<HomeworkWithSolution>>
+
     @GET("classHomework")
     suspend fun fetchHomework(): Response<List<HomeworkModel>>
 
-
     @DELETE("homework/{id}")
-    suspend fun deleteHomework(@Path("id") homeworkId: Int?): Response<Unit>
-
+    suspend fun deleteHomework(@Path("id") homeworkId: String?): Response<Unit>
 
     @Multipart
     @POST("addHomework")

@@ -1,6 +1,7 @@
 package com.smart.resources.schools_app.features.homework
 
 import com.smart.resources.schools_app.core.extentions.isImage
+import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
 import org.threeten.bp.LocalDateTime
 import java.io.File
 
@@ -17,24 +18,18 @@ abstract class BaseHomeworkModel(
     }
 }
 
-class HomeworkModel(
-    val idHomework: Int,
-    assignmentName: String,
-    date: LocalDateTime,
-    note: String,
+data class HomeworkModel(
+    val idHomework: String,
+    val assignmentName: String,
+    val date: LocalDateTime,
+    val note: String,
     val attachment: String,
-    subjectName: String
-
-): BaseHomeworkModel(assignmentName, date, note, subjectName){
+    val subjectName: String,
+    val solution: HomeworkSolutionModel?
+){
     val hasImage get() = attachment.isImage()
     val hasNote  get() = !note.isBlank()
 
-    fun isContentSame(model: HomeworkModel) =
-        assignmentName== model.assignmentName &&
-                date== model.date &&
-                note== model.note &&
-                attachment == model.attachment &&
-                subjectName== model.subjectName
 }
 
 class PostHomeworkModel(

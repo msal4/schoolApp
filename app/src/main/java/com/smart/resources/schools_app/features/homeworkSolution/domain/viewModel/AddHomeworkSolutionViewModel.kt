@@ -14,8 +14,8 @@ import com.smart.resources.schools_app.core.myTypes.ResponseError
 import com.smart.resources.schools_app.core.myTypes.Success
 import com.smart.resources.schools_app.core.myTypes.Unauthorized
 import com.smart.resources.schools_app.features.homeworkSolution.data.repository.HomeworkSolutionRepository
-import com.smart.resources.schools_app.features.homeworkSolution.domain.model.AddHomeworkSolutionModel
-import com.smart.resources.schools_app.features.homeworkSolution.domain.model.HomeworkSolutionModel
+import com.smart.resources.schools_app.features.homeworkSolution.data.model.AddHomeworkSolutionModel
+import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
 import com.smart.resources.schools_app.features.homeworkSolution.domain.repository.IHomeworkSolutionRepository
 import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.users.UsersRepository

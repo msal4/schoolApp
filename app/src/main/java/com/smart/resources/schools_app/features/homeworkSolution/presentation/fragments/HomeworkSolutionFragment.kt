@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
@@ -11,11 +13,12 @@ import androidx.lifecycle.observe
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.homeworkSolution.domain.viewModel.HomeworkSolutionViewModel
-import com.smart.resources.schools_app.features.homeworkSolution.domain.model.HomeworkSolutionModel
+import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
 import com.smart.resources.schools_app.features.homeworkSolution.presentation.adapter.HomeworkAnswerRecyclerAdapter
+import com.smart.resources.schools_app.sharedUi.ImageViewerActivity
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 
-class HomeworkAnswerFragment : Fragment() {
+class HomeworkSolutionFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
     private lateinit var viewModel: HomeworkSolutionViewModel
     private lateinit var adapter: HomeworkAnswerRecyclerAdapter
@@ -23,9 +26,14 @@ class HomeworkAnswerFragment : Fragment() {
 
     companion object {
         private const val HOMEWORK_ANSWER_FRAGMENT = "HomeworkAnswerFragment"
+        private const val EXTRA_HOMEWORK_ID = "extraHomeworkId"
 
-        fun newInstance(fm: FragmentManager) {
-            val fragment = HomeworkAnswerFragment()
+        fun newInstance(fm: FragmentManager, homeworkId:String) {
+            val fragment = HomeworkSolutionFragment().apply {
+                arguments = bundleOf(
+                    EXTRA_HOMEWORK_ID to homeworkId
+                )
+            }
             fm.beginTransaction().apply {
                 setCustomAnimations(
                     R.anim.slide_in_right,
@@ -45,11 +53,15 @@ class HomeworkAnswerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         viewModel = ViewModelProviders.of(activity!!).get(HomeworkSolutionViewModel::class.java)
+        val homeworkId= arguments?.getString(EXTRA_HOMEWORK_ID)?:""
+        viewModel.init(homeworkId)
+
         binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false).apply {
-            lifecycleOwner = this@HomeworkAnswerFragment
+            lifecycleOwner = this@HomeworkSolutionFragment
             listState = viewModel.listState
 
             adapter = HomeworkAnswerRecyclerAdapter()
+            adapter.onImageClicked= ::onImageClicked
             recyclerView.adapter = adapter
 
             viewModel.answers.observe(viewLifecycleOwner, ::onAnswersReceived)
@@ -57,6 +69,13 @@ class HomeworkAnswerFragment : Fragment() {
 
         (activity as SectionActivity).setCustomTitle(R.string.answers)
         return binding.root
+    }
+
+
+    private fun onImageClicked(imageView: ImageView, imageUrl: String) {
+        activity?.let {
+            ImageViewerActivity.newInstance(it, imageView, imageUrl)
+        }
     }
 
     private fun onAnswersReceived(solutions:List<HomeworkSolutionModel>?){

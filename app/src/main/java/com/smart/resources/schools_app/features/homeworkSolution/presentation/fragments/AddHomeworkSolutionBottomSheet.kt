@@ -16,11 +16,11 @@ import com.smart.resources.schools_app.core.extentions.getImage
 import com.smart.resources.schools_app.core.extentions.selectImage
 import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.databinding.BottomSheetAnswerHomeworkBinding
-import com.smart.resources.schools_app.features.homeworkSolution.domain.model.HomeworkSolutionModel
+import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
 import com.smart.resources.schools_app.features.homeworkSolution.domain.viewModel.AddHomeworkSolutionViewModel
 
 typealias solutionAddedCallback= (homeworkSolution:HomeworkSolutionModel)->Unit
-class HomeworkSolutionBottomSheet : BottomSheetDialogFragment() {
+class AddHomeworkSolutionBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetAnswerHomeworkBinding
     private lateinit var viewModel: AddHomeworkSolutionViewModel
     var onSolutionAdded: solutionAddedCallback?= null
@@ -28,9 +28,8 @@ class HomeworkSolutionBottomSheet : BottomSheetDialogFragment() {
     companion object Factory {
         private const val EXTRA_HOMEWORK_ID = "extraHomeworkId"
 
-        fun newInstance(homeworkId: String): HomeworkSolutionBottomSheet {
-
-            return HomeworkSolutionBottomSheet().apply {
+        fun newInstance(homeworkId: String): AddHomeworkSolutionBottomSheet {
+            return AddHomeworkSolutionBottomSheet().apply {
                 arguments = bundleOf(
                     EXTRA_HOMEWORK_ID to homeworkId
                 )
@@ -52,7 +51,7 @@ class HomeworkSolutionBottomSheet : BottomSheetDialogFragment() {
             }
 
         binding = BottomSheetAnswerHomeworkBinding.inflate(inflater, container, false).apply {
-            lifecycleOwner = this@HomeworkSolutionBottomSheet
+            lifecycleOwner = this@AddHomeworkSolutionBottomSheet
             model = viewModel
             addImageIcon.setOnClickListener { selectImage() }
         }

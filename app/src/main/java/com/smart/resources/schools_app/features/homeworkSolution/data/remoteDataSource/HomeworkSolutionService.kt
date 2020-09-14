@@ -5,7 +5,7 @@ import com.smart.resources.schools_app.core.extentions.asRequestBody
 import com.smart.resources.schools_app.core.helpers.RetrofitHelper
 import com.smart.resources.schools_app.core.myTypes.MyResult
 import com.smart.resources.schools_app.core.myTypes.toMyResult
-import com.smart.resources.schools_app.features.homeworkSolution.domain.model.HomeworkSolutionModel
+import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import java.io.File
@@ -33,7 +33,7 @@ class HomeworkSolutionService : IHomeworkSolutionService {
         }.toMyResult()
     }
 
-    override suspend fun getSolution(homeworkId: String): MyResult<HomeworkSolutionModel> {
+    override suspend fun getSolution(homeworkId: String): MyResult<List<HomeworkSolutionModel>> {
         return GlobalScope.async { homeworkSolutionClient.getHomeworkSolution(homeworkId) }.toMyResult()
     }
 }

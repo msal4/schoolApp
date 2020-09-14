@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.homeworkSolution.domain.model
+package com.smart.resources.schools_app.features.homeworkSolution.data.model
 
 import java.io.File
 

@@ -2,16 +2,18 @@ package com.smart.resources.schools_app.features.homeworkSolution.presentation.a
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.databinding.ItemHomeworkAnswerBinding
-import com.smart.resources.schools_app.features.homeworkSolution.domain.model.HomeworkSolutionModel
+import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
 import ru.rhanza.constraintexpandablelayout.State
 
 class HomeworkAnswerRecyclerAdapter :
     ListAdapter<HomeworkSolutionModel, HomeworkAnswerRecyclerAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
+    var onImageClicked: ((ImageView, String) -> Unit)? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -28,7 +30,9 @@ class HomeworkAnswerRecyclerAdapter :
     ) {
         val model = getItem(position)
         holder.bind(model)
-
+        holder.binding.image.setOnClickListener {
+            if (it is ImageView) onImageClicked?.invoke(it, model.imageUrl.toString())
+        }
     }
 
     override fun submitList(list: List<HomeworkSolutionModel>?) {

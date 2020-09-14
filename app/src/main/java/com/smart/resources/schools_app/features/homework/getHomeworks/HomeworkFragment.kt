@@ -9,7 +9,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.adapters.SwipeAdapter
 import com.smart.resources.schools_app.core.extentions.showSnackBar
@@ -17,9 +16,10 @@ import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.homework.HomeworkModel
 import com.smart.resources.schools_app.features.homework.HomeworkViewModel
 import com.smart.resources.schools_app.features.homework.addHomework.AddHomeworkFragment
-import com.smart.resources.schools_app.features.homeworkSolution.domain.model.HomeworkSolutionModel
-import com.smart.resources.schools_app.features.homeworkSolution.presentation.fragments.HomeworkSolutionBottomSheet
-import com.smart.resources.schools_app.features.homeworkSolution.presentation.fragments.HomeworkAnswerFragment
+import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
+import com.smart.resources.schools_app.features.homeworkSolution.presentation.fragments.AddHomeworkSolutionBottomSheet
+import com.smart.resources.schools_app.features.homeworkSolution.presentation.fragments.HomeworkSolutionFragment
+import com.smart.resources.schools_app.features.homeworkSolution.presentation.fragments.ShowHomeworkSolutionBottomSheet
 import com.smart.resources.schools_app.features.users.UsersRepository
 import com.smart.resources.schools_app.sharedUi.ImageViewerActivity
 import com.smart.resources.schools_app.sharedUi.SectionActivity
@@ -53,10 +53,10 @@ class HomeworkFragment : Fragment() {
             listState = viewModel.listState
             viewModel.onError = ::onError
 
-            viewModel.getHomework.observe(this@HomeworkFragment, Observer {
+            viewModel.homework.observe(this@HomeworkFragment, Observer {
                 if (it == null) return@Observer
                 errorText.text = ""
-                adapter.submitList(it)
+                adapter.submitList(viewModel.homework.value)
             })
 
         }
@@ -86,17 +86,22 @@ class HomeworkFragment : Fragment() {
     private fun onAnswerClicked(homeworkModel: HomeworkModel) {
         fragmentManager?.let {
             if (viewModel.isStudent) {
-                HomeworkSolutionBottomSheet.newInstance(homeworkModel.idHomework.toString()).apply {
-                    show(it, "")
-                    onSolutionAdded= ::onHomeworkSolutionAdded
+                if(homeworkModel.solution == null) {
+                    AddHomeworkSolutionBottomSheet.newInstance(homeworkModel.idHomework).apply {
+                        show(it, "")
+                        onSolutionAdded = ::onHomeworkSolutionAdded
+                    }
+                }else{
+                    ShowHomeworkSolutionBottomSheet.newInstance(homeworkModel.solution).show(it, "")
                 }
             } else {
-                HomeworkAnswerFragment.newInstance(it)
+                HomeworkSolutionFragment.newInstance(it, homeworkModel.idHomework)
             }
         }
     }
     private fun onHomeworkSolutionAdded(homeworkSolution: HomeworkSolutionModel) {
         binding.layout.showSnackBar(getString(R.string.solution_added_successfully), false)
+        viewModel.addSolution(homeworkSolution)
     }
     fun onError(errorMsg: String) {
         binding.layout.showSnackBar(errorMsg)

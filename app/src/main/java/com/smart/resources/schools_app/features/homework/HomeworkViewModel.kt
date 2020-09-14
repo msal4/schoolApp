@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.*
+import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
 import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.users.UsersRepository
 import kotlinx.coroutines.*
@@ -20,12 +21,17 @@ class HomeworkViewModel (application: Application) : AndroidViewModel(applicatio
         UsersRepository.instance.getCurrentUserAccount()?.isStudent == true
     }
 
-
     private val homeworkRepo= HomeworkRepository()
-    val getHomework: LiveData<MutableList<HomeworkModel>>
+    init {
+        fetchHomework()
+    }
+
+
+    val homework: LiveData<MutableList<HomeworkModel>>
             by lazy {
-                fetchHomework()
-                homeworkRepo.homework}
+
+                    homeworkRepo.homework
+            }
 
     private val c= application.applicationContext
     var onError: ((String)-> Unit)?= null
@@ -43,11 +49,10 @@ class HomeworkViewModel (application: Application) : AndroidViewModel(applicatio
         }
     }
 
-
     private fun fetchHomework(){
         viewModelScope.launch {
             listState.setLoading(true)
-            when (val result =homeworkRepo.downloadHomework()) {
+            when (val result =if(isStudent)  homeworkRepo.getStudentHomework() else homeworkRepo.getTeacherHomework()) {
                 is Success -> {
                     if (result.data.isNullOrEmpty()) listState.setBodyError(c.getString(R.string.no_homework))
                     else listState.setLoading(false)
@@ -59,8 +64,9 @@ class HomeworkViewModel (application: Application) : AndroidViewModel(applicatio
         }
     }
 
-
-
+    fun addSolution(homeworkSolutionModel: HomeworkSolutionModel){
+        homeworkRepo.addHomeworkSolution(homeworkSolutionModel)
+    }
     fun addHomework(){
         Logger.i(postHomeworkModel.toString())
         Logger.i("isDataValid: ${validateData()}")
