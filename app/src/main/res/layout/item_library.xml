@@ -35,7 +35,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/examName"
+            android:id="@+id/subjectName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
@@ -45,7 +45,7 @@
             android:textStyle="bold"
             android:fontFamily="@font/monadi"
             android:includeFontPadding="true"
-            app:layout_constraintBottom_toTopOf="@+id/date"
+            app:layout_constraintBottom_toTopOf="@+id/examDate"
             app:layout_constraintEnd_toEndOf="@+id/advertisementsIcon"
             app:layout_constraintStart_toStartOf="@+id/advertisementsIcon"
             app:layout_constraintTop_toBottomOf="@+id/advertisementsIcon"
@@ -57,17 +57,17 @@
 
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/examDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:layout_marginBottom="16dp"
             android:textColor="@android:color/black"
             app:layout_constraintBottom_toBottomOf="@+id/advertisementsIcon"
-            app:layout_constraintEnd_toEndOf="@+id/examName"
+            app:layout_constraintEnd_toEndOf="@+id/subjectName"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/examName"
-            app:layout_constraintTop_toBottomOf="@+id/examName"
+            app:layout_constraintStart_toStartOf="@+id/subjectName"
+            app:layout_constraintTop_toBottomOf="@+id/subjectName"
             mine:setDate="@{itemModel.addDate}"
             tools:text="8/10/2019" />
 

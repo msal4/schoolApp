@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:mine="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="onlineExamItem"
+            type="com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExamItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/item_margin"
+        android:onlineExamCardStatus="@{onlineExamItem.examStatus}"
+        android:layoutDirection="rtl"
+        android:minHeight="@dimen/item_min_height"
+        android:orientation="vertical"
+        android:padding="@dimen/item_padding">
+
+        <ImageView
+            android:id="@+id/lockIcon"
+            android:layout_width="@dimen/item_icon_size"
+            android:layout_height="@dimen/item_icon_size"
+            android:alpha="0.87"
+            android:visibility="@{onlineExamItem.locked? View.VISIBLE: View.GONE}"
+            android:contentDescription="@string/desc_ic_online_exam"
+            android:src="@drawable/ic_lock_primary_24dp"
+            android:tint="@android:color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/onlineExamIcon"
+            android:layout_width="@dimen/item_icon_size"
+            android:layout_height="@dimen/item_icon_size"
+            android:contentDescription="@string/desc_ic_online_exam"
+            android:src="@drawable/ic_online_exam"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/subjectName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/monadi"
+            android:includeFontPadding="true"
+            android:text="@{onlineExamItem.subjectName}"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/examDuration"
+            app:layout_constraintStart_toEndOf="@+id/onlineExamIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="المادة" />
+
+
+        <TextView
+            android:id="@+id/examDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            mine:setDate="@{onlineExamItem.date}"
+            android:textAlignment="viewStart"
+            app:layout_constraintBottom_toBottomOf="@+id/subjectName"
+            app:layout_constraintEnd_toStartOf="@+id/lockIcon"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/dash1"
+            app:layout_constraintTop_toTopOf="@+id/subjectName"
+            app:layout_constraintVertical_bias="1.0"
+            tools:text="8/10/2019" />
+
+        <TextView
+            android:id="@+id/dash1"
+            style="@style/dashTextStyle"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="2dp"
+            android:includeFontPadding="false"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/subjectName"
+            app:layout_constraintStart_toEndOf="@+id/subjectName"
+            app:layout_constraintTop_toTopOf="@+id/subjectName" />
+
+        <TextView
+            android:id="@+id/numberOfQuestions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:numberOfQuestions="@{onlineExamItem.numberOfQuestions}"
+            android:textAlignment="viewStart"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/onlineExamIcon"
+            app:layout_constraintTop_toBottomOf="@+id/subjectName"
+            tools:text="30 سؤال" />
+
+        <TextView
+            android:id="@+id/dash2"
+            style="@style/dashTextStyle"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/numberOfQuestions"
+            app:layout_constraintStart_toEndOf="@+id/numberOfQuestions"
+            app:layout_constraintTop_toTopOf="@+id/numberOfQuestions" />
+
+        <TextView
+            android:id="@+id/examDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="12dp"
+            android:durationInMinutes="@{onlineExamItem.duration}"
+            android:textAlignment="viewStart"
+            app:layout_constraintBaseline_toBaselineOf="@id/numberOfQuestions"
+            app:layout_constraintEnd_toStartOf="@+id/lockIcon"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/dash2"
+            tools:text="5 ساعات" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="start"
+            app:constraint_referenced_ids="lockIcon"
+            tools:layout_editor_absoluteX="399dp"
+            tools:layout_editor_absoluteY="12dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

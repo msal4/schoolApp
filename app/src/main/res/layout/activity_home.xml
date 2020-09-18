@@ -12,7 +12,6 @@
             type="com.smart.resources.schools_app.core.myTypes.UserType" />
     </data>
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -325,7 +324,7 @@
                 android:text="@string/advertising"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/home_circle_text_size"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/onlineExams"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toStartOf="@+id/guideline3"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -352,6 +351,50 @@
                 app:layout_constraintEnd_toEndOf="@+id/advertisements"
                 app:layout_constraintStart_toStartOf="@+id/advertisements"
                 app:layout_constraintTop_toTopOf="@+id/advertisements"
+                app:layout_constraintVertical_bias="0.0" />
+
+
+            <ImageView
+                android:id="@+id/onlineExamsIcon"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/home_circle_padding"
+                android:layout_marginEnd="@dimen/home_circle_padding"
+                android:layout_marginTop="@dimen/home_circle_top_padding"
+                android:layout_marginBottom="48dp"
+                android:contentDescription="@string/section_icon_desc"
+                android:elevation="6dp"
+                android:outlineProvider="none"
+                android:src="@drawable/ic_online_exam"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/onlineExams"
+                app:layout_constraintDimensionRatio="w,1:1"
+                app:layout_constraintEnd_toEndOf="@+id/onlineExams"
+                app:layout_constraintStart_toStartOf="@+id/onlineExams"
+                app:layout_constraintTop_toTopOf="@+id/onlineExams"
+                app:layout_constraintVertical_bias="0.0" />
+
+
+            <TextView
+                android:id="@+id/onlineExams"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/background_circle_white"
+                android:elevation="@dimen/home_circle_elevation"
+                android:gravity="center|bottom"
+                android:onClick="navigate"
+                android:padding="@dimen/home_circle_padding"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                android:text="@string/online_exam"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/home_circle_text_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="h,1:1"
+                app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toBottomOf="@+id/advertisements"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView

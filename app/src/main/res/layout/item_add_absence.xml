@@ -31,7 +31,7 @@
             android:textAlignment="viewStart"
             android:textColor="@android:color/black"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/date"
+            app:layout_constraintEnd_toStartOf="@id/examDate"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -39,7 +39,7 @@
             tools:text="اسم الطالب" />
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/examDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"

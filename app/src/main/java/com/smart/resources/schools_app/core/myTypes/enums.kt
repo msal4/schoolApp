@@ -9,7 +9,8 @@ enum class Section{
     ADVERTISING,
     EXAM,
     NOTIFICATION,
-    LECTURE
+    LECTURE,
+    ONLINE_EXAM,
 }
 
 enum class WeekDays(val dayName:String) {

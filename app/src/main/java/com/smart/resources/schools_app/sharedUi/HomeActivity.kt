@@ -127,6 +127,10 @@ class HomeActivity : AppCompatActivity() {
                 this,
                 Section.LECTURE
             )
+            R.id.onlineExams-> SectionActivity.newInstance(
+                this,
+                Section.ONLINE_EXAM
+            )
         }
     }
 }

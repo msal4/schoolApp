@@ -37,7 +37,7 @@
             android:text="@{model.title}"
             android:textAlignment="viewStart"
             android:textColor="@android:color/black"
-            app:layout_constraintEnd_toStartOf="@id/date"
+            app:layout_constraintEnd_toStartOf="@id/examDate"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toEndOf="@id/lectureIcon"
@@ -45,7 +45,7 @@
             tools:text="رياضيات" />
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/examDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="viewStart"
@@ -67,7 +67,7 @@
             android:text="@{model.subtitle}"
             android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/date"
+            app:layout_constraintEnd_toStartOf="@+id/examDate"
             app:layout_constraintStart_toEndOf="@id/lectureIcon"
             app:layout_constraintStart_toStartOf="@id/title"
             app:layout_constraintTop_toBottomOf="@id/title"

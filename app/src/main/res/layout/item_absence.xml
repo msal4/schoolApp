@@ -34,7 +34,7 @@
 
 
         <TextView
-            android:id="@+id/examName"
+            android:id="@+id/subjectName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -44,7 +44,7 @@
             android:textAlignment="viewStart"
             android:textColor="@android:color/black"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/date"
+            app:layout_constraintBottom_toTopOf="@+id/examDate"
             app:layout_constraintStart_toEndOf="@+id/advertisementsIcon"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="spread"
@@ -52,14 +52,14 @@
 
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/examDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             mine:setDate="@{itemModel.absenceDate}"
             android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/examName"
-            app:layout_constraintTop_toBottomOf="@+id/examName"
+            app:layout_constraintStart_toStartOf="@+id/subjectName"
+            app:layout_constraintTop_toBottomOf="@+id/subjectName"
             tools:text="8/10/2019" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

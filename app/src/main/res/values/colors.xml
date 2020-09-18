@@ -15,5 +15,8 @@
 
     <color name="shadowColor">#40000000</color>
     <color name="white">#FFFFFF</color>
-    <color name="lightBlue">#EFF3FC</color>
+    <color name="lightBlue">#EDF1F6</color>
+
+    <color name="examInProgressColor">#EFAD58</color>
+    <color name="examReadyColor">@color/green</color>
 </resources>

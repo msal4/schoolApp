@@ -13,8 +13,8 @@ android {
         applicationId "com.smart.resources.schools.smart" // TODO change5: modify package name
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 10
-        versionName "2.5.1"
+        versionCode 12
+        versionName "2.6.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         javaCompileOptions {
@@ -102,5 +102,7 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
 
    // implementation("com.squareup.okhttp3:logging-interceptor:4.8.1")
-    debugImplementation 'com.snakyapps.watchtower:interceptor-okhttp:2.0.2'
+    def watch_tower_version = "2.0.2"
+    debugImplementation "com.snakyapps.watchtower:interceptor-okhttp:$watch_tower_version"
+    releaseImplementation "com.snakyapps.watchtower:interceptor-okhttp-no-op:$watch_tower_version"
 }

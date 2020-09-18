@@ -20,6 +20,7 @@ import com.smart.resources.schools_app.features.exam.ExamFragment
 import com.smart.resources.schools_app.features.homework.getHomeworks.HomeworkFragment
 import com.smart.resources.schools_app.features.lecture.LectureFragment
 import com.smart.resources.schools_app.features.library.LibraryFragment
+import com.smart.resources.schools_app.features.onlineExam.presentaion.fragment.OnlineExamFragment
 import com.smart.resources.schools_app.features.users.UsersRepository
 import com.smart.resources.schools_app.features.rating.RatingFragment
 import com.smart.resources.schools_app.features.ratingAdd.AddRatingFragment
@@ -76,6 +77,7 @@ class SectionActivity : AppCompatActivity() {
                 Section.RATING ->
                     if(isStudent) RatingFragment.newInstance(this)
                     else AddRatingFragment.newInstance(this)
+                Section.ONLINE_EXAM -> OnlineExamFragment.newInstance(this)
             }
         }
     }

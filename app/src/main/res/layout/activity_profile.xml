@@ -466,10 +466,10 @@
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:padding="@dimen/profile_bottom_bar_padding"
+                android:visibility="@{teacherModel == null? View.VISIBLE: View.GONE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:visibility="@{teacherModel == null? View.VISIBLE: View.GONE}">
+                app:layout_constraintStart_toStartOf="parent">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -489,12 +489,10 @@
                     android:id="@+id/availabilityText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:alpha="0.87"
-                    android:textColor="@{model.certificateState == CertificateState.AVAILABLE? @color/white: @color/darkRed}"
-                    android:textSize="@dimen/profileAttributeSize"
                     android:text="@{model.certificateStatusMsg}"
-                    android:visibility="@{model.certificateState == CertificateState.UNKNOWN? View.GONE: View.VISIBLE}"
-                    />
+                    android:textColor="@{model.certificateState == CertificateState.AVAILABLE? @color/white: @android:color/darker_gray}"
+                    android:textSize="@dimen/profileAttributeSize"
+                    android:visibility="@{model.certificateState == CertificateState.UNKNOWN? View.GONE: View.VISIBLE}" />
 
             </LinearLayout>
 
