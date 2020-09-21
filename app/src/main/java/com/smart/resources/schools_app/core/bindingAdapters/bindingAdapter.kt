@@ -17,31 +17,5 @@ fun setStars(ratingBar:  RatingBar, stars:Int?){
 }
 
 
-@BindingAdapter("android:onlineExamCardStatus")
-fun View.setOnlineExamCardStatus(onlineExamStatus: OnlineExamStatus?){
 
-    background= when(onlineExamStatus){
-        OnlineExamStatus.READY -> R.drawable.background_online_exam_ready
-        OnlineExamStatus.IN_PROGRESS -> R.drawable.background_online_exam_in_progress
-        else -> R.drawable.background_item
-    }.toDrawable(context)
-
-    elevation = when(onlineExamStatus){
-        OnlineExamStatus.READY ->  R.dimen.exam_ready_item_elevation
-        OnlineExamStatus.IN_PROGRESS ->  R.dimen.exam_in_progress_item_elevation
-        else -> R.dimen.item_elevation
-    }.toDimen(context)
-
-    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-        val color= when(onlineExamStatus){
-            OnlineExamStatus.READY -> R.color.examReadyColor
-            OnlineExamStatus.IN_PROGRESS -> R.color.examInProgressColor
-            else -> android.R.color.black
-        }.toColor(context)
-
-        outlineAmbientShadowColor= color
-        outlineSpotShadowColor= color
-    }
-
-}
 

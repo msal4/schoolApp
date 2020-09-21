@@ -163,7 +163,7 @@
                 android:fontFamily="@font/monadi"
                 android:paddingStart="42dp"
                 android:paddingEnd="42dp"
-                android:text="@string/answer"
+                android:text="@string/answer_action"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 />

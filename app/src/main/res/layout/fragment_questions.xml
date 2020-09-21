@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+
+        <variable
+            name="listState"
+            type="com.smart.resources.schools_app.core.myTypes.ListState" />
+
+        <variable
+            name="model"
+            type="com.smart.resources.schools_app.features.onlineExam.domain.viewModel.QuestionsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/paperHolesGuideLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/paperHeaderGuideLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.132" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/background_paper"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/subjectName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.87"
+            android:fontFamily="@font/monadi"
+            android:text="اسئلة رياضيات"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/paperHolesGuideLine" />
+
+        <TextView
+            android:id="@+id/remainingQuestionsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/remainingQuestions"
+            app:layout_constraintEnd_toStartOf="@+id/subjectName"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/paperHolesGuideLine" />
+
+        <TextView
+            android:id="@+id/remainingQuestions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.87"
+            android:text="@{model.remainingQuestionsText}"
+            android:textColor="@android:color/black"
+            app:layout_constraintEnd_toEndOf="@+id/remainingQuestionsTitle"
+            app:layout_constraintStart_toStartOf="@+id/remainingQuestionsTitle"
+            app:layout_constraintTop_toBottomOf="@id/remainingQuestionsTitle" />
+
+        <TextView
+            android:id="@+id/examRemainingTimeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="@string/remainingTime"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/subjectName"
+            app:layout_constraintTop_toTopOf="@id/paperHolesGuideLine" />
+
+        <TextView
+            android:id="@+id/examRemainingTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.87"
+            android:timeInMinutesSeconds="@{model.onlineExamDetails.examDuration}"
+            android:timer="@{model.onlineExamDetails.remainingDuration}"
+            android:onTimerFinished="@{()-> model.onTimerFinished()}"
+            android:startTimer="@{true}"
+            android:textColor="@android:color/black"
+            app:layout_constraintEnd_toEndOf="@+id/examRemainingTimeTitle"
+            app:layout_constraintStart_toStartOf="@+id/examRemainingTimeTitle"
+            app:layout_constraintTop_toBottomOf="@id/examRemainingTimeTitle" />
+
+        <TextView
+            android:id="@+id/errorText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/error_text_margin"
+            android:gravity="start"
+            android:text="@{listState.bodyError}"
+            android:textAlignment="textStart"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/questionsPager" />
+
+        <ProgressBar
+            android:id="@+id/progressIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{listState.loading? View.VISIBLE: View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/questionsPager"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:visibility="@{listState.loading? View.GONE: View.VISIBLE}"
+            app:layout_constraintBottom_toTopOf="@+id/magicIndicator"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/paperHeaderGuideLine"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/magicIndicator"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:background="@color/black30"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

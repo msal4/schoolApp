@@ -8,6 +8,8 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.extentions.hide
+import com.smart.resources.schools_app.core.extentions.show
 import com.smart.resources.schools_app.databinding.ActivitySectionBinding
 import com.smart.resources.schools_app.features.notification.NotificationFragment
 import com.smart.resources.schools_app.core.myTypes.Section
@@ -56,6 +58,15 @@ class SectionActivity : AppCompatActivity() {
     fun setCustomTitle(@StringRes title: Int){
         setCustomTitle(getString(title))
     }
+
+    fun hideToolbar(){
+        binding.toolbar.hide()
+    }
+
+    fun showToolbar(){
+        binding.toolbar.show()
+    }
+
 
     private fun createFragment() {
         val isStudent= UsersRepository.instance.getCurrentUserAccount()?.userType == 0

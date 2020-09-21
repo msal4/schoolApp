@@ -13,9 +13,6 @@ import okhttp3.RequestBody
 import java.io.File
 import java.nio.charset.StandardCharsets
 
-
-
-
 fun String.decodeToken(): String {
     val splitString = this.split('.')
 //    val base64EncodedHeader = splitString[0]

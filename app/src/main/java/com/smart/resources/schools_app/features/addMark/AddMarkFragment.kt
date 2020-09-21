@@ -11,18 +11,21 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.helpers.RetrofitHelper
-import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.core.extentions.hide
 import com.smart.resources.schools_app.core.extentions.show
 import com.smart.resources.schools_app.core.extentions.showSnackBar
+import com.smart.resources.schools_app.core.helpers.RetrofitHelper
+import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.students.SendStudentResult
 import com.smart.resources.schools_app.features.students.StudentWithMark
 import com.smart.resources.schools_app.sharedUi.SectionActivity
-import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class AddMarkFragment : Fragment(), CanLogout {
     private lateinit var binding: FragmentRecyclerLoaderBinding
@@ -42,7 +45,7 @@ class AddMarkFragment : Fragment(), CanLogout {
             fm.beginTransaction().apply {
                 setCustomAnimations(
                     R.anim.slide_in_right,
-                    R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right
+                    R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right,
                 )
                 replace(R.id.fragmentContainer, fragment)
                 addToBackStack(ADD_EXAM_FRAGMENT)
@@ -57,7 +60,7 @@ class AddMarkFragment : Fragment(), CanLogout {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false).apply {
-            lifecycleOwner= this@AddMarkFragment
+            lifecycleOwner = this@AddMarkFragment
         }
         setHasOptionsMenu(true)
 
@@ -115,7 +118,7 @@ class AddMarkFragment : Fragment(), CanLogout {
         )
 
 
-        if (studebtResult.marks.isNotEmpty()){
+        if (studebtResult.marks.isNotEmpty()) {
 
             if (validateMark(studebtResult)) {
                 lifecycleScope.launch {
@@ -124,7 +127,11 @@ class AddMarkFragment : Fragment(), CanLogout {
 
 
                         val result =
-                            GlobalScope.async { RetrofitHelper.examClient.addMultiResult(studebtResult) }
+                            GlobalScope.async {
+                                RetrofitHelper.examClient.addMultiResult(
+                                    studebtResult
+                                )
+                            }
                                 .toMyResult()
 
 
@@ -133,12 +140,13 @@ class AddMarkFragment : Fragment(), CanLogout {
                                 onBackPressed()
 
                             }
-                            Unauthorized-> context?.let { expireLogout(it) }
+                            Unauthorized -> context?.let { expireLogout(it) }
                             is ResponseError -> {
                                 showErrorMsg(result.combinedMsg)
                             }
                             is ConnectionError -> {
-                                context?.getString(R.string.connection_error)?.let { showErrorMsg(it) }
+                                context?.getString(R.string.connection_error)
+                                    ?.let { showErrorMsg(it) }
 
                             }
                         }
@@ -152,17 +160,18 @@ class AddMarkFragment : Fragment(), CanLogout {
                 binding.layout.showSnackBar("يجب ادخال درجة صحيحة")
             }
 
-        }else{
+        } else {
             showErrorMsg(getString(R.string.no_degree_added))
         }
 
     }
 
 
-    private fun showErrorMsg(msg:String){
+    private fun showErrorMsg(msg: String) {
         setToolbarLoading(false)
         binding.layout.showSnackBar(msg)
     }
+
     private fun setToolbarLoading(isLoading: Boolean) {
         if (isLoading) {
             progressBar.show()
@@ -187,7 +196,7 @@ class AddMarkFragment : Fragment(), CanLogout {
     private fun setupViewModel(examId: Int) {
         viewModel = ViewModelProviders.of(this)
             .get(AddMarkViewModel::class.java).apply {
-                binding.listState= listState
+                binding.listState = listState
                 getStudents(examId).observe(
                     this@AddMarkFragment,
                     androidx.lifecycle.Observer { onExamsDownload(it) })

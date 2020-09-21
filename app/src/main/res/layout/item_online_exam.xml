@@ -8,7 +8,11 @@
         <import type="android.view.View"/>
         <variable
             name="onlineExamItem"
-            type="com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExamItem" />
+            type="com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExamDetails" />
+
+        <variable
+            name="isStudent"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/item_margin"
         android:onlineExamCardStatus="@{onlineExamItem.examStatus}"
+        android:canTakeOnlineExam="@{isStudent}"
         android:layoutDirection="rtl"
         android:minHeight="@dimen/item_min_height"
         android:orientation="vertical"
@@ -23,16 +28,17 @@
 
         <ImageView
             android:id="@+id/lockIcon"
-            android:layout_width="@dimen/item_icon_size"
-            android:layout_height="@dimen/item_icon_size"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="12dp"
             android:alpha="0.87"
-            android:visibility="@{onlineExamItem.locked? View.VISIBLE: View.GONE}"
             android:contentDescription="@string/desc_ic_online_exam"
             android:src="@drawable/ic_lock_primary_24dp"
-            android:tint="@android:color/black"
+            android:visibility="@{onlineExamItem.locked? View.VISIBLE: View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@android:color/black" />
 
         <ImageView
             android:id="@+id/onlineExamIcon"
@@ -55,9 +61,10 @@
             android:textAlignment="viewStart"
             android:textColor="@android:color/black"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/examDuration"
             app:layout_constraintStart_toEndOf="@+id/onlineExamIcon"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/remainingQuestions"
+            app:layout_constraintVertical_chainStyle="spread"
             tools:text="المادة" />
 
 
@@ -79,7 +86,7 @@
 
         <TextView
             android:id="@+id/dash1"
-            style="@style/dashTextStyle"
+            style="@style/DashTextStyle"
             android:layout_marginStart="12dp"
             android:layout_marginBottom="2dp"
             android:includeFontPadding="false"
@@ -89,15 +96,14 @@
             app:layout_constraintTop_toTopOf="@+id/subjectName" />
 
         <TextView
-            android:id="@+id/numberOfQuestions"
+            android:id="@+id/remainingQuestions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:numberOfQuestions="@{onlineExamItem.numberOfQuestions}"
             android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@+id/onlineExamIcon"
             app:layout_constraintTop_toBottomOf="@+id/subjectName"
@@ -105,21 +111,21 @@
 
         <TextView
             android:id="@+id/dash2"
-            style="@style/dashTextStyle"
+            style="@style/DashTextStyle"
             android:layout_marginStart="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/numberOfQuestions"
-            app:layout_constraintStart_toEndOf="@+id/numberOfQuestions"
-            app:layout_constraintTop_toTopOf="@+id/numberOfQuestions" />
+            app:layout_constraintBottom_toBottomOf="@+id/remainingQuestions"
+            app:layout_constraintStart_toEndOf="@+id/remainingQuestions"
+            app:layout_constraintTop_toTopOf="@+id/remainingQuestions" />
 
         <TextView
-            android:id="@+id/examDuration"
+            android:id="@+id/examRemainingTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="12dp"
-            android:durationInMinutes="@{onlineExamItem.duration}"
+            android:durationInMinutes="@{onlineExamItem.examDuration}"
             android:textAlignment="viewStart"
-            app:layout_constraintBaseline_toBaselineOf="@id/numberOfQuestions"
+            app:layout_constraintBaseline_toBaselineOf="@id/remainingQuestions"
             app:layout_constraintEnd_toStartOf="@+id/lockIcon"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/dash2"

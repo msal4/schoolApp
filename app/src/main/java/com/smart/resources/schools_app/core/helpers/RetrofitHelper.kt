@@ -29,7 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitHelper {
 
-  private  val API_BASE_URL get() =  "https://educatoin.app/api/"
+  private  val API_BASE_URL get() =  "https://srit-school.com/api/"
     // "http://directorates.srittwo.me/api/"
     val gson: Gson = GsonBuilder()
         .registerTypeAdapter(

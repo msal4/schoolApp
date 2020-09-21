@@ -46,7 +46,7 @@ class HomeworkRecyclerAdapter(private val isStudent:Boolean) :
 
     private fun getBtnText(model: HomeworkModel) =
         if (isStudent) {
-            if (model.solution == null) R.string.answer else R.string.show_answer
+            if (model.solution == null) R.string.answer_action else R.string.show_answer
         } else {
             R.string.answers
         }

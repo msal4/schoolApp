@@ -23,15 +23,8 @@
 
         <TextView
             android:id="@+id/titleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="@font/monadi"
             android:text="@{pageTitle}"
-            android:includeFontPadding="true"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            tools:text="العنوان" />
+            tools:text="العنوان"
+            style="@style/ToolbarTitleStyle" />
     </androidx.appcompat.widget.Toolbar>
 </layout>

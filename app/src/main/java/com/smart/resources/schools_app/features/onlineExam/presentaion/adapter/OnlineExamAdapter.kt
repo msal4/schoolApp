@@ -6,12 +6,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.databinding.ItemOnlineExamBinding
-import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExamItem
+import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExamDetails
 
-class OnlineExamRecyclerAdapter :
-    ListAdapter<OnlineExamItem, OnlineExamRecyclerAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class OnlineExamAdapter(private val isStudent:Boolean) :
+    ListAdapter<OnlineExamDetails, OnlineExamAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
-    var onItemPressed: (() -> Unit)? = null
+    var onItemPressed: ((onlineExamDetails:OnlineExamDetails) -> Unit)? = null
+
 
 
     override fun onBindViewHolder(
@@ -20,13 +21,13 @@ class OnlineExamRecyclerAdapter :
     ) {
         val model = getItem(position)
         holder.apply {
-            bind(model)
-            binding.root.setOnClickListener { onItemPressed?.invoke() }
+            bind(model, isStudent)
+            binding.root.setOnClickListener { onItemPressed?.invoke(model) }
         }
 
     }
 
-    override fun submitList(list: List<OnlineExamItem>?) {
+    override fun submitList(list: List<OnlineExamDetails>?) {
         super.submitList(list?.toList())
     }
 
@@ -38,8 +39,12 @@ class OnlineExamRecyclerAdapter :
     class MyViewHolder(var binding: ItemOnlineExamBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(model: OnlineExamItem) {
-            binding.onlineExamItem = model
+        fun bind(model: OnlineExamDetails, isStudent: Boolean) {
+            binding.apply {
+                onlineExamItem = model
+                this.isStudent= isStudent
+                executePendingBindings()
+            }
         }
 
         companion object {
@@ -55,20 +60,20 @@ class OnlineExamRecyclerAdapter :
 
 
     companion object {
-        private val DIFF_CALLBACK: DiffUtil.ItemCallback<OnlineExamItem> =
-            object : DiffUtil.ItemCallback<OnlineExamItem>() {
+        private val DIFF_CALLBACK: DiffUtil.ItemCallback<OnlineExamDetails> =
+            object : DiffUtil.ItemCallback<OnlineExamDetails>() {
                 override fun areItemsTheSame(
-                    oldItem: OnlineExamItem,
-                    newItem: OnlineExamItem
+                    oldDetails: OnlineExamDetails,
+                    newDetails: OnlineExamDetails
                 ): Boolean {
-                    return oldItem.id == newItem.id
+                    return oldDetails.id == newDetails.id
                 }
 
                 override fun areContentsTheSame(
-                    oldItem: OnlineExamItem,
-                    newItem: OnlineExamItem
+                    oldDetails: OnlineExamDetails,
+                    newDetails: OnlineExamDetails
                 ): Boolean {
-                    return oldItem == newItem
+                    return oldDetails == newDetails
                 }
             }
     }

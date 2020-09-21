@@ -28,21 +28,21 @@
             android:padding="@dimen/login_padding"
             tools:context=".features.login.LoginActivity">
 
-            <!-- TODO change4: add logo -->
+            <!-- TODO change4: add img_logo -->
             <ImageView
                 android:transitionName="@string/logo_trans"
                 android:id="@+id/logo"
                 android:layout_width="@dimen/logo_size"
                 android:layout_height="@dimen/logo_size"
                 android:contentDescription="@string/logo_desc"
-                android:src="@drawable/logo"
+                android:src="@drawable/img_logo"
                 app:layout_constraintBottom_toTopOf="@id/schoolName"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.49"
                 app:layout_constraintVertical_chainStyle="packed"
-                tools:src="@drawable/logo"/>
+                tools:src="@drawable/img_logo"/>
 
 
             <TextView

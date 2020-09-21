@@ -38,4 +38,5 @@
     <dimen name="logo_size">200dp</dimen>
     <dimen name="profile_bottom_bar_padding">18dp</dimen>
     <dimen name="active_item_border">1dp</dimen>
+    <dimen name="question_choice_spacing">8dp</dimen>
 </resources>

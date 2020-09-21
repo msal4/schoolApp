@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="questionModel"
+            type="com.smart.resources.schools_app.features.onlineExam.domain.model.questions.MultiChoiceQuestion" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layoutDirection="rtl"
+        android:padding="@dimen/item_padding">
+
+        <TextView
+            android:id="@+id/question"
+            style="@style/QuestionTextStyle"
+            android:text="@{questionModel.text}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1/ ما هو الحيوان الذي إن تم قطع رجل من أرجله تنمو مجدداً؟" />
+
+        <RadioGroup
+            android:id="@+id/choicesRadioGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/question"
+            app:layout_constraintStart_toStartOf="@+id/question"
+            app:layout_constraintTop_toBottomOf="@+id/question"
+            app:layout_constraintVertical_bias="0.0">
+
+            <RadioButton
+                android:id="@+id/choice1RadioBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{questionModel.choices[0]}"
+                android:layout_marginBottom="@dimen/question_choice_spacing"
+                />
+
+            <RadioButton
+                android:id="@+id/choice2RadioBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{questionModel.choices[1]}"
+                android:layout_marginBottom="@dimen/question_choice_spacing"
+                />
+
+            <RadioButton
+                android:id="@+id/choice3RadioBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{questionModel.choices[2]}"/>
+
+        </RadioGroup>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

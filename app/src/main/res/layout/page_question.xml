@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="questionModel"
+            type="com.smart.resources.schools_app.features.onlineExam.domain.model.questions.Question" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
+        android:padding="@dimen/item_padding">
+
+        <TextView
+            android:id="@+id/questionText"
+            android:text="@{questionModel.text}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1/ ما هو الحيوان الذي إن تم قطع رجل من أرجله تنمو مجدداً؟"
+            style="@style/QuestionTextStyle" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/QuestionAnswerStyle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/questionText"
+            app:layout_constraintStart_toStartOf="@+id/questionText"
+            app:layout_constraintTop_toBottomOf="@+id/questionText"
+            app:layout_constraintVertical_bias="0.0"
+            android:layout_marginTop="32dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/answer"
+                android:inputType="textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

@@ -2,6 +2,6 @@ student UserAccount
 phone: 770332233
 password: 12334
 ================
-teacher
+teacher & student
 phone: +9640
 password: 12345

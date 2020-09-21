@@ -2,6 +2,7 @@ package com.smart.resources.schools_app.features.rating
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.graphics.toColor
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
@@ -46,7 +47,7 @@ class RatingFragment : Fragment() {
         viewModel = ViewModelProviders.of(this)
             .get(RatingViewModel::class.java).apply {
                 binding.listState= listState
-                getRatings().observe(this@RatingFragment, Observer{onHomeworkDownload(it)})
+                getRatings().observe(viewLifecycleOwner, Observer{onHomeworkDownload(it)})
             }
     }
 

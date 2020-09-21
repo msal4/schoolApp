@@ -1,5 +1,6 @@
 package com.smart.resources.schools_app.core.bindingAdapters
 
+import android.annotation.SuppressLint
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.TextView
@@ -9,8 +10,8 @@ import androidx.databinding.InverseBindingListener
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.adapters.dateDisFormatter
+import com.smart.resources.schools_app.core.extentions.startCountDown
 import com.smart.resources.schools_app.features.users.UsersRepository
-import kotlinx.android.synthetic.main.item_online_exam.view.*
 import org.threeten.bp.Duration
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
@@ -33,6 +34,28 @@ fun TextView.setDurationInMinutes(duration: Duration?) {
     text= context.getString(R.string.durationInMinutes, duration?.toMinutes()?:0)
 }
 
+@BindingAdapter("android:timer", "android:onTimerFinished", "android:startTimer", requireAll = false)
+fun TextView.setTimer(duration:Duration?, onTimerFinished:(()->Unit)?, startTimer:Boolean?) {
+    if(startTimer == true) {
+        duration?.startCountDown(
+            onFinished = onTimerFinished,
+            onTicked = {
+                setTimeInMinutesSeconds(it)
+            },
+            countDownIntervalInMilli = 1000
+        )
+    }
+}
+
+@SuppressLint("SetTextI18n")
+@BindingAdapter("android:timeInMinutesSeconds")
+fun TextView.setTimeInMinutesSeconds(time:Duration) {
+    val minutes= time.toMinutes()
+    val remainingSeconds= time.seconds - (minutes *60)
+    text = "%02d:%02d".format(minutes,remainingSeconds)
+
+}
+
 @BindingAdapter("mine:setDate")
 fun setTextFromDate(textView: TextView, date: LocalDateTime?){
     try {
@@ -40,7 +63,6 @@ fun setTextFromDate(textView: TextView, date: LocalDateTime?){
     }catch (e: Exception){
         Logger.e("binding error: ${e.message}")
     }
-
 }
 
 @InverseBindingAdapter(attribute = "mine:setDate")

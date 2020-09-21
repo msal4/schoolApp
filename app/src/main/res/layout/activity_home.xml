@@ -68,7 +68,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.90999997" />
 
-
             <TextView
                 android:id="@+id/lectures"
                 android:visibility="@{userType == UserType.STUDENT? View.VISIBLE: View.GONE}"
@@ -110,7 +109,6 @@
                 app:layout_constraintStart_toStartOf="@+id/lectures"
                 app:layout_constraintTop_toTopOf="@+id/lectures"
                 app:layout_constraintVertical_bias="0.0" />
-
 
             <TextView
                 android:id="@+id/homework"
@@ -247,11 +245,11 @@
                 android:text="@string/notifications"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/home_circle_text_size"
-                app:layout_constraintTop_toBottomOf="@+id/schedule"
+                app:layout_constraintBottom_toTopOf="@id/absence"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintStart_toStartOf="@+id/guideline4"
-                app:layout_constraintBottom_toTopOf="@id/absence" />
+                app:layout_constraintTop_toBottomOf="@+id/schedule" />
 
             <ImageView
                 android:id="@+id/notificationsIcon"
@@ -310,7 +308,6 @@
                 app:layout_constraintTop_toTopOf="@+id/absence"
                 app:layout_constraintVertical_bias="0.0" />
 
-
             <TextView
                 android:id="@+id/advertisements"
                 android:layout_width="0dp"
@@ -333,7 +330,6 @@
                 app:layout_constraintVertical_bias="0.0"
                />
 
-
             <ImageView
                 android:id="@+id/advertisementsIcon"
                 android:layout_width="0dp"
@@ -353,7 +349,6 @@
                 app:layout_constraintTop_toTopOf="@+id/advertisements"
                 app:layout_constraintVertical_bias="0.0" />
 
-
             <ImageView
                 android:id="@+id/onlineExamsIcon"
                 android:layout_width="0dp"
@@ -366,14 +361,12 @@
                 android:elevation="6dp"
                 android:outlineProvider="none"
                 android:src="@drawable/ic_online_exam"
-                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/onlineExams"
                 app:layout_constraintDimensionRatio="w,1:1"
                 app:layout_constraintEnd_toEndOf="@+id/onlineExams"
                 app:layout_constraintStart_toStartOf="@+id/onlineExams"
                 app:layout_constraintTop_toTopOf="@+id/onlineExams"
                 app:layout_constraintVertical_bias="0.0" />
-
 
             <TextView
                 android:id="@+id/onlineExams"
@@ -385,8 +378,6 @@
                 android:gravity="center|bottom"
                 android:onClick="navigate"
                 android:padding="@dimen/home_circle_padding"
-                android:paddingStart="0dp"
-                android:paddingEnd="0dp"
                 android:text="@string/online_exam"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/home_circle_text_size"
@@ -476,8 +467,6 @@
                 app:layout_constraintStart_toStartOf="@+id/ratings"
                 app:layout_constraintTop_toTopOf="@+id/ratings"
                 app:layout_constraintVertical_bias="0.0" />
-
-
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline"

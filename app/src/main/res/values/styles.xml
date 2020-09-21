@@ -15,6 +15,7 @@
         <item name="android:includeFontPadding">false</item>
         <item name="android:editTextStyle">@style/MyEditText</item>
         <item name="editTextStyle">@style/MyEditText</item>
+        <item name="android:lineSpacingMultiplier">1.5</item>
     </style>
 
 
@@ -28,6 +29,7 @@
     <style name="MyEditText" parent="@style/Widget.AppCompat.EditText">
         <item name="android:inputType">text</item>
         <item name="android:textAlignment">viewStart</item>
+        <item name="android:lineSpacingMultiplier">1.3</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -39,12 +41,41 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="dashTextStyle">
+    <style name="DashTextStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">20sp</item>
         <item name="android:text">@string/dash</item>
 
+    </style>
+
+    <style name="ToolbarTitleStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:fontFamily">@font/monadi</item>
+        <item name="android:includeFontPadding">true</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="QuestionTextStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/monadi</item>
+        <item name="android:includeFontPadding">true</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="QuestionAnswerStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="hintTextColor">@android:color/darker_gray</item>
+        <item name="boxStrokeColor">@color/colorAccent</item>
     </style>
 
 </resources>

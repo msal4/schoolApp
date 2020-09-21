@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Shader
+import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
@@ -24,11 +25,21 @@ fun Context.toast(msg: String) {
     Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
 }
 
-fun ProgressBar.hide() {
+val Context.selectableItemBackgroundBorderless:Int get() {
+    val outValue = TypedValue()
+    theme.resolveAttribute(
+        android.R.attr.selectableItemBackgroundBorderless,
+        outValue,
+        true
+    )
+    return outValue.resourceId
+}
+
+fun View.hide() {
     visibility = View.GONE
 }
 
-fun ProgressBar.show() {
+fun View.show() {
     visibility = View.VISIBLE
 }
 

@@ -321,7 +321,7 @@
                     android:layout_height="34dp"
                     android:layout_marginEnd="16dp"
                     android:srcUrl="@{itemModel.schoolImage}"
-                    tools:src="@drawable/logo" />
+                    tools:src="@drawable/img_logo" />
 
                 <TextView
                     android:id="@+id/schoolNameText"
