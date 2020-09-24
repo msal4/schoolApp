@@ -8,6 +8,7 @@ import android.widget.ImageView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.observe
 import com.smart.resources.schools_app.R
@@ -20,8 +21,8 @@ import com.smart.resources.schools_app.sharedUi.SectionActivity
 
 class HomeworkSolutionFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
-    private lateinit var viewModel: HomeworkSolutionViewModel
     private lateinit var adapter: HomeworkAnswerRecyclerAdapter
+    private val viewModel: HomeworkSolutionViewModel by activityViewModels()
 
 
     companion object {
@@ -52,7 +53,6 @@ class HomeworkSolutionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProviders.of(activity!!).get(HomeworkSolutionViewModel::class.java)
         val homeworkId= arguments?.getString(EXTRA_HOMEWORK_ID)?:""
         viewModel.init(homeworkId)
 

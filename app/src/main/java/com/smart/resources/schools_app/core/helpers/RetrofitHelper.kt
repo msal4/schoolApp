@@ -2,6 +2,7 @@ package com.smart.resources.schools_app.core.helpers
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.smart.resources.schools_app.core.adapters.LocalDateConverter
 import com.smart.resources.schools_app.core.adapters.LocalDateTimeConverter
 import com.smart.resources.schools_app.features.absence.AbsenceClient
 import com.smart.resources.schools_app.features.advertising.AdvertisingClient
@@ -22,6 +23,7 @@ import com.snakydesign.watchtower.interceptor.WatchTowerInterceptor
 import com.snakydesign.watchtower.interceptor.WebWatchTowerObserver
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -29,12 +31,16 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitHelper {
 
-  private  val API_BASE_URL get() =  "https://srit-school.com/api/"
+    private val API_BASE_URL get() = "https://srit-school.com/api/"
+
     // "http://directorates.srittwo.me/api/"
     val gson: Gson = GsonBuilder()
         .registerTypeAdapter(
             LocalDateTime::class.java,
-            LocalDateTimeConverter()
+            LocalDateTimeConverter(),
+        ).registerTypeAdapter(
+            LocalDate::class.java,
+            LocalDateConverter(),
         )
         .create()
 
@@ -44,53 +50,53 @@ object RetrofitHelper {
         WatchTowerInterceptor()
         // HttpLoggingInterceptor().apply { setLevel(HttpLoggingInterceptor.Level.BODY) }
     }
-    private val mBuilder get () = Retrofit.Builder()
-        .baseUrl(API_BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create(gson))
+    private val mBuilder
+        get() = Retrofit.Builder()
+            .baseUrl(API_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create(gson))
 
     private val retrofit: Retrofit
-            get() =
-                mBuilder
-                    .client(OkHttpClient.Builder().addInterceptor(loggingInterceptor).build())
-                    .build()
+        get() =
+            mBuilder
+                .client(OkHttpClient.Builder().addInterceptor(loggingInterceptor).build())
+                .build()
 
     private val retrofitWithAuth: Retrofit
-            get() =
-                with(OkHttpClient.Builder()) {
-                    addInterceptor(loggingInterceptor)
-                    addTokenHeader()
-                    mBuilder
-                        .client(build())
-                        .build()
-                }
+        get() =
+            with(OkHttpClient.Builder()) {
+                addInterceptor(loggingInterceptor)
+                addTokenHeader()
+                mBuilder
+                    .client(build())
+                    .build()
+            }
 
 
     private fun OkHttpClient.Builder.addTokenHeader() {
-        addInterceptor(
-            Interceptor { chain ->
-                val token =
-                    UsersRepository.instance.getCurrentUserAccount()?.accessToken
-                val newRequest = chain.request().newBuilder()
-                    .addHeader("Authorization", "Baerer $token")
-                    .build()
-                chain.proceed(newRequest)
-            }
-        )
+        addInterceptor { chain ->
+            val token =
+                UsersRepository.instance.getCurrentUserAccount()?.accessToken
+            val newRequest = chain.request().newBuilder()
+                .addHeader("Authorization", "Baerer $token")
+                .build()
+            chain.proceed(newRequest)
+        }
     }
 
-    val homeworkClient: HomeworkClient get() =  retrofitWithAuth.create(HomeworkClient::class.java)
+    val homeworkClient: HomeworkClient get() = retrofitWithAuth.create(HomeworkClient::class.java)
     val homeworkSolutionClient: HomeworkSolutionClient
-        get() =  retrofitWithAuth.create(
-            HomeworkSolutionClient::class.java)
+        get() = retrofitWithAuth.create(
+            HomeworkSolutionClient::class.java
+        )
     val examClient: ExamClient get() = retrofitWithAuth.create(ExamClient::class.java)
     val lectureClient: LectureClient get() = retrofitWithAuth.create(LectureClient::class.java)
     val certificateClient: CertificateClient get() = retrofitWithAuth.create(CertificateClient::class.java)
-    val libraryClient: LibraryClient get() =  retrofitWithAuth.create(LibraryClient::class.java)
-    val notificationClient: NotificationsClient get() =  retrofitWithAuth.create(NotificationsClient::class.java)
+    val libraryClient: LibraryClient get() = retrofitWithAuth.create(LibraryClient::class.java)
+    val notificationClient: NotificationsClient get() = retrofitWithAuth.create(NotificationsClient::class.java)
     val absenceClient: AbsenceClient get() = retrofitWithAuth.create(AbsenceClient::class.java)
-    val advertisingClient: AdvertisingClient get() =  retrofitWithAuth.create(AdvertisingClient::class.java)
-    val scheduleClient: ScheduleClient get() =  retrofitWithAuth.create(ScheduleClient::class.java)
-    val ratingClient: RatingClient get() =  retrofitWithAuth.create(RatingClient::class.java)
-    val studentClient: StudentClient get() =  retrofitWithAuth.create(StudentClient::class.java)
-    val accountClient: AccountClient get() =  retrofit.create(AccountClient::class.java)
+    val advertisingClient: AdvertisingClient get() = retrofitWithAuth.create(AdvertisingClient::class.java)
+    val scheduleClient: ScheduleClient get() = retrofitWithAuth.create(ScheduleClient::class.java)
+    val ratingClient: RatingClient get() = retrofitWithAuth.create(RatingClient::class.java)
+    val studentClient: StudentClient get() = retrofitWithAuth.create(StudentClient::class.java)
+    val accountClient: AccountClient get() = retrofit.create(AccountClient::class.java)
 }

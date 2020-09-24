@@ -1,22 +1,24 @@
 package com.smart.resources.schools_app.features.absence
 
+import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 
 open class StudentAbsenceModel(
     val subjectName: String,
-    val absenceDate: LocalDateTime)
+    val absenceDate: LocalDate,
+)
 
 class AddAbsenceModel(
     val idStudent: String,
-    var isChecked: Boolean= false,
+    var isChecked: Boolean = false,
     name: String,
-    absenceDate: LocalDateTime= LocalDateTime.now()
+    absenceDate: LocalDate = LocalDate.now()
 
-): StudentAbsenceModel(name, absenceDate)
+) : StudentAbsenceModel(name, absenceDate)
 
 
 data class PostAbsenceModel(
-    var classId: String= "",
-    var subjectName: String= "",
+    var classId: String = "",
+    var subjectName: String = "",
     var studentsId: List<String> = listOf()
 )

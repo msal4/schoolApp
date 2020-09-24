@@ -1,7 +1,6 @@
 package com.smart.resources.schools_app.features.advertising
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView

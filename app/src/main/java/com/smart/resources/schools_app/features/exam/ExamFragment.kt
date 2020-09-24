@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.smart.resources.schools_app.R
@@ -16,8 +17,8 @@ import com.smart.resources.schools_app.sharedUi.SectionActivity
 
 class ExamFragment : Fragment(), ExamRecyclerAdapter.OnItemClickListener {
     private lateinit var binding: FragmentRecyclerLoaderBinding
-    private lateinit var viewModel: ExamViewModel
     private lateinit var adapter: ExamRecyclerAdapter
+    private val viewModel: ExamViewModel by activityViewModels()
 
     companion object {
         fun newInstance(fm: FragmentManager) {
@@ -50,10 +51,9 @@ class ExamFragment : Fragment(), ExamRecyclerAdapter.OnItemClickListener {
     }
 
     private fun setupViewModel() {
-        viewModel = ViewModelProviders.of(activity!!)
-            .get(ExamViewModel::class.java).apply {
+        viewModel.apply {
                     binding.listState= listState
-                    exams.observe(this@ExamFragment, Observer { onExamsDownload(it) })
+                    exams.observe(viewLifecycleOwner, { onExamsDownload(it) })
                 }
         }
 

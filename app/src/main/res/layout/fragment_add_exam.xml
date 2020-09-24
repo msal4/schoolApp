@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:mine="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -44,9 +43,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/exam_name"
-                style="@style/MyEditText"
+                style="@style/MyEditTextStyle"
                 android:text="@={postModel.subjectName}"
-                mine:errorMsg="@{e.subjectNameMsg}"
+                android:errorMsg="@{e.subjectNameMsg}"
                 tools:text="تيست" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -64,7 +63,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/note"
-                style="@style/MyEditText"
+                style="@style/MyEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@={postModel.note}"
@@ -89,11 +88,11 @@
                 android:id="@+id/dateField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/MyEditText"
+                style="@style/MyEditTextStyle"
                 android:inputType="date"
-                mine:setDate="@={postModel.date}"
+                android:setDate="@={postModel.date}"
                 android:focusable="false"
-                mine:errorMsg="@{e.dateMsg}"
+                android:errorMsg="@{e.dateMsg}"
                 android:hint="@string/date" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -107,7 +106,7 @@
             android:minHeight="60dp"
             android:gravity="right"
             android:focusableInTouchMode="false"
-            mine:errorMsg="@{e.typeMsg}"
+            android:errorMsg="@{e.typeMsg}"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toTopOf="@+id/classAndSectionSpinner"
             app:layout_constraintEnd_toEndOf="@+id/dateInputLayout"
@@ -124,7 +123,7 @@
             android:minHeight="60dp"
             android:focusableInTouchMode="false"
             android:gravity="right"
-            mine:errorMsg="@{e.sectionMsg}"
+            android:errorMsg="@{e.sectionMsg}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/examTypeSpinner"
             app:layout_constraintHorizontal_bias="0.0"

@@ -1,19 +1,19 @@
 package com.smart.resources.schools_app.features.rating
 
 import android.os.Bundle
-import android.view.*
-import androidx.core.graphics.toColor
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.viewModels
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 
 class RatingFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
-    private lateinit var viewModel: RatingViewModel
+    private val viewModel: RatingViewModel by viewModels()
 
     companion object {
         fun newInstance(fm:FragmentManager){
@@ -44,10 +44,9 @@ class RatingFragment : Fragment() {
     }
 
     private fun setupViewModel() {
-        viewModel = ViewModelProviders.of(this)
-            .get(RatingViewModel::class.java).apply {
+        viewModel.apply {
                 binding.listState= listState
-                getRatings().observe(viewLifecycleOwner, Observer{onHomeworkDownload(it)})
+                getRatings().observe(viewLifecycleOwner, {onHomeworkDownload(it)})
             }
     }
 

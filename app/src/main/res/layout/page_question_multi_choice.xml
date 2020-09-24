@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="questionModel"
-            type="com.smart.resources.schools_app.features.onlineExam.domain.model.questions.MultiChoiceQuestion" />
+            name="answerableQuestion"
+            type="com.smart.resources.schools_app.features.onlineExam.domain.model.MultiChoiceAnswerableQuestion" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,9 +16,9 @@
         android:padding="@dimen/item_padding">
 
         <TextView
-            android:id="@+id/question"
+            android:id="@+id/questionTextView"
             style="@style/QuestionTextStyle"
-            android:text="@{questionModel.text}"
+            android:text="@{answerableQuestion.question.question}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -30,16 +30,17 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/question"
-            app:layout_constraintStart_toStartOf="@+id/question"
-            app:layout_constraintTop_toBottomOf="@+id/question"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintEnd_toEndOf="@+id/questionTextView"
+            app:layout_constraintStart_toStartOf="@+id/questionTextView"
+            app:layout_constraintTop_toBottomOf="@+id/questionTextView"
+            app:layout_constraintVertical_bias="0.0"
+            android:checkedButtonIndex="@{answerableQuestion.answer.answer}">
 
             <RadioButton
                 android:id="@+id/choice1RadioBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{questionModel.choices[0]}"
+                android:text="@{answerableQuestion.question.options[0]}"
                 android:layout_marginBottom="@dimen/question_choice_spacing"
                 />
 
@@ -47,7 +48,7 @@
                 android:id="@+id/choice2RadioBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{questionModel.choices[1]}"
+                android:text="@{answerableQuestion.question.options[1]}"
                 android:layout_marginBottom="@dimen/question_choice_spacing"
                 />
 
@@ -55,7 +56,7 @@
                 android:id="@+id/choice3RadioBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{questionModel.choices[2]}"/>
+                android:text="@{answerableQuestion.question.options[2]}"/>
 
         </RadioGroup>
 

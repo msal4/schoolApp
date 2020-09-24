@@ -5,33 +5,26 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.databinding.PageQuestionBinding
-import com.smart.resources.schools_app.features.onlineExam.domain.model.questions.Question
+import com.smart.resources.schools_app.features.onlineExam.domain.model.Answer
+import com.smart.resources.schools_app.features.onlineExam.domain.model.AnswerableQuestion
 
 class QuestionViewHolder(var binding: PageQuestionBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    var onQuestionAnswerStateUpdated: (() -> Unit)? = null
-    private var oldIsAnswered= false
+    var onQuestionAnswerStateUpdated: ((answer: Answer) -> Unit)? = null
 
-    fun setup(question: Question){
-        binding.answer.addTextChangedListener {
-            val answer= it?.trim()?.toString()
+    fun setup(answerableQuestion: AnswerableQuestion) {
+        binding.answerEditText.addTextChangedListener {
+            val answerText = it?.trim()?.toString()
 
-            if(answer != null){
-                question.answer= answer
-
-                if(question.isAnswered != oldIsAnswered) {
-                    onQuestionAnswerStateUpdated?.invoke()
-                    oldIsAnswered= question.isAnswered
-                }
-            }
+            onQuestionAnswerStateUpdated?.invoke(Answer(answerText?:""))
         }
 
-        bind(question)
+        bind(answerableQuestion)
     }
 
-    private fun bind(question: Question) {
+    private fun bind(answerableQuestion: AnswerableQuestion) {
         binding.apply {
-            questionModel = question
+            this.answerableQuestion = answerableQuestion
             executePendingBindings()
         }
     }

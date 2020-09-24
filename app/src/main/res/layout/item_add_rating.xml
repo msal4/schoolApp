@@ -14,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_item"
+        android:background="@drawable/background_card"
         android:layoutDirection="rtl"
         android:orientation="vertical"
         android:elevation="@dimen/item_elevation"

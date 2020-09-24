@@ -2,8 +2,7 @@
 
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:mine= "http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
         <import type="android.view.View"/>
@@ -61,7 +60,7 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="38sp"
                 android:textStyle="bold"
-                tools:text="@string/school_name"
+                tools:text="@string/schoolName"
                 app:layout_constraintBottom_toTopOf="@+id/phoneNumber"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -76,7 +75,7 @@
                 android:background="@drawable/background_outline"
                 android:drawableStart="@drawable/ic_phone_primary_24dp"
                 android:drawablePadding="@dimen/edit_text_drawable_padding"
-                mine:errorMsg="@{loginViewModel.loginException.phoneNumberMsg}"
+                android:errorMsg="@{loginViewModel.loginException.phoneNumberMsg}"
                 android:hint="@string/phone_number"
                 android:inputType="phone"
                 android:maxLength="15"
@@ -100,7 +99,7 @@
                 android:background="@drawable/background_outline"
                 android:drawableStart="@drawable/ic_lock_primary_24dp"
                 android:drawablePadding="@dimen/edit_text_drawable_padding"
-                mine:errorMsg="@{loginViewModel.loginException.passwordMsg}"
+                android:errorMsg="@{loginViewModel.loginException.passwordMsg}"
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 android:maxLength="30"

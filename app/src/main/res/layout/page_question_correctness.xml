@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="com.smart.resources.schools_app.R"/>
         <variable
             name="questionModel"
-            type="com.smart.resources.schools_app.features.onlineExam.domain.model.questions.CorrectnessQuestion" />
+            type="com.smart.resources.schools_app.features.onlineExam.domain.model.CorrectnessAnswerableQuestion" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,7 +18,7 @@
 
         <TextView
             android:id="@+id/questionText"
-            android:text="@{questionModel.text}"
+            android:text="@{questionModel.question.question}"
             style="@style/QuestionTextStyle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +32,8 @@
             android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="@+id/questionText"
             app:layout_constraintStart_toStartOf="@+id/questionText"
-            app:layout_constraintTop_toBottomOf="@+id/questionText">
+            app:layout_constraintTop_toBottomOf="@+id/questionText"
+            android:checkedButton= "@{questionModel.answer.answer? R.id.correctRadioBtn : R.id.incorrectRadioBtn}">
 
             <RadioButton
                 android:id="@+id/correctRadioBtn"
@@ -61,7 +63,7 @@
             android:layout_marginTop="24dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/answer"
+                android:id="@+id/answerEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/correcting_answer"

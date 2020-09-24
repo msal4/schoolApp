@@ -1,6 +1,5 @@
 package com.smart.resources.schools_app.core.myTypes
 
-import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
 
 data class LoginException(

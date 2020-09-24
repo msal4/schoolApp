@@ -1,6 +1,7 @@
 package com.smart.resources.schools_app.features.library;
 import com.google.gson.annotations.SerializedName;
 
+import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
 
 public class LibraryModel {
@@ -9,7 +10,7 @@ public class LibraryModel {
     private String className,attachment;
     private String title;
 
-    private LocalDateTime addDate;
+    private LocalDate addDate;
 
 
     public int getIdLibrary() {
@@ -28,7 +29,7 @@ public class LibraryModel {
         return title;
     }
 
-    public LocalDateTime getAddDate() {
+    public LocalDate getAddDate() {
         return addDate;
     }
 }

@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.databinding.ItemWeekDayBinding
-import com.smart.resources.schools_app.core.myTypes.WeekDays
 
 class WeekRecyclerAdapter(private val schedule: List<ScheduleDayModel>)
     : RecyclerView.Adapter<WeekRecyclerAdapter.MyViewHolder>() {

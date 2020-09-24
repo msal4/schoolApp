@@ -8,7 +8,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.extentions.hide
@@ -29,10 +29,10 @@ import kotlinx.coroutines.withContext
 
 class AddMarkFragment : Fragment(), CanLogout {
     private lateinit var binding: FragmentRecyclerLoaderBinding
-    private lateinit var viewModel: AddMarkViewModel
     private lateinit var adapter: AddMarkRecyclerAdapter
     private lateinit var progressBar: ProgressBar
     private lateinit var saveItem: MenuItem
+    private val viewModel: AddMarkViewModel by viewModels()
 
     companion object {
         private const val ADD_EXAM_FRAGMENT = "addExamFragment"
@@ -76,7 +76,7 @@ class AddMarkFragment : Fragment(), CanLogout {
 
             progressBar = getToolbarProgressBar()
             onBackPressedDispatcher
-                .addCallback(this@AddMarkFragment, object :
+                .addCallback(viewLifecycleOwner, object :
                     OnBackPressedCallback(true) {
                     override fun handleOnBackPressed() {
                         this@AddMarkFragment.onBackPressed()
@@ -89,7 +89,9 @@ class AddMarkFragment : Fragment(), CanLogout {
 
     private fun onBackPressed() {
         progressBar.hide()
-        fragmentManager?.popBackStack()
+        if(isAdded){
+            parentFragmentManager.popBackStack()
+        }
     }
 
 
@@ -112,15 +114,15 @@ class AddMarkFragment : Fragment(), CanLogout {
     private fun onSave() {
 
 
-        val studebtResult = SendStudentResult(
+        val studentResult = SendStudentResult(
             AddMarkRecyclerAdapter.sendStudentResult,
             examId1
         )
 
 
-        if (studebtResult.marks.isNotEmpty()) {
+        if (studentResult.marks.isNotEmpty()) {
 
-            if (validateMark(studebtResult)) {
+            if (validateMark(studentResult)) {
                 lifecycleScope.launch {
                     withContext(Main) {
                         setToolbarLoading(true)
@@ -129,7 +131,7 @@ class AddMarkFragment : Fragment(), CanLogout {
                         val result =
                             GlobalScope.async {
                                 RetrofitHelper.examClient.addMultiResult(
-                                    studebtResult
+                                    studentResult
                                 )
                             }
                                 .toMyResult()
@@ -182,7 +184,7 @@ class AddMarkFragment : Fragment(), CanLogout {
         }
     }
 
-    fun validateMark(st: SendStudentResult): Boolean {
+    private fun validateMark(st: SendStudentResult): Boolean {
         var x = true
         for (s in st.marks) {
             if (s.mark > 100 || s.mark < 0) {
@@ -194,12 +196,11 @@ class AddMarkFragment : Fragment(), CanLogout {
 
 
     private fun setupViewModel(examId: Int) {
-        viewModel = ViewModelProviders.of(this)
-            .get(AddMarkViewModel::class.java).apply {
+        viewModel.apply {
                 binding.listState = listState
                 getStudents(examId).observe(
-                    this@AddMarkFragment,
-                    androidx.lifecycle.Observer { onExamsDownload(it) })
+                    viewLifecycleOwner,
+                     { onExamsDownload(it) })
             }
 
     }

@@ -4,33 +4,30 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.smart.resources.schools_app.features.onlineExam.domain.model.questions.BaseQuestion
-import com.smart.resources.schools_app.features.onlineExam.domain.model.questions.CorrectnessQuestion
-import com.smart.resources.schools_app.features.onlineExam.domain.model.questions.MultiChoiceQuestion
-import com.smart.resources.schools_app.features.onlineExam.domain.model.questions.Question
+import com.smart.resources.schools_app.features.onlineExam.domain.model.*
 import com.smart.resources.schools_app.features.onlineExam.presentaion.viewHolder.CorrectnessQuestionViewHolder
 import com.smart.resources.schools_app.features.onlineExam.presentaion.viewHolder.MultiChoiceQuestionViewHolder
 import com.smart.resources.schools_app.features.onlineExam.presentaion.viewHolder.QuestionViewHolder
 
 class QuestionsPagerAdapter :
-    ListAdapter<BaseQuestion<out Any?>, RecyclerView.ViewHolder>(DIFF_UTIL) {
+    ListAdapter<BaseAnswerableQuestion<out Any>, RecyclerView.ViewHolder>(DIFF_UTIL) {
 
     companion object {
         private const val QUESTION_ITEM_TYPE = 0
         private const val MULTI_CHOICE_QUESTION_ITEM_TYPE = 1
         private const val CORRECTNESS_QUESTION_ITEM_TYPE = 2
 
-        val DIFF_UTIL = object : DiffUtil.ItemCallback<BaseQuestion<out Any?>>() {
+        val DIFF_UTIL = object : DiffUtil.ItemCallback<BaseAnswerableQuestion<out Any>>() {
             override fun areItemsTheSame(
-                oldItem: BaseQuestion<out Any?>,
-                newItem: BaseQuestion<out Any?>
+                oldItem: BaseAnswerableQuestion<out Any>,
+                newItem: BaseAnswerableQuestion<out Any>
             ): Boolean {
                 return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: BaseQuestion<out Any?>,
-                newItem: BaseQuestion<out Any?>
+                oldItem: BaseAnswerableQuestion<out Any>,
+                newItem: BaseAnswerableQuestion<out Any>
             ): Boolean {
                 return oldItem == newItem
             }
@@ -38,7 +35,7 @@ class QuestionsPagerAdapter :
     }
 
     interface Listener {
-        fun onQuestionAnswerStateUpdated()
+        fun onQuestionAnswerStateUpdated(answer: BaseAnswer<out Any>, position: Int)
 
 //        fun onQuestionAnswered(index: Int, answer: String)
 //        fun onMultiChoiceQuestionAnswered(index: Int, answer: Int)
@@ -52,33 +49,34 @@ class QuestionsPagerAdapter :
         holder: RecyclerView.ViewHolder,
         position: Int
     ) {
-        val questionModel = getItem(position)
-        when (holder) {
-            is QuestionViewHolder -> holder.apply {
-                if (questionModel is Question) {
-                    setup(questionModel)
-                    onQuestionAnswerStateUpdated = {listener?.onQuestionAnswerStateUpdated()}
+        when (val answerableQuestion = getItem(position)) {
+            is AnswerableQuestion -> if (holder is QuestionViewHolder) {
+                holder.apply {
+                    setup(answerableQuestion)
+                    onQuestionAnswerStateUpdated =
+                        { listener?.onQuestionAnswerStateUpdated(it, position) }
                 }
             }
-            is MultiChoiceQuestionViewHolder -> holder.apply {
-                if (questionModel is MultiChoiceQuestion) {
-                    setup(questionModel)
-                    onQuestionAnswerStateUpdated = {listener?.onQuestionAnswerStateUpdated()}
+            is MultiChoiceAnswerableQuestion -> if (holder is MultiChoiceQuestionViewHolder) {
+                holder.apply {
+                        setup(answerableQuestion)
+                        onQuestionAnswerUpdated =
+                            { listener?.onQuestionAnswerStateUpdated(it, position) }
                 }
             }
-            is CorrectnessQuestionViewHolder -> holder.apply {
-                if (questionModel is CorrectnessQuestion) {
-                    setup(questionModel)
-                    onQuestionAnswerStateUpdated = {listener?.onQuestionAnswerStateUpdated()}
-                }
+            is CorrectnessAnswerableQuestion -> if (holder is CorrectnessQuestionViewHolder) {
+                holder.apply {
+                        setup(answerableQuestion)
+                        onQuestionAnswerUpdated =
+                            { listener?.onQuestionAnswerStateUpdated(it, position) }
+                    }
             }
         }
     }
 
-
     override fun getItemViewType(position: Int) = when (getItem(position)) {
-        is MultiChoiceQuestion -> MULTI_CHOICE_QUESTION_ITEM_TYPE
-        is CorrectnessQuestion -> CORRECTNESS_QUESTION_ITEM_TYPE
+        is MultiChoiceAnswerableQuestion -> MULTI_CHOICE_QUESTION_ITEM_TYPE
+        is CorrectnessAnswerableQuestion -> CORRECTNESS_QUESTION_ITEM_TYPE
         else -> QUESTION_ITEM_TYPE
     }
 

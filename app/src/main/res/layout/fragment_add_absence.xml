@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:mine="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -38,7 +37,7 @@
             android:hint="@string/classAndDivision"
             android:gravity="right"
             android:layout_weight="1"
-            mine:errorMsg="@{exception.sectionAndClassesMsg}"
+            android:errorMsg="@{exception.sectionAndClassesMsg}"
             android:minHeight="60dp" />
 
         <com.tiper.MaterialSpinner
@@ -50,7 +49,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:gravity="right"
-            mine:errorMsg="@{exception.subjectMsg}"
+            android:errorMsg="@{exception.subjectMsg}"
             android:layout_height="wrap_content"
             android:hint="@string/subject"
             android:minHeight="60dp"

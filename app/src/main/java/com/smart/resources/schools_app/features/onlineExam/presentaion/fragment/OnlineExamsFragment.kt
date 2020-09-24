@@ -1,19 +1,17 @@
 package com.smart.resources.schools_app.features.onlineExam.presentaion.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProviders
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExamDetails
 import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExamStatus
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.OnlineExamViewModel
 import com.smart.resources.schools_app.features.onlineExam.presentaion.adapter.OnlineExamAdapter
+import com.smart.resources.schools_app.features.users.UsersRepository
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 import org.threeten.bp.Duration
 import org.threeten.bp.LocalDateTime
@@ -38,7 +36,6 @@ class OnlineExamFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = this@OnlineExamFragment
             listState = viewModel.listState
@@ -53,12 +50,30 @@ class OnlineExamFragment : Fragment() {
             recyclerView.adapter = adapter
         }
 
+        setHasOptionsMenu(true)
         (activity as SectionActivity).setCustomTitle(R.string.online_exam)
         return binding.root
     }
 
     private fun onOnlineExamPressed(onlineExamDetails: OnlineExamDetails){
         QuestionsFragment.newInstance(parentFragmentManager, onlineExamDetails)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        if (UsersRepository.instance.getCurrentUserAccount()?.userType == 1) {
+            inflater.inflate(R.menu.menu_add_btn, menu)
+        }
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.addMenuItem -> if (isAdded) {
+                AddOnlineExamFragment.newInstance(parentFragmentManager)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
 

@@ -1,8 +1,8 @@
 package com.smart.resources.schools_app.features.profile.certificate
 
-import com.smart.resources.schools_app.features.profile.certificate.CertificateModel
 import retrofit2.Response
-import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface CertificateClient {
     @GET("certificateStudent/{id}")

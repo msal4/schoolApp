@@ -2,7 +2,6 @@ package com.smart.resources.schools_app.core.myTypes
 
 import com.orhanobut.logger.Logger
 import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.coroutineScope
 import org.json.JSONObject
 import retrofit2.Response
 import java.net.HttpURLConnection

@@ -39,6 +39,7 @@
     <string name="notes_optional">الملاحظات (اختياري)</string>
     <string name="description_optional">الوصف (اختياري)</string>
     <string name="date">التاريخ</string>
+    <string name="exam_date">تاريخ الامتحان</string>
     <string name="classAndDivision">الصف والشعبة</string>
     <string name="add">اضافة</string>
     <string name="solution_added_successfully">تمت اضافة الجواب بنجاح</string>
@@ -107,5 +108,12 @@
     <string name="correct">صح</string>
     <string name="wrong">خطأ</string>
     <string name="correcting_answer">تصحيح الخطأ</string>
+    <string name="options">اختيارات</string>
+    <string name="normal">اعتيادي</string>
+    <string name="true_and_false">صح وخطأ</string>
+    <string name="the_question">السؤال</string>
+    <string name="send_icon_description">ايقونة الارسال</string>
+    <string name="exam_duration_in_minutes">فترة الامتحان (بالدقائق)</string>
+    <string name="exam_key">مفتاح الامتحان</string>
 
 </resources>

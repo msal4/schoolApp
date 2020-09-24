@@ -2,9 +2,7 @@ package com.smart.resources.schools_app.features.onlineExam.presentaion.adapter
 
 import android.content.Context
 import android.graphics.Color
-import android.util.TypedValue
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.extentions.selectableItemBackgroundBorderless
 import com.smart.resources.schools_app.core.extentions.toColor
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator

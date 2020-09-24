@@ -4,24 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-
-<variable
-    name="itemModel"
-    type="com.smart.resources.schools_app.features.students.StudentWithMark" />
-
-
+        <variable
+            name="itemModel"
+            type="com.smart.resources.schools_app.features.students.StudentWithMark" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_item"
+        android:layout_marginBottom="@dimen/item_margin"
+        android:background="@drawable/background_card"
+        android:elevation="@dimen/item_elevation"
         android:layoutDirection="rtl"
         android:minHeight="@dimen/item_min_height"
         android:orientation="vertical"
-        android:elevation="@dimen/item_elevation"
-        android:layout_marginBottom="@dimen/item_margin"
         android:padding="@dimen/item_padding">
 
 
@@ -30,20 +26,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@{itemModel.idStudent}"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
 
         </TextView>
+
         <TextView
             android:id="@+id/subjectNameM"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/monadi"
             android:includeFontPadding="true"
+            android:text="@{itemModel.name}"
             android:textAlignment="viewStart"
             android:textColor="@android:color/black"
             android:textStyle="bold"
-            android:text="@{itemModel.name}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/mark"
             app:layout_constraintHorizontal_bias="0.016"
@@ -57,10 +53,10 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:enabled="@{itemModel.mark==null}"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
             android:hint="@string/mark"
             android:inputType="number"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:text="@{itemModel.mark.toString()}"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="@+id/subjectNameM"

@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="questionModel"
-            type="com.smart.resources.schools_app.features.onlineExam.domain.model.questions.Question" />
+            name="answerableQuestion"
+            type="com.smart.resources.schools_app.features.onlineExam.domain.model.AnswerableQuestion" />
     </data>
 
     <ScrollView
@@ -23,7 +23,7 @@
 
         <TextView
             android:id="@+id/questionText"
-            android:text="@{questionModel.text}"
+            android:text="@{answerableQuestion.question.question}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -40,10 +40,12 @@
             android:layout_marginTop="32dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/answer"
+                android:id="@+id/answerEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/answer"
+                style="@style/MyEditTextStyle"
+                android:text="@{answerableQuestion.answer.answer}"
                 android:inputType="textMultiLine" />
         </com.google.android.material.textfield.TextInputLayout>
 

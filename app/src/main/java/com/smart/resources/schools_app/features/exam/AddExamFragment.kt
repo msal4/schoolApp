@@ -7,10 +7,11 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.bindingAdapters.setSpinnerList
-import com.smart.resources.schools_app.core.bindingAdapters.setTextFromDate
+import com.smart.resources.schools_app.core.bindingAdapters.textView.setTextFromDate
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.core.extentions.hide
 import com.smart.resources.schools_app.core.extentions.show
@@ -22,13 +23,12 @@ import com.smart.resources.schools_app.features.profile.TeacherModel
 import com.smart.resources.schools_app.sharedUi.DatePickerFragment
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 import com.tiper.MaterialSpinner
-import org.threeten.bp.LocalDateTime
 
 class AddExamFragment : Fragment(), PostListener {
     private lateinit var binding: FragmentAddExamBinding
-    private lateinit var viewModel: ExamViewModel
     private lateinit var progressBar: ProgressBar
     private lateinit var saveItem: MenuItem
+    private val viewModel: ExamViewModel by activityViewModels()
 
     private val onClassSelected = object :
         MaterialSpinner.OnItemSelectedListener {
@@ -95,7 +95,7 @@ class AddExamFragment : Fragment(), PostListener {
             setCustomTitle(R.string.add_exam)
             progressBar = getToolbarProgressBar()
             onBackPressedDispatcher
-                .addCallback(this@AddExamFragment, object :
+                .addCallback(viewLifecycleOwner, object :
                     OnBackPressedCallback(true) {
                     override fun handleOnBackPressed() {
                         this@AddExamFragment.onBackPressed()
@@ -108,7 +108,9 @@ class AddExamFragment : Fragment(), PostListener {
 
     private fun onBackPressed() {
         progressBar.hide()
-        fragmentManager?.popBackStack()
+        if(isAdded){
+            parentFragmentManager.popBackStack()
+        }
     }
 
     private fun setupBinding(
@@ -141,14 +143,8 @@ class AddExamFragment : Fragment(), PostListener {
     private fun onDateClicked(dateField: View) {
         DatePickerFragment.newInstance()
             .apply {
-                onDateSet = { _, year, month, dayOfMonth ->
-                    val localDateTime = LocalDateTime.of(year, month+1, dayOfMonth, 0, 0)
-
-                    setTextFromDate(
-                        dateField as TextView,
-                        localDateTime
-                    )
-                    viewModel.postExamModel.date = localDateTime
+                onDateSet = {
+                    (dateField as TextView).setTextFromDate(it)
                 }
 
                 this@AddExamFragment.fragmentManager?.let { show(it, "") }
@@ -157,11 +153,7 @@ class AddExamFragment : Fragment(), PostListener {
 
 
     private fun setupViewModel() {
-        ViewModelProviders
-            .of(activity!!)
-            .get(ExamViewModel::class.java)
-            .apply {
-                viewModel = this
+        viewModel.apply {
                 binding.apply {
                     e= postException
                     postModel = postExamModel

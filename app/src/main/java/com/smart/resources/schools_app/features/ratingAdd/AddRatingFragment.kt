@@ -5,6 +5,7 @@ import android.view.*
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.observe
 import com.smart.resources.schools_app.R
@@ -14,6 +15,7 @@ import com.smart.resources.schools_app.core.extentions.hide
 import com.smart.resources.schools_app.core.extentions.show
 import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.databinding.FragmentAddRatingBinding
+import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceViewModel
 import com.smart.resources.schools_app.features.users.UsersRepository
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import com.smart.resources.schools_app.features.profile.TeacherModel
@@ -24,10 +26,12 @@ import com.tiper.MaterialSpinner
 
 class AddRatingFragment : Fragment(), MaterialSpinner.OnItemSelectedListener, PostListener {
     private lateinit var binding: FragmentAddRatingBinding
-    private lateinit var viewModel: AddRatingViewModel
     private lateinit var adapter: AddRatingAdapter
     private lateinit var saveMenuItem: MenuItem
     private lateinit var toolbarProgressBar: ProgressBar
+    private val viewModel: AddRatingViewModel by activityViewModels {
+        AddRatingViewModel.Factory(requireActivity().application, this)
+    }
 
     companion object {
         fun newInstance(fm:FragmentManager){
@@ -88,12 +92,10 @@ class AddRatingFragment : Fragment(), MaterialSpinner.OnItemSelectedListener, Po
 
 
     private fun setupViewModel() {
-        viewModel = ViewModelProviders.of(this, AddRatingViewModel.Factory(activity!!.application, this))
-            .get(AddRatingViewModel::class.java)
-            .apply {
+        viewModel.apply {
                 binding.viewState = listState
                 binding.sectionsError= sectionAndClassesErrorMsg
-                ratingModels.observe(this@AddRatingFragment, ::onStudentsDownloadCompleted)
+                ratingModels.observe(viewLifecycleOwner, ::onStudentsDownloadCompleted)
 
             }
     }

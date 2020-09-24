@@ -2,7 +2,6 @@ package com.smart.resources.schools_app.core.extentions
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
 import android.net.Uri
 import android.text.BidiFormatter
 import android.util.Base64
@@ -61,6 +60,7 @@ fun String.asRequestBody(): RequestBody {
 }
 
 
+
 fun File.asBodyPart(fieldName: String): MultipartBody.Part? {
     val requestBody= RequestBody.create(MediaType.parse("Image/*"), this)
     return MultipartBody.Part.createFormData(fieldName, name, requestBody)
@@ -70,4 +70,5 @@ fun <T> MutableLiveData<T>.notifyObservers() {
     this.value = this.value
 }
 
+/// fixes bidirectional text
 fun String.toUnicodeString(): String = BidiFormatter.getInstance().unicodeWrap(this)

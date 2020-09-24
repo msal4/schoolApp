@@ -3,6 +3,7 @@ package com.smart.resources.schools_app.features.rating
 import android.os.Parcel
 import android.os.Parcelable
 import com.smart.resources.schools_app.features.students.StudentWithMark
+import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 
 
@@ -11,14 +12,14 @@ class RatingModel  (
     var name: String,
     var rate: Float= -1.0f,
     var note: String= "",
-    var date: LocalDateTime= LocalDateTime.now()
+    var date: LocalDate= LocalDate.now()
 ):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()?: "",
         parcel.readString()?: "",
         parcel.readFloat(),
         parcel.readString()?: "",
-        parcel.readSerializable() as LocalDateTime
+        parcel.readSerializable() as LocalDate
     )
 
     constructor(student: StudentWithMark):this(student.idStudent, student.name)
@@ -27,7 +28,7 @@ class RatingModel  (
     fun reset(){
         rate= -1.0F
         note= ""
-        date= LocalDateTime.now()
+        date= LocalDate.now()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

@@ -5,35 +5,33 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.PageQuestionMultiChoiceBinding
-import com.smart.resources.schools_app.features.onlineExam.domain.model.questions.MultiChoiceQuestion
+import com.smart.resources.schools_app.features.onlineExam.domain.model.MultiChoiceAnswer
+import com.smart.resources.schools_app.features.onlineExam.domain.model.MultiChoiceAnswerableQuestion
 
 class MultiChoiceQuestionViewHolder(var binding: PageQuestionMultiChoiceBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    var onQuestionAnswerStateUpdated: (() -> Unit)? = null
-    private var oldIsAnswered= false
+    var onQuestionAnswerUpdated: ((answer: MultiChoiceAnswer) -> Unit)? = null
 
-    fun setup(question: MultiChoiceQuestion) {
+    fun setup(answerableQuestion: MultiChoiceAnswerableQuestion) {
         binding.apply {
             choicesRadioGroup.setOnCheckedChangeListener { _, checkedId ->
-               question.answer= when(checkedId){
+                val selection = when (checkedId) {
                     R.id.choice1RadioBtn -> 0
                     R.id.choice2RadioBtn -> 1
                     R.id.choice3RadioBtn -> 2
-                   else -> -1
+                    else -> -1
+
                 }
-                if(question.isAnswered != oldIsAnswered) {
-                    onQuestionAnswerStateUpdated?.invoke()
-                    oldIsAnswered= question.isAnswered
-                }
+                onQuestionAnswerUpdated?.invoke(MultiChoiceAnswer(selection))
             }
         }
 
-        bind(question)
+        bind(answerableQuestion)
     }
 
-    private fun bind(question: MultiChoiceQuestion) {
+    private fun bind(answerableQuestion: MultiChoiceAnswerableQuestion) {
         binding.apply {
-            questionModel = question
+            this.answerableQuestion = answerableQuestion
             executePendingBindings()
         }
     }

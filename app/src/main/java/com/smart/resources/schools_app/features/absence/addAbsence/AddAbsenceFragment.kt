@@ -5,6 +5,7 @@ import android.view.*
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.observe
 import com.smart.resources.schools_app.R
@@ -24,9 +25,11 @@ import com.tiper.MaterialSpinner
 class AddAbsenceFragment : Fragment(), MaterialSpinner.OnItemSelectedListener, PostListener {
     private lateinit var binding: FragmentAddAbsenceBinding
     private lateinit var adapter: AddAbsenceRecyclerAdapter
-    private lateinit var viewModel: AddAbsenceViewModel
     private lateinit var toolbarProgressBar: ProgressBar
     private lateinit var saveMenuItem: MenuItem
+    private val viewModel: AddAbsenceViewModel by activityViewModels{
+        AddAbsenceViewModel.Factory(requireActivity().application, this)
+    }
 
     companion object {
 
@@ -100,12 +103,10 @@ class AddAbsenceFragment : Fragment(), MaterialSpinner.OnItemSelectedListener, P
     }
 
     private fun setupViewModel() {
-        viewModel = ViewModelProviders.of(this, AddAbsenceViewModel.Factory(activity!!.application, this))
-            .get(AddAbsenceViewModel::class.java)
-            .apply {
+        viewModel.apply {
                 binding.viewState = listState
                 binding.exception= addAbsenceException
-                addAbsenceModels.observe(this@AddAbsenceFragment, ::onStudentsDownloadCompleted)
+                addAbsenceModels.observe(viewLifecycleOwner, ::onStudentsDownloadCompleted)
             }
     }
 

@@ -10,13 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.Event
 import com.smart.resources.schools_app.core.extentions.setSoftInputMode
 import com.smart.resources.schools_app.core.extentions.setStatusBarColor
 import com.smart.resources.schools_app.core.extentions.setStatusBarColorToWhite
 import com.smart.resources.schools_app.core.extentions.toColor
 import com.smart.resources.schools_app.core.helpers.ViewPager2Helper
 import com.smart.resources.schools_app.databinding.FragmentQuestionsBinding
+import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnswer
 import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExamDetails
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.QuestionsViewModel
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.QuestionsViewModelFactory
@@ -53,8 +53,6 @@ class QuestionsFragment : Fragment(), QuestionsPagerAdapter.Listener {
                 addToBackStack(QUESTIONS_FRAGMENT)
                 commit()
             }
-
-
         }
     }
 
@@ -112,13 +110,14 @@ class QuestionsFragment : Fragment(), QuestionsPagerAdapter.Listener {
         return binding.root
     }
 
-
     private fun onPageNumberPressed(index: Int) {
         binding.questionsPager.setCurrentItem(index, true)
     }
 
-    override fun onQuestionAnswerStateUpdated() {
-        viewModel.answersStateUpdatedEvent.value= Event(true)
+    override fun onQuestionAnswerStateUpdated(answer: BaseAnswer<out Any>, position:Int) {
+        viewModel.updateAnswer(answer, position)
     }
+
+
 }
 

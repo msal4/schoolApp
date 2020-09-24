@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.smart.resources.schools_app.R
@@ -19,7 +20,7 @@ import com.smart.resources.schools_app.sharedUi.SectionActivity
 
 class AbsenceFragment : Fragment(), CanLogout {
     private lateinit var binding: FragmentRecyclerLoaderBinding
-    private lateinit var viewModel: AbsenceViewModel
+    private val viewModel: AbsenceViewModel by viewModels()
 
     companion object {
         fun newInstance(fm:FragmentManager){
@@ -48,12 +49,8 @@ class AbsenceFragment : Fragment(), CanLogout {
 
     private fun setupViewModel() {
 
-
-
-
-        viewModel = ViewModelProviders.of(this)
-            .get(AbsenceViewModel::class.java).apply {
-                getAbsence().observe(this@AbsenceFragment, Observer{onAbsenceDownload(it)})
+        viewModel.apply {
+                getAbsence().observe(viewLifecycleOwner, {onAbsenceDownload(it)})
             }
     }
 

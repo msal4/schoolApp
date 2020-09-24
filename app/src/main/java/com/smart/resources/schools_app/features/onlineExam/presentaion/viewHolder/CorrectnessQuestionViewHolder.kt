@@ -8,37 +8,36 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.extentions.hide
 import com.smart.resources.schools_app.core.extentions.show
 import com.smart.resources.schools_app.databinding.PageQuestionCorrectnessBinding
-import com.smart.resources.schools_app.features.onlineExam.domain.model.questions.CorrectnessQuestion
+import com.smart.resources.schools_app.features.onlineExam.domain.model.CorrectnessAnswerableQuestion
+import com.smart.resources.schools_app.features.onlineExam.domain.model.CorrectnessAnswer
 
 class CorrectnessQuestionViewHolder(var binding: PageQuestionCorrectnessBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    var onQuestionAnswerStateUpdated: (() -> Unit)? = null
-    private var oldIsAnswered= false
+    var onQuestionAnswerUpdated: ((correctnessAnswer: CorrectnessAnswer) -> Unit)? = null
 
-    fun setup(question: CorrectnessQuestion) {
+    fun setup(answerableQuestion: CorrectnessAnswerableQuestion) {
         binding.apply {
             isCorrectRadioGroup.setOnCheckedChangeListener { _, checkedId ->
                 TransitionManager.beginDelayedTransition(root as ViewGroup)
-                question.answer= if (checkedId == R.id.incorrectRadioBtn) {
+                val answer = if (checkedId == R.id.incorrectRadioBtn) {
                     answerLayout.show()
-                    val correctAnswer= answer.text?.trim()?.toString()?:""
-                    question.correctAnswer= correctAnswer
-                    false
+                    val correctAnswer = this.answerEditText.text?.trim()?.toString() ?: ""
+                    CorrectnessAnswer(answer = false, correctAnswer = correctAnswer)
                 } else {
                     answerLayout.hide()
-                     true
+                    CorrectnessAnswer(answer = false,)
                 }
-                if(question.isAnswered != oldIsAnswered) {
-                    onQuestionAnswerStateUpdated?.invoke()
-                    oldIsAnswered= question.isAnswered
-                }
+
+                onQuestionAnswerUpdated?.invoke(answer)
             }
+
+            bind(answerableQuestion)
         }
     }
 
-    private fun bind(question: CorrectnessQuestion) {
+    private fun bind(answerableQuestion: CorrectnessAnswerableQuestion) {
         binding.apply {
-            questionModel = question
+            questionModel = answerableQuestion
             executePendingBindings()
         }
     }

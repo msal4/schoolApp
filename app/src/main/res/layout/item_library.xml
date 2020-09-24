@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:mine="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -68,7 +67,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/subjectName"
             app:layout_constraintTop_toBottomOf="@+id/subjectName"
-            mine:setDate="@{itemModel.addDate}"
+            android:setDate="@{itemModel.addDate}"
             tools:text="8/10/2019" />
 
 

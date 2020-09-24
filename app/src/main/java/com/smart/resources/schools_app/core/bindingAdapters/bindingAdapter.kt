@@ -1,15 +1,10 @@
 package com.smart.resources.schools_app.core.bindingAdapters
 
-import android.graphics.Color
-import android.view.View
-import android.widget.*
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import android.widget.RatingBar
+import androidx.core.view.children
 import androidx.databinding.BindingAdapter
-import com.orhanobut.logger.Logger
-import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.extentions.toColor
-import com.smart.resources.schools_app.core.extentions.toDimen
-import com.smart.resources.schools_app.core.extentions.toDrawable
-import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExamStatus
 
 @BindingAdapter("mine:setStars")
 fun setStars(ratingBar:  RatingBar, stars:Int?){
@@ -17,5 +12,10 @@ fun setStars(ratingBar:  RatingBar, stars:Int?){
 }
 
 
+@BindingAdapter("android:checkedButtonIndex")
+fun RadioGroup.setCheckedButtonIndex(checkButtonIndex:Int){
+    val radioBtnId= children.filter { it is RadioButton }.toList()[checkButtonIndex].id
+    check(radioBtnId)
+}
 
 

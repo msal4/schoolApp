@@ -4,6 +4,7 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import com.smart.resources.schools_app.core.extentions.isImage
 import kotlinx.android.parcel.Parcelize
+import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 
 // TODO: fix this model
@@ -18,7 +19,7 @@ data class HomeworkSolutionModel(
     @SerializedName("solutionImage")
     val imageUrl: String?,
     @SerializedName("solutionDate")
-    val date: LocalDateTime?
+    val date: LocalDate?
 ) : Parcelable {
     val hasAnswer: Boolean get() = !solution.isNullOrEmpty() && solution.toLowerCase() != "none".toLowerCase()
     val hasImage: Boolean get() = imageUrl != null && imageUrl.isImage()

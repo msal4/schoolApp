@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_item"
+        android:background="@drawable/background_card"
         android:elevation="@dimen/item_elevation"
         android:layoutDirection="rtl"
         android:padding="@dimen/item_padding"
@@ -54,7 +54,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/title"
             app:layout_constraintTop_toTopOf="parent"
-            app:setDate="@{model.date}"
+            android:setDate="@{model.date}"
             tools:text="8/10/2019" />
 
         <TextView

@@ -5,6 +5,7 @@ import android.view.*
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -26,8 +27,8 @@ import com.smart.resources.schools_app.sharedUi.SectionActivity
 
 class HomeworkFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
-    private lateinit var viewModel: HomeworkViewModel
     private lateinit var adapter: HomeworkRecyclerAdapter
+    private val viewModel: HomeworkViewModel by activityViewModels()
 
 
     companion object {
@@ -46,14 +47,12 @@ class HomeworkFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProviders.of(activity!!)
-            .get(HomeworkViewModel::class.java)
         binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = this@HomeworkFragment
             listState = viewModel.listState
             viewModel.onError = ::onError
 
-            viewModel.homework.observe(this@HomeworkFragment, Observer {
+            viewModel.homework.observe(viewLifecycleOwner, Observer {
                 if (it == null) return@Observer
                 errorText.text = ""
                 adapter.submitList(viewModel.homework.value)

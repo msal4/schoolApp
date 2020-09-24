@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.databinding.ItemAddAbsenceBinding
 import com.smart.resources.schools_app.features.absence.AddAbsenceModel
 
-class AddAbsenceRecyclerAdapter()
+class AddAbsenceRecyclerAdapter
     : RecyclerView.Adapter<AddAbsenceRecyclerAdapter.MyViewHolder>() {
     private var students: List<AddAbsenceModel>?= null
 

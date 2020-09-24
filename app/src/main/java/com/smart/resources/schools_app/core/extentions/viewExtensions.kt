@@ -1,14 +1,12 @@
 package com.smart.resources.schools_app.core.extentions
 
 import android.content.Context
-import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Shader
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorInt

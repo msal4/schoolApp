@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:mine="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layoutDirection="rtl">
 
@@ -33,7 +32,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_item"
+            android:background="@drawable/background_card"
             android:elevation="@dimen/item_elevation"
             android:layoutDirection="rtl"
             android:orientation="vertical"
@@ -71,7 +70,7 @@
                     android:id="@+id/examDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    mine:setDate="@{itemModel.date}"
+                    android:setDate="@{itemModel.date}"
                     android:textAlignment="viewStart"
                     tools:text="8/10/2019" />
 

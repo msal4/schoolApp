@@ -2,13 +2,14 @@ package com.smart.resources.schools_app.features.homework
 
 import com.smart.resources.schools_app.core.extentions.isImage
 import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
+import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import java.io.File
 
 
 abstract class BaseHomeworkModel(
     var assignmentName: String,
-    var date: LocalDateTime?,
+    var date: LocalDate?,
     var note: String,
     var subjectName: String
 ){
@@ -21,7 +22,7 @@ abstract class BaseHomeworkModel(
 data class HomeworkModel(
     val idHomework: String,
     val assignmentName: String,
-    val date: LocalDateTime,
+    val date: LocalDate,
     val note: String,
     val attachment: String,
     val subjectName: String,
@@ -36,7 +37,7 @@ class PostHomeworkModel(
     var attachment: File?= null,
     var classId:String= "",
     assignmentName: String= "",
-    date: LocalDateTime?= null,
+    date: LocalDate?= null,
     note: String= "",
     subjectName: String= ""
 ): BaseHomeworkModel(assignmentName, date, note, subjectName){

@@ -5,6 +5,7 @@ import android.view.*
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.smart.resources.schools_app.R
@@ -14,7 +15,7 @@ import com.smart.resources.schools_app.sharedUi.ImageViewerActivity
 
 class AdvertisingFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
-    private lateinit var viewModel: HomeworkViewModel
+    private val viewModel: HomeworkViewModel by viewModels()
 
     companion object {
         fun newInstance(fm:FragmentManager){
@@ -44,10 +45,9 @@ class AdvertisingFragment : Fragment() {
     }
 
     private fun setupViewModel() {
-        viewModel = ViewModelProviders.of(this)
-            .get(HomeworkViewModel::class.java).apply {
+        viewModel.apply {
                 binding.listState= listState
-                getExams().observe(this@AdvertisingFragment, Observer{onHomeworkDownload(it)})
+                getExams().observe(viewLifecycleOwner, {onHomeworkDownload(it)})
             }
     }
 

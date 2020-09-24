@@ -4,13 +4,13 @@ import android.widget.EditText
 import androidx.databinding.BindingAdapter
 import com.google.android.material.textfield.TextInputLayout
 
-@BindingAdapter("mine:errorMsg")
+@BindingAdapter("android:errorMsg")
 fun setEditTextError(editText: EditText, errorMsg:String?){
     editText.error= errorMsg
 }
 
 
-@BindingAdapter("mine:errorMsg")
+@BindingAdapter("android:errorMsg")
 fun setInputLayoutError(inputLayout: TextInputLayout, errorMsg:String?){
     inputLayout.error= errorMsg
 }

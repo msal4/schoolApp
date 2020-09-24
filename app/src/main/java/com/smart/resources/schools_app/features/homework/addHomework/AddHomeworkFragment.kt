@@ -1,5 +1,6 @@
 package com.smart.resources.schools_app.features.homework.addHomework
 
+//import id.zelory.compressor.Compressor
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -11,33 +12,31 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.bindingAdapters.loadImageUrl
-import com.smart.resources.schools_app.core.bindingAdapters.setTextFromDate
 import com.smart.resources.schools_app.core.bindingAdapters.setSpinnerList
-import com.smart.resources.schools_app.core.extentions.getImage
-import com.smart.resources.schools_app.core.myTypes.PostListener
+import com.smart.resources.schools_app.core.bindingAdapters.textView.setTextFromDate
 import com.smart.resources.schools_app.core.extentions.*
 import com.smart.resources.schools_app.core.helpers.FileUtils
+import com.smart.resources.schools_app.core.myTypes.PostListener
 import com.smart.resources.schools_app.databinding.FragmentAddHomeworkBinding
 import com.smart.resources.schools_app.features.homework.HomeworkViewModel
-import com.smart.resources.schools_app.features.users.UsersRepository
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
-import com.smart.resources.schools_app.sharedUi.SectionActivity
 import com.smart.resources.schools_app.features.profile.TeacherModel
+import com.smart.resources.schools_app.features.users.UsersRepository
 import com.smart.resources.schools_app.sharedUi.DatePickerFragment
+import com.smart.resources.schools_app.sharedUi.SectionActivity
 import com.tiper.MaterialSpinner
 import id.zelory.compressor.Compressor
-//import id.zelory.compressor.Compressor
-import org.threeten.bp.LocalDateTime
 import java.io.File
 
 class AddHomeworkFragment : Fragment(), PostListener {
     private lateinit var binding: FragmentAddHomeworkBinding
-    private lateinit var viewModel: HomeworkViewModel
     private lateinit var progressBar: ProgressBar
     private lateinit var saveItem: MenuItem
+    private val viewModel: HomeworkViewModel by activityViewModels()
 
     private val onSpinnerItemSelected = object :
         MaterialSpinner.OnItemSelectedListener {
@@ -88,7 +87,7 @@ class AddHomeworkFragment : Fragment(), PostListener {
             setCustomTitle(R.string.add_homework)
             progressBar = getToolbarProgressBar()
             onBackPressedDispatcher
-                .addCallback(this@AddHomeworkFragment, object :
+                .addCallback(viewLifecycleOwner, object :
                     OnBackPressedCallback(true) {
                     override fun handleOnBackPressed() {
                         this@AddHomeworkFragment.onBackPressed()
@@ -101,7 +100,9 @@ class AddHomeworkFragment : Fragment(), PostListener {
 
     private fun onBackPressed() {
         progressBar.hide()
-        fragmentManager?.popBackStack()
+        if (isAdded) {
+            parentFragmentManager.popBackStack()
+        }
     }
 
     private fun setupBinding(
@@ -110,8 +111,8 @@ class AddHomeworkFragment : Fragment(), PostListener {
     ) {
         binding = FragmentAddHomeworkBinding
             .inflate(inflater, container, false).apply {
-                val currentUser= UsersRepository.instance.getCurrentUserAccount()
-                val teacherInfoModel= currentUser?.accessToken?.let { TeacherModel.fromToken(it) }
+                val currentUser = UsersRepository.instance.getCurrentUserAccount()
+                val teacherInfoModel = currentUser?.accessToken?.let { TeacherModel.fromToken(it) }
                 teacherInfoModel?.classesInfo
                     ?.let {
                         setSpinnerList(
@@ -167,14 +168,8 @@ class AddHomeworkFragment : Fragment(), PostListener {
     private fun onDateClicked(dateField: View) {
         DatePickerFragment.newInstance()
             .apply {
-                onDateSet = { _, year, month, dayOfMonth ->
-                    val localDateTime = LocalDateTime.of(year, month+1, dayOfMonth, 0, 0)
-
-                    setTextFromDate(
-                        dateField as TextView,
-                        localDateTime
-                    )
-                    viewModel.postHomeworkModel.date = localDateTime
+                onDateSet = {
+                    (dateField as TextView).setTextFromDate(it)
                 }
 
                 this@AddHomeworkFragment.fragmentManager?.let { show(it, "") }
@@ -183,16 +178,12 @@ class AddHomeworkFragment : Fragment(), PostListener {
 
 
     private fun setupViewModel() {
-        ViewModelProviders
-            .of(activity!!)
-            .get(HomeworkViewModel::class.java)
-            .apply {
-                viewModel = this
+        viewModel.apply {
                 binding.apply {
-                    e= postException
+                    e = postException
                     postModel = postHomeworkModel
-                    lifecycleOwner= this@AddHomeworkFragment
-                    uploadListener= this@AddHomeworkFragment
+                    lifecycleOwner = this@AddHomeworkFragment
+                    uploadListener = this@AddHomeworkFragment
                 }
             }
 
@@ -202,7 +193,7 @@ class AddHomeworkFragment : Fragment(), PostListener {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_save_btn, menu)
 
-        saveItem= menu.findItem(R.id.saveMenuItem)
+        saveItem = menu.findItem(R.id.saveMenuItem)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
