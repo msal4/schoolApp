@@ -33,14 +33,14 @@ class SwipeAdapter (val onSwipe:(viewHolder: RecyclerView.ViewHolder)->Unit) : I
             25 //so mBackground is behind the rounded corners of itemView
 
 
-        val iconMargin: Int = (itemView.height - (mIcon?.getIntrinsicHeight() ?: 0)) / 2
+        val iconMargin: Int = (itemView.height - (mIcon?.intrinsicHeight ?: 0)) / 2
         val iconTop: Int =
-            itemView.top + (itemView.height - (mIcon?.getIntrinsicHeight() ?: 0)) / 2
-        val iconBottom: Int = iconTop + (mIcon?.getIntrinsicHeight() ?: 0)
+            itemView.top + (itemView.height - (mIcon?.intrinsicHeight ?: 0)) / 2
+        val iconBottom: Int = iconTop + (mIcon?.intrinsicHeight ?: 0)
 
         if (dX > 0) { // Swiping to the right
             val iconLeft = itemView.left + iconMargin
-            val iconRight: Int = iconLeft + (mIcon?.getIntrinsicWidth() ?: 0)
+            val iconRight: Int = iconLeft + (mIcon?.intrinsicWidth ?: 0)
             mIcon?.setBounds(iconLeft, iconTop, iconRight, iconBottom)
             mBackground.setBounds(
                 itemView.left,
@@ -50,7 +50,7 @@ class SwipeAdapter (val onSwipe:(viewHolder: RecyclerView.ViewHolder)->Unit) : I
             )
         } else if (dX < 0) { // Swiping to the left
             val iconLeft: Int =
-                itemView.right - iconMargin - (mIcon?.getIntrinsicWidth() ?: 0)
+                itemView.right - iconMargin - (mIcon?.intrinsicWidth ?: 0)
             val iconRight = itemView.right - iconMargin
             mIcon?.setBounds(iconLeft, iconTop, iconRight, iconBottom)
             mBackground.setBounds(

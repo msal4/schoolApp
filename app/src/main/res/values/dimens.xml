@@ -40,4 +40,5 @@
     <dimen name="active_item_border">1dp</dimen>
     <dimen name="question_choice_spacing">8dp</dimen>
     <dimen name="fields_spacing">16dp</dimen>
+    <dimen name="number_picker_width">120dp</dimen>
 </resources>

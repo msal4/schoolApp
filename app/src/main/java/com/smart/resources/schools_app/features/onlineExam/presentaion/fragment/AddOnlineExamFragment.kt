@@ -9,14 +9,15 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.FragmentAddOnlineExamBinding
+import com.smart.resources.schools_app.databinding.ItemQuestionsHeaderBinding
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.AddOnlineExamViewModel
-import com.smart.resources.schools_app.features.onlineExam.presentaion.adapter.QuestionsPagerAdapter
+import com.smart.resources.schools_app.features.onlineExam.presentaion.adapter.QuestionsQuickAdapter
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 
 class AddOnlineExamFragment : Fragment() {
     private lateinit var binding: FragmentAddOnlineExamBinding
     private val viewModel: AddOnlineExamViewModel by viewModels()
-    private lateinit var pagerAdapter: QuestionsPagerAdapter
+    private lateinit var adapter: QuestionsQuickAdapter
 
     companion object {
         private const val ADD_ONLINE_EXAM_FRAGMENT = "addOnlineExamFragment"
@@ -46,6 +47,17 @@ class AddOnlineExamFragment : Fragment() {
         binding = FragmentAddOnlineExamBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = this@AddOnlineExamFragment
             model= viewModel
+            adapter= QuestionsQuickAdapter()
+
+
+            simpleQuestionsRecycler.adapter= adapter
+            viewModel.questions.observe(viewLifecycleOwner){
+                adapter.setDiffNewData(it.toMutableList())
+            }
+
+            addQuestionFab.setOnClickListener {
+
+            }
         }
         (activity as SectionActivity).setCustomTitle(R.string.add_exam)
         return binding.root

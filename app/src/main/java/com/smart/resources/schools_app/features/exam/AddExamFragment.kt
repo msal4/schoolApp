@@ -8,10 +8,9 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.bindingAdapters.setSpinnerList
-import com.smart.resources.schools_app.core.bindingAdapters.textView.setTextFromDate
+import com.smart.resources.schools_app.core.bindingAdapters.textView.setDate
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.core.extentions.hide
 import com.smart.resources.schools_app.core.extentions.show
@@ -144,7 +143,7 @@ class AddExamFragment : Fragment(), PostListener {
         DatePickerFragment.newInstance()
             .apply {
                 onDateSet = {
-                    (dateField as TextView).setTextFromDate(it)
+                    (dateField as TextView).setDate(it)
                 }
 
                 this@AddExamFragment.fragmentManager?.let { show(it, "") }

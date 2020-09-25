@@ -1,12 +1,12 @@
 package com.smart.resources.schools_app.features.onlineExam.presentaion.adapter
 
 import android.view.View
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.extentions.toColor
-import com.smart.resources.schools_app.core.extentions.toDimen
-import com.smart.resources.schools_app.core.extentions.toDrawable
+import com.smart.resources.schools_app.core.extentions.*
 import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExamStatus
+import com.smart.resources.schools_app.features.onlineExam.domain.model.QuestionType
 
 @BindingAdapter("android:onlineExamCardStatus", "android:canTakeOnlineExam", requireAll = true)
 fun View.setOnlineExamCardStatus(onlineExamStatus: OnlineExamStatus, canTakeOnlineExam:Boolean){
@@ -38,4 +38,19 @@ fun View.setOnlineExamCardStatus(onlineExamStatus: OnlineExamStatus, canTakeOnli
         outlineAmbientShadowColor= color
         outlineSpotShadowColor= color
     }
+}
+
+@BindingAdapter("android:questionType")
+fun TextView.setQuestionTypeLabel(questionType: QuestionType){
+    text = when(questionType){
+        QuestionType.NORMAL -> R.string.normal
+        QuestionType.CORRECTNESS -> R.string.true_and_false
+        QuestionType.MULTI_CHOICE -> R.string.options
+    }.toString(context)
+
+    backgroundTintList = when(questionType){
+        QuestionType.NORMAL -> R.color.questionNormalColor
+        QuestionType.CORRECTNESS -> R.color.questionCorrectnessColor
+        QuestionType.MULTI_CHOICE -> R.color.questionMultiChoiceColor
+    }.toColorStateList(context)
 }

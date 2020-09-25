@@ -13,11 +13,10 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.bindingAdapters.loadImageUrl
 import com.smart.resources.schools_app.core.bindingAdapters.setSpinnerList
-import com.smart.resources.schools_app.core.bindingAdapters.textView.setTextFromDate
+import com.smart.resources.schools_app.core.bindingAdapters.textView.setDate
 import com.smart.resources.schools_app.core.extentions.*
 import com.smart.resources.schools_app.core.helpers.FileUtils
 import com.smart.resources.schools_app.core.myTypes.PostListener
@@ -169,7 +168,7 @@ class AddHomeworkFragment : Fragment(), PostListener {
         DatePickerFragment.newInstance()
             .apply {
                 onDateSet = {
-                    (dateField as TextView).setTextFromDate(it)
+                    (dateField as TextView).setDate(it)
                 }
 
                 this@AddHomeworkFragment.fragmentManager?.let { show(it, "") }

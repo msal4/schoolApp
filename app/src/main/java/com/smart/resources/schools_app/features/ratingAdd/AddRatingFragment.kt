@@ -88,9 +88,6 @@ class AddRatingFragment : Fragment(), MaterialSpinner.OnItemSelectedListener, Po
             }
     }
 
-
-
-
     private fun setupViewModel() {
         viewModel.apply {
                 binding.viewState = listState

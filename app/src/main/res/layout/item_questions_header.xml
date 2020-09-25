@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="normalQuestionsCount"
+            type="Integer" />
+        <variable
+            name="multiChoiceQuestionsCount"
+            type="Integer" />
+        <variable
+            name="correctnessQuestionsCount"
+            type="Integer" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:padding="@dimen/item_padding"
+        android:layoutDirection="rtl">
+
+        <TextView
+            android:id="@+id/normalQuestionsCountText"
+            style="@style/questionTypeCountTextStyle"
+            android:backgroundTint="@color/questionNormalColor"
+            android:verticalTextTitle="@{normalQuestionsCount.toString()}"
+            android:verticalTextSubtitle="@{@string/normal}"
+            android:layout_marginBottom="@dimen/item_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/multiChoiceQuestionsCountText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            tools:text="15\nاعتيادي"
+            />
+        <TextView
+            android:id="@+id/multiChoiceQuestionsCountText"
+            style="@style/questionTypeCountTextStyle"
+            android:backgroundTint="@color/questionMultiChoiceColor"
+            android:verticalTextTitle="@{multiChoiceQuestionsCount.toString()}"
+            android:verticalTextSubtitle="@{@string/options}"
+            app:layout_constraintBottom_toBottomOf="@+id/normalQuestionsCountText"
+            app:layout_constraintEnd_toStartOf="@id/correctnessQuestionsCountText"
+            app:layout_constraintStart_toEndOf="@+id/normalQuestionsCountText"
+            app:layout_constraintTop_toTopOf="@+id/normalQuestionsCountText"
+            tools:text="15\nاختيارات" />
+
+        <TextView
+            android:id="@+id/correctnessQuestionsCountText"
+            style="@style/questionTypeCountTextStyle"
+            android:backgroundTint="@color/questionCorrectnessColor"
+            android:verticalTextTitle="@{correctnessQuestionsCount.toString()}"
+            android:verticalTextSubtitle="@{@string/true_and_false}"
+            app:layout_constraintBottom_toBottomOf="@+id/multiChoiceQuestionsCountText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/multiChoiceQuestionsCountText"
+            app:layout_constraintTop_toTopOf="@+id/multiChoiceQuestionsCountText"
+            tools:text="15\nصح وخطأ"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

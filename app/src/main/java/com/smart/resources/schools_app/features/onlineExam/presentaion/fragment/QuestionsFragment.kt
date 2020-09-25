@@ -21,16 +21,16 @@ import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineEx
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.QuestionsViewModel
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.QuestionsViewModelFactory
 import com.smart.resources.schools_app.features.onlineExam.presentaion.adapter.QuestionsNavigatorAdapter
-import com.smart.resources.schools_app.features.onlineExam.presentaion.adapter.QuestionsPagerAdapter
+import com.smart.resources.schools_app.features.onlineExam.presentaion.adapter.AnswerableQuestionsPagerAdapter
 import com.smart.resources.schools_app.sharedUi.SectionActivity
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 
-class QuestionsFragment : Fragment(), QuestionsPagerAdapter.Listener {
+class QuestionsFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
     private lateinit var binding: FragmentQuestionsBinding
     private val viewModel: QuestionsViewModel by viewModels {
         QuestionsViewModelFactory(arguments?.getParcelable(EXTRA_EXAM_DETAILS)!!)
     }
-    private lateinit var pagerAdapter: QuestionsPagerAdapter
+    private lateinit var pagerAdapterAnswerable: AnswerableQuestionsPagerAdapter
     private lateinit var navigatorAdapter: QuestionsNavigatorAdapter
 
     companion object {
@@ -84,9 +84,9 @@ class QuestionsFragment : Fragment(), QuestionsPagerAdapter.Listener {
         binding = FragmentQuestionsBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = this@QuestionsFragment
             model = viewModel
-            pagerAdapter = QuestionsPagerAdapter()
-            pagerAdapter.listener = this@QuestionsFragment
-            questionsPager.adapter = pagerAdapter
+            pagerAdapterAnswerable = AnswerableQuestionsPagerAdapter()
+            pagerAdapterAnswerable.listener = this@QuestionsFragment
+            questionsPager.adapter = pagerAdapterAnswerable
 
             magicIndicator.navigator = CommonNavigator(requireContext()).apply {
                 navigatorAdapter = QuestionsNavigatorAdapter()
@@ -97,7 +97,7 @@ class QuestionsFragment : Fragment(), QuestionsPagerAdapter.Listener {
             ViewPager2Helper.bind(magicIndicator, questionsPager)
 
             viewModel.questions.observe(viewLifecycleOwner) {
-                pagerAdapter.submitList(it)
+                pagerAdapterAnswerable.submitList(it)
             }
 
             viewModel.solvedQuestions.observe(viewLifecycleOwner) {

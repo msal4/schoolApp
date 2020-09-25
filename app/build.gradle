@@ -108,4 +108,10 @@ dependencies {
     implementation "androidx.viewpager2:viewpager2:1.0.0"
     // view pager: tabs
     implementation 'com.github.hackware1993:MagicIndicator:1.6.0'
+
+    // quick adapter
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
+
+    // number picker
+    implementation 'com.github.sephiroth74:NumberSlidingPicker:1.0.3'
 }

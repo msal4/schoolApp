@@ -9,7 +9,7 @@ import com.smart.resources.schools_app.features.onlineExam.presentaion.viewHolde
 import com.smart.resources.schools_app.features.onlineExam.presentaion.viewHolder.MultiChoiceQuestionViewHolder
 import com.smart.resources.schools_app.features.onlineExam.presentaion.viewHolder.QuestionViewHolder
 
-class QuestionsPagerAdapter :
+class AnswerableQuestionsPagerAdapter :
     ListAdapter<BaseAnswerableQuestion<out Any>, RecyclerView.ViewHolder>(DIFF_UTIL) {
 
     companion object {

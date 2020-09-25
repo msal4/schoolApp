@@ -16,7 +16,7 @@ import com.smart.resources.schools_app.sharedUi.SectionActivity
 import org.threeten.bp.Duration
 import org.threeten.bp.LocalDateTime
 
-class OnlineExamFragment : Fragment() {
+class OnlineExamsFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
     private lateinit var adapter: OnlineExamAdapter
     private val viewModel: OnlineExamViewModel by viewModels()
@@ -24,7 +24,7 @@ class OnlineExamFragment : Fragment() {
 
     companion object {
         fun newInstance(fm: FragmentManager) {
-            val fragment = OnlineExamFragment()
+            val fragment = OnlineExamsFragment()
             fm.beginTransaction().apply {
                 add(R.id.fragmentContainer, fragment)
                 commit()
@@ -37,7 +37,7 @@ class OnlineExamFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false).apply {
-            lifecycleOwner = this@OnlineExamFragment
+            lifecycleOwner = this@OnlineExamsFragment
             listState = viewModel.listState
 
 

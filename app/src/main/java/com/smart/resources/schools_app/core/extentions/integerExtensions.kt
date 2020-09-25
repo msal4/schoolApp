@@ -9,11 +9,14 @@ import androidx.core.content.res.ResourcesCompat
 import org.threeten.bp.Duration
 
 fun Int.toColor(context: Context) = ContextCompat.getColor(context, this)
+fun Int.toColorStateList(context: Context) = ContextCompat.getColorStateList(context, this)
 
 fun Int.toDimen(context: Context) = context.resources.getDimension(this)
 
 fun Int.toDrawable(context: Context): Drawable? =
     ResourcesCompat.getDrawable(context.resources, this, null)
+
+fun Int.toString(context: Context) = context.resources.getString(this)
 
 fun pxToDp(px: Int): Int {
     return (px / Resources.getSystem().displayMetrics.density).toInt()

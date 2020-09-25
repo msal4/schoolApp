@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.orhanobut.logger.Logger
-import com.smart.resources.schools_app.core.bindingAdapters.textView.setTextFromDate
+import com.smart.resources.schools_app.core.bindingAdapters.textView.setDate
 import com.smart.resources.schools_app.databinding.BottomSheetAddRatingBinding
 import com.smart.resources.schools_app.features.rating.RatingModel
 import com.smart.resources.schools_app.sharedUi.DatePickerFragment
-import org.threeten.bp.LocalDateTime
 
 // TODO: add scrolling when page opens
 class AddRatingBottomSheet : BottomSheetDialogFragment() {
@@ -68,7 +67,7 @@ class AddRatingBottomSheet : BottomSheetDialogFragment() {
         DatePickerFragment.newInstance()
             .apply {
                 onDateSet = {
-                    (dateField as TextView).setTextFromDate(it)
+                    (dateField as TextView).setDate(it)
                 }
 
                 this@AddRatingBottomSheet.fragmentManager?.let { show(it, "") }

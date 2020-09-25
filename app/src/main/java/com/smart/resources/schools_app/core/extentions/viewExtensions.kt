@@ -1,6 +1,8 @@
 package com.smart.resources.schools_app.core.extentions
 
+import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
 import android.graphics.LinearGradient
 import android.graphics.Shader
 import android.util.TypedValue
@@ -10,6 +12,7 @@ import android.view.Window
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorInt
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
 import androidx.core.view.get
@@ -18,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
+
 
 fun Context.toast(msg: String) {
     Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
@@ -31,6 +35,17 @@ val Context.selectableItemBackgroundBorderless:Int get() {
         true
     )
     return outValue.resourceId
+}
+
+val Context.activity: AppCompatActivity? get() {
+    var context= this
+    while (context is ContextWrapper) {
+        if (context is AppCompatActivity) {
+            return context
+        }
+        context = context.baseContext
+    }
+    return null
 }
 
 fun View.hide() {

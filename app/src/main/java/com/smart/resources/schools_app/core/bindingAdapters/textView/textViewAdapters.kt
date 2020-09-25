@@ -5,6 +5,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.CharSymbols
+import com.smart.resources.schools_app.core.extentions.hide
 import com.smart.resources.schools_app.core.extentions.startCountDown
 import com.smart.resources.schools_app.core.extentions.toUnicodeString
 import com.smart.resources.schools_app.features.users.UsersRepository
@@ -55,7 +56,16 @@ fun TextView.setTimeInMinutesSeconds(time: Duration) {
 
 @BindingAdapter("android:unorderedList")
 fun TextView.setUnOrderedList(list: List<String>) {
-    text = list.joinToString(prefix = CharSymbols.BULLET, postfix = "\n") { it }.toUnicodeString()
+    if(list.isEmpty()) {
+        hide()
+        return
+    }
+    text = list.joinToString(prefix = "${CharSymbols.BULLET} ", separator = "\n${CharSymbols.BULLET} ") { it }.toUnicodeString()
+}
+
+@BindingAdapter("android:verticalTextTitle", "android:verticalTextSubtitle", requireAll = true)
+fun TextView.setVerticalText(title:String?, subtitle:String?) {
+    text= "$title\n$subtitle"
 }
 
 

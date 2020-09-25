@@ -7,14 +7,16 @@ import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.core.adapters.dateDisFormatter
+import com.smart.resources.schools_app.core.adapters.timeDisFormatter
+import com.smart.resources.schools_app.core.extentions.activity
 import com.smart.resources.schools_app.sharedUi.DatePickerFragment
 import org.threeten.bp.LocalDate
 
-private const val SET_DATE_ATTRIBUTE= "android:setDate"
-private const val SHOW_DATE_PICKER_ON_CLICK_ATTRIBUTE= "android:showDatePickerOnClick"
+private const val SET_DATE_ATTRIBUTE = "android:setDate"
+private const val SHOW_DATE_PICKER_ON_CLICK_ATTRIBUTE = "android:showDatePickerOnClick"
 
 @BindingAdapter(SET_DATE_ATTRIBUTE)
-fun TextView.setTextFromDate(date: LocalDate?) {
+fun TextView.setDate(date: LocalDate?) {
     try {
         text = date?.format(dateDisFormatter)
     } catch (e: Exception) {
@@ -23,7 +25,7 @@ fun TextView.setTextFromDate(date: LocalDate?) {
 }
 
 @InverseBindingAdapter(attribute = SET_DATE_ATTRIBUTE)
-fun  TextView.setDateFomText(): LocalDate {
+fun TextView.toLocalDate(): LocalDate {
     return LocalDate.parse(
         text,
         dateDisFormatter
@@ -31,7 +33,7 @@ fun  TextView.setDateFomText(): LocalDate {
 }
 
 @BindingAdapter("${SET_DATE_ATTRIBUTE}AttrChanged")
-fun TextView.setListeners(
+fun TextView.setDateChangedListener(
     attrChange: InverseBindingListener
 ) {
     doAfterTextChanged {
@@ -41,14 +43,17 @@ fun TextView.setListeners(
 
 @BindingAdapter(SHOW_DATE_PICKER_ON_CLICK_ATTRIBUTE)
 fun TextView.setShowDatePickerOnClick(enabled: Boolean) {
-    if(enabled) {
+    if (enabled) {
         setOnClickListener {
-            DatePickerFragment.newInstance()
-                .onDateSet = {
-                setTextFromDate(it)
+            val pickerFragment = DatePickerFragment.newInstance()
+            pickerFragment.onDateSet = {
+                setDate(it)
+            }
+            context.activity?.let {
+                pickerFragment.show(it.supportFragmentManager, "")
             }
         }
-    }else{
+    } else {
         setOnClickListener(null)
     }
 }
