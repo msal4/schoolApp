@@ -14,13 +14,13 @@ import com.smart.resources.schools_app.core.bindingAdapters.textView.setDate
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.core.extentions.hide
 import com.smart.resources.schools_app.core.extentions.show
-import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.databinding.FragmentAddExamBinding
 import com.smart.resources.schools_app.features.users.UsersRepository
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import com.smart.resources.schools_app.features.profile.TeacherModel
-import com.smart.resources.schools_app.sharedUi.fragment.DatePickerFragment
-import com.smart.resources.schools_app.sharedUi.activity.SectionActivity
+import com.smart.resources.schools_app.features.dateTimePickers.DatePickerFragment
+import com.smart.resources.schools_app.core.activity.SectionActivity
+import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.tiper.MaterialSpinner
 
 class AddExamFragment : Fragment(), PostListener {

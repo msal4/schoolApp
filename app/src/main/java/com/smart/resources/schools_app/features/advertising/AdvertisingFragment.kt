@@ -8,8 +8,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
-import com.smart.resources.schools_app.sharedUi.activity.SectionActivity
-import com.smart.resources.schools_app.sharedUi.activity.ImageViewerActivity
+import com.smart.resources.schools_app.core.activity.SectionActivity
+import com.smart.resources.schools_app.features.imageViewer.ImageViewerActivity
 
 class AdvertisingFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding

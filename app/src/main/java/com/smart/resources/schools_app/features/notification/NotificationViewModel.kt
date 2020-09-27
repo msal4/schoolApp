@@ -3,7 +3,7 @@ package com.smart.resources.schools_app.features.notification
 import android.app.Application
 import androidx.lifecycle.*
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.helpers.RetrofitHelper
+import com.smart.resources.schools_app.core.utils.RetrofitHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.users.UsersRepository

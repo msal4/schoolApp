@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.core
+package com.smart.resources.schools_app.core.myTypes
 
 /**
  * Used as a wrapper for data that is exposed via a LiveData that represents an event.

@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -13,14 +12,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.adapters.SwipeAdapter
+import com.smart.resources.schools_app.core.callbacks.SwipeAdapter
 import com.smart.resources.schools_app.core.extentions.toStringResource
 import com.smart.resources.schools_app.databinding.FragmentAddOnlineExamBinding
 import com.smart.resources.schools_app.features.onlineExam.domain.model.Question
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.AddOnlineExamViewModel
 import com.smart.resources.schools_app.features.onlineExam.presentation.adapter.QuestionsQuickAdapter
-import com.smart.resources.schools_app.sharedUi.LoadableActionMenuItemFragment
-import com.smart.resources.schools_app.sharedUi.activity.SectionActivity
+import com.smart.resources.schools_app.core.abstractTypes.LoadableActionMenuItemFragment
+import com.smart.resources.schools_app.core.activity.SectionActivity
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
 

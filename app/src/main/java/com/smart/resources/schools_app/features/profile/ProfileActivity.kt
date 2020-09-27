@@ -16,7 +16,7 @@ import com.smart.resources.schools_app.core.extentions.selectImage
 import com.smart.resources.schools_app.databinding.ActivityProfileBinding
 import com.smart.resources.schools_app.features.users.AccountsDialog
 import com.smart.resources.schools_app.features.users.UsersRepository
-import com.smart.resources.schools_app.sharedUi.activity.ImageViewerActivity
+import com.smart.resources.schools_app.features.imageViewer.ImageViewerActivity
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding

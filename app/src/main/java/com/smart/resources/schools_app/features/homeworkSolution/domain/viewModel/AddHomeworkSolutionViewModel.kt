@@ -7,8 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.Event
-import com.smart.resources.schools_app.core.helpers.FileUtils
+import com.smart.resources.schools_app.core.myTypes.Event
+import com.smart.resources.schools_app.core.utils.FileUtils
 import com.smart.resources.schools_app.core.myTypes.ConnectionError
 import com.smart.resources.schools_app.core.myTypes.ResponseError
 import com.smart.resources.schools_app.core.myTypes.Success

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.CharSymbols
 import com.smart.resources.schools_app.core.extentions.hide
 import com.smart.resources.schools_app.core.extentions.startCountDown
 import com.smart.resources.schools_app.core.extentions.toUnicodeString

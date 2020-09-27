@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.core
+package com.smart.resources.schools_app.core.abstractTypes
 
 import android.content.Context
 import androidx.room.Database

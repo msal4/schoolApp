@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.core
+package com.smart.resources.schools_app.core.utils
 
 object CharSymbols{
     const val FILLED_CIRCLE= '\u25CF'

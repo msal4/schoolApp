@@ -3,7 +3,7 @@ package com.smart.resources.schools_app.features.login
 import android.content.Context
 import android.widget.Toast
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
+import com.smart.resources.schools_app.core.utils.SharedPrefHelper
 import com.smart.resources.schools_app.features.users.UsersRepository
 
 

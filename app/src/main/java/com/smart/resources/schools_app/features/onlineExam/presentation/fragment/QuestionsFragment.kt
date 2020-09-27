@@ -14,15 +14,15 @@ import com.smart.resources.schools_app.core.extentions.setSoftInputMode
 import com.smart.resources.schools_app.core.extentions.setStatusBarColor
 import com.smart.resources.schools_app.core.extentions.setStatusBarColorToWhite
 import com.smart.resources.schools_app.core.extentions.toColorResource
-import com.smart.resources.schools_app.core.helpers.ViewPager2Helper
+import com.smart.resources.schools_app.core.callbacks.ViewPager2Helper
 import com.smart.resources.schools_app.databinding.FragmentQuestionsBinding
 import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnswer
-import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExamDetails
+import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.QuestionsViewModel
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.QuestionsViewModelFactory
 import com.smart.resources.schools_app.features.onlineExam.presentation.adapter.QuestionsNavigatorAdapter
 import com.smart.resources.schools_app.features.onlineExam.presentation.adapter.AnswerableQuestionsPagerAdapter
-import com.smart.resources.schools_app.sharedUi.activity.SectionActivity
+import com.smart.resources.schools_app.core.activity.SectionActivity
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 
 class QuestionsFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
@@ -37,10 +37,10 @@ class QuestionsFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
         private const val QUESTIONS_FRAGMENT = "questionsFragment"
         private const val EXTRA_EXAM_DETAILS = "extraExamDetails"
 
-        fun newInstance(fm: FragmentManager, examDetails: OnlineExamDetails) {
+        fun newInstance(fm: FragmentManager, exam: OnlineExam) {
             val fragment = QuestionsFragment()
             fragment.arguments = bundleOf(
-                EXTRA_EXAM_DETAILS to examDetails
+                EXTRA_EXAM_DETAILS to exam
             )
             fm.beginTransaction().apply {
                 setCustomAnimations(

@@ -8,7 +8,7 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayout
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.*
-import com.smart.resources.schools_app.sharedUi.activity.SectionActivity
+import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.databinding.FragmentNotificationsBinding
 
 class NotificationFragment : Fragment() {

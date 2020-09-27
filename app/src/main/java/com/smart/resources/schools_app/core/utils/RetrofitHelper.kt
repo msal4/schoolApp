@@ -1,9 +1,9 @@
-package com.smart.resources.schools_app.core.helpers
+package com.smart.resources.schools_app.core.utils
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.smart.resources.schools_app.core.adapters.LocalDateConverter
-import com.smart.resources.schools_app.core.adapters.LocalDateTimeConverter
+import com.smart.resources.schools_app.core.typeConverters.retrofit.LocalDateConverter
+import com.smart.resources.schools_app.core.typeConverters.retrofit.LocalDateTimeConverter
 import com.smart.resources.schools_app.features.absence.AbsenceClient
 import com.smart.resources.schools_app.features.advertising.AdvertisingClient
 import com.smart.resources.schools_app.features.exam.ExamClient
@@ -21,7 +21,6 @@ import com.smart.resources.schools_app.features.users.UsersRepository
 import com.snakydesign.watchtower.WatchTower
 import com.snakydesign.watchtower.interceptor.WatchTowerInterceptor
 import com.snakydesign.watchtower.interceptor.WebWatchTowerObserver
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime

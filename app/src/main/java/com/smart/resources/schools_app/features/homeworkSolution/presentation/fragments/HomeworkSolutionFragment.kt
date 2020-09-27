@@ -15,8 +15,8 @@ import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.homeworkSolution.domain.viewModel.HomeworkSolutionViewModel
 import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
 import com.smart.resources.schools_app.features.homeworkSolution.presentation.adapter.HomeworkAnswerRecyclerAdapter
-import com.smart.resources.schools_app.sharedUi.activity.ImageViewerActivity
-import com.smart.resources.schools_app.sharedUi.activity.SectionActivity
+import com.smart.resources.schools_app.features.imageViewer.ImageViewerActivity
+import com.smart.resources.schools_app.core.activity.SectionActivity
 
 class HomeworkSolutionFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding

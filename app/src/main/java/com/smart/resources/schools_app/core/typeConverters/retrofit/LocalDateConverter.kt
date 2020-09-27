@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.core.adapters
+package com.smart.resources.schools_app.core.typeConverters.retrofit
 
 import com.google.gson.*
 import org.threeten.bp.LocalDate

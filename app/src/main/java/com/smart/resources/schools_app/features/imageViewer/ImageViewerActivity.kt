@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.sharedUi.activity
+package com.smart.resources.schools_app.features.imageViewer
 
 import android.app.Activity
 import android.content.Intent

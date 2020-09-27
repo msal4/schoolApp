@@ -1,17 +1,14 @@
-package com.smart.resources.schools_app.sharedUi
+package com.smart.resources.schools_app.core.abstractTypes
 
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.ProgressBar
-import androidx.annotation.MenuRes
 import androidx.fragment.app.Fragment
-import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.extentions.hide
 import com.smart.resources.schools_app.core.extentions.show
-import com.smart.resources.schools_app.core.myTypes.Section
-import com.smart.resources.schools_app.sharedUi.activity.SectionActivity
+import com.smart.resources.schools_app.core.activity.SectionActivity
 
 abstract class LoadableActionMenuItemFragment : Fragment() {
     private val mProgressBar:ProgressBar? by lazy {
@@ -38,7 +35,6 @@ abstract class LoadableActionMenuItemFragment : Fragment() {
         mMenuItem= menu.findItem(loadableItemId)
         super.onCreateOptionsMenu(menu, inflater)
     }
-
 
     fun setToolbarLoading(isLoading: Boolean) {
         if(isLoading){

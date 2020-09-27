@@ -8,7 +8,7 @@ import androidx.core.os.bundleOf
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.smart.resources.schools_app.databinding.BottomSheetHomeworkSolutionBinding
 import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
-import com.smart.resources.schools_app.sharedUi.activity.ImageViewerActivity
+import com.smart.resources.schools_app.features.imageViewer.ImageViewerActivity
 
 class ShowHomeworkSolutionBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetHomeworkSolutionBinding

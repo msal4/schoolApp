@@ -7,12 +7,12 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
-import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExamDetails
-import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExamStatus
+import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.OnlineExamViewModel
 import com.smart.resources.schools_app.features.onlineExam.presentation.adapter.OnlineExamAdapter
 import com.smart.resources.schools_app.features.users.UsersRepository
-import com.smart.resources.schools_app.sharedUi.activity.SectionActivity
+import com.smart.resources.schools_app.core.activity.SectionActivity
+import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import org.threeten.bp.Duration
 import org.threeten.bp.LocalDateTime
 
@@ -55,8 +55,8 @@ class OnlineExamsFragment : Fragment() {
         return binding.root
     }
 
-    private fun onOnlineExamPressed(onlineExamDetails: OnlineExamDetails){
-        QuestionsFragment.newInstance(parentFragmentManager, onlineExamDetails)
+    private fun onOnlineExamPressed(onlineExam: OnlineExam){
+        QuestionsFragment.newInstance(parentFragmentManager, onlineExam)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -78,39 +78,35 @@ class OnlineExamsFragment : Fragment() {
 }
 
 val dummyOnlineExams=  listOf(
-    OnlineExamDetails(
+    OnlineExam(
         "0",
         "رياضيات",
         LocalDateTime.now(),
         Duration.ofMinutes(150),
-        LocalDateTime.now().plusMinutes(30),
         5,
-        OnlineExamStatus.IN_PROGRESS,
+        OnlineExamStatus.ACTIVE,
     ),
-    OnlineExamDetails(
+    OnlineExam(
         "1",
         "اللغة العربية",
         LocalDateTime.now(),
         Duration.ofMinutes(500),
-        LocalDateTime.now().plusMinutes(30),
         15,
-        OnlineExamStatus.READY,
+        OnlineExamStatus.COMPLETED,
     ),
-    OnlineExamDetails(
+    OnlineExam(
         "2",
         "انكليزي",
         LocalDateTime.now(),
         Duration.ofMinutes(300),
-        LocalDateTime.now().plusMinutes(30),
         30,
         OnlineExamStatus.LOCKED,
     ),
-    OnlineExamDetails(
+    OnlineExam(
         "3",
         "فيزياء",
         LocalDateTime.now(),
         Duration.ofMinutes(50),
-        LocalDateTime.now().plusMinutes(30),
         60,
         OnlineExamStatus.COMPLETED,
     ),

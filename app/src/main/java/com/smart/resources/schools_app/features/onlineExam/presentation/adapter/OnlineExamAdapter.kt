@@ -6,12 +6,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.databinding.ItemOnlineExamBinding
-import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExamDetails
+import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExam
 
 class OnlineExamAdapter(private val isStudent:Boolean) :
-    ListAdapter<OnlineExamDetails, OnlineExamAdapter.MyViewHolder>(DIFF_CALLBACK) {
+    ListAdapter<OnlineExam, OnlineExamAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
-    var onItemPressed: ((onlineExamDetails:OnlineExamDetails) -> Unit)? = null
+    var onItemPressed: ((onlineExam:OnlineExam) -> Unit)? = null
 
 
 
@@ -27,7 +27,7 @@ class OnlineExamAdapter(private val isStudent:Boolean) :
 
     }
 
-    override fun submitList(list: List<OnlineExamDetails>?) {
+    override fun submitList(list: List<OnlineExam>?) {
         super.submitList(list?.toList())
     }
 
@@ -39,7 +39,7 @@ class OnlineExamAdapter(private val isStudent:Boolean) :
     class MyViewHolder(var binding: ItemOnlineExamBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(model: OnlineExamDetails, isStudent: Boolean) {
+        fun bind(model: OnlineExam, isStudent: Boolean) {
             binding.apply {
                 onlineExamItem = model
                 this.isStudent= isStudent
@@ -60,20 +60,20 @@ class OnlineExamAdapter(private val isStudent:Boolean) :
 
 
     companion object {
-        private val DIFF_CALLBACK: DiffUtil.ItemCallback<OnlineExamDetails> =
-            object : DiffUtil.ItemCallback<OnlineExamDetails>() {
+        private val DIFF_CALLBACK: DiffUtil.ItemCallback<OnlineExam> =
+            object : DiffUtil.ItemCallback<OnlineExam>() {
                 override fun areItemsTheSame(
-                    oldDetails: OnlineExamDetails,
-                    newDetails: OnlineExamDetails
+                    old: OnlineExam,
+                    aNew: OnlineExam
                 ): Boolean {
-                    return oldDetails.id == newDetails.id
+                    return old.id == aNew.id
                 }
 
                 override fun areContentsTheSame(
-                    oldDetails: OnlineExamDetails,
-                    newDetails: OnlineExamDetails
+                    old: OnlineExam,
+                    aNew: OnlineExam
                 ): Boolean {
-                    return oldDetails == newDetails
+                    return old == aNew
                 }
             }
     }

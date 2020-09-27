@@ -31,7 +31,6 @@ enum class WeekDays(val dayName:String) {
 enum class UserType{
     STUDENT,
     TEACHER
-
 }
 
 enum class NotificationType{

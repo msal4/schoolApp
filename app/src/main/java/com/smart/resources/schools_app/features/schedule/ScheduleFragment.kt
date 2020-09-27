@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.WeekDays
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
-import com.smart.resources.schools_app.sharedUi.activity.SectionActivity
+import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.extentions.*
 
 class ScheduleFragment : Fragment() {

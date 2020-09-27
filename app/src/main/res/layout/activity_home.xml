@@ -21,7 +21,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".sharedUi.activity.HomeActivity">
+            tools:context=".core.activity.HomeActivity">
 
             <ImageView
                 android:id="@+id/topPart"

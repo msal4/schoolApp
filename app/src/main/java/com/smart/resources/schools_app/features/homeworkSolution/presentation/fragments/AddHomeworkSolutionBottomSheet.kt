@@ -10,7 +10,7 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.observe
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.smart.resources.schools_app.core.Event
+import com.smart.resources.schools_app.core.myTypes.Event
 import com.smart.resources.schools_app.core.extentions.GET_IMAGE_REQUEST
 import com.smart.resources.schools_app.core.extentions.getImage
 import com.smart.resources.schools_app.core.extentions.selectImage

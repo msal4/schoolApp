@@ -1,7 +1,7 @@
 package com.smart.resources.schools_app.features.profile
 
 import com.smart.resources.schools_app.core.extentions.decodeToken
-import com.smart.resources.schools_app.core.helpers.RetrofitHelper
+import com.smart.resources.schools_app.core.utils.RetrofitHelper
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.Period
 

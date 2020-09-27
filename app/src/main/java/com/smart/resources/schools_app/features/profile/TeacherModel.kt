@@ -1,7 +1,7 @@
 package com.smart.resources.schools_app.features.profile
 
 import com.google.gson.annotations.SerializedName
-import com.smart.resources.schools_app.core.CharSymbols
+import com.smart.resources.schools_app.core.utils.CharSymbols
 import org.threeten.bp.LocalDateTime
 
 class TeacherModel(

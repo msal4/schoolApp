@@ -7,15 +7,15 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.observe
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.bindingAdapters.setSpinnerList
-import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.core.myTypes.PostListener
 import com.smart.resources.schools_app.databinding.FragmentAddRatingBinding
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import com.smart.resources.schools_app.features.profile.TeacherModel
 import com.smart.resources.schools_app.features.rating.RatingModel
 import com.smart.resources.schools_app.features.users.UsersRepository
-import com.smart.resources.schools_app.sharedUi.LoadableActionMenuItemFragment
-import com.smart.resources.schools_app.sharedUi.activity.SectionActivity
+import com.smart.resources.schools_app.core.abstractTypes.LoadableActionMenuItemFragment
+import com.smart.resources.schools_app.core.activity.SectionActivity
+import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.tiper.MaterialSpinner
 
 

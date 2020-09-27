@@ -7,7 +7,7 @@ import com.smart.resources.schools_app.features.onlineExam.domain.model.*
 
 typealias ListOfAnswerableQuestions = List<BaseAnswerableQuestion<out Any>>
 
-class QuestionsViewModel(val onlineExamDetails: OnlineExamDetails) : ViewModel(), CanLogout {
+class QuestionsViewModel(val onlineExam: OnlineExam) : ViewModel(), CanLogout {
 
     private val _questions:MutableLiveData<ListOfAnswerableQuestions> = MutableLiveData(dummyQuestions)
     val questions: LiveData<ListOfAnswerableQuestions> = _questions
@@ -30,11 +30,11 @@ class QuestionsViewModel(val onlineExamDetails: OnlineExamDetails) : ViewModel()
 
 
 class QuestionsViewModelFactory(
-    private val onlineExamDetails: OnlineExamDetails
+    private val onlineExam: OnlineExam
 ) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return QuestionsViewModel(onlineExamDetails) as T
+        return QuestionsViewModel(onlineExam) as T
     }
 }
 

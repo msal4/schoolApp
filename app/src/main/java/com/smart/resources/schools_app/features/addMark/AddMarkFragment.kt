@@ -14,13 +14,13 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.extentions.hide
 import com.smart.resources.schools_app.core.extentions.show
 import com.smart.resources.schools_app.core.extentions.showSnackBar
-import com.smart.resources.schools_app.core.helpers.RetrofitHelper
+import com.smart.resources.schools_app.core.utils.RetrofitHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.students.SendStudentResult
 import com.smart.resources.schools_app.features.students.StudentWithMark
-import com.smart.resources.schools_app.sharedUi.activity.SectionActivity
+import com.smart.resources.schools_app.core.activity.SectionActivity
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async

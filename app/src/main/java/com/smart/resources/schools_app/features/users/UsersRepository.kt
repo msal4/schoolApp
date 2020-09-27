@@ -1,8 +1,8 @@
 package com.smart.resources.schools_app.features.users
 
 import android.content.Context
-import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
-import com.smart.resources.schools_app.core.AppDatabase
+import com.smart.resources.schools_app.core.utils.SharedPrefHelper
+import com.smart.resources.schools_app.core.abstractTypes.AppDatabase
 import com.smart.resources.schools_app.features.profile.UserModel
 import com.smart.resources.schools_app.features.profile.StudentModel
 import com.smart.resources.schools_app.features.profile.TeacherModel

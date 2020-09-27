@@ -13,7 +13,7 @@ import com.smart.resources.schools_app.features.absence.StudentAbsenceModel
 import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
 import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.users.UsersRepository
-import com.smart.resources.schools_app.sharedUi.activity.SectionActivity
+import com.smart.resources.schools_app.core.activity.SectionActivity
 //import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
 
 class AbsenceFragment : Fragment(), CanLogout {

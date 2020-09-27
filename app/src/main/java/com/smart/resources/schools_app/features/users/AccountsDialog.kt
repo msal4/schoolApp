@@ -13,7 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.adapters.SwipeAdapter
+import com.smart.resources.schools_app.core.callbacks.SwipeAdapter
 import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.databinding.DialogAccountsBinding
 import com.smart.resources.schools_app.features.login.CanLogout

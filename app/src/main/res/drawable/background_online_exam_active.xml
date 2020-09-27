@@ -4,7 +4,7 @@
 
     <corners android:radius="@dimen/item_corner_radius"/>
     <stroke android:width="@dimen/active_item_border"
-        android:color="@color/examInProgressColor" />
+        android:color="@color/examActiveColor" />
     <solid android:color="@color/lightBlue"/>
 
 </shape>

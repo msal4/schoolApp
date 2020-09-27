@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.adapters.SwipeAdapter
+import com.smart.resources.schools_app.core.callbacks.SwipeAdapter
 import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.homework.HomeworkModel
@@ -21,8 +21,8 @@ import com.smart.resources.schools_app.features.homeworkSolution.presentation.fr
 import com.smart.resources.schools_app.features.homeworkSolution.presentation.fragments.HomeworkSolutionFragment
 import com.smart.resources.schools_app.features.homeworkSolution.presentation.fragments.ShowHomeworkSolutionBottomSheet
 import com.smart.resources.schools_app.features.users.UsersRepository
-import com.smart.resources.schools_app.sharedUi.activity.ImageViewerActivity
-import com.smart.resources.schools_app.sharedUi.activity.SectionActivity
+import com.smart.resources.schools_app.features.imageViewer.ImageViewerActivity
+import com.smart.resources.schools_app.core.activity.SectionActivity
 
 class HomeworkFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding

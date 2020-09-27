@@ -12,12 +12,12 @@ import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.defaultGradient
+import com.smart.resources.schools_app.core.utils.defaultGradient
+import com.smart.resources.schools_app.core.utils.SharedPrefHelper
+import com.smart.resources.schools_app.databinding.ActivityLoginBinding
+import com.smart.resources.schools_app.core.activity.HomeActivity
 import com.smart.resources.schools_app.core.extentions.applyGradient
 import com.smart.resources.schools_app.core.extentions.showSnackBar
-import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
-import com.smart.resources.schools_app.databinding.ActivityLoginBinding
-import com.smart.resources.schools_app.sharedUi.activity.HomeActivity
 
 
 class LoginActivity : AppCompatActivity() {

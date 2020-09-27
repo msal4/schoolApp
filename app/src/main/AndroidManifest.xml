@@ -25,15 +25,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".sharedUi.activity.ImageViewerActivity"
+            android:name="com.smart.resources.schools_app.features.imageViewer.ImageViewerActivity"
             android:label="@string/title_activity_full_image" />
         <activity
-            android:name=".sharedUi.activity.SectionActivity"
+            android:name="com.smart.resources.schools_app.core.activity.SectionActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity
-            android:name=".sharedUi.activity.HomeActivity"
+            android:name="com.smart.resources.schools_app.core.activity.HomeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".features.profile.ProfileActivity"

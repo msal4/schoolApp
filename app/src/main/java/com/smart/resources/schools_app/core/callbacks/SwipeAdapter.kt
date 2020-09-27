@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.core.adapters
+package com.smart.resources.schools_app.core.callbacks
 
 import android.graphics.Canvas
 import androidx.recyclerview.widget.ItemTouchHelper

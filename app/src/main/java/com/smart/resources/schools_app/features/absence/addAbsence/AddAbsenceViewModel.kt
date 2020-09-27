@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.helpers.RetrofitHelper
+import com.smart.resources.schools_app.core.utils.RetrofitHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.absence.AddAbsenceModel
 import com.smart.resources.schools_app.features.absence.PostAbsenceModel

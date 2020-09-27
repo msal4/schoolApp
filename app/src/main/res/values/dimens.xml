@@ -20,8 +20,7 @@
     <dimen name="item_min_height">80dp</dimen>
     <dimen name="item_schedule_height">140dp</dimen>
     <dimen name="item_elevation">4dp</dimen>
-    <dimen name="exam_ready_item_elevation">8dp</dimen>
-    <dimen name="exam_in_progress_item_elevation">12dp</dimen>
+    <dimen name="exam_item_active_elevation">12dp</dimen>
     <dimen name="profileAttributeTitleSize">20sp</dimen>
     <dimen name="profileAttributeSize">14sp</dimen>
     <dimen name="advertising_collapsed_height">116dp</dimen>
