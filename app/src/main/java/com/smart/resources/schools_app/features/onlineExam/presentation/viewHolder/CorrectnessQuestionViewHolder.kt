@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.onlineExam.presentaion.viewHolder
+package com.smart.resources.schools_app.features.onlineExam.presentation.viewHolder
 
 import android.transition.TransitionManager
 import android.view.LayoutInflater

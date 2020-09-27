@@ -60,7 +60,7 @@ fun TextView.setUnOrderedList(list: List<String>) {
         hide()
         return
     }
-    text = list.joinToString(prefix = "${CharSymbols.BULLET} ", separator = "\n${CharSymbols.BULLET} ") { it }.toUnicodeString()
+    text = list.joinToString(separator = "\n") { it }.toUnicodeString()
 }
 
 @BindingAdapter("android:verticalTextTitle", "android:verticalTextSubtitle", requireAll = true)

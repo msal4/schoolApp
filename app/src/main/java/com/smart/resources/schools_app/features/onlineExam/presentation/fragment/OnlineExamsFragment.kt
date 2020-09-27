@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.onlineExam.presentaion.fragment
+package com.smart.resources.schools_app.features.onlineExam.presentation.fragment
 
 import android.os.Bundle
 import android.view.*
@@ -10,9 +10,9 @@ import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExamDetails
 import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExamStatus
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.OnlineExamViewModel
-import com.smart.resources.schools_app.features.onlineExam.presentaion.adapter.OnlineExamAdapter
+import com.smart.resources.schools_app.features.onlineExam.presentation.adapter.OnlineExamAdapter
 import com.smart.resources.schools_app.features.users.UsersRepository
-import com.smart.resources.schools_app.sharedUi.SectionActivity
+import com.smart.resources.schools_app.sharedUi.activity.SectionActivity
 import org.threeten.bp.Duration
 import org.threeten.bp.LocalDateTime
 

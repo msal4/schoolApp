@@ -5,12 +5,10 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.tabs.TabLayout
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.*
-import com.smart.resources.schools_app.sharedUi.SectionActivity
+import com.smart.resources.schools_app.sharedUi.activity.SectionActivity
 import com.smart.resources.schools_app.databinding.FragmentNotificationsBinding
 
 class NotificationFragment : Fragment() {

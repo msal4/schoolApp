@@ -13,7 +13,7 @@ import com.smart.resources.schools_app.core.extentions.hideSystemUi
 import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.databinding.ActivitySplashScreenBinding
 import com.smart.resources.schools_app.features.users.UsersRepository
-import com.smart.resources.schools_app.sharedUi.HomeActivity
+import com.smart.resources.schools_app.sharedUi.activity.HomeActivity
 
 class SplashScreenActivity : AppCompatActivity() {
     private lateinit var binding:ActivitySplashScreenBinding

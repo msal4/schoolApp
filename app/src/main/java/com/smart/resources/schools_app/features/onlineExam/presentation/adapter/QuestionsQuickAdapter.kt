@@ -1,11 +1,10 @@
-package com.smart.resources.schools_app.features.onlineExam.presentaion.adapter
+package com.smart.resources.schools_app.features.onlineExam.presentation.adapter
 
 import android.view.LayoutInflater
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
-import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ItemQuestionBinding
 import com.smart.resources.schools_app.databinding.ItemQuestionsHeaderBinding
@@ -13,15 +12,17 @@ import com.smart.resources.schools_app.features.onlineExam.domain.model.Question
 import com.smart.resources.schools_app.features.onlineExam.domain.model.QuestionType
 
 class QuestionsQuickAdapter : BaseQuickAdapter<Question, BaseDataBindingHolder<ItemQuestionBinding>>(R.layout.item_question) {
+
+
     init {
         setDiffCallback(QuestionDiffCallback())
     }
 
     private lateinit var headerBinding: ItemQuestionsHeaderBinding
 
-    private fun updateHeaderView() {
+    private fun updateHeaderView(list: List<Question>) {
         headerBinding.apply {
-            val questionTypeGroups = data.groupBy { it.questionType }
+            val questionTypeGroups = list.groupBy { it.questionType }
             QuestionType.values().forEach {
                 when (it) {
                     QuestionType.NORMAL -> normalQuestionsCount =
@@ -38,7 +39,7 @@ class QuestionsQuickAdapter : BaseQuickAdapter<Question, BaseDataBindingHolder<I
 
     override fun setDiffNewData(list: MutableList<Question>?) {
         super.setDiffNewData(list)
-        updateHeaderView()
+        updateHeaderView(list?: emptyList())
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="model"
+            type="com.smart.resources.schools_app.features.onlineExam.domain.viewModel.AddQuestionViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:elevation="@dimen/bottom_sheet_elevation"
+        android:layoutDirection="rtl"
+        android:paddingStart="@dimen/item_padding"
+        android:paddingEnd="@dimen/item_padding"
+        android:paddingBottom="@dimen/item_padding"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/questionFieldLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:hintEnabled="false"
+            android:errorMsg="@{model.questionErrorMsg}"
+            android:paddingBottom="4dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/questionField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:hint="@string/the_question"
+                android:text="@={model.question}"
+                android:textColor="@android:color/black"
+                android:imeOptions="actionSend"
+                android:paddingTop="@dimen/item_padding"
+                android:paddingBottom="4dp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/sendIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/send_icon_description"
+            android:src="@drawable/ic_send_white"
+            android:padding="4dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            app:layout_constraintBottom_toBottomOf="@+id/questionTypesRadioGroup"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/questionTypesRadioGroup"
+            app:tint="@color/colorPrimary87"
+            android:onClick="@{()->model.addQuestion()}"/>
+
+        <RadioGroup
+            android:id="@+id/questionTypesRadioGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/item_padding"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/questionFieldLayout"
+            app:layout_constraintStart_toEndOf="@+id/sendIcon"
+            app:layout_constraintTop_toBottomOf="@+id/questionFieldLayout"
+            tools:checkedButton="@id/normalQuestionRadioBtn"
+            >
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:id="@+id/normalQuestionRadioBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/normal"
+                android:layout_marginEnd="12dp" />
+
+            <RadioButton
+                android:id="@+id/multiChoiceQuestionRadioBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:text="@string/options" />
+
+            <RadioButton
+                android:id="@+id/correctnessQuestionRadioBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/true_and_false" />
+
+
+        </RadioGroup>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

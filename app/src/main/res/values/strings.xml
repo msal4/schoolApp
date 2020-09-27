@@ -100,6 +100,8 @@
     <string name="answer">الجواب</string>
     <string name="show_answer">اظهار الاجابة</string>
     <string name="empty_answer_msg">يرجى اضافة وصف او صورة!</string>
+    <string name="empty_question_msg">يرجى كتابة السؤال</string>
+    <string name="no_question_type_selected_msg">يرجى اختيار نوع السؤال</string>
     <string name="unexpected_error">لقد حدث خطأ غير متوقع!</string>
     <string name="dash">-</string>
     <string name="online_exam">امتحان اونلاين</string>
@@ -117,5 +119,7 @@
     <string name="duration_in_minutes">الفترة (بالدقائق)</string>
     <string name="required_questions">الاسئلة المطلوبة</string>
     <string name="key">المفتاح</string>
+    <string name="tag_add_question_fragment">addQuestionFragmentTag</string>
+    <string name="empty_options_error_msg">يرجى اضافة اختيار على الاقل عن طريق كتابة الاختيار على سطر جديد!</string>
 
 </resources>

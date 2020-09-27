@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.onlineExam.presentaion.fragment
+package com.smart.resources.schools_app.features.onlineExam.presentation.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,16 +13,16 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.extentions.setSoftInputMode
 import com.smart.resources.schools_app.core.extentions.setStatusBarColor
 import com.smart.resources.schools_app.core.extentions.setStatusBarColorToWhite
-import com.smart.resources.schools_app.core.extentions.toColor
+import com.smart.resources.schools_app.core.extentions.toColorResource
 import com.smart.resources.schools_app.core.helpers.ViewPager2Helper
 import com.smart.resources.schools_app.databinding.FragmentQuestionsBinding
 import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnswer
 import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExamDetails
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.QuestionsViewModel
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.QuestionsViewModelFactory
-import com.smart.resources.schools_app.features.onlineExam.presentaion.adapter.QuestionsNavigatorAdapter
-import com.smart.resources.schools_app.features.onlineExam.presentaion.adapter.AnswerableQuestionsPagerAdapter
-import com.smart.resources.schools_app.sharedUi.SectionActivity
+import com.smart.resources.schools_app.features.onlineExam.presentation.adapter.QuestionsNavigatorAdapter
+import com.smart.resources.schools_app.features.onlineExam.presentation.adapter.AnswerableQuestionsPagerAdapter
+import com.smart.resources.schools_app.sharedUi.activity.SectionActivity
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 
 class QuestionsFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
@@ -71,7 +71,7 @@ class QuestionsFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
         super.onDestroy()
         activity?.apply {
             setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-            setStatusBarColor(R.color.colorPrimaryDark.toColor(requireContext()))
+            setStatusBarColor(R.color.colorPrimaryDark.toColorResource(requireContext()))
         }
         (activity as SectionActivity).showToolbar()
     }

@@ -9,15 +9,14 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.observe
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.homeworkSolution.domain.viewModel.HomeworkSolutionViewModel
 import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
 import com.smart.resources.schools_app.features.homeworkSolution.presentation.adapter.HomeworkAnswerRecyclerAdapter
-import com.smart.resources.schools_app.sharedUi.ImageViewerActivity
-import com.smart.resources.schools_app.sharedUi.SectionActivity
+import com.smart.resources.schools_app.sharedUi.activity.ImageViewerActivity
+import com.smart.resources.schools_app.sharedUi.activity.SectionActivity
 
 class HomeworkSolutionFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding

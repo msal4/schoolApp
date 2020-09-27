@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.sharedUi
+package com.smart.resources.schools_app.sharedUi.activity
 
 import android.content.Context
 import android.content.Intent
@@ -22,7 +22,7 @@ import com.smart.resources.schools_app.features.exam.ExamFragment
 import com.smart.resources.schools_app.features.homework.getHomeworks.HomeworkFragment
 import com.smart.resources.schools_app.features.lecture.LectureFragment
 import com.smart.resources.schools_app.features.library.LibraryFragment
-import com.smart.resources.schools_app.features.onlineExam.presentaion.fragment.OnlineExamsFragment
+import com.smart.resources.schools_app.features.onlineExam.presentation.fragment.OnlineExamsFragment
 import com.smart.resources.schools_app.features.users.UsersRepository
 import com.smart.resources.schools_app.features.rating.RatingFragment
 import com.smart.resources.schools_app.features.ratingAdd.AddRatingFragment

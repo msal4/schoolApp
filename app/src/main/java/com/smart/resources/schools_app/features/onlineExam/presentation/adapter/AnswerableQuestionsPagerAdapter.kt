@@ -1,13 +1,14 @@
-package com.smart.resources.schools_app.features.onlineExam.presentaion.adapter
+package com.smart.resources.schools_app.features.onlineExam.presentation.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.chad.library.adapter.base.module.DraggableModule
 import com.smart.resources.schools_app.features.onlineExam.domain.model.*
-import com.smart.resources.schools_app.features.onlineExam.presentaion.viewHolder.CorrectnessQuestionViewHolder
-import com.smart.resources.schools_app.features.onlineExam.presentaion.viewHolder.MultiChoiceQuestionViewHolder
-import com.smart.resources.schools_app.features.onlineExam.presentaion.viewHolder.QuestionViewHolder
+import com.smart.resources.schools_app.features.onlineExam.presentation.viewHolder.CorrectnessQuestionViewHolder
+import com.smart.resources.schools_app.features.onlineExam.presentation.viewHolder.MultiChoiceQuestionViewHolder
+import com.smart.resources.schools_app.features.onlineExam.presentation.viewHolder.QuestionViewHolder
 
 class AnswerableQuestionsPagerAdapter :
     ListAdapter<BaseAnswerableQuestion<out Any>, RecyclerView.ViewHolder>(DIFF_UTIL) {

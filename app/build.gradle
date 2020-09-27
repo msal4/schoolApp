@@ -114,4 +114,7 @@ dependencies {
 
     // number picker
     implementation 'com.github.sephiroth74:NumberSlidingPicker:1.0.3'
+
+    // for detecting keyboard visibility
+    implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC2'
 }

@@ -25,8 +25,8 @@ import com.smart.resources.schools_app.features.homework.HomeworkViewModel
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import com.smart.resources.schools_app.features.profile.TeacherModel
 import com.smart.resources.schools_app.features.users.UsersRepository
-import com.smart.resources.schools_app.sharedUi.DatePickerFragment
-import com.smart.resources.schools_app.sharedUi.SectionActivity
+import com.smart.resources.schools_app.sharedUi.fragment.DatePickerFragment
+import com.smart.resources.schools_app.sharedUi.activity.SectionActivity
 import com.tiper.MaterialSpinner
 import id.zelory.compressor.Compressor
 import java.io.File

@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.sharedUi
+package com.smart.resources.schools_app.sharedUi.fragment
 
 import android.app.Dialog
 import android.app.TimePickerDialog

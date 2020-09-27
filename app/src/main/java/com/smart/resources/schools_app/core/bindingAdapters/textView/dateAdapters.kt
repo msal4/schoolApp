@@ -7,9 +7,8 @@ import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.core.adapters.dateDisFormatter
-import com.smart.resources.schools_app.core.adapters.timeDisFormatter
 import com.smart.resources.schools_app.core.extentions.activity
-import com.smart.resources.schools_app.sharedUi.DatePickerFragment
+import com.smart.resources.schools_app.sharedUi.fragment.DatePickerFragment
 import org.threeten.bp.LocalDate
 
 private const val SET_DATE_ATTRIBUTE = "android:setDate"

@@ -17,7 +17,7 @@ import com.smart.resources.schools_app.core.extentions.applyGradient
 import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.core.helpers.SharedPrefHelper
 import com.smart.resources.schools_app.databinding.ActivityLoginBinding
-import com.smart.resources.schools_app.sharedUi.HomeActivity
+import com.smart.resources.schools_app.sharedUi.activity.HomeActivity
 
 
 class LoginActivity : AppCompatActivity() {

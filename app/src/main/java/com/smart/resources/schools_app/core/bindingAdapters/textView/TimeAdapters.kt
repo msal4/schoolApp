@@ -5,10 +5,9 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
-import com.smart.resources.schools_app.core.adapters.dateDisFormatter
 import com.smart.resources.schools_app.core.adapters.timeDisFormatter
 import com.smart.resources.schools_app.core.extentions.activity
-import com.smart.resources.schools_app.sharedUi.TimePickerFragment
+import com.smart.resources.schools_app.sharedUi.fragment.TimePickerFragment
 import org.threeten.bp.LocalTime
 
 private const val SET_TIME_ATTRIBUTE = "android:setTime"

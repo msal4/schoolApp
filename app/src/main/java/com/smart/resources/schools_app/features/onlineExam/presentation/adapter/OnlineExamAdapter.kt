@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.onlineExam.presentaion.adapter
+package com.smart.resources.schools_app.features.onlineExam.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -43,4 +43,12 @@ class AddOnlineExamViewModel(application: Application) : AndroidViewModel(applic
         ),
     )
     val questions: LiveData<List<Question>> = _questions
+
+    fun addQuestion(question: Question){
+        _questions.value= _questions.value?.toMutableList()?.apply { add(0, question) }
+    }
+
+    fun removeQuestion(index:Int){
+        _questions.value= _questions.value?.toMutableList()?.apply { removeAt(index) }
+    }
 }

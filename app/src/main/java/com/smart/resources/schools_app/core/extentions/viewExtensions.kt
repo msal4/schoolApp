@@ -9,6 +9,7 @@ import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorInt
@@ -46,6 +47,12 @@ val Context.activity: AppCompatActivity? get() {
         context = context.baseContext
     }
     return null
+}
+
+fun Context.showKeyboard(){
+    val imm: InputMethodManager? =
+        getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+    imm?.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
 }
 
 fun View.hide() {

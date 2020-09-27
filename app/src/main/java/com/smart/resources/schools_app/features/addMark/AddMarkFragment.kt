@@ -20,7 +20,7 @@ import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.students.SendStudentResult
 import com.smart.resources.schools_app.features.students.StudentWithMark
-import com.smart.resources.schools_app.sharedUi.SectionActivity
+import com.smart.resources.schools_app.sharedUi.activity.SectionActivity
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async

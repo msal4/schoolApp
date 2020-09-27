@@ -6,12 +6,10 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
-import com.smart.resources.schools_app.sharedUi.SectionActivity
-import com.smart.resources.schools_app.sharedUi.ImageViewerActivity
+import com.smart.resources.schools_app.sharedUi.activity.SectionActivity
+import com.smart.resources.schools_app.sharedUi.activity.ImageViewerActivity
 
 class AdvertisingFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding

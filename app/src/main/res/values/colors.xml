@@ -3,6 +3,7 @@
 
     // old one
     <color name="colorPrimary">#6f86d6</color>
+    <color name="colorPrimary87">#DE6F86D6</color>
     <color name="colorPrimaryDark">#5F76C7</color>
     <color name="colorPrimaryLight">#48c6ef</color>
     <color name="colorAccent">#D81B60</color>

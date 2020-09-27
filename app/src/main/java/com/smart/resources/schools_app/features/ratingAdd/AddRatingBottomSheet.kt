@@ -10,7 +10,7 @@ import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.core.bindingAdapters.textView.setDate
 import com.smart.resources.schools_app.databinding.BottomSheetAddRatingBinding
 import com.smart.resources.schools_app.features.rating.RatingModel
-import com.smart.resources.schools_app.sharedUi.DatePickerFragment
+import com.smart.resources.schools_app.sharedUi.fragment.DatePickerFragment
 
 // TODO: add scrolling when page opens
 class AddRatingBottomSheet : BottomSheetDialogFragment() {

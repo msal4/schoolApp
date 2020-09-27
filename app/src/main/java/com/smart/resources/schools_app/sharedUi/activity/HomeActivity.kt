@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.sharedUi
+package com.smart.resources.schools_app.sharedUi.activity
 
 import android.app.Activity
 import android.content.Context
