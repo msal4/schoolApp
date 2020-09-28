@@ -1,18 +1,34 @@
 package com.smart.resources.schools_app.features.onlineExam.data.model
 
 import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = LocalQuestion.TABLE_NAME)
+@Entity(
+    tableName = LocalQuestion.TABLE_NAME,
+    foreignKeys = [
+        ForeignKey(
+            entity = LocalOnlineExam::class,
+            parentColumns = ["onlineExamId"],
+            childColumns = ["onlineExamId"],
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE,
+        ),
+    ],
+    indices = [
+    Index(value = ["onlineExamId"])
+    ]
+)
 data class LocalQuestion(
     @PrimaryKey
-    private val questionId:String,
-    private val onlineExamId:String,
-    private val questionText:String,
-    private val questionType:Int,
-    private val options:List<Int>?,
-){
-    companion object{
-        const val TABLE_NAME= "Questions"
+    val questionId: String,
+    val onlineExamId: String,
+    val questionText: String,
+    val questionType: Int,
+    val options: List<Int>?,
+) {
+    companion object {
+        const val TABLE_NAME = "Questions"
     }
 }

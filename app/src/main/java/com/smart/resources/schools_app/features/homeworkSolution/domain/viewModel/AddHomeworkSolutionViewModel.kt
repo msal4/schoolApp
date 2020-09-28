@@ -18,7 +18,7 @@ import com.smart.resources.schools_app.features.homeworkSolution.data.model.AddH
 import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
 import com.smart.resources.schools_app.features.homeworkSolution.domain.repository.IHomeworkSolutionRepository
 import com.smart.resources.schools_app.features.login.CanLogout
-import com.smart.resources.schools_app.features.users.UsersRepository
+import com.smart.resources.schools_app.features.users.data.UserRepository
 import id.zelory.compressor.Compressor
 import kotlinx.coroutines.launch
 import java.io.File
@@ -38,7 +38,7 @@ class AddHomeworkSolutionViewModel(application: Application) : AndroidViewModel(
     lateinit var homeworkId: String
     var description: String = ""
     private var attachmentImage: File? = null
-    private val studentId = UsersRepository.instance.getUser()?.id
+    private val studentId = UserRepository.instance.getUser()?.id
 
     fun saveUri(uri: Uri) {
         val originalFile: File = FileUtils.from(c, uri)

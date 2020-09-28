@@ -6,7 +6,7 @@ import com.smart.resources.schools_app.core.myTypes.MyResult
 import com.smart.resources.schools_app.core.myTypes.Success
 import com.smart.resources.schools_app.core.myTypes.toMyResult
 import com.smart.resources.schools_app.core.extentions.notifyObservers
-import com.smart.resources.schools_app.features.users.UsersRepository
+import com.smart.resources.schools_app.features.users.data.UserRepository
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 
@@ -14,7 +14,7 @@ class ExamRepository{
     val exams: MutableLiveData<MutableList<ExamModel>> = MutableLiveData(mutableListOf())
 
     suspend fun downloadExams(): MyResult<List<ExamModel>> {
-        val isStudent= UsersRepository.instance.getCurrentUserAccount()?.userType==0
+        val isStudent= UserRepository.instance.getCurrentUserAccount()?.userType==0
 
         val myRes= getExamsResult(isStudent)
         if(myRes is Success) exams.value= myRes.data?.toMutableList()

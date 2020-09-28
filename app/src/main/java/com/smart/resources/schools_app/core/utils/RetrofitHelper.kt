@@ -17,7 +17,7 @@ import com.smart.resources.schools_app.features.profile.certificate.CertificateC
 import com.smart.resources.schools_app.features.rating.RatingClient
 import com.smart.resources.schools_app.features.schedule.ScheduleClient
 import com.smart.resources.schools_app.features.students.StudentClient
-import com.smart.resources.schools_app.features.users.UsersRepository
+import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.snakydesign.watchtower.WatchTower
 import com.snakydesign.watchtower.interceptor.WatchTowerInterceptor
 import com.snakydesign.watchtower.interceptor.WebWatchTowerObserver
@@ -74,7 +74,7 @@ object RetrofitHelper {
     private fun OkHttpClient.Builder.addTokenHeader() {
         addInterceptor { chain ->
             val token =
-                UsersRepository.instance.getCurrentUserAccount()?.accessToken
+                UserRepository.instance.getCurrentUserAccount()?.accessToken
             val newRequest = chain.request().newBuilder()
                 .addHeader("Authorization", "Baerer $token")
                 .build()

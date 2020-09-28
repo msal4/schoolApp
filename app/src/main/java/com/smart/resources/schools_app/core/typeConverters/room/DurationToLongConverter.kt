@@ -6,7 +6,7 @@ import org.threeten.bp.Duration
 class DurationToLongConverter {
     @TypeConverter
     fun fromLong(value: Long?): Duration? {
-        if (value != null) {
+        if(value !=null) {
             return Duration.ofMillis(value)
         }
         return null
@@ -14,9 +14,6 @@ class DurationToLongConverter {
 
     @TypeConverter
     fun toLong(duration: Duration?): Long? {
-        if (duration != null) {
-            return duration.toMillis()
-        }
-        return null
+            return duration?.toMillis()
     }
 }

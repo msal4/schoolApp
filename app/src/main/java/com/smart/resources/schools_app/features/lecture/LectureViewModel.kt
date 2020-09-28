@@ -8,7 +8,7 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.profile.StudentModel
-import com.smart.resources.schools_app.features.users.UsersRepository
+import com.smart.resources.schools_app.features.users.data.UserRepository
 import java.net.HttpURLConnection
 
 
@@ -20,7 +20,7 @@ class LectureViewModel(application: Application) : AndroidViewModel(application)
     }
     val listState = ListState()
     private val lectureRepository:ILectureRepository= LectureRepository()
-    private val user= UsersRepository.instance.getUser()
+    private val user= UserRepository.instance.getUser()
 
     private suspend fun fetchLectures(): List<LectureModel> {
         if(user == null || user !is StudentModel) return listOf()

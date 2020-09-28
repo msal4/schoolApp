@@ -10,8 +10,8 @@ class LocalDateTimeToTimestampConverter {
     }
 
     @TypeConverter
-    fun fromTimestamp(value: Long?): LocalDateTime? {
-        if (value != null) {
+    fun fromTimestamp(value: Long?): LocalDateTime?{
+        if(value !=null) {
             return LocalDateTime.ofEpochSecond(value, 0, ZONE_OFFSET)
         }
         return null
@@ -19,9 +19,6 @@ class LocalDateTimeToTimestampConverter {
 
     @TypeConverter
     fun toTimestamp(date: LocalDateTime?): Long? {
-        if (date != null) {
-            return date.toEpochSecond(ZONE_OFFSET)
-        }
-        return null
+            return date?.toEpochSecond(ZONE_OFFSET)
     }
 }

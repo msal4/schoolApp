@@ -1,31 +1,32 @@
-package com.smart.resources.schools_app.features.users
+package com.smart.resources.schools_app.features.users.data
 
-import android.content.Context
 import com.smart.resources.schools_app.core.utils.SharedPrefHelper
-import com.smart.resources.schools_app.core.abstractTypes.AppDatabase
-import com.smart.resources.schools_app.features.profile.UserModel
 import com.smart.resources.schools_app.features.profile.StudentModel
 import com.smart.resources.schools_app.features.profile.TeacherModel
+import com.smart.resources.schools_app.features.profile.UserModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class UsersRepository(context: Context) {
-    private var accountDao: AccountDao? = AppDatabase.getAppDatabase(context)?.userDao()
-    private val sharedPref= SharedPrefHelper.instance
+
+class UserRepository @Inject constructor(
+    private val accountsDao: AccountsDao,
+    private val sharedPrefHelper: SharedPrefHelper,
+) {
     private var currentUserAccount: UserAccount? = null
 
-    suspend fun getUsers()= accountDao?.getUsers()
+    suspend fun getUsers() = accountsDao.getUsers()
 
     fun getCurrentUserAccount(): UserAccount? {
-        if(currentUserAccount == null) sharedPref.currentUserId?.let {
-            currentUserAccount = accountDao?.getUserById(it)
+        if (currentUserAccount == null) sharedPrefHelper.currentUserId?.let {
+            currentUserAccount = accountsDao.getUserById(it)
         }
 
         return currentUserAccount
     }
 
-    fun getUser(): UserModel?{
+    fun getUser(): UserModel? {
         getCurrentUserAccount()?.apply {
             return if (userType == 0) {
                 StudentModel.fromToken(accessToken)
@@ -37,47 +38,38 @@ class UsersRepository(context: Context) {
     }
 
 
-
-    fun deleteUser(uid: String){
+    fun deleteUser(uid: String) {
         CoroutineScope(IO).launch {
-            accountDao?.deleteUserById(uid)
+            accountsDao.deleteUserById(uid)
         }
     }
 
-    fun deleteCurrentUser(){
+    fun deleteCurrentUser() {
         currentUserAccount?.uid?.let { deleteUser(it) }
     }
 
     fun insertCurrentUser(currentUserAccount: UserAccount) {
         CoroutineScope(IO).launch {
-             accountDao?.insert(currentUserAccount)
+            accountsDao.insert(currentUserAccount)
         }
         setCurrentUser(currentUserAccount)
     }
 
     fun setCurrentUser(currentUserAccount: UserAccount) {
         this.currentUserAccount = currentUserAccount
-        sharedPref.currentUserId = currentUserAccount.uid
+        sharedPrefHelper.currentUserId = currentUserAccount.uid
     }
 
-    fun updateCurrentUser(imageLocation: String){
+    fun updateCurrentUser(imageLocation: String) {
         CoroutineScope(IO).launch {
             currentUserAccount?.uid?.let {
-                accountDao?.updateImg(it, imageLocation)
-                currentUserAccount?.img= imageLocation
+                accountsDao.updateImg(it, imageLocation)
+                currentUserAccount?.img = imageLocation
             }
         }
     }
 
     companion object {
-        lateinit var instance: UsersRepository
-
-
-        fun init(context: Context) {
-            instance =
-                UsersRepository(
-                    context
-                )
-        }
+        lateinit var instance: UserRepository
     }
 }

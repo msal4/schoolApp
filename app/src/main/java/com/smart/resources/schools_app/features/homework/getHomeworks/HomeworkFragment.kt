@@ -20,7 +20,7 @@ import com.smart.resources.schools_app.features.homeworkSolution.data.model.Home
 import com.smart.resources.schools_app.features.homeworkSolution.presentation.fragments.AddHomeworkSolutionBottomSheet
 import com.smart.resources.schools_app.features.homeworkSolution.presentation.fragments.HomeworkSolutionFragment
 import com.smart.resources.schools_app.features.homeworkSolution.presentation.fragments.ShowHomeworkSolutionBottomSheet
-import com.smart.resources.schools_app.features.users.UsersRepository
+import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.smart.resources.schools_app.features.imageViewer.ImageViewerActivity
 import com.smart.resources.schools_app.core.activity.SectionActivity
 
@@ -66,7 +66,7 @@ class HomeworkFragment : Fragment() {
 
         (activity as SectionActivity).setCustomTitle(R.string.homework)
         setHasOptionsMenu(true)
-        if (UsersRepository.instance.getCurrentUserAccount()?.userType == 1) {
+        if (UserRepository.instance.getCurrentUserAccount()?.userType == 1) {
             val touchHelper = ItemTouchHelper(SwipeAdapter(::onSwipe))
             touchHelper.attachToRecyclerView(binding.recyclerView)
         }
@@ -107,7 +107,7 @@ class HomeworkFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if (UsersRepository.instance.getCurrentUserAccount()?.userType == 1) {
+        if (UserRepository.instance.getCurrentUserAccount()?.userType == 1) {
 
             inflater.inflate(R.menu.menu_add_btn, menu)
         }

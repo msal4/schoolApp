@@ -7,7 +7,7 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
 import com.smart.resources.schools_app.features.login.CanLogout
-import com.smart.resources.schools_app.features.users.UsersRepository
+import com.smart.resources.schools_app.features.users.data.UserRepository
 import kotlinx.coroutines.*
 
 class HomeworkViewModel (application: Application) : AndroidViewModel(application), CanLogout{
@@ -18,7 +18,7 @@ class HomeworkViewModel (application: Application) : AndroidViewModel(applicatio
     val postException= PostException()
     var uploadListener: PostListener?= null
     val isStudent by lazy {
-        UsersRepository.instance.getCurrentUserAccount()?.isStudent == true
+        UserRepository.instance.getCurrentUserAccount()?.isStudent == true
     }
 
     private val homeworkRepo= HomeworkRepository()

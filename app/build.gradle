@@ -1,10 +1,8 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-kapt'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion 29
@@ -19,7 +17,7 @@ android {
         multiDexEnabled true
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [
+                arguments += [
                         "room.schemaLocation"  : "$projectDir/schemas".toString(),
                         "room.incremental"     : "true",
                         "room.expandProjection": "true"]
@@ -97,7 +95,6 @@ dependencies {
     def room_version = "2.2.5"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
-
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:$room_version"
 
@@ -106,6 +103,15 @@ dependencies {
     def watch_tower_version = "2.0.2"
     debugImplementation "com.snakyapps.watchtower:interceptor-okhttp:$watch_tower_version"
     releaseImplementation "com.snakyapps.watchtower:interceptor-okhttp-no-op:$watch_tower_version"
+
+    // hilt for dependency injection
+    def hilt_jetpack_version = "1.0.0-alpha02"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_jetpack_version"
+    kapt "androidx.hilt:hilt-compiler:$hilt_jetpack_version"
+
+    def hilt_version = "2.28-alpha"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
     // view pager
     implementation "androidx.viewpager2:viewpager2:1.0.0"
@@ -121,4 +127,6 @@ dependencies {
     // for detecting keyboard visibility
     implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC2'
 
+    // for apiResponse, resource, and dataBoundResource classes
+    implementation 'com.github.hadiyarajesh:flower:1.0.0'
 }

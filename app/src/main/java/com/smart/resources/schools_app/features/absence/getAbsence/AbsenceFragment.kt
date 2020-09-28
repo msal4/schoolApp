@@ -12,7 +12,7 @@ import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.absence.StudentAbsenceModel
 import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
 import com.smart.resources.schools_app.features.login.CanLogout
-import com.smart.resources.schools_app.features.users.UsersRepository
+import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.smart.resources.schools_app.core.activity.SectionActivity
 //import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
 
@@ -53,7 +53,7 @@ class AbsenceFragment : Fragment(), CanLogout {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if(UsersRepository.instance.getCurrentUserAccount()?.userType == 1) {
+        if(UserRepository.instance.getCurrentUserAccount()?.userType == 1) {
             inflater.inflate(R.menu.menu_add_btn, menu)
         }
 

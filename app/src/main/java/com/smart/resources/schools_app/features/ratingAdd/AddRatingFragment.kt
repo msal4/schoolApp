@@ -12,7 +12,7 @@ import com.smart.resources.schools_app.databinding.FragmentAddRatingBinding
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import com.smart.resources.schools_app.features.profile.TeacherModel
 import com.smart.resources.schools_app.features.rating.RatingModel
-import com.smart.resources.schools_app.features.users.UsersRepository
+import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.smart.resources.schools_app.core.abstractTypes.LoadableActionMenuItemFragment
 import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.extentions.showSnackBar
@@ -66,7 +66,7 @@ class AddRatingFragment : LoadableActionMenuItemFragment(), MaterialSpinner.OnIt
     ) {
         binding = FragmentAddRatingBinding
             .inflate(inflater, container, false).apply {
-                val currentUser = UsersRepository.instance.getCurrentUserAccount()
+                val currentUser = UserRepository.instance.getCurrentUserAccount()
                 val teacherInfoModel = currentUser?.accessToken?.let { TeacherModel.fromToken(it) }
                 teacherInfoModel?.let {
                     setSpinnerList(

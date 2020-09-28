@@ -7,12 +7,12 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.extentions.hide
 import com.smart.resources.schools_app.core.extentions.startCountDown
 import com.smart.resources.schools_app.core.extentions.toUnicodeString
-import com.smart.resources.schools_app.features.users.UsersRepository
+import com.smart.resources.schools_app.features.users.data.UserRepository
 import org.threeten.bp.Duration
 
 @BindingAdapter("android:setMark")
 fun setMark(tv: TextView, mark: Int?) {
-    val isStudent = UsersRepository.instance.getCurrentUserAccount()?.userType == 0
+    val isStudent = UserRepository.instance.getCurrentUserAccount()?.userType == 0
     tv.text = mark?.toString() ?: if (isStudent) "- " else ""
 }
 

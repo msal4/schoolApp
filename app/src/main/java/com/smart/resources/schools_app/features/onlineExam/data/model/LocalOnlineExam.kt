@@ -9,15 +9,6 @@ import org.threeten.bp.LocalDateTime
 
 @Entity(
     tableName = LocalOnlineExam.TABLE_NAME,
-    foreignKeys = [
-        ForeignKey(
-            entity = LocalQuestion::class,
-            parentColumns = ["onlineExamId"],
-            childColumns = ["onlineExamId"],
-            onDelete = ForeignKey.CASCADE,
-            onUpdate = ForeignKey.CASCADE,
-        ),
-    ],
 )
 data class LocalOnlineExam(
     @PrimaryKey
@@ -25,7 +16,7 @@ data class LocalOnlineExam(
     val subjectName: String,
     val date: LocalDateTime,
     val examDuration: Duration,
-    val startDateTime: LocalDateTime? = null,
+    val startDateTime: LocalDateTime? = null, // TODO: delete or keep?,this does not exists in domain model
     val numberOfQuestions: Int,
     val examStatus: OnlineExamStatus,
 ) {

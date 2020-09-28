@@ -15,7 +15,7 @@ import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.core.extentions.hide
 import com.smart.resources.schools_app.core.extentions.show
 import com.smart.resources.schools_app.databinding.FragmentAddExamBinding
-import com.smart.resources.schools_app.features.users.UsersRepository
+import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import com.smart.resources.schools_app.features.profile.TeacherModel
 import com.smart.resources.schools_app.features.dateTimePickers.DatePickerFragment
@@ -28,6 +28,7 @@ class AddExamFragment : Fragment(), PostListener {
     private lateinit var progressBar: ProgressBar
     private lateinit var saveItem: MenuItem
     private val viewModel: ExamViewModel by activityViewModels()
+
 
     private val onClassSelected = object :
         MaterialSpinner.OnItemSelectedListener {
@@ -120,7 +121,7 @@ class AddExamFragment : Fragment(), PostListener {
             .inflate(inflater, container, false)
             .apply {
                 val currentUser=
-                    UsersRepository.instance.getCurrentUserAccount()
+                    UserRepository.instance.getCurrentUserAccount()
                 val teacherInfoModel= currentUser?.accessToken?.let { TeacherModel.fromToken(it) }
                 teacherInfoModel?.apply {
                     setSpinnerList(

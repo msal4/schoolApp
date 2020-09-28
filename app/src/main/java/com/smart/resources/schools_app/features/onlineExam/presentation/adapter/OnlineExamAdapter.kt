@@ -13,8 +13,6 @@ class OnlineExamAdapter(private val isStudent:Boolean) :
 
     var onItemPressed: ((onlineExam:OnlineExam) -> Unit)? = null
 
-
-
     override fun onBindViewHolder(
         holder: MyViewHolder,
         position: Int

@@ -10,8 +10,8 @@ import com.smart.resources.schools_app.core.extentions.withEngNums
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.profile.StudentModel
 import com.smart.resources.schools_app.features.profile.TeacherModel
-import com.smart.resources.schools_app.features.users.UserAccount
-import com.smart.resources.schools_app.features.users.UsersRepository
+import com.smart.resources.schools_app.features.users.data.UserAccount
+import com.smart.resources.schools_app.features.users.data.UserRepository
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -93,7 +93,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
             person?.apply {
-                    UsersRepository.instance.insertCurrentUser(
+                    UserRepository.instance.insertCurrentUser(
                         UserAccount(
                             id,
                             result.data,

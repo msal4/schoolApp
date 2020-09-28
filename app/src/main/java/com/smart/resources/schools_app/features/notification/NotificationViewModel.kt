@@ -6,7 +6,7 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.utils.RetrofitHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.login.CanLogout
-import com.smart.resources.schools_app.features.users.UsersRepository
+import com.smart.resources.schools_app.features.users.data.UserRepository
 import kotlinx.coroutines.*
 
 
@@ -24,7 +24,7 @@ class NotificationViewModel(application: Application) : AndroidViewModel(applica
         return notifications
     }
 
-    val userType= if(UsersRepository.instance.getCurrentUserAccount()?.userType==0) UserType.STUDENT else UserType.TEACHER
+    val userType= if(UserRepository.instance.getCurrentUserAccount()?.userType==0) UserType.STUDENT else UserType.TEACHER
 
 
     fun fetchNotifications(notificationType: NotificationType){

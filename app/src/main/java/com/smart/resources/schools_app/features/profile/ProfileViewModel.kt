@@ -13,7 +13,7 @@ import com.smart.resources.schools_app.core.myTypes.Unauthorized
 import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.profile.certificate.CertificateModel
 import com.smart.resources.schools_app.features.profile.certificate.CertificateRepository
-import com.smart.resources.schools_app.features.users.UsersRepository
+import com.smart.resources.schools_app.features.users.data.UserRepository
 import java.net.HttpURLConnection
 
 enum class CertificateState { UNKNOWN, AVAILABLE, UNAVAILABLE, }
@@ -30,7 +30,7 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
 
     val certificateState = liveData {
         emit(CertificateState.UNKNOWN)
-        val userId = UsersRepository.instance.getCurrentUserAccount()?.originalId
+        val userId = UserRepository.instance.getCurrentUserAccount()?.originalId
         if (userId == null) {
             emit(CertificateState.UNAVAILABLE)
             return@liveData

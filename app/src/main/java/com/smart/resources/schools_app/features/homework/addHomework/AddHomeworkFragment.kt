@@ -24,7 +24,7 @@ import com.smart.resources.schools_app.databinding.FragmentAddHomeworkBinding
 import com.smart.resources.schools_app.features.homework.HomeworkViewModel
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import com.smart.resources.schools_app.features.profile.TeacherModel
-import com.smart.resources.schools_app.features.users.UsersRepository
+import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.smart.resources.schools_app.features.dateTimePickers.DatePickerFragment
 import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.tiper.MaterialSpinner
@@ -110,7 +110,7 @@ class AddHomeworkFragment : Fragment(), PostListener {
     ) {
         binding = FragmentAddHomeworkBinding
             .inflate(inflater, container, false).apply {
-                val currentUser = UsersRepository.instance.getCurrentUserAccount()
+                val currentUser = UserRepository.instance.getCurrentUserAccount()
                 val teacherInfoModel = currentUser?.accessToken?.let { TeacherModel.fromToken(it) }
                 teacherInfoModel?.classesInfo
                     ?.let {

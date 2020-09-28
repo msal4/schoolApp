@@ -81,8 +81,6 @@ class AddOnlineExamFragment : LoadableActionMenuItemFragment() {
             model = viewModel
             adapter = QuestionsQuickAdapter()
 
-            val swipeAdapter = SwipeAdapter(::onItemSwiped)
-            ItemTouchHelper(swipeAdapter).attachToRecyclerView(simpleQuestionsRecycler)
             simpleQuestionsRecycler.adapter = adapter
             viewModel.questions.observe(viewLifecycleOwner) {
                 adapter.setDiffNewData(it.toMutableList())

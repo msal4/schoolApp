@@ -23,12 +23,13 @@ import com.smart.resources.schools_app.features.homework.getHomeworks.HomeworkFr
 import com.smart.resources.schools_app.features.lecture.LectureFragment
 import com.smart.resources.schools_app.features.library.LibraryFragment
 import com.smart.resources.schools_app.features.onlineExam.presentation.fragment.OnlineExamsFragment
-import com.smart.resources.schools_app.features.users.UsersRepository
+import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.smart.resources.schools_app.features.rating.RatingFragment
 import com.smart.resources.schools_app.features.ratingAdd.AddRatingFragment
 import com.smart.resources.schools_app.features.schedule.ScheduleFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class SectionActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySectionBinding
 
@@ -69,7 +70,7 @@ class SectionActivity : AppCompatActivity() {
 
 
     private fun createFragment() {
-        val isStudent= UsersRepository.instance.getCurrentUserAccount()?.userType == 0
+        val isStudent= UserRepository.instance.getCurrentUserAccount()?.userType == 0
 
         supportFragmentManager.apply {
             when(intent.getSerializableExtra(EXTRA_SECTION) as Section){

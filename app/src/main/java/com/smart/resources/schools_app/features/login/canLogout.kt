@@ -4,7 +4,7 @@ import android.content.Context
 import android.widget.Toast
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.utils.SharedPrefHelper
-import com.smart.resources.schools_app.features.users.UsersRepository
+import com.smart.resources.schools_app.features.users.data.UserRepository
 
 
 interface CanLogout{
@@ -15,7 +15,7 @@ interface CanLogout{
 
     fun expireLogout(context: Context){
         Toast.makeText(context, context.getString(R.string.account_expire), Toast.LENGTH_LONG).show()
-        UsersRepository.instance.deleteCurrentUser()
+        UserRepository.instance.deleteCurrentUser()
         logout(context)
     }
 }

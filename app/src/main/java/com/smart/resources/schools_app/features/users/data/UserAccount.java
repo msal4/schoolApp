@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.users;
+package com.smart.resources.schools_app.features.users.data;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

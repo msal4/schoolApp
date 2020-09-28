@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.users
+package com.smart.resources.schools_app.features.users.presentation
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -18,6 +18,8 @@ import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.databinding.DialogAccountsBinding
 import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.login.LoginActivity
+import com.smart.resources.schools_app.features.users.data.UserAccount
+import com.smart.resources.schools_app.features.users.data.UserRepository
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -27,7 +29,7 @@ class AccountsDialog : DialogFragment(), CanLogout,
     AccountsRecyclerAdapter.OnItemClickListener {
     private lateinit var binding: DialogAccountsBinding
     private lateinit var adapter: AccountsRecyclerAdapter
-    private val accountsManager = UsersRepository.instance
+    private val accountsManager = UserRepository.instance
     private var onAccountChanged: (() -> Unit)? = null
 
     fun setOnAccountChanged(onFinish: (() -> Unit)) {
@@ -81,7 +83,7 @@ class AccountsDialog : DialogFragment(), CanLogout,
 
     private fun setupUsers() {
         lifecycleScope.launch {
-            val users = accountsManager.getUsers()?.toMutableList()
+            val users = accountsManager.getUsers().toMutableList()
             withContext(Main) {
                 adapter =
                     AccountsRecyclerAdapter(users, this@AccountsDialog)
@@ -111,7 +113,7 @@ class AccountsDialog : DialogFragment(), CanLogout,
 
     override fun onItemClick(UserAccount: UserAccount) {
         if (UserAccount != accountsManager.getCurrentUserAccount()) {
-            UsersRepository.instance.setCurrentUser(UserAccount)
+            UserRepository.instance.setCurrentUser(UserAccount)
             onAccountChanged?.invoke()
         }
 

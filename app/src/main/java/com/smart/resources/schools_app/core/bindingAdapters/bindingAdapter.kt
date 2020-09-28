@@ -5,8 +5,9 @@ import android.widget.RadioGroup
 import android.widget.RatingBar
 import androidx.core.view.children
 import androidx.databinding.BindingAdapter
-import androidx.fragment.app.FragmentContainerView
-import kotlinx.android.synthetic.main.activity_section.view.*
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+import com.smart.resources.schools_app.core.callbacks.SwipeAdapter
 
 @BindingAdapter("mine:setStars")
 fun setStars(ratingBar:  RatingBar, stars:Int?){
@@ -20,3 +21,14 @@ fun RadioGroup.setCheckedButtonIndex(checkButtonIndex:Int){
     check(radioBtnId)
 }
 
+fun interface SwipeListener{
+    fun onSwiped(position:Int)
+}
+
+@BindingAdapter("android:swipeToDelete", "android:extraItemsCount", requireAll = false)
+fun RecyclerView.setSwipeToDelete(swipeListener: SwipeListener, extraItemsCount:Int?=0){
+    val swipeAdapter = SwipeAdapter {
+        swipeListener.onSwiped(it.adapterPosition - (extraItemsCount?:0))
+    }
+    ItemTouchHelper(swipeAdapter).attachToRecyclerView(this)
+}

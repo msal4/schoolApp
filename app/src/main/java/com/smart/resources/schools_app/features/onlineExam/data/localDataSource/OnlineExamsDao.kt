@@ -12,17 +12,10 @@ interface OnlineExamsDao {
     @Query("SELECT * FROM ${LocalOnlineExam.TABLE_NAME}")
     fun getOnlineExams(): Flow<List<LocalOnlineExam>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(onlineExam: LocalOnlineExam)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(vararg onlineExam: LocalOnlineExam)
 
-//    @Query("SELECT * FROM UserAccount WHERE uid = :userId")
-//    fun getUserById(userId: String): UserAccount
-//
-//
-//    @Query("UPDATE UserAccount SET img = :newImg WHERE uid = :id")
-//    suspend fun updateImg(id:String,newImg:String)
-//
-//    @Query("DELETE FROM UserAccount WHERE uid=:id")
-//    suspend fun deleteUserById(id: String)
+    @Query("DELETE FROM ${LocalOnlineExam.TABLE_NAME} WHERE onlineExamId = :examId")
+    suspend fun remove(examId:String)
 
 }

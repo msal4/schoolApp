@@ -19,9 +19,6 @@ class OnlineExamStatusToIntegerConverter {
 
     @TypeConverter
     fun toInteger(examStatus: OnlineExamStatus?): Int? {
-        if (examStatus != null) {
-            return examStatus.ordinal
-        }
-        return null
+            return examStatus?.ordinal
     }
 }

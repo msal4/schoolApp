@@ -14,8 +14,8 @@ import com.smart.resources.schools_app.core.extentions.GET_IMAGE_REQUEST
 import com.smart.resources.schools_app.core.extentions.getImage
 import com.smart.resources.schools_app.core.extentions.selectImage
 import com.smart.resources.schools_app.databinding.ActivityProfileBinding
-import com.smart.resources.schools_app.features.users.AccountsDialog
-import com.smart.resources.schools_app.features.users.UsersRepository
+import com.smart.resources.schools_app.features.users.presentation.AccountsDialog
+import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.smart.resources.schools_app.features.imageViewer.ImageViewerActivity
 
 class ProfileActivity : AppCompatActivity() {
@@ -38,7 +38,7 @@ class ProfileActivity : AppCompatActivity() {
             itemModel = personModel
             teacherModel = if (personModel is TeacherModel) personModel else null
 
-            UsersRepository.instance.getCurrentUserAccount()?.img?.let {
+            UserRepository.instance.getCurrentUserAccount()?.img?.let {
                 setAccountImage(
                     profileImage,
                     it
@@ -62,7 +62,7 @@ class ProfileActivity : AppCompatActivity() {
             .get(ProfileViewModel::class.java)
     }
 
-    private fun getPerson()= UsersRepository.instance.getUser()
+    private fun getPerson()= UserRepository.instance.getUser()
 
     companion object Factory {
         const val REQUEST_IS_PROFILE_IMAGE_UPDATED = 0
@@ -84,7 +84,7 @@ class ProfileActivity : AppCompatActivity() {
             resultCode == Activity.RESULT_OK && data != null
         ) {
             data.getImage().toString().let {
-                UsersRepository.instance.updateCurrentUser(it)
+                UserRepository.instance.updateCurrentUser(it)
                 loadImageUrl(
                     binding.profileImage,
                     it

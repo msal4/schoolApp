@@ -18,11 +18,15 @@ import com.smart.resources.schools_app.databinding.ActivityLoginBinding
 import com.smart.resources.schools_app.core.activity.HomeActivity
 import com.smart.resources.schools_app.core.extentions.applyGradient
 import com.smart.resources.schools_app.core.extentions.showSnackBar
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var viewModel: LoginViewModel
+    @Inject
+    lateinit var sharedPrefHelper: SharedPrefHelper
 
     companion object Factory {
         private const val EXTRA_MULTI_ACCOUNT= "extraMultiAccount"
@@ -57,7 +61,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun selectNavigation() {
         if (!intent.getBooleanExtra(EXTRA_MULTI_ACCOUNT, false) &&
-            !SharedPrefHelper.instance.currentUserId.isNullOrBlank()) {
+            !sharedPrefHelper.currentUserId.isNullOrBlank()) {
             HomeActivity.newInstance(this)
         }
     }

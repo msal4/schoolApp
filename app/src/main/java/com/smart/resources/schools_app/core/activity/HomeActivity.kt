@@ -14,7 +14,7 @@ import com.smart.resources.schools_app.databinding.ActivityHomeBinding
 import com.smart.resources.schools_app.features.profile.ProfileActivity
 import com.smart.resources.schools_app.core.myTypes.Section
 import com.smart.resources.schools_app.core.myTypes.UserType
-import com.smart.resources.schools_app.features.users.UsersRepository
+import com.smart.resources.schools_app.features.users.data.UserRepository
 import org.json.JSONObject
 import java.lang.Exception
 import java.net.URI
@@ -39,11 +39,11 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setUserType() {
         binding.userType =
-            if (UsersRepository.instance.getCurrentUserAccount()?.userType == 0) UserType.STUDENT else UserType.TEACHER
+            if (UserRepository.instance.getCurrentUserAccount()?.userType == 0) UserType.STUDENT else UserType.TEACHER
     }
 
     private fun loadProfileImage() {
-        UsersRepository.instance.getCurrentUserAccount()?.img?.let {
+        UserRepository.instance.getCurrentUserAccount()?.img?.let {
             setAccountImage(
                 binding.profileImage,
                 URI.create(it).toString()
@@ -52,7 +52,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setSchoolName(){
-        UsersRepository.instance.getCurrentUserAccount()?.apply {
+        UserRepository.instance.getCurrentUserAccount()?.apply {
             try {
                 JSONObject(accessToken.decodeToken()).getString("schoolName").apply {
                     binding.schoolName.text = this

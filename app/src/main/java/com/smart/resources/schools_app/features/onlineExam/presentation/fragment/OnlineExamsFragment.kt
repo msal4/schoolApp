@@ -6,21 +6,19 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.activity.SectionActivity
+import com.smart.resources.schools_app.core.bindingAdapters.setSwipeToDelete
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.OnlineExamViewModel
 import com.smart.resources.schools_app.features.onlineExam.presentation.adapter.OnlineExamAdapter
-import com.smart.resources.schools_app.features.users.UsersRepository
-import com.smart.resources.schools_app.core.activity.SectionActivity
-import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
-import org.threeten.bp.Duration
-import org.threeten.bp.LocalDateTime
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OnlineExamsFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
     private lateinit var adapter: OnlineExamAdapter
     private val viewModel: OnlineExamViewModel by viewModels()
-
 
     companion object {
         fun newInstance(fm: FragmentManager) {
@@ -41,13 +39,8 @@ class OnlineExamsFragment : Fragment() {
             listState = viewModel.listState
 
 
-            adapter = OnlineExamAdapter(true)
-
-            adapter.onItemPressed= ::onOnlineExamPressed
-            adapter.submitList(dummyOnlineExams)
-            viewModel.listState.setLoading(false) // TODO: remove
-
-            recyclerView.adapter = adapter
+            setupRecycler()
+            setupObservers()
         }
 
         setHasOptionsMenu(true)
@@ -55,59 +48,41 @@ class OnlineExamsFragment : Fragment() {
         return binding.root
     }
 
-    private fun onOnlineExamPressed(onlineExam: OnlineExam){
+    private fun setupObservers() {
+        viewModel.onlineExams.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
+    }
+
+    private fun FragmentRecyclerLoaderBinding.setupRecycler() {
+        adapter = OnlineExamAdapter(true)
+        adapter.onItemPressed = ::onOnlineExamPressed
+
+        if(viewModel.hasEditPermission) {
+            recyclerView.setSwipeToDelete(viewModel::removeExam)
+        }
+        recyclerView.adapter = adapter
+    }
+
+    private fun onOnlineExamPressed(onlineExam: OnlineExam) {
         QuestionsFragment.newInstance(parentFragmentManager, onlineExam)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if (UsersRepository.instance.getCurrentUserAccount()?.userType == 1) {
-            inflater.inflate(R.menu.menu_add_btn, menu)
-        }
-
+        inflater.inflate(R.menu.menu_add_btn, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.addMenuItem -> if (isAdded) {
-                AddOnlineExamFragment.newInstance(parentFragmentManager)
+                if(viewModel.hasEditPermission) {
+                    AddOnlineExamFragment.newInstance(parentFragmentManager)
+                }else{
+
+                }
             }
         }
         return super.onOptionsItemSelected(item)
     }
 }
-
-val dummyOnlineExams=  listOf(
-    OnlineExam(
-        "0",
-        "رياضيات",
-        LocalDateTime.now(),
-        Duration.ofMinutes(150),
-        5,
-        OnlineExamStatus.ACTIVE,
-    ),
-    OnlineExam(
-        "1",
-        "اللغة العربية",
-        LocalDateTime.now(),
-        Duration.ofMinutes(500),
-        15,
-        OnlineExamStatus.COMPLETED,
-    ),
-    OnlineExam(
-        "2",
-        "انكليزي",
-        LocalDateTime.now(),
-        Duration.ofMinutes(300),
-        30,
-        OnlineExamStatus.LOCKED,
-    ),
-    OnlineExam(
-        "3",
-        "فيزياء",
-        LocalDateTime.now(),
-        Duration.ofMinutes(50),
-        60,
-        OnlineExamStatus.COMPLETED,
-    ),
-)

@@ -2,11 +2,21 @@ package com.smart.resources.schools_app.core.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.lang.ClassCastException
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class SharedPrefHelper private constructor(context: Context) {
+@Singleton
+class SharedPrefHelper @Inject constructor(@ApplicationContext context: Context) {
     private val mSharedPreferences: SharedPreferences
 
+    init {
+        mSharedPreferences = context.getSharedPreferences(
+            PREF_NAME,
+            Context.MODE_PRIVATE
+        )
+    }
 
     var currentUserId: String?
         get() = try{
@@ -24,20 +34,13 @@ class SharedPrefHelper private constructor(context: Context) {
         lateinit var instance: SharedPrefHelper
         private const val PREF_NAME = "mySettingsPref"
         private const val USER_ID = "userID"
-
-        fun init(context: Context) {
-            instance =
-                SharedPrefHelper(
-                    context
-                )
-        }
-
+//        fun init(context: Context) {
+//            instance =
+//                SharedPrefHelper(
+//                    context
+//                )
+//        }
     }
 
-    init {
-        mSharedPreferences = context.getSharedPreferences(
-            PREF_NAME,
-            Context.MODE_PRIVATE
-        )
-    }
+
 }

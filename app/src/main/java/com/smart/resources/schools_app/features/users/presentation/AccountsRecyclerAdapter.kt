@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.users
+package com.smart.resources.schools_app.features.users.presentation
 
 import android.os.Build
 import android.view.LayoutInflater
@@ -8,6 +8,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ItemAccountBinding
+import com.smart.resources.schools_app.features.users.data.UserAccount
+import com.smart.resources.schools_app.features.users.data.UserRepository
 
 class AccountsRecyclerAdapter(private val UserAccounts:MutableList<UserAccount>?, private val listener: OnItemClickListener) : RecyclerView.Adapter<AccountsRecyclerAdapter.MyViewHolder>(){
     interface OnItemClickListener {
@@ -48,7 +50,7 @@ class AccountsRecyclerAdapter(private val UserAccounts:MutableList<UserAccount>?
             }
             holder.bind(user)
 
-            if(user.uid== UsersRepository.instance.getCurrentUserAccount()?.uid){
+            if(user.uid== UserRepository.instance.getCurrentUserAccount()?.uid){
 
                 holder.binding.profileImage.apply {
                     borderColor= ContextCompat.getColor(holder.itemView.context, R.color.green)

@@ -1,57 +1,119 @@
 package com.smart.resources.schools_app.features.onlineExam.domain.viewModel
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.liveData
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.*
+import com.hadiyarajesh.flower.Resource
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.myTypes.*
-import com.smart.resources.schools_app.features.homeworkSolution.data.repository.HomeworkSolutionRepository
-import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
-import com.smart.resources.schools_app.features.homeworkSolution.domain.repository.IHomeworkSolutionRepository
+import com.smart.resources.schools_app.core.extentions.toStringResource
+import com.smart.resources.schools_app.core.myTypes.ListState
+import com.smart.resources.schools_app.core.myTypes.UserType
+import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import com.smart.resources.schools_app.features.login.CanLogout
-import java.net.HttpURLConnection
+import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExam
+import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IAddOnlineExamsUseCase
+import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IGetOnlineExamsUseCase
+import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IRemoveOnlineExamUseCase
+import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserTypeUseCase
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import org.threeten.bp.Duration
+import org.threeten.bp.LocalDateTime
 
+class OnlineExamViewModel @ViewModelInject constructor(
+    application: Application,
+    private val getOnlineExamsUseCase: IGetOnlineExamsUseCase,
+    private val removeOnlineExamUseCase: IRemoveOnlineExamUseCase,
+    private val addOnlineExamsUseCase: IAddOnlineExamsUseCase, // TODO: remove this
+    private val getCurrentUserTypeUseCase: IGetCurrentUserTypeUseCase // TODO: remove this
+) : AndroidViewModel(application), CanLogout {
 
-class OnlineExamViewModel(application: Application) : AndroidViewModel(application),
-    CanLogout {
     private val c = application.applicationContext
-
-    val answers: LiveData<List<HomeworkSolutionModel>> = liveData {
-        emit(getSolutions())
-    }
-    private val solutionRepo: IHomeworkSolutionRepository = HomeworkSolutionRepository()
     val listState = ListState()
 
-    private var mHomeworkId= ""
-
-    fun init(homeworkId:String){
-        mHomeworkId= homeworkId
+    private val userType  by lazy {
+        getCurrentUserTypeUseCase()
     }
 
-    private suspend fun getSolutions(): List<HomeworkSolutionModel> {
-        listState.apply {
+     val hasEditPermission:Boolean get()  {
+        return userType == UserType.TEACHER
+    }
 
-            setLoading(true)
-            when (val result = solutionRepo.getSolution(mHomeworkId)) {
-                is Success -> {
-                    if (result.data.isNullOrEmpty()) setBodyError(c.getString(R.string.no_solutions))
-                    else {
-                        setLoading(false)
-                        return result.data
-                    }
-                }
-                Unauthorized -> expireLogout(c)
-                is ResponseError -> {
-                    val msg =
-                        if (result.statusCode == HttpURLConnection.HTTP_NOT_FOUND) c.getString(R.string.no_solutions) else result.combinedMsg
-                    setBodyError(msg)
-                }
-                is ConnectionError -> setBodyError(c.getString(R.string.connection_error))
-            }
-
-            setLoading(false)
+    init {
+        // TODO: remove this
+        viewModelScope.launch {
+//           addOnlineExamsUseCase(
+//               dummyOnlineExams[0]
+//           )
+//           delay(2000)
+//           addOnlineExamsUseCase(
+//               dummyOnlineExams[2]
+//           )
+//           delay(5000)
+            addOnlineExamsUseCase(
+                *dummyOnlineExams.toTypedArray()
+            )
         }
-        return emptyList()
+    }
+
+    // TODO: add unauthorized interceptor
+    val onlineExams: LiveData<List<OnlineExam>> = getOnlineExamsUseCase().map {
+        when (it.status) {
+            Resource.Status.SUCCESS -> {
+                if (it.data.isNullOrEmpty()) {
+                    listState.setBodyError(R.string.no_exams.toStringResource(c))
+                } else {
+                    listState.setLoading(false)
+                }
+            }
+            Resource.Status.ERROR -> listState.setBodyError(it.message.toString())
+            Resource.Status.LOADING -> listState.setLoading(it.data.isNullOrEmpty())
+        }
+
+
+        it.data ?: listOf()
+    }.asLiveData(context = viewModelScope.coroutineContext)
+
+    fun removeExam(position: Int) {
+        onlineExams.value?.get(position)?.let {
+            viewModelScope.launch {
+                removeOnlineExamUseCase(it.id)
+            }
+        }
     }
 }
+
+val dummyOnlineExams = listOf(
+    OnlineExam(
+        "0",
+        "رياضيات",
+        LocalDateTime.now(),
+        Duration.ofMinutes(150),
+        6,
+        OnlineExamStatus.ACTIVE,
+    ),
+    OnlineExam(
+        "1",
+        "اللغة العربية",
+        LocalDateTime.now(),
+        Duration.ofMinutes(500),
+        15,
+        OnlineExamStatus.COMPLETED,
+    ),
+    OnlineExam(
+        "2",
+        "انكليزي",
+        LocalDateTime.now(),
+        Duration.ofMinutes(300),
+        30,
+        OnlineExamStatus.LOCKED,
+    ),
+    OnlineExam(
+        "3",
+        "فيزياء",
+        LocalDateTime.now(),
+        Duration.ofMinutes(50),
+        60,
+        OnlineExamStatus.COMPLETED,
+    ),
+)
