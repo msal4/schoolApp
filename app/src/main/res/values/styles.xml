@@ -15,9 +15,21 @@
         <item name="android:includeFontPadding">false</item>
         <item name="android:editTextStyle">@style/MyEditTextStyle</item>
         <item name="editTextStyle">@style/MyEditTextStyle</item>
+        <item name="bottomSheetDialogTheme">@style/BottomSheetDialogStyle</item>
 
     </style>
-    
+
+    <style name="BottomSheetDialogStyle" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="bottomSheetStyle">@style/BottomSheetModalStyle</item>
+    </style>
+
+    <style name="BottomSheetModalStyle"
+        parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_bottom_sheet</item>
+    </style>
 
     <style name="CustomActivityAnimation" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
@@ -90,7 +102,7 @@
         <item name="android:padding">12dp</item>
         <item name="alpha">0.87</item>
         <item name="android:lineSpacingMultiplier">1</item>
-        <item name="android:background">@drawable/background_card</item>
+        <item name="android:background">@drawable/bg_card</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textAlignment">center</item>
         <item name="android:gravity">center</item>

@@ -34,6 +34,10 @@ class OnlineExamsRepository(
         return Resource.success(Unit)
     }
 
+    override suspend fun addOnlineExamByKey(examKey: String): Resource<Unit> {
+        return Resource.success(null)
+    }
+
     override suspend fun removeOnlineExam(examId: String): Resource<Unit> {
         onlineExamsDao.remove(examId)
         return Resource.success(Unit)

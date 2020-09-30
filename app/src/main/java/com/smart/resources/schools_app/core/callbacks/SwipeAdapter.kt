@@ -27,7 +27,7 @@ class SwipeAdapter(
 
         viewHolder.itemView.apply {
             val mBackground =
-                R.drawable.background_swipe_delete.toDrawable(context)//ColorDrawable(R.color.lightRed.toColorResource(itemView.context))
+                R.drawable.bg_swipe_delete.toDrawable(context)//ColorDrawable(R.color.lightRed.toColorResource(itemView.context))
             val mIcon = R.drawable.ic_delete_white_24dp.toDrawable(context)
             if (mBackground == null || mIcon == null) return
 

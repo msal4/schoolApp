@@ -10,13 +10,13 @@ import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 fun View.setOnlineExamCardStatus(onlineExamStatus: OnlineExamStatus, canTakeOnlineExam:Boolean){
     if(!canTakeOnlineExam){
         elevation= R.dimen.item_elevation.toDimen(context)
-        background = R.drawable.background_card.toDrawable(context)
+        background = R.drawable.bg_card.toDrawable(context)
         return
     }
 
     background= when(onlineExamStatus){
-        OnlineExamStatus.ACTIVE -> R.drawable.background_online_exam_active
-        else -> R.drawable.background_card
+        OnlineExamStatus.ACTIVE -> R.drawable.bg_online_exam_active
+        else -> R.drawable.bg_card
     }.toDrawable(context)
 
     elevation = when(onlineExamStatus){

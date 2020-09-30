@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="model"
+            type="com.smart.resources.schools_app.features.onlineExam.domain.viewModel.AddOnlineExamSheetViewModel" />
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layoutDirection="rtl">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:gravity="center"
+        android:theme="@style/AppTheme"
+        android:padding="@dimen/add_page_padding">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/dateInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/dateField"
+                style="@style/MyEditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@={model.examKey}"
+                android:hint="@string/exam_key"
+                android:inputType="text"
+                android:errorMsg="@{model.examKeyError}"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/addExamButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_btn_blue_gradient"
+            android:elevation="8dp"
+            android:fontFamily="@font/monadi"
+            android:paddingStart="58dp"
+            android:paddingEnd="58dp"
+            android:text='@{model.isLoading()? "": @string/add_exam}'
+            android:onClick="@{()-> model.addExam()}"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="@+id/dateInputLayout"
+            app:layout_constraintTop_toBottomOf="@+id/dateInputLayout"
+            tools:text="@string/add_exam"/>
+
+        <ProgressBar
+            android:id="@+id/progressIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:elevation="12dp"
+            android:indeterminateTint="@color/white"
+            android:animatedVisible="@{model.isLoading()}"
+            app:layout_constraintBottom_toBottomOf="@+id/addExamButton"
+            app:layout_constraintEnd_toEndOf="@+id/addExamButton"
+            app:layout_constraintStart_toStartOf="@+id/addExamButton"
+            app:layout_constraintTop_toTopOf="@+id/addExamButton"
+            tools:visibility="gone"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

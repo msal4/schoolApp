@@ -26,7 +26,10 @@ abstract class OnlineExamsModule {
     abstract fun bindGetOnlineExamsUseCase(getOnlineExamsUseCase: GetOnlineExamsUseCase): IGetOnlineExamsUseCase
 
     @Binds
-    abstract fun bindAddOnlineExamUseCase(addOnlineExamUseCase: AddOnlineExamsUseCase): IAddOnlineExamsUseCase
+    abstract fun bindAddOnlineExamsUseCase(addOnlineExamUseCase: AddOnlineExamsUseCase): IAddOnlineExamsUseCase
+
+    @Binds
+    abstract fun bindAddOnlineExamByKeyUseCase(addOnlineExamByKeyUseCase: AddOnlineExamByKeyUseCase): IAddOnlineExamByKeyUseCase
 
     @Binds
     abstract fun bindRemoveOnlineExamUseCase(removeOnlineExamUseCase: RemoveOnlineExamUseCase): IRemoveOnlineExamUseCase

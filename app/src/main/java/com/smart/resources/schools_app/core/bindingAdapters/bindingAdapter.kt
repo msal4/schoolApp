@@ -1,6 +1,8 @@
 package com.smart.resources.schools_app.core.bindingAdapters
 
+import android.transition.TransitionManager
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.children
 import androidx.core.widget.doAfterTextChanged
@@ -47,6 +49,15 @@ fun View.setVisible(visible: Boolean?){
     }else{
         hide()
     }
+}
+
+@BindingAdapter("android:animatedVisible")
+fun View.setAnimatedVisible(visible: Boolean?){
+    val root= rootView
+    if(root is ViewGroup){
+        TransitionManager.beginDelayedTransition(root)
+    }
+    setVisible(visible)
 }
 
 @BindingAdapter("android:radioGroupReadOnly")

@@ -124,8 +124,9 @@
     <string name="subject_not_selected_error">يرجى اختيار المادة!</string>
     <string name="empty_exam_date_error">يرجى اختيار تاريخ الامتحان!</string>
     <string name="empty_exam_time_error">يرجى اختيار وقت الامتحان!</string>
-    <string name="empty_exam_key_error">يرجى كتابة رمز الامتحان!</string>
+    <string name="empty_exam_key_error">يرجى ادخال رمز الامتحان!</string>
     <string name="empty_questions_error">يرجى اضافة سؤال!</string>
     <string name="no_answer">لا يوجد جواب!</string>
+    <string name="exam_key">رمز الامتحان</string>
 
 </resources>

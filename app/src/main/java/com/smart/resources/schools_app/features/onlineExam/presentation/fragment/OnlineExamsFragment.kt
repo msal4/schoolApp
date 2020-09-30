@@ -82,7 +82,7 @@ class OnlineExamsFragment : Fragment() {
                 if(viewModel.isTeacher) {
                     AddOnlineExamFragment.newInstance(parentFragmentManager)
                 }else{
-
+                    AddOnlineExamBottomSheet.newInstance().show(parentFragmentManager, "")
                 }
             }
         }

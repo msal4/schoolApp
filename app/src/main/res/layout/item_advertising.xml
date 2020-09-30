@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:elevation="@dimen/item_elevation"
         android:layoutDirection="rtl"
-        android:background="@drawable/background_card"
+        android:background="@drawable/bg_card"
         android:padding="@dimen/item_padding"
         android:minHeight="@dimen/item_min_height"
         android:orientation="vertical">

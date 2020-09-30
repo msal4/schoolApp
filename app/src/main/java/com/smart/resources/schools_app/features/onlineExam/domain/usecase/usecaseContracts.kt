@@ -13,6 +13,11 @@ interface IAddOnlineExamsUseCase{
     suspend operator fun invoke(vararg completeOnlineExam: CompleteOnlineExam): Resource<Unit>
 }
 
+interface IAddOnlineExamByKeyUseCase{
+    suspend operator fun invoke(examKey:String): Resource<Unit>
+}
+
+
 interface IRemoveOnlineExamUseCase{
     suspend operator fun invoke(examId:String): Resource<Unit>
 }
