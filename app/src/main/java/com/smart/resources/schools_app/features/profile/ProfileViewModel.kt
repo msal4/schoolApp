@@ -9,7 +9,6 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.ConnectionError
 import com.smart.resources.schools_app.core.myTypes.ResponseError
 import com.smart.resources.schools_app.core.myTypes.Success
-import com.smart.resources.schools_app.core.myTypes.Unauthorized
 import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.profile.certificate.CertificateModel
 import com.smart.resources.schools_app.features.profile.certificate.CertificateRepository
@@ -18,7 +17,7 @@ import java.net.HttpURLConnection
 
 enum class CertificateState { UNKNOWN, AVAILABLE, UNAVAILABLE, }
 
-class ProfileViewModel(application: Application) : AndroidViewModel(application), CanLogout {
+class ProfileViewModel(application: Application) : AndroidViewModel(application) {
 
     private val c = application.applicationContext
 
@@ -45,11 +44,6 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
                 certificateModel = res.data
                 _certificateStatusMsg.postValue(c.getString(R.string.available))
                 CertificateState.AVAILABLE
-            }
-            Unauthorized -> {
-                expireLogout(c)
-                _certificateStatusMsg.postValue(c.getString(R.string.unauthorized))
-                CertificateState.UNAVAILABLE
             }
             is ResponseError -> {
                 val errorMsg = if (res.statusCode != HttpURLConnection.HTTP_NOT_FOUND) c.getString(

@@ -7,9 +7,7 @@ import com.smart.resources.schools_app.databinding.ItemScheduleDayBinding
 
 class ScheduleDayRecyclerAdapter(private val daySchedule:List<String?>) : RecyclerView.Adapter<ScheduleDayRecyclerAdapter.MyViewHolder>() {
 
-    inner class MyViewHolder(val binding: ItemScheduleDayBinding) : RecyclerView.ViewHolder(binding.root) {
-
-    }
+    inner class MyViewHolder(val binding: ItemScheduleDayBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

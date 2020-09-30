@@ -9,7 +9,7 @@ import com.smart.resources.schools_app.features.login.CanLogout
 import kotlinx.coroutines.*
 
 
-class RatingViewModel(application: Application) : AndroidViewModel(application), CanLogout {
+class RatingViewModel(application: Application) : AndroidViewModel(application) {
     private val c= application.applicationContext
     val listState = ListState()
 
@@ -42,7 +42,6 @@ class RatingViewModel(application: Application) : AndroidViewModel(application),
                         }
 
                     }
-                    Unauthorized-> expireLogout(c)
                     is ResponseError -> setBodyError(result.combinedMsg)
                     is ConnectionError -> setBodyError(c.getString(R.string.connection_error))
                 }

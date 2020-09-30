@@ -12,7 +12,7 @@ import com.smart.resources.schools_app.features.users.data.UserRepository
 import java.net.HttpURLConnection
 
 
-class LectureViewModel(application: Application) : AndroidViewModel(application), CanLogout {
+class LectureViewModel(application: Application) : AndroidViewModel(application) {
     private val c = application.applicationContext
 
     val lectures: LiveData<List<LectureModel>> = liveData {
@@ -35,7 +35,6 @@ class LectureViewModel(application: Application) : AndroidViewModel(application)
                         return result.data
                     }
                 }
-                Unauthorized -> expireLogout(c)
                 is ResponseError -> {
                     val msg= if(result.statusCode == HttpURLConnection.HTTP_NOT_FOUND) c.getString(R.string.no_lectures) else result.combinedMsg
                     setBodyError(msg)

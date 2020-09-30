@@ -120,14 +120,10 @@
 
 
         <com.tiper.MaterialSpinner
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.SpinnerStyle"
             android:id="@+id/classAndSectionSpinner"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:gravity="right"
             android:hint="@string/classAndDivision"
-            android:minHeight="60dp"
             android:errorMsg="@{e.sectionMsg}"
             app:layout_constraintBottom_toTopOf="@id/homeworkImageCard"
             app:layout_constraintEnd_toEndOf="@+id/examTypeField"

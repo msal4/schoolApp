@@ -45,7 +45,7 @@ class ScheduleFragment : Fragment() {
     private fun setupViewModel() {
         viewModel.apply {
                 binding.listState= listState
-                getSchedule().observe(viewLifecycleOwner, Observer{onScheduleDownloaded(it)})
+                getSchedule().observe(viewLifecycleOwner, {onScheduleDownloaded(it)})
             }
     }
 

@@ -10,7 +10,7 @@ import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.users.data.UserRepository
 import kotlinx.coroutines.*
 
-class HomeworkViewModel (application: Application) : AndroidViewModel(application), CanLogout{
+class HomeworkViewModel (application: Application) : AndroidViewModel(application){
 
 
     val listState = ListState()
@@ -42,7 +42,6 @@ class HomeworkViewModel (application: Application) : AndroidViewModel(applicatio
                 is Success -> {
 
                 }
-                Unauthorized-> expireLogout(c)
                 is ResponseError -> onError?.invoke(result.combinedMsg)
                 is ConnectionError -> onError?.invoke(c.getString(R.string.connection_error))
             }
@@ -57,7 +56,6 @@ class HomeworkViewModel (application: Application) : AndroidViewModel(applicatio
                     if (result.data.isNullOrEmpty()) listState.setBodyError(c.getString(R.string.no_homework))
                     else listState.setLoading(false)
                 }
-                Unauthorized-> expireLogout(c)
                 is ResponseError -> listState.setBodyError(result.combinedMsg)
                 is ConnectionError -> listState.setBodyError(c.getString(R.string.connection_error))
             }
@@ -80,7 +78,6 @@ class HomeworkViewModel (application: Application) : AndroidViewModel(applicatio
                     uploadListener?.onUploadCompleted()
                     //postHomeworkModel= PostHomeworkModel()
                 }
-                Unauthorized-> expireLogout(c)
                 is ResponseError -> uploadListener?.onError(myRes.combinedMsg)
                 is ConnectionError -> uploadListener?.onError(c.getString(R.string.connection_error))
             }

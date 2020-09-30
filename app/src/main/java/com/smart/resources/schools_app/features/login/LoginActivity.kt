@@ -33,6 +33,7 @@ class LoginActivity : AppCompatActivity() {
 
         fun newInstance(context: Context, isMultiAccount: Boolean = false) {
             Intent(context, LoginActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 putExtra(EXTRA_MULTI_ACCOUNT, isMultiAccount)
                 context.startActivity(this)
             }

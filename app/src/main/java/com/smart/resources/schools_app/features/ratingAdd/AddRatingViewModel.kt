@@ -13,7 +13,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class AddRatingViewModel(application: Application, private val postListener: PostListener) :
-    AndroidViewModel(application), CanLogout {
+    AndroidViewModel(application){
     private val c = application.applicationContext
     val listState = ListState().apply {
         setLoading(false)
@@ -45,7 +45,6 @@ class AddRatingViewModel(application: Application, private val postListener: Pos
                 }
 
             }
-            Unauthorized-> expireLogout(c)
             is ResponseError -> listState.setBodyError(studentsResult.combinedMsg)
             is ConnectionError -> listState.setBodyError(c.getString(R.string.connection_error))
         }
@@ -72,7 +71,6 @@ class AddRatingViewModel(application: Application, private val postListener: Pos
 
                 when (result) {
                     is Success -> postListener.onUploadCompleted()
-                    Unauthorized-> expireLogout(c)
                     is ResponseError -> postListener.onError(result.combinedMsg)
                     is ConnectionError -> postListener.onError(c.getString(R.string.connection_error))
                 }

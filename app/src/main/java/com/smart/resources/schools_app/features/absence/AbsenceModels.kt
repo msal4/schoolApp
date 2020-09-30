@@ -1,7 +1,6 @@
 package com.smart.resources.schools_app.features.absence
 
 import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
 
 open class StudentAbsenceModel(
     val subjectName: String,

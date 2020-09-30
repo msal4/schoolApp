@@ -27,32 +27,22 @@
             android:orientation="horizontal">
 
         <com.tiper.MaterialSpinner
-            android:focusableInTouchMode="false"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.SpinnerStyle"
             android:layout_marginStart="@dimen/item_margin"
             android:layout_marginTop="@dimen/item_margin"
             android:id="@+id/classAndSectionSpinner"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:hint="@string/classAndDivision"
-            android:gravity="right"
             android:layout_weight="1"
-            android:errorMsg="@{exception.sectionAndClassesMsg}"
-            android:minHeight="60dp" />
+            android:errorMsg="@{exception.sectionAndClassesMsg}" />
 
         <com.tiper.MaterialSpinner
-            android:focusableInTouchMode="false"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.SpinnerStyle"
+            android:id="@+id/subjectsSpinner"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="@dimen/item_margin"
             android:layout_marginTop="@dimen/item_margin"
-            android:id="@+id/subjectsSpinner"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:gravity="right"
             android:errorMsg="@{exception.subjectMsg}"
-            android:layout_height="wrap_content"
             android:hint="@string/subject"
-            android:minHeight="60dp"
             android:layout_weight="1"/>
 
 

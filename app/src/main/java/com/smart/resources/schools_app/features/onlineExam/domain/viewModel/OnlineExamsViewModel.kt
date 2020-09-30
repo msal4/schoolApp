@@ -2,7 +2,10 @@ package com.smart.resources.schools_app.features.onlineExam.domain.viewModel
 
 import android.app.Application
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.hadiyarajesh.flower.Resource
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.extentions.toString
@@ -11,7 +14,6 @@ import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExam
-import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IAddOnlineExamsUseCase
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IGetOnlineExamsUseCase
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IRemoveOnlineExamUseCase
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserTypeUseCase
@@ -24,8 +26,8 @@ class OnlineExamViewModel @ViewModelInject constructor(
     application: Application,
     private val getOnlineExamsUseCase: IGetOnlineExamsUseCase,
     private val removeOnlineExamUseCase: IRemoveOnlineExamUseCase,
-    private val addOnlineExamsUseCase: IAddOnlineExamsUseCase, // TODO: remove this
-    private val getCurrentUserTypeUseCase: IGetCurrentUserTypeUseCase // TODO: remove this
+   // private val addOnlineExamsUseCase: IAddOnlineExamsUseCase, // TODO: remove this
+    private val getCurrentUserTypeUseCase: IGetCurrentUserTypeUseCase
 ) : AndroidViewModel(application), CanLogout {
 
     private val c = application.applicationContext
@@ -39,9 +41,9 @@ class OnlineExamViewModel @ViewModelInject constructor(
         return userType == UserType.TEACHER
     }
 
-    init {
-        // TODO: remove this
-        viewModelScope.launch {
+    // TODO: remove this
+//    init {
+//        viewModelScope.launch {
 //           addOnlineExamsUseCase(
 //               dummyOnlineExams[0]
 //           )
@@ -53,8 +55,8 @@ class OnlineExamViewModel @ViewModelInject constructor(
 //            addOnlineExamsUseCase(
 //                *dummyOnlineExams.toTypedArray()
 //            )
-        }
-    }
+//        }
+//    }
 
     // TODO: add unauthorized interceptor
     val onlineExams: LiveData<List<OnlineExam>> = getOnlineExamsUseCase().map {

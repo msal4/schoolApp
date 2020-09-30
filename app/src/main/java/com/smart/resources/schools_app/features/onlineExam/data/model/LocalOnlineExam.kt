@@ -1,7 +1,6 @@
 package com.smart.resources.schools_app.features.onlineExam.data.model
 
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import org.threeten.bp.Duration

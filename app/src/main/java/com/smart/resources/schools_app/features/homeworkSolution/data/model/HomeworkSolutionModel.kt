@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName
 import com.smart.resources.schools_app.core.extentions.isImage
 import kotlinx.android.parcel.Parcelize
 import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
 
 // TODO: fix this model
 @Parcelize

@@ -30,7 +30,6 @@ class ExamViewModel(application: Application) : AndroidViewModel(application), C
                         if (result.data.isNullOrEmpty()) setBodyError(c.getString(R.string.no_exams))
                         else setLoading(false)
                     }
-                    Unauthorized-> expireLogout(c)
                     is ResponseError -> setBodyError(result.combinedMsg)
                     is ConnectionError -> setBodyError(c.getString(R.string.connection_error))
                 }
@@ -53,7 +52,6 @@ class ExamViewModel(application: Application) : AndroidViewModel(application), C
         viewModelScope.launch {
             when(val myRes= examRepo.addExam(postExamModel)){
                 is Success -> listener?.onUploadCompleted()
-                Unauthorized-> expireLogout(c)
                 is ResponseError -> listener?.onError(myRes.combinedMsg)
                 is ConnectionError -> listener?.onError(c.getString(R.string.connection_error))
             }

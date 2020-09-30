@@ -1,7 +1,9 @@
 package com.smart.resources.schools_app.features.users.data
 
-import androidx.room.*
-import com.smart.resources.schools_app.features.users.data.UserAccount
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 
 @Dao
 interface AccountsDao {

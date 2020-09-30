@@ -34,14 +34,9 @@
                     >
 
                     <com.tiper.MaterialSpinner
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.SpinnerStyle"
                         android:id="@+id/subjectsSpinner"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:focusableInTouchMode="false"
-                        android:gravity="start"
                         android:hint="@string/subject"
-                        android:minHeight="60dp"
                         android:errorMsg="@{model.showErrors?model.subjectErrorMsg:null}"
                         android:setList="@{model.subjectsList}"
                         android:selectedItem="@={model.examSubjectIndex}"

@@ -10,7 +10,7 @@ import com.smart.resources.schools_app.features.students.StudentWithMark
 import kotlinx.coroutines.*
 
 
-class AddMarkViewModel(application: Application) : AndroidViewModel(application), CanLogout {
+class AddMarkViewModel(application: Application) : AndroidViewModel(application) {
     private val c= application.applicationContext
     val listState = ListState()
 
@@ -27,7 +27,7 @@ class AddMarkViewModel(application: Application) : AndroidViewModel(application)
     }
 
 
-    fun fetchStudents(examId:Int){
+    private fun fetchStudents(examId:Int){
         viewModelScope.launch {
             listState.apply {
                 setLoading(true)
@@ -43,7 +43,6 @@ class AddMarkViewModel(application: Application) : AndroidViewModel(application)
                         }
 
                     }
-                    Unauthorized-> expireLogout(c)
                     is ResponseError -> setBodyError(result.combinedMsg)
                     is ConnectionError -> setBodyError(c.getString(R.string.connection_error))
                 }

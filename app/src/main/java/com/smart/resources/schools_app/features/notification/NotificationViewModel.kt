@@ -10,7 +10,7 @@ import com.smart.resources.schools_app.features.users.data.UserRepository
 import kotlinx.coroutines.*
 
 
-class NotificationViewModel(application: Application) : AndroidViewModel(application), CanLogout {
+class NotificationViewModel(application: Application) : AndroidViewModel(application) {
     private val c= application.applicationContext
     val listState = ListState()
 
@@ -50,7 +50,6 @@ class NotificationViewModel(application: Application) : AndroidViewModel(applica
                         }
 
                     }
-                    Unauthorized-> expireLogout(c)
                     is ResponseError -> setBodyError(result.combinedMsg)
                     is ConnectionError -> setBodyError(c.getString(R.string.connection_error))
                 }

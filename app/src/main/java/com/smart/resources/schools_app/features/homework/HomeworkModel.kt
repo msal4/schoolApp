@@ -3,7 +3,6 @@ package com.smart.resources.schools_app.features.homework
 import com.smart.resources.schools_app.core.extentions.isImage
 import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
 import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
 import java.io.File
 
 

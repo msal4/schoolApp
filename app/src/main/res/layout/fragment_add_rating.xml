@@ -34,19 +34,14 @@
             app:layout_constraintVertical_bias="0.0"/>
 
 
-
         <com.tiper.MaterialSpinner
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.SpinnerStyle"
             android:id="@+id/classAndSectionSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusableInTouchMode="false"
             android:layout_marginStart="@dimen/item_margin"
-            android:layout_marginEnd="@dimen/item_margin"
             android:layout_marginTop="@dimen/item_margin"
-            android:hint="@string/classAndDivision"
-            android:gravity="right"
+            android:layout_marginEnd="@dimen/item_margin"
             android:errorMsg="@{sectionsError}"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="@string/classAndDivision"
             app:layout_constraintBottom_toTopOf="@+id/recyclerViewLoader"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

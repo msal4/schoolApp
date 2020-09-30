@@ -12,7 +12,6 @@ import com.smart.resources.schools_app.core.utils.FileUtils
 import com.smart.resources.schools_app.core.myTypes.ConnectionError
 import com.smart.resources.schools_app.core.myTypes.ResponseError
 import com.smart.resources.schools_app.core.myTypes.Success
-import com.smart.resources.schools_app.core.myTypes.Unauthorized
 import com.smart.resources.schools_app.features.homeworkSolution.data.repository.HomeworkSolutionRepository
 import com.smart.resources.schools_app.features.homeworkSolution.data.model.AddHomeworkSolutionModel
 import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
@@ -66,9 +65,6 @@ class AddHomeworkSolutionViewModel(application: Application) : AndroidViewModel(
                     } else {
                         _error.postValue(Event(c.getString(R.string.unexpected_error)))
                     }
-                }
-                Unauthorized -> {
-                    expireLogout(c)
                 }
                 is ResponseError -> {
                     _error.postValue(Event(c.getString(R.string.error, res.statusCode.toString())))

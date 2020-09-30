@@ -2,7 +2,6 @@ package com.smart.resources.schools_app.features.lecture
 
 import com.google.gson.annotations.SerializedName
 import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
 
 data class LectureModel (
     @SerializedName("idOnline")

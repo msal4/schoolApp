@@ -11,12 +11,10 @@ import com.smart.resources.schools_app.core.extentions.hide
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.absence.StudentAbsenceModel
 import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
-import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.smart.resources.schools_app.core.activity.SectionActivity
-//import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
 
-class AbsenceFragment : Fragment(), CanLogout {
+class AbsenceFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
     private val viewModel: AbsenceViewModel by viewModels()
 
@@ -76,7 +74,6 @@ class AbsenceFragment : Fragment(), CanLogout {
                     binding.recyclerView.adapter= AbsenceRecyclerAdapter(result.data)
                 }
             }
-            Unauthorized-> context?.let { expireLogout(it) }
             is ResponseError -> errorMsg = result.combinedMsg
             is ConnectionError -> errorMsg = getString(R.string.connection_error)
         }

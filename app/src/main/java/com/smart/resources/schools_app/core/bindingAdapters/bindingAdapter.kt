@@ -3,23 +3,16 @@ package com.smart.resources.schools_app.core.bindingAdapters
 import android.transition.TransitionManager
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import android.widget.RatingBar
 import androidx.core.view.children
-import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.BindingAdapter
-import androidx.databinding.InverseBindingAdapter
-import androidx.databinding.InverseBindingListener
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.core.callbacks.SwipeAdapter
 import com.smart.resources.schools_app.core.extentions.hide
 import com.smart.resources.schools_app.core.extentions.show
-
-@BindingAdapter("mine:setStars")
-fun setStars(ratingBar:  RatingBar, stars:Int?){
-    ratingBar.rating= (stars?:0).toFloat()
-}
-
 
 @BindingAdapter("android:checkedButtonIndex")
 fun RadioGroup.setCheckedButtonIndex(checkButtonIndex:Int){

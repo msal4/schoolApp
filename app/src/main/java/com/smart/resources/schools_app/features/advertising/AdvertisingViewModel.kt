@@ -40,7 +40,6 @@ class HomeworkViewModel(application: Application) : AndroidViewModel(application
                         }
 
                     }
-                    Unauthorized-> expireLogout(c)
                     is ResponseError -> setBodyError(result.combinedMsg)
                     is ConnectionError -> setBodyError(c.getString(R.string.connection_error))
                 }

@@ -4,6 +4,7 @@ import android.app.Application
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
+import com.smart.resources.schools_app.core.utils.AuthorizationInterceptor
 import com.smart.resources.schools_app.core.utils.SharedPrefHelper
 import com.smart.resources.schools_app.features.users.data.UserRepository
 import dagger.hilt.android.HiltAndroidApp
@@ -13,6 +14,7 @@ import javax.inject.Inject
 class MyApp : Application() {
     @Inject lateinit var userRepository: UserRepository
     @Inject lateinit var sharedPrefHelper: SharedPrefHelper
+    @Inject lateinit var authorizationInterceptor: AuthorizationInterceptor
 
     override fun onCreate() {
         super.onCreate()
@@ -20,6 +22,7 @@ class MyApp : Application() {
         AndroidThreeTen.init(this)
         UserRepository.instance= userRepository // To not break old code
         SharedPrefHelper.instance= sharedPrefHelper // To not break old code
+        AuthorizationInterceptor.instance= authorizationInterceptor  // To not break old code
         Logger.addLogAdapter(AndroidLogAdapter())
     }
 }

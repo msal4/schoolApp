@@ -98,14 +98,9 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.tiper.MaterialSpinner
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.SpinnerStyle"
             android:id="@+id/examTypeSpinner"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:hint="@string/exam_type"
-            android:minHeight="60dp"
-            android:gravity="right"
-            android:focusableInTouchMode="false"
             android:errorMsg="@{e.typeMsg}"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toTopOf="@+id/classAndSectionSpinner"
@@ -115,14 +110,9 @@
 
 
         <com.tiper.MaterialSpinner
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.SpinnerStyle"
             android:id="@+id/classAndSectionSpinner"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:hint="@string/classAndDivision"
-            android:minHeight="60dp"
-            android:focusableInTouchMode="false"
-            android:gravity="right"
             android:errorMsg="@{e.sectionMsg}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/examTypeSpinner"

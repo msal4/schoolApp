@@ -4,9 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.smart.resources.schools_app.features.onlineExam.data.model.LocalOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.data.model.LocalQuestion
-import com.smart.resources.schools_app.features.onlineExam.domain.model.Question
 import kotlinx.coroutines.flow.Flow
 
 @Dao

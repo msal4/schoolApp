@@ -1,6 +1,5 @@
 package com.smart.resources.schools_app.core.extentions
 
-import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.LinearGradient

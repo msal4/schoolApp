@@ -5,8 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import android.text.BidiFormatter
 import android.util.Base64
-import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.MutableLiveData
 import okhttp3.MediaType
 import okhttp3.MultipartBody

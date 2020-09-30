@@ -41,7 +41,6 @@ class HomeworkSolutionViewModel(application: Application) : AndroidViewModel(app
                         return result.data
                     }
                 }
-                Unauthorized -> expireLogout(c)
                 is ResponseError -> {
                     val msg =
                         if (result.statusCode == HttpURLConnection.HTTP_NOT_FOUND) c.getString(R.string.no_solutions) else result.combinedMsg

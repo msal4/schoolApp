@@ -4,7 +4,6 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.smart.resources.schools_app.features.students.StudentWithMark
 import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
 
 
 class RatingModel  (

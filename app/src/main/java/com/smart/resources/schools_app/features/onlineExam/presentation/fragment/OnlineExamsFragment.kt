@@ -38,18 +38,20 @@ class OnlineExamsFragment : Fragment() {
         binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = this@OnlineExamsFragment
             listState = viewModel.listState
-
-
             setupRecycler()
-            setupObservers()
         }
 
-        setHasOptionsMenu(true)
-        (activity as SectionActivity).setCustomTitle(R.string.online_exam)
+        observeViewModel()
+        setupToolbar()
         return binding.root
     }
 
-    private fun setupObservers() {
+    private fun setupToolbar() {
+        setHasOptionsMenu(true)
+        (activity as SectionActivity).setCustomTitle(R.string.online_exam)
+    }
+
+    private fun observeViewModel() {
         viewModel.onlineExams.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }

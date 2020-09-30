@@ -17,7 +17,6 @@ import com.smart.resources.schools_app.features.profile.certificate.CertificateC
 import com.smart.resources.schools_app.features.rating.RatingClient
 import com.smart.resources.schools_app.features.schedule.ScheduleClient
 import com.smart.resources.schools_app.features.students.StudentClient
-import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.snakydesign.watchtower.WatchTower
 import com.snakydesign.watchtower.interceptor.WatchTowerInterceptor
 import com.snakydesign.watchtower.interceptor.WebWatchTowerObserver
@@ -45,10 +44,11 @@ object RetrofitHelper {
 
 
     private val loggingInterceptor by lazy {
-        WatchTower.start(WebWatchTowerObserver(port = 8085))// TODO: move to app class
+        WatchTower.start(WebWatchTowerObserver(port = 8085))// TODO: remove it if not needed
         WatchTowerInterceptor()
-        // HttpLoggingInterceptor().apply { setLevel(HttpLoggingInterceptor.Level.BODY) }
     }
+
+
     private val mBuilder
         get() = Retrofit.Builder()
             .baseUrl(API_BASE_URL)
@@ -57,30 +57,25 @@ object RetrofitHelper {
     private val retrofit: Retrofit
         get() =
             mBuilder
-                .client(OkHttpClient.Builder().addInterceptor(loggingInterceptor).build())
+                .client(
+                    OkHttpClient
+                        .Builder()
+                        .addInterceptor(loggingInterceptor)
+                        .addInterceptor(loggingInterceptor)
+                        .build()
+                )
                 .build()
 
     private val retrofitWithAuth: Retrofit
         get() =
             with(OkHttpClient.Builder()) {
+                addInterceptor(AuthorizationInterceptor.instance)
                 addInterceptor(loggingInterceptor)
-                addTokenHeader()
                 mBuilder
                     .client(build())
                     .build()
             }
 
-
-    private fun OkHttpClient.Builder.addTokenHeader() {
-        addInterceptor { chain ->
-            val token =
-                UserRepository.instance.getCurrentUserAccount()?.accessToken
-            val newRequest = chain.request().newBuilder()
-                .addHeader("Authorization", "Baerer $token")
-                .build()
-            chain.proceed(newRequest)
-        }
-    }
 
     val homeworkClient: HomeworkClient get() = retrofitWithAuth.create(HomeworkClient::class.java)
     val homeworkSolutionClient: HomeworkSolutionClient

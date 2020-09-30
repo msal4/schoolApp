@@ -11,23 +11,25 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.extentions.hide
 import com.smart.resources.schools_app.core.extentions.show
 import com.smart.resources.schools_app.core.extentions.showSnackBar
+import com.smart.resources.schools_app.core.myTypes.ConnectionError
+import com.smart.resources.schools_app.core.myTypes.ResponseError
+import com.smart.resources.schools_app.core.myTypes.Success
+import com.smart.resources.schools_app.core.myTypes.toMyResult
 import com.smart.resources.schools_app.core.utils.RetrofitHelper
-import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
-import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.students.SendStudentResult
 import com.smart.resources.schools_app.features.students.StudentWithMark
-import com.smart.resources.schools_app.core.activity.SectionActivity
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AddMarkFragment : Fragment(), CanLogout {
+class AddMarkFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
     private lateinit var adapter: AddMarkRecyclerAdapter
     private lateinit var progressBar: ProgressBar
@@ -89,7 +91,7 @@ class AddMarkFragment : Fragment(), CanLogout {
 
     private fun onBackPressed() {
         progressBar.hide()
-        if(isAdded){
+        if (isAdded) {
             parentFragmentManager.popBackStack()
         }
     }
@@ -140,9 +142,7 @@ class AddMarkFragment : Fragment(), CanLogout {
                         when (result) {
                             is Success -> {
                                 onBackPressed()
-
                             }
-                            Unauthorized -> context?.let { expireLogout(it) }
                             is ResponseError -> {
                                 showErrorMsg(result.combinedMsg)
                             }
@@ -197,11 +197,11 @@ class AddMarkFragment : Fragment(), CanLogout {
 
     private fun setupViewModel(examId: Int) {
         viewModel.apply {
-                binding.listState = listState
-                getStudents(examId).observe(
-                    viewLifecycleOwner,
-                     { onExamsDownload(it) })
-            }
+            binding.listState = listState
+            getStudents(examId).observe(
+                viewLifecycleOwner,
+                { onExamsDownload(it) })
+        }
 
     }
 
