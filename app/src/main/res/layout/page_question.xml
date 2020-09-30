@@ -5,6 +5,10 @@
 
     <data>
         <variable
+            name="readOnly"
+            type="Boolean" />
+
+        <variable
             name="answerableQuestion"
             type="com.smart.resources.schools_app.features.onlineExam.domain.model.AnswerableQuestion" />
     </data>
@@ -30,8 +34,9 @@
             tools:text="1/ ما هو الحيوان الذي إن تم قطع رجل من أرجله تنمو مجدداً؟"
             style="@style/QuestionTextStyle" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/QuestionAnswerStyle"
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/questionText"
             app:layout_constraintStart_toStartOf="@+id/questionText"
@@ -39,15 +44,28 @@
             app:layout_constraintVertical_bias="0.0"
             android:layout_marginTop="32dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/answerEditText"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/QuestionAnswerStyle"
+                android:visible="@{!readOnly}">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/answerEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/answer"
+                    style="@style/MyEditTextStyle"
+                    android:text="@{answerableQuestion.answer.answer}"
+                    android:inputType="textMultiLine" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/answer"
-                style="@style/MyEditTextStyle"
-                android:text="@{answerableQuestion.answer.answer}"
-                android:inputType="textMultiLine" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:answer="@{answerableQuestion.answer.answer}"
+                android:visible="@{readOnly}"
+                android:textAlignment="viewStart"
+                />
+        </FrameLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

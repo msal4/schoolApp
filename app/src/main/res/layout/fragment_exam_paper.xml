@@ -99,7 +99,7 @@
             android:timeInMinutesSeconds="@{model.onlineExam.examDuration}"
             android:timer="@{model.onlineExam.remainingDuration}"
             android:onTimerFinished="@{()-> model.onTimerFinished()}"
-            android:startTimer="@{true}"
+            android:startTimer="@{!model.readOnly}"
             android:textColor="@android:color/black"
             app:layout_constraintEnd_toEndOf="@+id/examRemainingTimeTitle"
             app:layout_constraintStart_toStartOf="@+id/examRemainingTimeTitle"

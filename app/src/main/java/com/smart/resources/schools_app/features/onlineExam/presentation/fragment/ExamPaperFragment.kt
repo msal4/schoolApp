@@ -10,25 +10,31 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.activity.SectionActivity
+import com.smart.resources.schools_app.core.callbacks.ViewPager2Helper
 import com.smart.resources.schools_app.core.extentions.setSoftInputMode
 import com.smart.resources.schools_app.core.extentions.setStatusBarColor
 import com.smart.resources.schools_app.core.extentions.setStatusBarColorToWhite
 import com.smart.resources.schools_app.core.extentions.toColor
-import com.smart.resources.schools_app.core.callbacks.ViewPager2Helper
-import com.smart.resources.schools_app.databinding.FragmentQuestionsBinding
+import com.smart.resources.schools_app.databinding.FragmentExamPaperBinding
 import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnswer
 import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.QuestionsViewModel
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.QuestionsViewModelFactory
-import com.smart.resources.schools_app.features.onlineExam.presentation.adapter.QuestionsNavigatorAdapter
 import com.smart.resources.schools_app.features.onlineExam.presentation.adapter.AnswerableQuestionsPagerAdapter
-import com.smart.resources.schools_app.core.activity.SectionActivity
+import com.smart.resources.schools_app.features.onlineExam.presentation.adapter.QuestionsNavigatorAdapter
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 
-class QuestionsFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
-    private lateinit var binding: FragmentQuestionsBinding
+class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
+    private lateinit var binding: FragmentExamPaperBinding
     private val viewModel: QuestionsViewModel by viewModels {
-        QuestionsViewModelFactory(arguments?.getParcelable(EXTRA_EXAM_DETAILS)!!)
+        requireArguments().run {
+            QuestionsViewModelFactory(
+                getParcelable(EXTRA_EXAM_DETAILS)!!,
+                getBoolean(EXTRA_READ_ONLY)
+            )
+        }
+
     }
     private lateinit var pagerAdapterAnswerable: AnswerableQuestionsPagerAdapter
     private lateinit var navigatorAdapter: QuestionsNavigatorAdapter
@@ -36,11 +42,13 @@ class QuestionsFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
     companion object {
         private const val QUESTIONS_FRAGMENT = "questionsFragment"
         private const val EXTRA_EXAM_DETAILS = "extraExamDetails"
+        private const val EXTRA_READ_ONLY = "extraReadOnly"
 
-        fun newInstance(fm: FragmentManager, exam: OnlineExam) {
-            val fragment = QuestionsFragment()
+        fun newInstance(fm: FragmentManager, exam: OnlineExam, readOnly: Boolean = false) {
+            val fragment = ExamPaperFragment()
             fragment.arguments = bundleOf(
-                EXTRA_EXAM_DETAILS to exam
+                EXTRA_EXAM_DETAILS to exam,
+                EXTRA_READ_ONLY to readOnly
             )
             fm.beginTransaction().apply {
                 setCustomAnimations(
@@ -81,11 +89,11 @@ class QuestionsFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = FragmentQuestionsBinding.inflate(inflater, container, false).apply {
-            lifecycleOwner = this@QuestionsFragment
+        binding = FragmentExamPaperBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = this@ExamPaperFragment
             model = viewModel
-            pagerAdapterAnswerable = AnswerableQuestionsPagerAdapter()
-            pagerAdapterAnswerable.listener = this@QuestionsFragment
+            pagerAdapterAnswerable = AnswerableQuestionsPagerAdapter(viewModel.readOnly)
+            pagerAdapterAnswerable.listener = this@ExamPaperFragment
             questionsPager.adapter = pagerAdapterAnswerable
 
             magicIndicator.navigator = CommonNavigator(requireContext()).apply {
@@ -101,7 +109,7 @@ class QuestionsFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
             }
 
             viewModel.solvedQuestions.observe(viewLifecycleOwner) {
-                navigatorAdapter.submitList(it?: emptyList())
+                navigatorAdapter.submitList(it ?: emptyList())
             }
 
         }
@@ -114,7 +122,7 @@ class QuestionsFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
         binding.questionsPager.setCurrentItem(index, true)
     }
 
-    override fun onQuestionAnswerStateUpdated(answer: BaseAnswer<out Any>, position:Int) {
+    override fun onQuestionAnswerStateUpdated(answer: BaseAnswer<out Any>, position: Int) {
         viewModel.updateAnswer(answer, position)
     }
 

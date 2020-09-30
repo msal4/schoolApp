@@ -8,7 +8,10 @@ import com.smart.resources.schools_app.databinding.PageQuestionMultiChoiceBindin
 import com.smart.resources.schools_app.features.onlineExam.domain.model.MultiChoiceAnswer
 import com.smart.resources.schools_app.features.onlineExam.domain.model.MultiChoiceAnswerableQuestion
 
-class MultiChoiceQuestionViewHolder(var binding: PageQuestionMultiChoiceBinding) :
+class MultiChoiceQuestionViewHolder(
+    val binding: PageQuestionMultiChoiceBinding,
+    private val readOnly: Boolean
+) :
     RecyclerView.ViewHolder(binding.root) {
     var onQuestionAnswerUpdated: ((answer: MultiChoiceAnswer) -> Unit)? = null
 
@@ -32,17 +35,19 @@ class MultiChoiceQuestionViewHolder(var binding: PageQuestionMultiChoiceBinding)
     private fun bind(answerableQuestion: MultiChoiceAnswerableQuestion) {
         binding.apply {
             this.answerableQuestion = answerableQuestion
+            readOnly = this@MultiChoiceQuestionViewHolder.readOnly
             executePendingBindings()
         }
     }
 
     companion object {
-        fun create(parent: ViewGroup) = MultiChoiceQuestionViewHolder(
+        fun create(parent: ViewGroup, readOnly: Boolean) = MultiChoiceQuestionViewHolder(
             PageQuestionMultiChoiceBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
             ),
+            readOnly
         )
     }
 }

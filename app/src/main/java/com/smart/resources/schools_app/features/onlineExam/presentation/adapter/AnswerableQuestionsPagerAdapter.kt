@@ -10,7 +10,7 @@ import com.smart.resources.schools_app.features.onlineExam.presentation.viewHold
 import com.smart.resources.schools_app.features.onlineExam.presentation.viewHolder.MultiChoiceQuestionViewHolder
 import com.smart.resources.schools_app.features.onlineExam.presentation.viewHolder.QuestionViewHolder
 
-class AnswerableQuestionsPagerAdapter :
+class AnswerableQuestionsPagerAdapter(private val readOnly:Boolean) :
     ListAdapter<BaseAnswerableQuestion<out Any>, RecyclerView.ViewHolder>(DIFF_UTIL) {
 
     companion object {
@@ -85,9 +85,9 @@ class AnswerableQuestionsPagerAdapter :
         parent: ViewGroup,
         viewType: Int
     ) = when (viewType) {
-        MULTI_CHOICE_QUESTION_ITEM_TYPE -> MultiChoiceQuestionViewHolder.create(parent)
-        CORRECTNESS_QUESTION_ITEM_TYPE -> CorrectnessQuestionViewHolder.create(parent)
-        else -> QuestionViewHolder.create(parent)
+        MULTI_CHOICE_QUESTION_ITEM_TYPE -> MultiChoiceQuestionViewHolder.create(parent, readOnly)
+        CORRECTNESS_QUESTION_ITEM_TYPE -> CorrectnessQuestionViewHolder.create(parent, readOnly)
+        else -> QuestionViewHolder.create(parent, readOnly)
     }
 
 }

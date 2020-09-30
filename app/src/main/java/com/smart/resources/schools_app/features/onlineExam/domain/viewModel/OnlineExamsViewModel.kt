@@ -35,7 +35,7 @@ class OnlineExamViewModel @ViewModelInject constructor(
         getCurrentUserTypeUseCase()
     }
 
-     val hasEditPermission:Boolean get()  {
+     val isTeacher:Boolean get()  {
         return userType == UserType.TEACHER
     }
 

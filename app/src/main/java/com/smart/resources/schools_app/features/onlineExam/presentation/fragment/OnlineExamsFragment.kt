@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.bindingAdapters.setSwipeToDelete
+import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.OnlineExamViewModel
@@ -58,14 +59,16 @@ class OnlineExamsFragment : Fragment() {
         adapter = OnlineExamAdapter(true)
         adapter.onItemPressed = ::onOnlineExamPressed
 
-        if(viewModel.hasEditPermission) {
+        if(viewModel.isTeacher) {
             recyclerView.setSwipeToDelete(viewModel::removeExam)
         }
         recyclerView.adapter = adapter
     }
 
     private fun onOnlineExamPressed(onlineExam: OnlineExam) {
-        QuestionsFragment.newInstance(parentFragmentManager, onlineExam)
+        // TODO: test this logic
+        val readOnly= viewModel.isTeacher || (onlineExam.examStatus != OnlineExamStatus.ACTIVE)
+        ExamPaperFragment.newInstance(parentFragmentManager, onlineExam, readOnly)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -76,7 +79,7 @@ class OnlineExamsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.addMenuItem -> if (isAdded) {
-                if(viewModel.hasEditPermission) {
+                if(viewModel.isTeacher) {
                     AddOnlineExamFragment.newInstance(parentFragmentManager)
                 }else{
 

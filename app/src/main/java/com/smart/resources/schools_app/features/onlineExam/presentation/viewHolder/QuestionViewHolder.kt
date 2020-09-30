@@ -8,7 +8,10 @@ import com.smart.resources.schools_app.databinding.PageQuestionBinding
 import com.smart.resources.schools_app.features.onlineExam.domain.model.Answer
 import com.smart.resources.schools_app.features.onlineExam.domain.model.AnswerableQuestion
 
-class QuestionViewHolder(var binding: PageQuestionBinding) :
+class QuestionViewHolder(
+    var binding: PageQuestionBinding,
+    private val readOnly: Boolean
+) :
     RecyclerView.ViewHolder(binding.root) {
     var onQuestionAnswerStateUpdated: ((answer: Answer) -> Unit)? = null
 
@@ -16,7 +19,7 @@ class QuestionViewHolder(var binding: PageQuestionBinding) :
         binding.answerEditText.addTextChangedListener {
             val answerText = it?.trim()?.toString()
 
-            onQuestionAnswerStateUpdated?.invoke(Answer(answerText?:""))
+            onQuestionAnswerStateUpdated?.invoke(Answer(answerText ?: ""))
         }
 
         bind(answerableQuestion)
@@ -25,17 +28,19 @@ class QuestionViewHolder(var binding: PageQuestionBinding) :
     private fun bind(answerableQuestion: AnswerableQuestion) {
         binding.apply {
             this.answerableQuestion = answerableQuestion
+            readOnly = this@QuestionViewHolder.readOnly
             executePendingBindings()
         }
     }
 
     companion object {
-        fun create(parent: ViewGroup) = QuestionViewHolder(
+        fun create(parent: ViewGroup, readOnly: Boolean) = QuestionViewHolder(
             PageQuestionBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
             ),
+            readOnly
         )
     }
 }

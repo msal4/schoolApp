@@ -6,6 +6,10 @@
     <data>
         <import type="com.smart.resources.schools_app.R"/>
         <variable
+            name="readOnly"
+            type="Boolean" />
+
+        <variable
             name="questionModel"
             type="com.smart.resources.schools_app.features.onlineExam.domain.model.CorrectnessAnswerableQuestion" />
     </data>
@@ -33,6 +37,7 @@
             app:layout_constraintEnd_toEndOf="@+id/questionText"
             app:layout_constraintStart_toStartOf="@+id/questionText"
             app:layout_constraintTop_toBottomOf="@+id/questionText"
+            android:radioGroupReadOnly="@{readOnly}"
             android:checkedButton= "@{questionModel.answer.answer? R.id.correctRadioBtn : R.id.incorrectRadioBtn}">
 
             <RadioButton
@@ -51,10 +56,9 @@
 
         </RadioGroup>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/answerLayout"
-            android:visibility="gone"
-            style="@style/QuestionAnswerStyle"
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/isCorrectRadioGroup"
             app:layout_constraintStart_toStartOf="@+id/isCorrectRadioGroup"
@@ -62,13 +66,26 @@
             app:layout_constraintVertical_bias="0.0"
             android:layout_marginTop="24dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/answerEditText"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/answerLayout"
+                style="@style/QuestionAnswerStyle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/answerEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/correcting_answer"
+                    android:inputType="textMultiLine" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/answerText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/correcting_answer"
-                android:inputType="textMultiLine" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:text="@{questionModel.answer.correctAnswer}"
+                android:textAlignment="viewStart"
+                />
+        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

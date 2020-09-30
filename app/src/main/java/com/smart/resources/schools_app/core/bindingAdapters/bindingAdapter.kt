@@ -1,5 +1,6 @@
 package com.smart.resources.schools_app.core.bindingAdapters
 
+import android.view.View
 import android.widget.*
 import androidx.core.view.children
 import androidx.core.widget.doAfterTextChanged
@@ -9,6 +10,8 @@ import androidx.databinding.InverseBindingListener
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.core.callbacks.SwipeAdapter
+import com.smart.resources.schools_app.core.extentions.hide
+import com.smart.resources.schools_app.core.extentions.show
 
 @BindingAdapter("mine:setStars")
 fun setStars(ratingBar:  RatingBar, stars:Int?){
@@ -37,6 +40,19 @@ fun RecyclerView.setSwipeToDelete(swipeListener: SwipeListener, headersCount:Int
 }
 
 
+@BindingAdapter("android:visible")
+fun View.setVisible(visible: Boolean?){
+    if(visible == true){
+        show()
+    }else{
+        hide()
+    }
+}
 
-
+@BindingAdapter("android:radioGroupReadOnly")
+fun RadioGroup.setRadioGroupReadOnly(readOnly: Boolean?){
+    children.forEach {
+        it.isClickable= readOnly==false
+    }
+}
 
