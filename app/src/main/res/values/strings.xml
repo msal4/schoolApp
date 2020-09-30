@@ -24,8 +24,8 @@
     <string name="no_homework">لا توجد واجبات</string>
     <string name="connection_error">خطأ في الاتصال!</string>
     <string name="error">خطأ %1$s!</string>
-    <string name="questionsOfSubject">اسئلة %1$s</string>
-    <string name="numberOfQuestions">%1$d سؤال</string>
+    <string name="questions_subject">اسئلة %1$s</string>
+    <string name="questions_number">%1$d سؤال</string>
     <string name="durationInMinutes">%1$d دقيقة</string>
     <string name="field_required">هذا الحقل مطلوب!</string>
     <string name="wrong_login_info">رقم الهاتف او كلمة السر غير صحيحة!</string>

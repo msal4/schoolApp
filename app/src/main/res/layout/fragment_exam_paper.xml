@@ -51,12 +51,13 @@
             android:layout_height="wrap_content"
             android:alpha="0.87"
             android:fontFamily="@font/monadi"
-            android:text="اسئلة رياضيات"
+            android:text="@{String.format(@string/questions_subject, model.onlineExam.subjectName)}"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/paperHolesGuideLine" />
+            app:layout_constraintTop_toTopOf="@id/paperHolesGuideLine"
+            tools:text="اسئلة رياضيات"/>
 
         <TextView
             android:id="@+id/remainingQuestionsTitle"

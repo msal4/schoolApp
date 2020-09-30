@@ -18,7 +18,7 @@ fun setMark(tv: TextView, mark: Int?) {
 
 @BindingAdapter("android:numberOfQuestions")
 fun TextView.setNumberOfQuestions(numberOfQuestions: Int?) {
-    text = context.getString(R.string.numberOfQuestions, numberOfQuestions ?: 0)
+    text = context.getString(R.string.questions_number, numberOfQuestions ?: 0)
 }
 
 @BindingAdapter("android:durationInMinutes")
