@@ -6,10 +6,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.extentions.withEngNums
+import com.smart.resources.schools_app.core.extentions.replaceArNumbersWithEn
 import com.smart.resources.schools_app.core.myTypes.*
-import com.smart.resources.schools_app.features.profile.StudentModel
-import com.smart.resources.schools_app.features.profile.TeacherModel
+import com.smart.resources.schools_app.features.users.data.StudentModel
+import com.smart.resources.schools_app.features.users.data.TeacherModel
 import com.smart.resources.schools_app.features.users.data.UserAccount
 import com.smart.resources.schools_app.features.users.data.UserRepository
 import kotlinx.coroutines.Dispatchers.Main
@@ -49,8 +49,8 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             }
 
         viewModelScope.launch {
-            val phone = phoneNumber.toString().withEngNums()
-            val pass = password.toString().withEngNums()
+            val phone = phoneNumber.toString().replaceArNumbersWithEn()
+            val pass = password.toString().replaceArNumbersWithEn()
 
             when (val token = getToken(userType, phone, pass)) {
                 is Success -> {

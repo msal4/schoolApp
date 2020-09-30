@@ -3,7 +3,7 @@ package com.smart.resources.schools_app.core.typeConverters.room
 import androidx.room.TypeConverter
 
 enum class OnlineExamStatus {
-    LOCKED,
+    INACTIVE,
     COMPLETED,
     ACTIVE,
 }

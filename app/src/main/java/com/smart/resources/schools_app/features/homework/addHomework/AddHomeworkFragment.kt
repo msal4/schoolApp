@@ -23,7 +23,7 @@ import com.smart.resources.schools_app.core.myTypes.PostListener
 import com.smart.resources.schools_app.databinding.FragmentAddHomeworkBinding
 import com.smart.resources.schools_app.features.homework.HomeworkViewModel
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
-import com.smart.resources.schools_app.features.profile.TeacherModel
+import com.smart.resources.schools_app.features.users.data.TeacherModel
 import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.smart.resources.schools_app.features.dateTimePickers.DatePickerFragment
 import com.smart.resources.schools_app.core.activity.SectionActivity
@@ -114,10 +114,7 @@ class AddHomeworkFragment : Fragment(), PostListener {
                 val teacherInfoModel = currentUser?.accessToken?.let { TeacherModel.fromToken(it) }
                 teacherInfoModel?.classesInfo
                     ?.let {
-                        setSpinnerList(
-                            classAndSectionSpinner,
-                            it
-                        )
+                        classAndSectionSpinner.setSpinnerList(it)
                     }
 
                 dateField.setOnClickListener(::onDateClicked)
@@ -133,7 +130,7 @@ class AddHomeworkFragment : Fragment(), PostListener {
             resultCode == Activity.RESULT_OK &&
             data != null
         ) {
-            data.getImage()?.let {
+            data.getImage().let {
                 saveAsCompressedFile(it)
 
                 binding.apply {
@@ -161,7 +158,7 @@ class AddHomeworkFragment : Fragment(), PostListener {
     }
 
     private fun addImage(view: View) {
-        selectImage()
+        openImagePickerApp()
     }
 
     private fun onDateClicked(dateField: View) {

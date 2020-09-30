@@ -13,7 +13,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.smart.resources.schools_app.core.myTypes.Event
 import com.smart.resources.schools_app.core.extentions.GET_IMAGE_REQUEST
 import com.smart.resources.schools_app.core.extentions.getImage
-import com.smart.resources.schools_app.core.extentions.selectImage
+import com.smart.resources.schools_app.core.extentions.openImagePickerApp
 import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.databinding.BottomSheetAnswerHomeworkBinding
 import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
@@ -53,7 +53,7 @@ class AddHomeworkSolutionBottomSheet : BottomSheetDialogFragment() {
         binding = BottomSheetAnswerHomeworkBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = this@AddHomeworkSolutionBottomSheet
             model = viewModel
-            addImageIcon.setOnClickListener { selectImage() }
+            addImageIcon.setOnClickListener { openImagePickerApp() }
         }
 
         return binding.root
@@ -78,7 +78,7 @@ class AddHomeworkSolutionBottomSheet : BottomSheetDialogFragment() {
             resultCode == Activity.RESULT_OK &&
             data != null
         ) {
-            data.getImage()?.let {
+            data.getImage().let {
                 viewModel.saveUri(it)
                 binding.apply {
                     imageAttachment.setImageURI(it)

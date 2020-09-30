@@ -18,4 +18,5 @@ interface OnlineExamsDao {
     @Query("DELETE FROM ${LocalOnlineExam.TABLE_NAME} WHERE onlineExamId = :examId")
     suspend fun remove(examId:String)
 
+
 }

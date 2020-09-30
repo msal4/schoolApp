@@ -13,7 +13,7 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.extentions.setSoftInputMode
 import com.smart.resources.schools_app.core.extentions.setStatusBarColor
 import com.smart.resources.schools_app.core.extentions.setStatusBarColorToWhite
-import com.smart.resources.schools_app.core.extentions.toColorResource
+import com.smart.resources.schools_app.core.extentions.toColor
 import com.smart.resources.schools_app.core.callbacks.ViewPager2Helper
 import com.smart.resources.schools_app.databinding.FragmentQuestionsBinding
 import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnswer
@@ -71,7 +71,7 @@ class QuestionsFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
         super.onDestroy()
         activity?.apply {
             setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-            setStatusBarColor(R.color.colorPrimaryDark.toColorResource(requireContext()))
+            setStatusBarColor(R.color.colorPrimaryDark.toColor(requireContext()))
         }
         (activity as SectionActivity).showToolbar()
     }

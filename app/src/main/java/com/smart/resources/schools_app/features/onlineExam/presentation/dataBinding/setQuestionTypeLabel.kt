@@ -4,8 +4,8 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.extentions.toColorStateList
-import com.smart.resources.schools_app.core.extentions.toStringResource
-import com.smart.resources.schools_app.features.onlineExam.domain.model.QuestionType
+import com.smart.resources.schools_app.core.extentions.toString
+import com.smart.resources.schools_app.core.typeConverters.room.QuestionType
 
 @BindingAdapter("android:questionType")
 fun TextView.setQuestionTypeLabel(questionType: QuestionType){
@@ -13,7 +13,7 @@ fun TextView.setQuestionTypeLabel(questionType: QuestionType){
         QuestionType.NORMAL -> R.string.normal
         QuestionType.CORRECTNESS -> R.string.true_and_false
         QuestionType.MULTI_CHOICE -> R.string.options
-    }.toStringResource(context)
+    }.toString(context)
 
     backgroundTintList = when(questionType){
         QuestionType.NORMAL -> R.color.questionNormalColor

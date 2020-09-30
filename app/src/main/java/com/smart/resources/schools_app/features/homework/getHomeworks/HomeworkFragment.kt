@@ -67,13 +67,13 @@ class HomeworkFragment : Fragment() {
         (activity as SectionActivity).setCustomTitle(R.string.homework)
         setHasOptionsMenu(true)
         if (UserRepository.instance.getCurrentUserAccount()?.userType == 1) {
-            val touchHelper = ItemTouchHelper(SwipeAdapter(::onSwipe))
+            val touchHelper = ItemTouchHelper(SwipeAdapter(onSwiped= ::onSwiped))
             touchHelper.attachToRecyclerView(binding.recyclerView)
         }
         return binding.root
     }
 
-    private fun onSwipe(viewHolder: RecyclerView.ViewHolder) {
+    private fun onSwiped(viewHolder: RecyclerView.ViewHolder) {
         viewModel.deleteHomework(viewHolder.adapterPosition)
     }
 

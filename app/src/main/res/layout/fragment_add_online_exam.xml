@@ -4,15 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <variable
-            name="postModel"
-            type="com.smart.resources.schools_app.features.homework.PostHomeworkModel" />
-
-        <variable
-            name="e"
-            type="com.smart.resources.schools_app.core.myTypes.PostException" />
-
         <variable
             name="model"
             type="com.smart.resources.schools_app.features.onlineExam.domain.viewModel.AddOnlineExamViewModel" />
@@ -20,6 +11,7 @@
 
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layoutDirection="rtl">
@@ -38,7 +30,27 @@
                     android:id="@+id/constraintLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="24dp">
+                    android:padding="24dp"
+                    >
+
+                    <com.tiper.MaterialSpinner
+                        android:id="@+id/subjectsSpinner"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusableInTouchMode="false"
+                        android:gravity="start"
+                        android:hint="@string/subject"
+                        android:minHeight="60dp"
+                        android:errorMsg="@{model.showErrors?model.subjectErrorMsg:null}"
+                        android:setList="@{model.subjectsList}"
+                        android:selectedItem="@={model.examSubjectIndex}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/examDateLayout"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        android:layout_marginBottom="@dimen/fields_spacing"/>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/examDateLayout"
@@ -47,14 +59,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="@dimen/fields_spacing"
-                        android:errorMsg="@{e.dateMsg}"
                         android:focusable="false"
+                        android:errorMsg="@{model.showErrors?model.examDateErrorMsg:null}"
                         app:layout_constraintBottom_toTopOf="@id/examDurationText"
                         app:layout_constraintEnd_toStartOf="@id/examTimeLayout"
                         app:layout_constraintHorizontal_weight="4"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_chainStyle="packed">
+                        app:layout_constraintTop_toBottomOf="@id/subjectsSpinner">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/dateField"
@@ -65,7 +76,8 @@
                             android:hint="@string/date"
                             android:inputType="date"
                             android:setDate="@={model.examDate}"
-                            android:showDatePickerOnClick="@{true}" />
+                            android:showDatePickerOnClick="@{true}"
+                            android:layout_marginBottom="@dimen/errorMsgSpacing"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -74,8 +86,8 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:errorMsg="@{e.dateMsg}"
                         android:focusable="false"
+                        android:errorMsg="@{model.showErrors?model.examTimeErrorMsg:null}"
                         app:layout_constraintBottom_toBottomOf="@+id/examDateLayout"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_weight="3"
@@ -92,7 +104,8 @@
                             android:hint="@string/time"
                             android:inputType="date"
                             android:setTime="@={model.examTime}"
-                            android:showTimePickerOnClick="@{true}" />
+                            android:showTimePickerOnClick="@{true}"
+                            android:layout_marginBottom="@dimen/errorMsgSpacing"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -117,12 +130,13 @@
                         android:layoutDirection="ltr"
                         android:padding="0dp"
                         android:progress="250"
+                        android:progressValue="@{model.examDurationInMinutes}"
                         app:layout_constraintBottom_toTopOf="@id/examKeyLayout"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintTop_toBottomOf="@id/examDurationText"
                         app:picker_max="999"
-                        app:picker_min="0"
+                        app:picker_min="1"
                         app:picker_orientation="horizontal"
                         app:picker_stepSize="5"
                         app:picker_tracker="exponential" />
@@ -147,13 +161,13 @@
                         android:layoutDirection="ltr"
                         android:padding="0dp"
                         android:progress="1"
+                        android:progressValue="@{model.numberOfRequiredQuestions}"
                         app:layout_constraintBottom_toBottomOf="@+id/durationNumberPicker"
                         app:layout_constraintEnd_toEndOf="@id/requiredQuestionsText"
                         app:layout_constraintTop_toTopOf="@+id/durationNumberPicker"
-                        app:picker_max="999"
                         app:picker_min="1"
                         app:picker_orientation="horizontal"
-                        app:picker_stepSize="5"
+                        app:picker_stepSize="1"
                         app:picker_tracker="exponential" />
 
 
@@ -174,7 +188,9 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/key"
                             android:inputType="textMultiLine"
-                            android:text="@={postModel.note}" />
+                            android:text="@={model.examKey}"
+                            android:errorMsg="@{model.showErrors?model.examKeyErrorMsg:null}"
+                            />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -195,15 +211,14 @@
                         android:id="@+id/simpleQuestionsRecycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:headersCount="@{1}"
                         android:nestedScrollingEnabled="false"
-                        android:extraItemsCount="@{1}"
                         android:swipeToDelete="@{model.removeQuestion}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/divider"
-                        tools:layout_editor_absoluteX="24dp"
                         tools:listitem="@layout/item_question" />
 
 

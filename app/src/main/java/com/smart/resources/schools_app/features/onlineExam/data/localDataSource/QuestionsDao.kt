@@ -15,16 +15,9 @@ interface QuestionsDao {
     fun getExamQuestions(examId:String): Flow<List<LocalQuestion>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(question: LocalQuestion)
+    suspend fun insert(vararg question: LocalQuestion)
 
-//    @Query("SELECT * FROM UserAccount WHERE uid = :userId")
-//    fun getUserById(userId: String): UserAccount
-//
-//
-//    @Query("UPDATE UserAccount SET img = :newImg WHERE uid = :id")
-//    suspend fun updateImg(id:String,newImg:String)
-//
-//    @Query("DELETE FROM UserAccount WHERE uid=:id")
-//    suspend fun deleteUserById(id: String)
+    @Query("DELETE FROM ${LocalQuestion.TABLE_NAME} WHERE onlineExamId = :examId")
+    suspend fun removeExamQuestions(examId:String)
 
 }

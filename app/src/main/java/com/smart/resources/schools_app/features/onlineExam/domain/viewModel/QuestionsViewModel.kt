@@ -9,7 +9,7 @@ typealias ListOfAnswerableQuestions = List<BaseAnswerableQuestion<out Any>>
 
 class QuestionsViewModel(val onlineExam: OnlineExam) : ViewModel(), CanLogout {
 
-    private val _questions:MutableLiveData<ListOfAnswerableQuestions> = MutableLiveData(dummyQuestions)
+    private val _questions:MutableLiveData<ListOfAnswerableQuestions> = MutableLiveData(dummyAnswerableQuestions)
     val questions: LiveData<ListOfAnswerableQuestions> = _questions
     val solvedQuestions = questions.switchMap {
         questions.map { it.map { q -> q.answer!=null } }
@@ -39,7 +39,7 @@ class QuestionsViewModelFactory(
 }
 
 
-private val dummyQuestions:MutableList<BaseAnswerableQuestion<out Any>> = mutableListOf(
+private val dummyAnswerableQuestions:MutableList<BaseAnswerableQuestion<out Any>> = mutableListOf(
     AnswerableQuestion(
         questionId = "0",
         question = " ما هو الحيوان الذي إن تم قطع رجل من أرجله تنمو مجدداً؟",

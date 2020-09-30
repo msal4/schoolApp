@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.bindingAdapters.setAccountImage
-import com.smart.resources.schools_app.core.extentions.decodeToken
+import com.smart.resources.schools_app.core.extentions.decodeTokenBody
 import com.smart.resources.schools_app.databinding.ActivityHomeBinding
 import com.smart.resources.schools_app.features.profile.ProfileActivity
 import com.smart.resources.schools_app.core.myTypes.Section
@@ -54,7 +54,7 @@ class HomeActivity : AppCompatActivity() {
     private fun setSchoolName(){
         UserRepository.instance.getCurrentUserAccount()?.apply {
             try {
-                JSONObject(accessToken.decodeToken()).getString("schoolName").apply {
+                JSONObject(accessToken.decodeTokenBody()).getString("schoolName").apply {
                     binding.schoolName.text = this
                 }
             }catch (e:Exception){

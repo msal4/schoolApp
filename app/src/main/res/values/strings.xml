@@ -66,7 +66,7 @@
     <string name="advertising">الاعلانات</string>
     <string name="no_advertisements">لا توجد اعلانات</string>
     <string name="no_rating">لا توجد تقييمات</string>
-    <string name="role">الدور</string>e
+    <string name="role">الدور</string>
     <string name="subjects">المواد</string>
     <string name="notes">ملاحظات</string>
     <string name="homework_image_content_desc">صورة الواجب</string>
@@ -118,8 +118,13 @@
     <string name="send_icon_description">ايقونة الارسال</string>
     <string name="duration_in_minutes">الفترة (بالدقائق)</string>
     <string name="required_questions">الاسئلة المطلوبة</string>
-    <string name="key">المفتاح</string>
+    <string name="key">الرمز</string>
     <string name="tag_add_question_fragment">addQuestionFragmentTag</string>
     <string name="empty_options_error_msg">يرجى اضافة اختيار على الاقل عن طريق كتابة الاختيار على سطر جديد!</string>
+    <string name="subject_not_selected_error">يرجى اختيار المادة!</string>
+    <string name="empty_exam_date_error">يرجى اختيار تاريخ الامتحان!</string>
+    <string name="empty_exam_time_error">يرجى اختيار وقت الامتحان!</string>
+    <string name="empty_exam_key_error">يرجى كتابة رمز الامتحان!</string>
+    <string name="empty_questions_error">يرجى اضافة سؤال!</string>
 
 </resources>

@@ -6,21 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.extentions.hide
 import com.smart.resources.schools_app.core.extentions.show
-import com.smart.resources.schools_app.core.extentions.showKeyboard
-import com.smart.resources.schools_app.core.extentions.toast
+import com.smart.resources.schools_app.core.extentions.openKeyboard
+import com.smart.resources.schools_app.core.typeConverters.room.QuestionType
 import com.smart.resources.schools_app.databinding.FragmentAddQuestionBinding
 import com.smart.resources.schools_app.features.onlineExam.domain.model.Question
-import com.smart.resources.schools_app.features.onlineExam.domain.model.QuestionType
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.AddQuestionViewModel
-import kotlinx.android.synthetic.main.item_question.*
-import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
-import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
 
 class AddQuestionFragment : Fragment() {
     private lateinit var binding: FragmentAddQuestionBinding
@@ -87,7 +82,7 @@ class AddQuestionFragment : Fragment() {
     }
 
     fun show() {
-        requireContext().showKeyboard()
+        requireContext().openKeyboard()
         binding.questionField.requestFocus()
     }
 

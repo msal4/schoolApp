@@ -21,12 +21,13 @@ fun Activity.setStatusBarColorToWhite(view: View) {
 }
 
 fun Activity.setStatusBarColor(@ColorInt color: Int) {
-    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-    window.statusBarColor = color
+    window.apply {
+        addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        statusBarColor = color
+    }
 }
 
 fun Activity.setSoftInputMode(softInputMode: Int) {
     window.setSoftInputMode(softInputMode)
-
 }
 

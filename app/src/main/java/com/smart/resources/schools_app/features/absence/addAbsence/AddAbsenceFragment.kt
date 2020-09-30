@@ -8,17 +8,17 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.observe
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.bindingAdapters.setSpinnerList
-import com.smart.resources.schools_app.core.myTypes.PostListener
 import com.smart.resources.schools_app.core.extentions.hide
 import com.smart.resources.schools_app.core.extentions.show
-import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.extentions.showSnackBar
+import com.smart.resources.schools_app.core.myTypes.PostListener
 import com.smart.resources.schools_app.databinding.FragmentAddAbsenceBinding
 import com.smart.resources.schools_app.features.absence.AddAbsenceModel
-import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
-import com.smart.resources.schools_app.features.profile.TeacherModel
+import com.smart.resources.schools_app.features.users.data.TeacherModel
+import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.tiper.MaterialSpinner
 
 class AddAbsenceFragment : Fragment(), MaterialSpinner.OnItemSelectedListener, PostListener {
@@ -26,18 +26,23 @@ class AddAbsenceFragment : Fragment(), MaterialSpinner.OnItemSelectedListener, P
     private lateinit var adapter: AddAbsenceRecyclerAdapter
     private lateinit var toolbarProgressBar: ProgressBar
     private lateinit var saveMenuItem: MenuItem
-    private val viewModel: AddAbsenceViewModel by activityViewModels{
+    private val viewModel: AddAbsenceViewModel by activityViewModels {
         AddAbsenceViewModel.Factory(requireActivity().application, this)
     }
 
     companion object {
 
-        fun newInstance(fm:FragmentManager){
+        fun newInstance(fm: FragmentManager) {
 
-            val fragment=
+            val fragment =
                 AddAbsenceFragment()
-                fm.beginTransaction().apply {
-                setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,R.anim.slide_in_left, R.anim.slide_out_right)
+            fm.beginTransaction().apply {
+                setCustomAnimations(
+                    R.anim.slide_in_right,
+                    R.anim.slide_out_left,
+                    R.anim.slide_in_left,
+                    R.anim.slide_out_right
+                )
                 add(R.id.fragmentContainer, fragment)
                 commit()
             }
@@ -54,11 +59,10 @@ class AddAbsenceFragment : Fragment(), MaterialSpinner.OnItemSelectedListener, P
         setHasOptionsMenu(true)
         (activity as SectionActivity).apply {
             setCustomTitle(R.string.add_absence)
-            toolbarProgressBar= getToolbarProgressBar()
+            toolbarProgressBar = getToolbarProgressBar()
         }
         return binding.root
     }
-
 
 
     private fun setupBinding(
@@ -71,26 +75,21 @@ class AddAbsenceFragment : Fragment(), MaterialSpinner.OnItemSelectedListener, P
 
                 // setup recycler
                 recyclerViewLoader.apply {
-                    adapter= AddAbsenceRecyclerAdapter()
+                    adapter = AddAbsenceRecyclerAdapter()
                     recyclerView.adapter = adapter
                 }
 
                 // setup spinner
-                val currentUser=
+                val currentUser =
                     UserRepository.instance.getCurrentUserAccount()
                 if (currentUser != null) {
-                    if(currentUser.userType==1) {
-                        val teacherInfoModel= currentUser.accessToken?.let { TeacherModel.fromToken(it) }
+                    if (currentUser.userType == 1) {
+                        val teacherInfoModel =
+                            currentUser.accessToken?.let { TeacherModel.fromToken(it) }
                         teacherInfoModel?.let {
-                            setSpinnerList(
-                                classAndSectionSpinner,
-                                it.classesInfo
-                            )
+                            classAndSectionSpinner.setSpinnerList(it.classesInfo)
                             classAndSectionSpinner.onItemSelectedListener = this@AddAbsenceFragment
-                            setSpinnerList(
-                                subjectsSpinner,
-                                it.subjects
-                            )
+                            subjectsSpinner.setSpinnerList(it.subjects)
                             subjectsSpinner.onItemSelectedListener = this@AddAbsenceFragment
                         }
                     }
@@ -103,20 +102,20 @@ class AddAbsenceFragment : Fragment(), MaterialSpinner.OnItemSelectedListener, P
 
     private fun setupViewModel() {
         viewModel.apply {
-                binding.viewState = listState
-                binding.exception= addAbsenceException
-                addAbsenceModels.observe(viewLifecycleOwner, ::onStudentsDownloadCompleted)
-            }
-    }
-
-
-    private fun onStudentsDownloadCompleted(students: List<AddAbsenceModel>?){
-        students?.let {
-           adapter.updateData(it)
+            binding.viewState = listState
+            binding.exception = addAbsenceException
+            addAbsenceModels.observe(viewLifecycleOwner, ::onStudentsDownloadCompleted)
         }
     }
 
-    override fun onUploadCompleted(){
+
+    private fun onStudentsDownloadCompleted(students: List<AddAbsenceModel>?) {
+        students?.let {
+            adapter.updateData(it)
+        }
+    }
+
+    override fun onUploadCompleted() {
         setToolbarLoading(false)
         adapter.uncheckAll()
         binding.linearLayout.showSnackBar(getString(R.string.done_successfully), false)
@@ -127,30 +126,30 @@ class AddAbsenceFragment : Fragment(), MaterialSpinner.OnItemSelectedListener, P
     }
 
     private fun setToolbarLoading(isLoading: Boolean) {
-        if(isLoading){
+        if (isLoading) {
             toolbarProgressBar.show()
             saveMenuItem.isVisible = false
-        }else{
+        } else {
             toolbarProgressBar.hide()
             saveMenuItem.isVisible = true
         }
     }
 
-    override fun onError(errorMsg:String){
+    override fun onError(errorMsg: String) {
         setToolbarLoading(false)
         binding.linearLayout.showSnackBar(errorMsg)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_save_btn, menu)
-        saveMenuItem= menu.findItem(R.id.saveMenuItem)
+        saveMenuItem = menu.findItem(R.id.saveMenuItem)
 
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.saveMenuItem->{
+        when (item.itemId) {
+            R.id.saveMenuItem -> {
                 viewModel.addAbsences()
             }
         }
@@ -158,12 +157,12 @@ class AddAbsenceFragment : Fragment(), MaterialSpinner.OnItemSelectedListener, P
     }
 
     override fun onItemSelected(parent: MaterialSpinner, view: View?, position: Int, id: Long) {
-        if(parent.selectedItem is ClassInfoModel){
+        if (parent.selectedItem is ClassInfoModel) {
             adapter.clearData()
-            val classId= (parent.selectedItem as ClassInfoModel).classId.toString()
-            viewModel.classId.value=  classId
-        }else if(parent.selectedItem is String){
-            viewModel.postAbsenceModel.subjectName= parent.selectedItem as String
+            val classId = (parent.selectedItem as ClassInfoModel).classId.toString()
+            viewModel.classId.value = classId
+        } else if (parent.selectedItem is String) {
+            viewModel.postAbsenceModel.subjectName = parent.selectedItem as String
         }
     }
 

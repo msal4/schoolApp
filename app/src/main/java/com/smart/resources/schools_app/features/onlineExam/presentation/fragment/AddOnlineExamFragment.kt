@@ -7,23 +7,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.callbacks.SwipeAdapter
-import com.smart.resources.schools_app.core.extentions.toStringResource
+import com.smart.resources.schools_app.core.abstractTypes.LoadableActionMenuItemFragment
+import com.smart.resources.schools_app.core.activity.SectionActivity
+import com.smart.resources.schools_app.core.extentions.showSnackBar
+import com.smart.resources.schools_app.core.extentions.toString
 import com.smart.resources.schools_app.databinding.FragmentAddOnlineExamBinding
 import com.smart.resources.schools_app.features.onlineExam.domain.model.Question
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.AddOnlineExamViewModel
 import com.smart.resources.schools_app.features.onlineExam.presentation.adapter.QuestionsQuickAdapter
-import com.smart.resources.schools_app.core.abstractTypes.LoadableActionMenuItemFragment
-import com.smart.resources.schools_app.core.activity.SectionActivity
+import dagger.hilt.android.AndroidEntryPoint
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
 
-
+@AndroidEntryPoint
 class AddOnlineExamFragment : LoadableActionMenuItemFragment() {
     private lateinit var binding: FragmentAddOnlineExamBinding
     private val viewModel: AddOnlineExamViewModel by viewModels()
@@ -60,7 +59,7 @@ class AddOnlineExamFragment : LoadableActionMenuItemFragment() {
 
     private fun findAddQuestionFragment(): AddQuestionFragment? {
         val fragmentTag = R.string.tag_add_question_fragment
-            .toStringResource(requireContext())
+            .toString(requireContext())
         val fragment = childFragmentManager.findFragmentByTag(fragmentTag)
         return if (fragment is AddQuestionFragment) {
             fragment
@@ -70,23 +69,17 @@ class AddOnlineExamFragment : LoadableActionMenuItemFragment() {
         }
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = FragmentAddOnlineExamBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = this@AddOnlineExamFragment
             model = viewModel
             adapter = QuestionsQuickAdapter()
-
             simpleQuestionsRecycler.adapter = adapter
-            viewModel.questions.observe(viewLifecycleOwner) {
-                adapter.setDiffNewData(it.toMutableList())
-            }
 
-
+            setupObservers()
             addQuestionFab.setOnClickListener(::onFabPressed)
         }
         registerKeyboardListener()
@@ -94,13 +87,39 @@ class AddOnlineExamFragment : LoadableActionMenuItemFragment() {
         return binding.root
     }
 
+    private fun setupObservers() {
+        viewModel.apply {
+            questions.observe(viewLifecycleOwner) {
+                adapter.setDiffNewData(it.toMutableList())
+            }
+
+            isLoading.observe(viewLifecycleOwner) {
+                it.getContentIfNotHandled()?.let { isLoading ->
+                    setToolbarLoading(isLoading)
+                }
+            }
+
+            errorMsgEvent.observe(viewLifecycleOwner) {
+                it.getContentIfNotHandled()?.let { errorMsgId ->
+                    val errorMsg= errorMsgId.toString(requireContext())
+                    binding.coordinatorLayout.showSnackBar(errorMsg)
+                }
+            }
+
+            examAddedEvent.observe(viewLifecycleOwner) {
+                it.getContentIfNotHandled()?.let { examAdded ->
+                    if(examAdded && isAdded){
+                        parentFragmentManager.popBackStack()
+                    }
+                }
+            }
+        }
+    }
+
     private fun onQuestionAdded(question: Question) {
         viewModel.addQuestion(question)
     }
 
-    private fun onItemSwiped(viewHolder: RecyclerView.ViewHolder) {
-        viewModel.removeQuestion(viewHolder.adapterPosition - adapter.headerLayoutCount)
-    }
 
     private fun onFabPressed(view: View) {
         binding.addQuestionFab.hide(
@@ -116,7 +135,7 @@ class AddOnlineExamFragment : LoadableActionMenuItemFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.saveMenuItem -> {
-                setToolbarLoading(true)
+                viewModel.addOnlineExam()
             }
         }
 

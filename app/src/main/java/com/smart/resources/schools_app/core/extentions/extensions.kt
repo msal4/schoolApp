@@ -15,7 +15,7 @@ import java.io.File
 import java.nio.charset.StandardCharsets
 
 
-fun String.decodeToken(): String {
+fun String.decodeTokenBody(): String {
     val splitString = this.split('.')
 //    val base64EncodedHeader = splitString[0]
     val base64EncodedBody = splitString[1]
@@ -45,7 +45,7 @@ fun String?.isImage() = (this != null && (this.toLowerCase().endsWith(".jpg") ||
 fun String?.isPdf(): Boolean = this?.toLowerCase()?.endsWith(".pdf") ?: false
 
 
-fun String.withEngNums() = this
+fun String.replaceArNumbersWithEn() = this
     .replace('٠', '0')
     .replace('١', '1')
     .replace('٢', '2')
@@ -76,3 +76,17 @@ fun <T> MutableLiveData<T>.notifyObservers() {
 /// fixes bidirectional text
 fun String.toUnicodeString(): String = BidiFormatter.getInstance().unicodeWrap(this)
 
+fun String?.isNotNullOrBlank ()= !isNullOrBlank()
+fun List<Any>?.isNotNullOrEmpty ()= !isNullOrEmpty()
+
+/**
+ * validate an integer to be:
+ *
+ * 1- not null
+ *
+ * 2- more than > -1
+ *
+ * 3- less than < max
+ *
+ */
+fun Int?.isValidIndex (max:Int= Integer.MAX_VALUE)= this!=null && this > -1 && this < max

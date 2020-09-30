@@ -11,7 +11,7 @@
 
     <color name="green_a200">#69F0AE</color>
     <color name="lightRed">#DE6865</color>
-    <color name="darkRed">#C80400</color>
+    <color name="darkRed">#EA3A3A</color>
 
     <color name="shadowColor">#40000000</color>
     <color name="white">#FFFFFF</color>
@@ -31,4 +31,6 @@
     <color name="questionNormalColor">@color/orange_200_alpha_87</color>
     <color name="questionCorrectnessColor">@color/red_a100_alpha_87</color>
     <color name="questionMultiChoiceColor">@color/pink_a100_alpha_87</color>
+
+    <color name="blue_a200">#203051</color>
 </resources>

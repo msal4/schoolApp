@@ -5,26 +5,28 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.databinding.BindingAdapter
 import com.google.android.material.textfield.TextInputLayout
-import com.smart.resources.schools_app.core.extentions.toStringResource
+import com.smart.resources.schools_app.core.extentions.toString
 
-@BindingAdapter("android:errorMsg")
+private const val EDIT_TEXT_ERROR_MSG_ATTRIBUTE="android:errorMsg"
+
+@BindingAdapter(EDIT_TEXT_ERROR_MSG_ATTRIBUTE)
 fun setEditTextErrorMsg(editText: EditText, errorMsg:String?){
     editText.error= errorMsg
 }
 
-@BindingAdapter("android:errorMsg")
+@BindingAdapter(EDIT_TEXT_ERROR_MSG_ATTRIBUTE)
 fun EditText.setEditTextError(errorMsgId:Int?){
-   error= errorMsgId?.toStringResource(context)
+   error= errorMsgId?.toString(context)
 }
 
 
-@BindingAdapter("android:errorMsg")
-fun setInputLayoutError(inputLayout: TextInputLayout, errorMsg:String?){
-    inputLayout.error= errorMsg
+@BindingAdapter(EDIT_TEXT_ERROR_MSG_ATTRIBUTE)
+fun TextInputLayout.setInputLayoutError(errorMsg:String?){
+    error= errorMsg
 }
 
-@BindingAdapter("android:errorMsg")
-fun TextInputLayout.setEditTextError(errorMsgId:Int?){
+@BindingAdapter(EDIT_TEXT_ERROR_MSG_ATTRIBUTE)
+fun TextInputLayout.setInputLayoutError(errorMsgId:Int?){
     if(errorMsgId == null && error == null) return
 
     val layout= rootView
@@ -32,5 +34,5 @@ fun TextInputLayout.setEditTextError(errorMsgId:Int?){
         TransitionManager.beginDelayedTransition(layout)
     }
     isErrorEnabled= errorMsgId != null
-    error= errorMsgId?.toStringResource(context)
+    error= errorMsgId?.toString(context)
 }

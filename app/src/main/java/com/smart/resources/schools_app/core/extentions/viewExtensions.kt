@@ -49,7 +49,7 @@ val Context.activity: AppCompatActivity? get() {
     return null
 }
 
-fun Context.showKeyboard(){
+fun Context.openKeyboard(){
     val imm: InputMethodManager? =
         getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
     imm?.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
@@ -67,7 +67,7 @@ fun ViewGroup.showSnackBar(msg: String, isError: Boolean = true) {
     val snackBar = Snackbar.make(this, msg, Snackbar.LENGTH_LONG)
     val snackView: ViewGroup = snackBar.view as ViewGroup
     snackView.layoutDirection = View.LAYOUT_DIRECTION_RTL
-    snackView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDark))
+    snackView.setBackgroundColor(ContextCompat.getColor(context, R.color.blue_a200))
     (snackView[0] as ViewGroup).forEach {
         Logger.i("type " + it.javaClass.name)
         if (it is TextView) {
@@ -106,12 +106,9 @@ fun TextView.applyGradient(@ColorInt vararg colors: Int) {
 
 fun Window.hideSystemUi() {
     decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE
-            // Set the content to appear under the system bars so that the
-            // content doesn't resize when the system bars hide and show.
             or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
             or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            // Hide the nav bar and status bar
             or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
             or View.SYSTEM_UI_FLAG_FULLSCREEN)
 }

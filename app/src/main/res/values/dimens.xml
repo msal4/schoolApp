@@ -41,4 +41,5 @@
     <dimen name="fields_spacing">16dp</dimen>
     <dimen name="number_picker_width">120dp</dimen>
     <dimen name="bottom_sheet_elevation">12dp</dimen>
+    <dimen name="errorMsgSpacing">2dp</dimen>
 </resources>

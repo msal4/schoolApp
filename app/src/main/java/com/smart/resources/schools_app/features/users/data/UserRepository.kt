@@ -1,9 +1,6 @@
 package com.smart.resources.schools_app.features.users.data
 
 import com.smart.resources.schools_app.core.utils.SharedPrefHelper
-import com.smart.resources.schools_app.features.profile.StudentModel
-import com.smart.resources.schools_app.features.profile.TeacherModel
-import com.smart.resources.schools_app.features.profile.UserModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch

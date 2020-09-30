@@ -1,6 +1,6 @@
-package com.smart.resources.schools_app.features.profile
+package com.smart.resources.schools_app.features.users.data
 
-import com.smart.resources.schools_app.core.extentions.decodeToken
+import com.smart.resources.schools_app.core.extentions.decodeTokenBody
 import com.smart.resources.schools_app.core.utils.RetrofitHelper
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.Period
@@ -30,7 +30,7 @@ abstract class UserModel(
     companion object Factory {
         fun <T : UserModel> fromToken(classType: Class<T>, accessToken: String): T? {
             return try {
-                val body = accessToken.decodeToken()
+                val body = accessToken.decodeTokenBody()
                 val gson = RetrofitHelper.gson
                 gson.fromJson(body, classType)
             } catch (e: Exception) {

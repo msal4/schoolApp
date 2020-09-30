@@ -65,7 +65,7 @@ class AccountsDialog : DialogFragment(), CanLogout,
         binding = DialogAccountsBinding.inflate(inflater, container, false)
         setupUsers()
 
-        val touchHelper = ItemTouchHelper(SwipeAdapter(::onSwipe))
+        val touchHelper = ItemTouchHelper(SwipeAdapter(onSwiped= ::onSwiped))
         touchHelper.attachToRecyclerView(binding.accountsRecycler)
 
 
@@ -93,7 +93,7 @@ class AccountsDialog : DialogFragment(), CanLogout,
     }
 
 
-    private fun onSwipe(viewHolder: RecyclerView.ViewHolder) {
+    private fun onSwiped(viewHolder: RecyclerView.ViewHolder) {
         if (viewHolder is AccountsRecyclerAdapter.MyViewHolder) {
             viewHolder.binding.itemModel?.uid?.let {
                 accountsManager.deleteUser(it)

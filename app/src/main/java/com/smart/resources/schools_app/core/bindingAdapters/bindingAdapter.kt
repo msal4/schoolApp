@@ -1,10 +1,11 @@
 package com.smart.resources.schools_app.core.bindingAdapters
 
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.RatingBar
+import android.widget.*
 import androidx.core.view.children
+import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.BindingAdapter
+import androidx.databinding.InverseBindingAdapter
+import androidx.databinding.InverseBindingListener
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.core.callbacks.SwipeAdapter
@@ -25,10 +26,17 @@ fun interface SwipeListener{
     fun onSwiped(position:Int)
 }
 
-@BindingAdapter("android:swipeToDelete", "android:extraItemsCount", requireAll = false)
-fun RecyclerView.setSwipeToDelete(swipeListener: SwipeListener, extraItemsCount:Int?=0){
-    val swipeAdapter = SwipeAdapter {
-        swipeListener.onSwiped(it.adapterPosition - (extraItemsCount?:0))
+@BindingAdapter("android:swipeToDelete", "android:headersCount", requireAll = false)
+fun RecyclerView.setSwipeToDelete(swipeListener: SwipeListener, headersCount:Int?=0){
+    val fixedPositions= if(headersCount!=null) (0 until headersCount).toList() else emptyList()
+
+    val swipeAdapter = SwipeAdapter(fixedPositions) {
+        swipeListener.onSwiped(it.adapterPosition - (headersCount?:0))
     }
     ItemTouchHelper(swipeAdapter).attachToRecyclerView(this)
 }
+
+
+
+
+

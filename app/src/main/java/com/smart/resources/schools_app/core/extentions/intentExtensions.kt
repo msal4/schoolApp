@@ -11,7 +11,7 @@ var GET_IMAGE_REQUEST = 0
 var GET_MULTI_IMAGES_REQUEST = 1
 
 
-fun Activity.selectImage(
+fun Activity.openImagePickerApp(
     multiSelect: Boolean= false,
     neededForLaterUsage: Boolean= false
 ) {
@@ -26,7 +26,7 @@ fun Activity.selectImage(
     )
 }
 
-fun Fragment.selectImage(
+fun Fragment.openImagePickerApp(
     multiSelect: Boolean= false,
     neededForLaterUsage: Boolean= false
 ) {
@@ -54,25 +54,26 @@ private fun getImageIntent(
     return intent
 }
 
-
-fun Intent.getImage(): Uri? {
+fun Intent.getImage(): Uri {
     return getImages()[0]
 }
 
 // NOTE: there is no reliable way to convert Uri into real Path
-fun Intent.getImages(): List<Uri?> {
-    val images: MutableList<Uri?> =
-        ArrayList()
-    if (clipData != null) {
+fun Intent.getImages(): List<Uri> {
+    val images: MutableList<Uri> = ArrayList()
+
+    val imageClipData=  clipData
+    val imageData= data
+
+    if (imageClipData != null) {
         //evaluate the count before the for loop --- otherwise, the count is evaluated every loop.
-        val count = clipData!!.itemCount
+        val count = imageClipData.itemCount
         for (i in 0 until count) {
-            val imageUri = clipData!!.getItemAt(i).uri
+            val imageUri = imageClipData.getItemAt(i).uri
             images.add(imageUri)
         }
-    } else if (data != null) {
-        val imageUri = data
-        images.add(imageUri)
+    } else if (imageData != null) {
+        images.add(imageData)
     }
     return images
 }

@@ -9,18 +9,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.bindingAdapters.setSpinnerList
 import com.smart.resources.schools_app.core.bindingAdapters.textView.setDate
-import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.core.extentions.hide
 import com.smart.resources.schools_app.core.extentions.show
-import com.smart.resources.schools_app.databinding.FragmentAddExamBinding
-import com.smart.resources.schools_app.features.users.data.UserRepository
-import com.smart.resources.schools_app.features.profile.ClassInfoModel
-import com.smart.resources.schools_app.features.profile.TeacherModel
-import com.smart.resources.schools_app.features.dateTimePickers.DatePickerFragment
-import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.extentions.showSnackBar
+import com.smart.resources.schools_app.core.myTypes.PostListener
+import com.smart.resources.schools_app.databinding.FragmentAddExamBinding
+import com.smart.resources.schools_app.features.dateTimePickers.DatePickerFragment
+import com.smart.resources.schools_app.features.profile.ClassInfoModel
+import com.smart.resources.schools_app.features.users.data.TeacherModel
+import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.tiper.MaterialSpinner
 
 class AddExamFragment : Fragment(), PostListener {
@@ -108,7 +108,7 @@ class AddExamFragment : Fragment(), PostListener {
 
     private fun onBackPressed() {
         progressBar.hide()
-        if(isAdded){
+        if (isAdded) {
             parentFragmentManager.popBackStack()
         }
     }
@@ -120,23 +120,21 @@ class AddExamFragment : Fragment(), PostListener {
         binding = FragmentAddExamBinding
             .inflate(inflater, container, false)
             .apply {
-                val currentUser=
+                val currentUser =
                     UserRepository.instance.getCurrentUserAccount()
-                val teacherInfoModel= currentUser?.accessToken?.let { TeacherModel.fromToken(it) }
+                val teacherInfoModel = currentUser?.accessToken?.let { TeacherModel.fromToken(it) }
                 teacherInfoModel?.apply {
-                    setSpinnerList(
-                        classAndSectionSpinner,
+                    classAndSectionSpinner.setSpinnerList(
                         classesInfo
                     )
-                    setSpinnerList(
-                        examTypeSpinner,
+                    examTypeSpinner.setSpinnerList(
                         examType
                     )
                 }
 
                 dateField.setOnClickListener(::onDateClicked)
                 classAndSectionSpinner.onItemSelectedListener = onClassSelected
-                examTypeSpinner.onItemSelectedListener= onExamTypeSelected
+                examTypeSpinner.onItemSelectedListener = onExamTypeSelected
             }
     }
 
@@ -154,19 +152,19 @@ class AddExamFragment : Fragment(), PostListener {
 
     private fun setupViewModel() {
         viewModel.apply {
-                binding.apply {
-                    e= postException
-                    postModel = postExamModel
-                    lifecycleOwner= this@AddExamFragment
-                    listener= this@AddExamFragment
-                }
+            binding.apply {
+                e = postException
+                postModel = postExamModel
+                lifecycleOwner = this@AddExamFragment
+                listener = this@AddExamFragment
             }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_save_btn, menu)
 
-        saveItem= menu.findItem(R.id.saveMenuItem)
+        saveItem = menu.findItem(R.id.saveMenuItem)
         super.onCreateOptionsMenu(menu, inflater)
     }
 

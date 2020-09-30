@@ -2,7 +2,9 @@ package com.smart.resources.schools_app.features.users
 
 import com.smart.resources.schools_app.core.appDatabase.AppDatabase
 import com.smart.resources.schools_app.features.users.data.AccountsDao
+import com.smart.resources.schools_app.features.users.domain.usecase.GetCurrentTeacherDataUseCase
 import com.smart.resources.schools_app.features.users.domain.usecase.GetCurrentUserTypeUseCase
+import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentTeacherDataUseCase
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserTypeUseCase
 import dagger.Binds
 import dagger.Module
@@ -15,7 +17,9 @@ import javax.inject.Singleton
 @InstallIn(ApplicationComponent::class)
 abstract class UsersModule {
     @Binds
-    abstract fun provideGetCurrentUserType(getCurrentUserTypeUseCase: GetCurrentUserTypeUseCase): IGetCurrentUserTypeUseCase
+    abstract fun provideGetCurrentUserTypeUseCase(getCurrentUserTypeUseCase: GetCurrentUserTypeUseCase): IGetCurrentUserTypeUseCase
+    @Binds
+    abstract fun provideGetCurrentTeacherDataUseCase(getCurrentTeacherDataUseCase: GetCurrentTeacherDataUseCase): IGetCurrentTeacherDataUseCase
 
     companion object{
         @Singleton

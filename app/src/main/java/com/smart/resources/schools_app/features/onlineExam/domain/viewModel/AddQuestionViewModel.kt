@@ -7,8 +7,8 @@ import androidx.lifecycle.switchMap
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.Event
+import com.smart.resources.schools_app.core.typeConverters.room.QuestionType
 import com.smart.resources.schools_app.features.onlineExam.domain.model.Question
-import com.smart.resources.schools_app.features.onlineExam.domain.model.QuestionType
 
 class AddQuestionViewModel : ViewModel() {
 

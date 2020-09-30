@@ -5,7 +5,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.hadiyarajesh.flower.Resource
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.extentions.toStringResource
+import com.smart.resources.schools_app.core.extentions.toString
 import com.smart.resources.schools_app.core.myTypes.ListState
 import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
@@ -50,9 +50,9 @@ class OnlineExamViewModel @ViewModelInject constructor(
 //               dummyOnlineExams[2]
 //           )
 //           delay(5000)
-            addOnlineExamsUseCase(
-                *dummyOnlineExams.toTypedArray()
-            )
+//            addOnlineExamsUseCase(
+//                *dummyOnlineExams.toTypedArray()
+//            )
         }
     }
 
@@ -61,7 +61,7 @@ class OnlineExamViewModel @ViewModelInject constructor(
         when (it.status) {
             Resource.Status.SUCCESS -> {
                 if (it.data.isNullOrEmpty()) {
-                    listState.setBodyError(R.string.no_exams.toStringResource(c))
+                    listState.setBodyError(R.string.no_exams.toString(c))
                 } else {
                     listState.setLoading(false)
                 }
@@ -106,7 +106,7 @@ val dummyOnlineExams = listOf(
         LocalDateTime.now(),
         Duration.ofMinutes(300),
         30,
-        OnlineExamStatus.LOCKED,
+        OnlineExamStatus.INACTIVE,
     ),
     OnlineExam(
         "3",

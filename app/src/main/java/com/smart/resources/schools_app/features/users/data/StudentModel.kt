@@ -1,6 +1,7 @@
-package com.smart.resources.schools_app.features.profile
+package com.smart.resources.schools_app.features.users.data
 
 import com.google.gson.annotations.SerializedName
+import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import org.threeten.bp.LocalDateTime
 
 

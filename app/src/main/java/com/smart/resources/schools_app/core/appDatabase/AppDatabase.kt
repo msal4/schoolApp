@@ -24,7 +24,8 @@ import com.smart.resources.schools_app.features.users.data.UserAccount
     DurationToLongConverter::class,
     LocalDateTimeToTimestampConverter::class,
     OnlineExamStatusToIntegerConverter::class,
-    IntegersListToStringConverter::class,
+    QuestionTypeToIntegerConverter::class,
+    StringListToStringConverter::class,
     ]
 )
 abstract class AppDatabase : RoomDatabase() {

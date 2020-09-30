@@ -35,8 +35,12 @@ fun TextView.toLocalDate(): LocalDate {
 fun TextView.setDateChangedListener(
     attrChange: InverseBindingListener
 ) {
+    var prevText= text
     doAfterTextChanged {
-        attrChange.onChange()
+        if(prevText!=text) {
+            prevText= text
+            attrChange.onChange()
+        }
     }
 }
 

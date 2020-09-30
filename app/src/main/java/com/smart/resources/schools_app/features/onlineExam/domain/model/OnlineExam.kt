@@ -16,7 +16,7 @@ data class OnlineExam(
     val examStatus: OnlineExamStatus,
 
     ) : Parcelable {
-    val isLocked get() = examStatus == OnlineExamStatus.LOCKED
+    val isLocked get() = examStatus == OnlineExamStatus.INACTIVE
     val remainingDuration: Duration
         get() {
             val passedDuration = Duration.between(examDate, LocalDateTime.now())

@@ -5,9 +5,9 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 
-class IntegersListToStringConverter {
+class StringListToStringConverter {
     @TypeConverter
-    fun fromString(value: String?): List<Int>? {
+    fun fromString(value: String?): List<String>? {
         if(value !=null) {
             val listType: Type = object : TypeToken<List<Int>>() {}.type
             return Gson().fromJson(value, listType)
@@ -16,7 +16,7 @@ class IntegersListToStringConverter {
     }
 
     @TypeConverter
-    fun toString(list: List<Int>?): String? {
+    fun toString(list: List<String>?): String? {
         if(list == null) return null
         val gson = Gson()
         return gson.toJson(list)

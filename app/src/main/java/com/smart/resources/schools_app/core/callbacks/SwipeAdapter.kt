@@ -4,9 +4,12 @@ import android.graphics.Canvas
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.extentions.toDrawableResource
+import com.smart.resources.schools_app.core.extentions.toDrawable
 
-class SwipeAdapter(val onSwipe: (viewHolder: RecyclerView.ViewHolder) -> Unit) :
+class SwipeAdapter(
+    private val fixedPositions: List<Int> = listOf(),
+    private val onSwiped: (viewHolder: RecyclerView.ViewHolder) -> Unit,
+) :
     ItemTouchHelper.SimpleCallback(
         0,
         ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
@@ -24,8 +27,8 @@ class SwipeAdapter(val onSwipe: (viewHolder: RecyclerView.ViewHolder) -> Unit) :
 
         viewHolder.itemView.apply {
             val mBackground =
-                R.drawable.background_swipe_delete.toDrawableResource(context)//ColorDrawable(R.color.lightRed.toColorResource(itemView.context))
-            val mIcon = R.drawable.ic_delete_white_24dp.toDrawableResource(context)
+                R.drawable.background_swipe_delete.toDrawable(context)//ColorDrawable(R.color.lightRed.toColorResource(itemView.context))
+            val mIcon = R.drawable.ic_delete_white_24dp.toDrawable(context)
             if (mBackground == null || mIcon == null) return
 
             //so mBackground is behind the rounded corners of itemView
@@ -95,9 +98,16 @@ class SwipeAdapter(val onSwipe: (viewHolder: RecyclerView.ViewHolder) -> Unit) :
         direction: Int
     ) { // remove from adapter
 
-        onSwipe(viewHolder)
+        onSwiped(viewHolder)
 
     }
 
+    override fun getSwipeDirs(
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder
+    ): Int {
+        if (fixedPositions.contains(viewHolder.adapterPosition)) return 0 // disable swipe
+        return super.getSwipeDirs(recyclerView, viewHolder)
+    }
 
 }

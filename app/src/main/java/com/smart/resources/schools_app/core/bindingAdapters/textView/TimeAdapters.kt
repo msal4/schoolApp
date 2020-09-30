@@ -9,6 +9,7 @@ import com.smart.resources.schools_app.core.typeConverters.retrofit.timeDisForma
 import com.smart.resources.schools_app.core.extentions.activity
 import com.smart.resources.schools_app.features.dateTimePickers.TimePickerFragment
 import org.threeten.bp.LocalTime
+import java.lang.Exception
 
 private const val SET_TIME_ATTRIBUTE = "android:setTime"
 private const val SHOW_TIME_PICKER_ON_CLICK_ATTRIBUTE = "android:showTimePickerOnClick"
@@ -19,19 +20,27 @@ fun TextView.setTime(time: LocalTime?) {
 }
 
 @InverseBindingAdapter(attribute = SET_TIME_ATTRIBUTE)
-fun TextView.toLocalTime(): LocalTime {
-    return LocalTime.parse(
-        text,
-        timeDisFormatter
-    )
+fun TextView.toLocalTime(): LocalTime? {
+    return  try {
+         LocalTime.parse(
+            text,
+            timeDisFormatter
+        )
+    }catch (e:Exception){
+        null
+    }
 }
 
 @BindingAdapter("${SET_TIME_ATTRIBUTE}AttrChanged")
 fun TextView.setTimeChangedListener(
     attrChange: InverseBindingListener
 ) {
+    var prevText= text
     doAfterTextChanged {
-        attrChange.onChange()
+        if(prevText!=text) {
+            prevText= text
+            attrChange.onChange()
+        }
     }
 }
 @BindingAdapter(SHOW_TIME_PICKER_ON_CLICK_ATTRIBUTE)

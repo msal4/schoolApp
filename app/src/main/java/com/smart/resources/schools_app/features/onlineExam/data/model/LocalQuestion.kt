@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.smart.resources.schools_app.core.typeConverters.room.QuestionType
 
 @Entity(
     tableName = LocalQuestion.TABLE_NAME,
@@ -25,8 +26,8 @@ data class LocalQuestion(
     val questionId: String,
     val onlineExamId: String,
     val questionText: String,
-    val questionType: Int,
-    val options: List<Int>?,
+    val questionType: QuestionType,
+    val options: List<String>?,
 ) {
     companion object {
         const val TABLE_NAME = "Questions"

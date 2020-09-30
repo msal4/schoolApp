@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.typeConverters.room.QuestionType
 import com.smart.resources.schools_app.databinding.ItemQuestionBinding
 import com.smart.resources.schools_app.databinding.ItemQuestionsHeaderBinding
 import com.smart.resources.schools_app.features.onlineExam.domain.model.Question
-import com.smart.resources.schools_app.features.onlineExam.domain.model.QuestionType
 
 class QuestionsQuickAdapter : BaseQuickAdapter<Question, BaseDataBindingHolder<ItemQuestionBinding>>(R.layout.item_question) {
 
