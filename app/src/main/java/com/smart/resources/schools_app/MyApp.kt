@@ -7,6 +7,8 @@ import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.core.utils.AuthorizationInterceptor
 import com.smart.resources.schools_app.core.utils.SharedPrefHelper
 import com.smart.resources.schools_app.features.users.data.UserRepository
+import com.snakydesign.watchtower.WatchTower
+import com.snakydesign.watchtower.interceptor.WebWatchTowerObserver
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
@@ -24,5 +26,6 @@ class MyApp : Application() {
         SharedPrefHelper.instance= sharedPrefHelper // To not break old code
         AuthorizationInterceptor.instance= authorizationInterceptor  // To not break old code
         Logger.addLogAdapter(AndroidLogAdapter())
+        WatchTower.start(WebWatchTowerObserver(port = 8085))
     }
 }

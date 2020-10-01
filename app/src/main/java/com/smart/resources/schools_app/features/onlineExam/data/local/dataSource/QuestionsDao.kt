@@ -1,10 +1,10 @@
-package com.smart.resources.schools_app.features.onlineExam.data.localDataSource
+package com.smart.resources.schools_app.features.onlineExam.data.local.dataSource
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.smart.resources.schools_app.features.onlineExam.data.model.LocalQuestion
+import com.smart.resources.schools_app.features.onlineExam.data.local.model.LocalQuestion
 import kotlinx.coroutines.flow.Flow
 
 @Dao

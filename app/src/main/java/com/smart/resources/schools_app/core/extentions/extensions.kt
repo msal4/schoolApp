@@ -60,8 +60,6 @@ fun String.asRequestBody(): RequestBody {
     return RequestBody.create(MediaType.parse("text/plain"), this.trim())
 }
 
-
-
 fun File.asBodyPart(fieldName: String): MultipartBody.Part? {
     val requestBody= RequestBody.create(MediaType.parse("Image/*"), this)
     return MultipartBody.Part.createFormData(fieldName, name, requestBody)

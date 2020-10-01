@@ -1,11 +1,12 @@
 package com.smart.resources.schools_app.features.onlineExam.data.mappers.domain
 
-import com.smart.resources.schools_app.features.onlineExam.data.model.LocalOnlineExam
+import com.smart.resources.schools_app.features.onlineExam.data.local.model.LocalOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExam
 
-fun mapOnlineExamToLocal(input: OnlineExam):LocalOnlineExam{
+fun mapOnlineExamToLocal(input: OnlineExam, userId:String):LocalOnlineExam{
     return LocalOnlineExam(
         onlineExamId = input.id,
+        userId = userId,
         subjectName = input.subjectName,
         date = input.examDate,
         examDuration = input.examDuration,

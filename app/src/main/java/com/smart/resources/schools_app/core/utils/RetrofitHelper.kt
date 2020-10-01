@@ -43,8 +43,7 @@ object RetrofitHelper {
         .create()
 
 
-    private val loggingInterceptor by lazy {
-        WatchTower.start(WebWatchTowerObserver(port = 8085))// TODO: remove it if not needed
+    private val watchTowerInterceptor by lazy {
         WatchTowerInterceptor()
     }
 
@@ -60,8 +59,7 @@ object RetrofitHelper {
                 .client(
                     OkHttpClient
                         .Builder()
-                        .addInterceptor(loggingInterceptor)
-                        .addInterceptor(loggingInterceptor)
+                        .addInterceptor(watchTowerInterceptor)
                         .build()
                 )
                 .build()
@@ -69,8 +67,8 @@ object RetrofitHelper {
     private val retrofitWithAuth: Retrofit
         get() =
             with(OkHttpClient.Builder()) {
+                addInterceptor(watchTowerInterceptor)
                 addInterceptor(AuthorizationInterceptor.instance)
-                addInterceptor(loggingInterceptor)
                 mBuilder
                     .client(build())
                     .build()

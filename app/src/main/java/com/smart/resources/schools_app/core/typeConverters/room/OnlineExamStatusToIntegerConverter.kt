@@ -4,8 +4,8 @@ import androidx.room.TypeConverter
 
 enum class OnlineExamStatus {
     INACTIVE,
-    COMPLETED,
     ACTIVE,
+    COMPLETED,
 }
 
 class OnlineExamStatusToIntegerConverter {

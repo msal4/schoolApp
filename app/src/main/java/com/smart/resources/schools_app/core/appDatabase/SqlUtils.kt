@@ -1,7 +1,7 @@
 package com.smart.resources.schools_app.core.appDatabase
 
-import com.smart.resources.schools_app.features.onlineExam.data.model.LocalOnlineExam
-import com.smart.resources.schools_app.features.onlineExam.data.model.LocalQuestion
+import com.smart.resources.schools_app.features.onlineExam.data.local.model.LocalOnlineExam
+import com.smart.resources.schools_app.features.onlineExam.data.local.model.LocalQuestion
 
 object SqlUtils {
     const val CREATE_ONLINE_EXAMS_TABLE= "CREATE TABLE IF NOT EXISTS `${LocalOnlineExam.TABLE_NAME}` (`onlineExamId` TEXT NOT NULL, `subjectName` TEXT NOT NULL, `date` INTEGER NOT NULL, `examDuration` INTEGER NOT NULL, `startDateTime` INTEGER, `numberOfQuestions` INTEGER NOT NULL, `examStatus` INTEGER NOT NULL, PRIMARY KEY(`onlineExamId`))"

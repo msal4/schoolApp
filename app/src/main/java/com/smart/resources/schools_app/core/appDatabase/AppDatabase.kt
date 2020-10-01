@@ -4,10 +4,10 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.smart.resources.schools_app.core.typeConverters.room.*
-import com.smart.resources.schools_app.features.onlineExam.data.localDataSource.OnlineExamsDao
-import com.smart.resources.schools_app.features.onlineExam.data.localDataSource.QuestionsDao
-import com.smart.resources.schools_app.features.onlineExam.data.model.LocalOnlineExam
-import com.smart.resources.schools_app.features.onlineExam.data.model.LocalQuestion
+import com.smart.resources.schools_app.features.onlineExam.data.local.dataSource.OnlineExamsDao
+import com.smart.resources.schools_app.features.onlineExam.data.local.dataSource.QuestionsDao
+import com.smart.resources.schools_app.features.onlineExam.data.local.model.LocalOnlineExam
+import com.smart.resources.schools_app.features.onlineExam.data.local.model.LocalQuestion
 import com.smart.resources.schools_app.features.users.data.AccountsDao
 import com.smart.resources.schools_app.features.users.data.UserAccount
 

@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.onlineExam.data.model
+package com.smart.resources.schools_app.features.onlineExam.data.local.model
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
@@ -18,7 +18,7 @@ import com.smart.resources.schools_app.core.typeConverters.room.QuestionType
         ),
     ],
     indices = [
-    Index(value = ["onlineExamId"])
+        Index(value = ["onlineExamId"]),
     ]
 )
 data class LocalQuestion(

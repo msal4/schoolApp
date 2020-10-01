@@ -2,12 +2,12 @@ package com.smart.resources.schools_app.features.onlineExam
 
 import com.smart.resources.schools_app.core.appDatabase.AppDatabase
 import com.smart.resources.schools_app.core.utils.mapList
-import com.smart.resources.schools_app.features.onlineExam.data.localDataSource.OnlineExamsDao
-import com.smart.resources.schools_app.features.onlineExam.data.localDataSource.QuestionsDao
-import com.smart.resources.schools_app.features.onlineExam.data.mappers.local.mapLocalOnlineExam
+import com.smart.resources.schools_app.features.onlineExam.data.local.dataSource.OnlineExamsDao
+import com.smart.resources.schools_app.features.onlineExam.data.local.dataSource.QuestionsDao
+import com.smart.resources.schools_app.features.onlineExam.data.local.mappers.mapLocalOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.data.mappers.domain.mapOnlineExamToLocal
 import com.smart.resources.schools_app.features.onlineExam.data.mappers.domain.mapQuestionToLocal
-import com.smart.resources.schools_app.features.onlineExam.data.mappers.local.mapLocalQuestion
+import com.smart.resources.schools_app.features.onlineExam.data.local.mappers.mapLocalQuestion
 import com.smart.resources.schools_app.features.onlineExam.data.repository.OnlineExamsRepository
 import com.smart.resources.schools_app.features.onlineExam.data.repository.QuestionsRepository
 import com.smart.resources.schools_app.features.onlineExam.domain.repository.IOnlineExamsRepository

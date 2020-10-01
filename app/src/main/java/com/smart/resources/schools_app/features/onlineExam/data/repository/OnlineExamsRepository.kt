@@ -3,8 +3,8 @@ package com.smart.resources.schools_app.features.onlineExam.data.repository
 import com.hadiyarajesh.flower.ApiEmptyResponse
 import com.hadiyarajesh.flower.Resource
 import com.hadiyarajesh.flower.networkBoundResource
-import com.smart.resources.schools_app.features.onlineExam.data.localDataSource.OnlineExamsDao
-import com.smart.resources.schools_app.features.onlineExam.data.model.LocalOnlineExam
+import com.smart.resources.schools_app.features.onlineExam.data.local.dataSource.OnlineExamsDao
+import com.smart.resources.schools_app.features.onlineExam.data.local.model.LocalOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.repository.IOnlineExamsRepository
 import kotlinx.coroutines.flow.Flow
