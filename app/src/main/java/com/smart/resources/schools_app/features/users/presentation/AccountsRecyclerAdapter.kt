@@ -53,7 +53,7 @@ class AccountsRecyclerAdapter(private val UserAccounts:MutableList<UserAccount>?
             if(user.uid== UserRepository.instance.getCurrentUserAccount()?.uid){
 
                 holder.binding.profileImage.apply {
-                    borderColor= ContextCompat.getColor(holder.itemView.context, R.color.green)
+                    borderColor= ContextCompat.getColor(holder.itemView.context, R.color.light_green_a700)
                     borderWidth= 2
                 }
 

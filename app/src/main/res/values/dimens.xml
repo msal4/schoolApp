@@ -42,4 +42,5 @@
     <dimen name="number_picker_width">120dp</dimen>
     <dimen name="bottom_sheet_elevation">12dp</dimen>
     <dimen name="errorMsgSpacing">2dp</dimen>
+    <dimen name="online_exam_state_indicator_size">12dp</dimen>
 </resources>

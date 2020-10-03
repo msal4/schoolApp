@@ -15,18 +15,19 @@ import org.threeten.bp.LocalDateTime
  */
 @Entity(
     tableName = LocalOnlineExam.TABLE_NAME,
-    foreignKeys = [
-        ForeignKey(
-            entity = UserAccount::class,
-            parentColumns = ["uid"],
-            childColumns = ["userId"],
-            onDelete = ForeignKey.CASCADE,
-            onUpdate = ForeignKey.CASCADE,
-        ),
-    ],
-    indices = [
-        Index(value = ["userId"])
-    ]
+    // TODO: add re add foreign keys
+//    foreignKeys = [
+//        ForeignKey(
+//            entity = UserAccount::class,
+//            parentColumns = ["uid"],
+//            childColumns = ["userId"],
+//            onDelete = ForeignKey.CASCADE,
+//            onUpdate = ForeignKey.CASCADE,
+//        ),
+//    ],
+//    indices = [
+//        Index(value = ["userId"])
+//    ]
 )
 data class LocalOnlineExam(
     @PrimaryKey

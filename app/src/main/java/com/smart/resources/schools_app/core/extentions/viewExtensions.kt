@@ -74,7 +74,7 @@ fun ViewGroup.showSnackBar(msg: String, isError: Boolean = true) {
                 if (isError) ContextCompat.getColor(
                     context,
                     R.color.darkRed
-                ) else ContextCompat.getColor(context, R.color.green)
+                ) else ContextCompat.getColor(context, R.color.light_green_a700)
             )
         }
     }

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "18d9a00d43b4e8a8e5edba539c609a60",
+    "identityHash": "ed9078c60420204665fd683b74e26695",
     "entities": [
       {
         "tableName": "UserAccount",
@@ -50,11 +50,17 @@
       },
       {
         "tableName": "OnlineExams",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`onlineExamId` TEXT NOT NULL, `subjectName` TEXT NOT NULL, `date` INTEGER NOT NULL, `examDuration` INTEGER NOT NULL, `startDateTime` INTEGER, `numberOfQuestions` INTEGER NOT NULL, `examStatus` INTEGER NOT NULL, PRIMARY KEY(`onlineExamId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`onlineExamId` TEXT NOT NULL, `userId` TEXT NOT NULL, `subjectName` TEXT NOT NULL, `date` INTEGER NOT NULL, `examDuration` INTEGER NOT NULL, `startDateTime` INTEGER, `numberOfQuestions` INTEGER NOT NULL, `examStatus` INTEGER NOT NULL, PRIMARY KEY(`onlineExamId`))",
         "fields": [
           {
             "fieldPath": "onlineExamId",
             "columnName": "onlineExamId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "userId",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -173,7 +179,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '18d9a00d43b4e8a8e5edba539c609a60')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ed9078c60420204665fd683b74e26695')"
     ]
   }
 }

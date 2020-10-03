@@ -22,7 +22,7 @@
 
     <color name="orange_300">#EFAD58</color>
     <color name="examActiveColor">@color/orange_300</color>
-    <color name="green">#41CF21</color>
+    <color name="light_green_a700">#41CF21</color>
 
     <color name="orange_200_alpha_87">#DEEAC078</color>
     <color name="red_a100_alpha_87">#DEFF8A80</color>

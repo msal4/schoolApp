@@ -6,6 +6,8 @@
 
     <data>
         <import type="android.view.View"/>
+        <import type="com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus"/>
+
         <variable
             name="onlineExamItem"
             type="com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExam" />
@@ -19,26 +21,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/item_margin"
-        android:onlineExamCardStatus="@{onlineExamItem.examStatus}"
-        android:canTakeOnlineExam="@{isStudent}"
+        android:background="@drawable/bg_card"
         android:layoutDirection="rtl"
         android:minHeight="@dimen/item_min_height"
         android:orientation="vertical"
-        android:padding="@dimen/item_padding">
+        android:padding="@dimen/item_padding"
+        android:elevation="@dimen/item_elevation"
+        android:clipChildren="false"
+        android:clipToPadding="false">
 
-        <ImageView
-            android:id="@+id/lockIcon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginEnd="12dp"
+        <View
+            android:id="@+id/circleIndicatorIcon"
+            android:layout_width="@dimen/online_exam_state_indicator_size"
+            android:layout_height="@dimen/online_exam_state_indicator_size"
             android:alpha="0.87"
             android:contentDescription="@string/desc_ic_online_exam"
-            android:src="@drawable/ic_lock_primary_24dp"
-            android:visibility="@{onlineExamItem.locked? View.VISIBLE: View.GONE}"
+            android:background="@drawable/bg_circle_primary"
+            android:visible="@{onlineExamItem.examStatus != OnlineExamStatus.COMPLETED}"
+            android:backgroundTint="@{onlineExamItem.examStatus == OnlineExamStatus.ACTIVE? @color/light_green_a700:@color/darkRed}"
+            android:outlineProvider="background"
+            android:elevation="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@android:color/black" />
+            tools:backgroundTint="@color/darkRed"
+            tools:ignore="UseAppTint"
+           />
 
         <ImageView
             android:id="@+id/onlineExamIcon"
@@ -55,15 +62,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginEnd="12dp"
             android:fontFamily="@font/monadi"
             android:includeFontPadding="true"
             android:text="@{onlineExamItem.subjectName}"
             android:textAlignment="viewStart"
             android:textColor="@android:color/black"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/remainingQuestions"
+            app:layout_constraintEnd_toStartOf="@+id/examDate"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/onlineExamIcon"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/remainingQuestions"
             app:layout_constraintVertical_chainStyle="spread"
             tools:text="المادة" />
 
@@ -73,27 +83,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
             android:setDate="@{onlineExamItem.examDate.toLocalDate()}"
             android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="@+id/subjectName"
-            app:layout_constraintEnd_toStartOf="@+id/lockIcon"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/dash1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintTop_toTopOf="@+id/subjectName"
             app:layout_constraintVertical_bias="1.0"
             tools:text="8/10/2019" />
 
-        <TextView
-            android:id="@+id/dash1"
-            style="@style/DashTextStyle"
-            android:layout_marginStart="12dp"
-            android:layout_marginBottom="2dp"
-            android:includeFontPadding="false"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/subjectName"
-            app:layout_constraintStart_toEndOf="@+id/subjectName"
-            app:layout_constraintTop_toTopOf="@+id/subjectName" />
 
         <TextView
             android:id="@+id/remainingQuestions"
@@ -126,19 +124,11 @@
             android:durationInMinutes="@{onlineExamItem.examDuration}"
             android:textAlignment="viewStart"
             app:layout_constraintBaseline_toBaselineOf="@id/remainingQuestions"
-            app:layout_constraintEnd_toStartOf="@+id/lockIcon"
+            app:layout_constraintEnd_toStartOf="@+id/circleIndicatorIcon"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/dash2"
             tools:text="5 ساعات" />
 
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrier2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="start"
-            app:constraint_referenced_ids="lockIcon"
-            tools:layout_editor_absoluteX="399dp"
-            tools:layout_editor_absoluteY="12dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -13,7 +13,9 @@ import com.smart.resources.schools_app.core.myTypes.ListState
 import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import com.smart.resources.schools_app.features.login.CanLogout
+import com.smart.resources.schools_app.features.onlineExam.domain.model.CompleteOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExam
+import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IAddOnlineExamsUseCase
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IGetOnlineExamsUseCase
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IRemoveOnlineExamUseCase
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserTypeUseCase
@@ -26,7 +28,7 @@ class OnlineExamViewModel @ViewModelInject constructor(
     application: Application,
     private val getOnlineExamsUseCase: IGetOnlineExamsUseCase,
     private val removeOnlineExamUseCase: IRemoveOnlineExamUseCase,
-   // private val addOnlineExamsUseCase: IAddOnlineExamsUseCase, // TODO: remove this
+    private val addOnlineExamsUseCase: IAddOnlineExamsUseCase, // TODO: remove this
     private val getCurrentUserTypeUseCase: IGetCurrentUserTypeUseCase
 ) : AndroidViewModel(application), CanLogout {
 
@@ -42,8 +44,8 @@ class OnlineExamViewModel @ViewModelInject constructor(
     }
 
     // TODO: remove this
-//    init {
-//        viewModelScope.launch {
+    init {
+        viewModelScope.launch {
 //           addOnlineExamsUseCase(
 //               dummyOnlineExams[0]
 //           )
@@ -52,11 +54,16 @@ class OnlineExamViewModel @ViewModelInject constructor(
 //               dummyOnlineExams[2]
 //           )
 //           delay(5000)
-//            addOnlineExamsUseCase(
-//                *dummyOnlineExams.toTypedArray()
-//            )
-//        }
-//    }
+            addOnlineExamsUseCase(
+                *dummyOnlineExams.map {
+                    CompleteOnlineExam(
+                        onlineExam = it,
+                        questions = dummyQuestions,
+                    )
+                }.toTypedArray()
+            )
+        }
+    }
 
     // TODO: add unauthorized interceptor
     val onlineExams: LiveData<List<OnlineExam>> = getOnlineExamsUseCase().map {
