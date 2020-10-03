@@ -4,35 +4,40 @@ import android.transition.TransitionManager
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.databinding.BindingAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.textfield.TextInputLayout
 import com.smart.resources.schools_app.core.extentions.toString
+import com.smart.resources.schools_app.features.filter.FilterBottomSheet
 
-private const val EDIT_TEXT_ERROR_MSG_ATTRIBUTE="android:errorMsg"
+private const val EDIT_TEXT_ERROR_MSG_ATTRIBUTE = "android:errorMsg"
 
 @BindingAdapter(EDIT_TEXT_ERROR_MSG_ATTRIBUTE)
-fun setEditTextErrorMsg(editText: EditText, errorMsg:String?){
-    editText.error= errorMsg
+fun setEditTextErrorMsg(editText: EditText, errorMsg: String?) {
+    editText.error = errorMsg
 }
 
 @BindingAdapter(EDIT_TEXT_ERROR_MSG_ATTRIBUTE)
-fun EditText.setEditTextError(errorMsgId:Int?){
-   error= errorMsgId?.toString(context)
+fun EditText.setEditTextError(errorMsgId: Int?) {
+    error = errorMsgId?.toString(context)
 }
 
 
 @BindingAdapter(EDIT_TEXT_ERROR_MSG_ATTRIBUTE)
-fun TextInputLayout.setInputLayoutError(errorMsg:String?){
-    error= errorMsg
+fun TextInputLayout.setInputLayoutError(errorMsg: String?) {
+    error = errorMsg
 }
 
 @BindingAdapter(EDIT_TEXT_ERROR_MSG_ATTRIBUTE)
-fun TextInputLayout.setInputLayoutError(errorMsgId:Int?){
-    if(errorMsgId == null && error == null) return
+fun TextInputLayout.setInputLayoutError(errorMsgId: Int?) {
+    if (errorMsgId == null && error == null) return
 
-    val layout= rootView
-    if(layout is ViewGroup){
+    val layout = rootView
+    if (layout is ViewGroup) {
         TransitionManager.beginDelayedTransition(layout)
     }
-    isErrorEnabled= errorMsgId != null
-    error= errorMsgId?.toString(context)
+    isErrorEnabled = errorMsgId != null
+    error = errorMsgId?.toString(context)
 }
+
+

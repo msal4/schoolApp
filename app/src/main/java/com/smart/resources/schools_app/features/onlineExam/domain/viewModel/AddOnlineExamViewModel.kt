@@ -34,16 +34,31 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
 
     private val _showErrors = MutableLiveData<Boolean>(false)
     private val _isLoading = MutableLiveData<Event<Boolean>>(Event(false))
-    private val _questions = MutableLiveData<List<Question>>(dummyQuestions) // TODO: remove initial data
+    private val _questions =
+        MutableLiveData<List<Question>>(dummyQuestions) // TODO: remove initial data
     private val _errorMsgEvent = MutableLiveData<Event<Int?>>()
     private val _examAddedEvent = MutableLiveData<Event<Boolean>>()
 
 
-    val subjectsList = liveData {
+    val subjects = liveData {
         val subjects = getCurrentTeacherDataUseCase()?.subjects.orEmpty()
         emit(subjects)
     }
-    val examSubjectIndex = MutableLiveData<Int>(0)
+    val classes: List<String> by lazy {
+            listOf(
+                "رياضيات",
+                "عربي",
+                "english",
+                "arabic",
+                "تيست",
+            )
+    }
+
+    val selectedClassesPositions = MutableLiveData<List<Int>>(emptyList())
+    val selectedClasses = selectedClassesPositions.map {
+        classes.filterIndexed { index, _ -> it.contains(index) }
+    }
+    val selectedSubject = MutableLiveData<Int>(0)
     val examDate = MutableLiveData<LocalDate>(null)
     val examTime = MutableLiveData<LocalTime>(null)
     val examDurationInMinutes = MutableLiveData<Int>(250)
@@ -51,11 +66,8 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
     val examKey = MutableLiveData<String>("")
     val questions: LiveData<List<Question>> = _questions
 
-
-
-
-    val subjectErrorMsg: LiveData<Int?> = examSubjectIndex.map {
-        val subjectsCount = subjectsList.value?.size ?: 0
+    val subjectErrorMsg: LiveData<Int?> = selectedSubject.map {
+        val subjectsCount = subjects.value?.size ?: 0
         if (it.isValidIndex(subjectsCount)) null
         else R.string.subject_not_selected_error
     }
@@ -71,7 +83,7 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
         if (it.isNotNullOrBlank()) null
         else R.string.empty_exam_key_error
     }
-    private var questionsListError:Int?= null
+    private var questionsListError: Int? = null
 
     val errorMsgEvent: LiveData<Event<Int?>> = _errorMsgEvent
     val examAddedEvent: LiveData<Event<Boolean>> = _examAddedEvent
@@ -79,27 +91,28 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
     val isLoading: LiveData<Event<Boolean>> = _isLoading
 
 
-    private val isFormValid= MediatorLiveData<Boolean>().apply {
-       addSource(subjectErrorMsg){
-           value= isFormValid()
-       }
-        addSource(examDateErrorMsg){
-            value= isFormValid()
+    private val isFormValid = MediatorLiveData<Boolean>().apply {
+        addSource(subjectErrorMsg) {
+            value = isFormValid()
         }
-        addSource(examTimeErrorMsg){
-            value= isFormValid()
+        addSource(examDateErrorMsg) {
+            value = isFormValid()
         }
-        addSource(examKeyErrorMsg){
-            value= isFormValid()
+        addSource(examTimeErrorMsg) {
+            value = isFormValid()
+        }
+        addSource(examKeyErrorMsg) {
+            value = isFormValid()
         }
         addSource(questions) {
-            value= isFormValid()
-            if(questions.value.isNullOrEmpty()){
-                questionsListError =  R.string.empty_questions_error
+            value = isFormValid()
+            if (questions.value.isNullOrEmpty()) {
+                questionsListError = R.string.empty_questions_error
             }
         }
     }
-    private val emptyObserver= { _:Boolean->}
+    private val emptyObserver = { _: Boolean -> }
+
     init {
         // to trigger live data
         isFormValid.observeForever(emptyObserver)
@@ -116,24 +129,24 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
     fun addOnlineExam() {
         _showErrors.value = true
         if (isFormValid.value != true) {
-            if(questionsListError!=null){
+            if (questionsListError != null) {
                 _errorMsgEvent.value = Event(questionsListError)
-                questionsListError= null
+                questionsListError = null
             }
             return
         }
 
         val onlineExam = OnlineExam(
             id = "",
-            subjectName = subjectsList.value!![examSubjectIndex.value!!],
+            subjectName = subjects.value!![selectedSubject.value!!],
             examDate = LocalDateTime.of(examDate.value, examTime.value),
             examDuration = Duration.ofMinutes(examDurationInMinutes.value?.toLong() ?: 0),
             numberOfQuestions = questions.value?.size ?: 0,
             examStatus = OnlineExamStatus.INACTIVE,
         )
 
-        val completeOnlineExam= CompleteOnlineExam(
-            onlineExam= onlineExam,
+        val completeOnlineExam = CompleteOnlineExam(
+            onlineExam = onlineExam,
             questions = questions.value.orEmpty()
         )
 
@@ -151,7 +164,7 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
                     examDateErrorMsg.value != null ||
                     examTimeErrorMsg.value != null ||
                     examKeyErrorMsg.value != null ||
-                    questions.value.isNullOrEmpty()-> false
+                    questions.value.isNullOrEmpty() -> false
             else -> true
         }
     }

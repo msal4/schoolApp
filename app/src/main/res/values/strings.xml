@@ -128,5 +128,6 @@
     <string name="empty_questions_error">يرجى اضافة سؤال!</string>
     <string name="no_answer">لا يوجد جواب!</string>
     <string name="exam_key">رمز الامتحان</string>
+    <string name="classes">الصفوف</string>
 
 </resources>

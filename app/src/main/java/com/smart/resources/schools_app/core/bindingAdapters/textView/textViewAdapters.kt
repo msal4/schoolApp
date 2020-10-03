@@ -62,6 +62,11 @@ fun TextView.setUnOrderedList(list: List<String>) {
     text = list.joinToString(separator = "\n") { it }.toUnicodeString()
 }
 
+@BindingAdapter("android:textCommaSeparated")
+fun TextView.setText(list: List<String>?) {
+    text = list.orEmpty().joinToString(separator = "، ") { it }.toUnicodeString()
+}
+
 @BindingAdapter("android:verticalTextTitle", "android:verticalTextSubtitle", requireAll = true)
 fun TextView.setVerticalText(title:String?, subtitle:String?) {
     text= "$title\n$subtitle"

@@ -114,7 +114,6 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
 
         }
 
-        val screenTitle = requireContext().getString(R.string.questions_subject, "مادة")
         return binding.root
     }
 

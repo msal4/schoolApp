@@ -15,6 +15,8 @@ import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.core.extentions.toString
 import com.smart.resources.schools_app.databinding.FragmentAddOnlineExamBinding
+import com.smart.resources.schools_app.features.filter.FilterBottomSheet
+import com.smart.resources.schools_app.features.filter.FilterItem
 import com.smart.resources.schools_app.features.onlineExam.domain.model.Question
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.AddOnlineExamViewModel
 import com.smart.resources.schools_app.features.onlineExam.presentation.adapter.QuestionsQuickAdapter
@@ -76,12 +78,15 @@ class AddOnlineExamFragment : LoadableActionMenuItemFragment() {
         binding = FragmentAddOnlineExamBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = this@AddOnlineExamFragment
             model = viewModel
+
             adapter = QuestionsQuickAdapter()
             simpleQuestionsRecycler.adapter = adapter
 
+            classesField.setOnClickListener { showClassesFilter() }
+            addQuestionFab.setOnClickListener { showAddQuestionFragment() }
             setupObservers()
-            addQuestionFab.setOnClickListener(::onFabPressed)
         }
+
         registerKeyboardListener()
         (activity as SectionActivity).setCustomTitle(R.string.add_exam)
         return binding.root
@@ -101,14 +106,14 @@ class AddOnlineExamFragment : LoadableActionMenuItemFragment() {
 
             errorMsgEvent.observe(viewLifecycleOwner) {
                 it.getContentIfNotHandled()?.let { errorMsgId ->
-                    val errorMsg= errorMsgId.toString(requireContext())
+                    val errorMsg = errorMsgId.toString(requireContext())
                     binding.coordinatorLayout.showSnackBar(errorMsg)
                 }
             }
 
             examAddedEvent.observe(viewLifecycleOwner) {
                 it.getContentIfNotHandled()?.let { examAdded ->
-                    if(examAdded && isAdded){
+                    if (examAdded && isAdded) {
                         parentFragmentManager.popBackStack()
                     }
                 }
@@ -120,8 +125,33 @@ class AddOnlineExamFragment : LoadableActionMenuItemFragment() {
         viewModel.addQuestion(question)
     }
 
+    private fun showClassesFilter() {
+        val classes = viewModel.classes
+        if (classes.isNullOrEmpty()) return
 
-    private fun onFabPressed(view: View) {
+        if (isAdded) {
+            // map classes to FilterItems
+            val filterItems= classes.mapIndexed {index, item ->
+                FilterItem(
+                    selected = viewModel.selectedClassesPositions.value.orEmpty().contains(index),
+                    item = item,
+                )
+            }
+            
+            // show filter bottom sheet
+            FilterBottomSheet
+                .newInstance(filterItems)
+                .also {
+                    it.onSelectionChanged = {
+                        viewModel.selectedClassesPositions.value = it
+                    }
+                    it.show(parentFragmentManager, "")
+                }
+        }
+    }
+
+
+    private fun showAddQuestionFragment() {
         binding.addQuestionFab.hide(
             object : FloatingActionButton.OnVisibilityChangedListener() {
                 override fun onHidden(fab: FloatingActionButton) {

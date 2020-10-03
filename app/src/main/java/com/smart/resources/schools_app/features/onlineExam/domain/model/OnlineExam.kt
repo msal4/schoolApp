@@ -14,8 +14,7 @@ data class OnlineExam(
     val examDuration: Duration,
     val numberOfQuestions: Int,
     val examStatus: OnlineExamStatus,
-
-    ) : Parcelable {
+) : Parcelable {
 
     val remainingDuration: Duration
         get() {
