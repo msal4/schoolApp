@@ -16,7 +16,7 @@
         <item name="android:editTextStyle">@style/MyEditTextStyle</item>
         <item name="editTextStyle">@style/MyEditTextStyle</item>
         <item name="bottomSheetDialogTheme">@style/BottomSheetDialogStyle</item>
-
+        <item name="snackbarStyle">@style/Widget.MaterialComponents.Snackbar</item>
     </style>
 
     <style name="BottomSheetDialogStyle" parent="Theme.Design.Light.BottomSheetDialog">

@@ -32,5 +32,5 @@
     <color name="questionCorrectnessColor">@color/red_a100_alpha_87</color>
     <color name="questionMultiChoiceColor">@color/pink_a100_alpha_87</color>
 
-    <color name="blue_a200">#203051</color>
+    <color name="snackbar_background">#383E4A</color>
 </resources>
