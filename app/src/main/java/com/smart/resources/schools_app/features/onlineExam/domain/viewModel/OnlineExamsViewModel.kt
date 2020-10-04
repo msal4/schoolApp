@@ -12,8 +12,6 @@ import com.smart.resources.schools_app.core.extentions.toString
 import com.smart.resources.schools_app.core.myTypes.ListState
 import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
-import com.smart.resources.schools_app.features.login.CanLogout
-import com.smart.resources.schools_app.features.onlineExam.domain.model.CompleteOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IAddOnlineExamsUseCase
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IGetOnlineExamsUseCase
@@ -35,17 +33,18 @@ class OnlineExamViewModel @ViewModelInject constructor(
     private val c = application.applicationContext
     val listState = ListState()
 
-    private val userType  by lazy {
+    private val userType by lazy {
         getCurrentUserTypeUseCase()
     }
 
-     val isTeacher:Boolean get()  {
-        return userType == UserType.TEACHER
-    }
+    val isTeacher: Boolean
+        get() {
+            return userType == UserType.TEACHER
+        }
 
     // TODO: remove this
     init {
-        viewModelScope.launch {
+//        viewModelScope.launch {
 //           addOnlineExamsUseCase(
 //               dummyOnlineExams[0]
 //           )
@@ -54,29 +53,28 @@ class OnlineExamViewModel @ViewModelInject constructor(
 //               dummyOnlineExams[2]
 //           )
 //           delay(5000)
-            addOnlineExamsUseCase(
-                *dummyOnlineExams.map {
-                    CompleteOnlineExam(
-                        onlineExam = it,
-                        questions = dummyQuestions,
-                    )
-                }.toTypedArray()
-            )
-        }
+//            addOnlineExamsUseCase(
+//                *dummyOnlineExams.map {
+//                    CompleteOnlineExam(
+//                        onlineExam = it,
+//                        questions = dummyQuestions,
+//                    )
+//                }.toTypedArray()
+//            )
+//        }
     }
 
-    // TODO: add unauthorized interceptor
     val onlineExams: LiveData<List<OnlineExam>> = getOnlineExamsUseCase().map {
-        when (it.status) {
-            Resource.Status.SUCCESS -> {
-                if (it.data.isNullOrEmpty()) {
+        if (it.data.isNullOrEmpty()) {
+            when (it.status) {
+                Resource.Status.SUCCESS -> {
                     listState.setBodyError(R.string.no_exams.toString(c))
-                } else {
-                    listState.setLoading(false)
                 }
+                Resource.Status.ERROR -> listState.setBodyError(it.message.toString())
+                Resource.Status.LOADING -> listState.setLoading(true)
             }
-            Resource.Status.ERROR -> listState.setBodyError(it.message.toString())
-            Resource.Status.LOADING -> listState.setLoading(it.data.isNullOrEmpty())
+        }else{
+            listState.setLoading(false)
         }
 
 

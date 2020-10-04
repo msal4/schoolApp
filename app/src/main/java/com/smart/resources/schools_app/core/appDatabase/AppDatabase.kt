@@ -8,6 +8,7 @@ import com.smart.resources.schools_app.features.onlineExam.data.local.dataSource
 import com.smart.resources.schools_app.features.onlineExam.data.local.dataSource.QuestionsDao
 import com.smart.resources.schools_app.features.onlineExam.data.local.model.LocalOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.data.local.model.LocalQuestion
+import com.smart.resources.schools_app.features.onlineExam.data.local.model.UserOnlineExamCrossRef
 import com.smart.resources.schools_app.features.users.data.AccountsDao
 import com.smart.resources.schools_app.features.users.data.UserAccount
 
@@ -15,6 +16,7 @@ import com.smart.resources.schools_app.features.users.data.UserAccount
     entities = [
         UserAccount::class,
         LocalOnlineExam::class,
+        UserOnlineExamCrossRef::class,
         LocalQuestion::class,
     ],
     version = 2

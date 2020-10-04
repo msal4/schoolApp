@@ -2,7 +2,9 @@ package com.smart.resources.schools_app.core.utils
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.hadiyarajesh.flower.calladpater.FlowCallAdapterFactory
 import com.smart.resources.schools_app.core.typeConverters.retrofit.LocalDateConverter
+import com.smart.resources.schools_app.core.typeConverters.retrofit.LocalTimeConverter
 import com.smart.resources.schools_app.core.typeConverters.retrofit.LocalDateTimeConverter
 import com.smart.resources.schools_app.features.absence.AbsenceClient
 import com.smart.resources.schools_app.features.advertising.AdvertisingClient
@@ -13,16 +15,17 @@ import com.smart.resources.schools_app.features.lecture.LectureClient
 import com.smart.resources.schools_app.features.library.LibraryClient
 import com.smart.resources.schools_app.features.login.AccountClient
 import com.smart.resources.schools_app.features.notification.NotificationsClient
+import com.smart.resources.schools_app.features.onlineExam.data.remote.dataSource.OnlineExamsClient
+import com.smart.resources.schools_app.features.onlineExam.data.remote.dataSource.QuestionsClient
 import com.smart.resources.schools_app.features.profile.certificate.CertificateClient
 import com.smart.resources.schools_app.features.rating.RatingClient
 import com.smart.resources.schools_app.features.schedule.ScheduleClient
 import com.smart.resources.schools_app.features.students.StudentClient
-import com.snakydesign.watchtower.WatchTower
 import com.snakydesign.watchtower.interceptor.WatchTowerInterceptor
-import com.snakydesign.watchtower.interceptor.WebWatchTowerObserver
 import okhttp3.OkHttpClient
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
+import org.threeten.bp.LocalTime
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -40,18 +43,21 @@ object RetrofitHelper {
             LocalDate::class.java,
             LocalDateConverter(),
         )
+        .registerTypeAdapter(
+            LocalTime::class.java,
+            LocalTimeConverter(),
+        )
         .create()
-
 
     private val watchTowerInterceptor by lazy {
         WatchTowerInterceptor()
     }
 
-
     private val mBuilder
         get() = Retrofit.Builder()
             .baseUrl(API_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
+            .addCallAdapterFactory(FlowCallAdapterFactory.create())
 
     private val retrofit: Retrofit
         get() =
@@ -81,6 +87,8 @@ object RetrofitHelper {
             HomeworkSolutionClient::class.java
         )
     val examClient: ExamClient get() = retrofitWithAuth.create(ExamClient::class.java)
+    val onlineExamsClient: OnlineExamsClient get() = retrofitWithAuth.create(OnlineExamsClient::class.java) // TO not break old code
+    val questionsClient: QuestionsClient get() = retrofitWithAuth.create(QuestionsClient::class.java) // TO not break old code
     val lectureClient: LectureClient get() = retrofitWithAuth.create(LectureClient::class.java)
     val certificateClient: CertificateClient get() = retrofitWithAuth.create(CertificateClient::class.java)
     val libraryClient: LibraryClient get() = retrofitWithAuth.create(LibraryClient::class.java)

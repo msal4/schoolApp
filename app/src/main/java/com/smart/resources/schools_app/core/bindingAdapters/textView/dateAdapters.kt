@@ -8,11 +8,25 @@ import androidx.databinding.InverseBindingListener
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.core.typeConverters.retrofit.dateDisFormatter
 import com.smart.resources.schools_app.core.extentions.activity
+import com.smart.resources.schools_app.core.typeConverters.retrofit.dateTimeDisFormatter
 import com.smart.resources.schools_app.features.dateTimePickers.DatePickerFragment
 import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDateTime
 
 private const val SET_DATE_ATTRIBUTE = "android:setDate"
+private const val SET_DATE_TIME_ATTRIBUTE = "android:setDateTime"
 private const val SHOW_DATE_PICKER_ON_CLICK_ATTRIBUTE = "android:showDatePickerOnClick"
+
+
+@BindingAdapter(SET_DATE_TIME_ATTRIBUTE)
+fun TextView.setDateTime(date: LocalDateTime?) {
+    try {
+        text = date?.format(dateTimeDisFormatter)
+    } catch (e: Exception) {
+        Logger.e("binding error: ${e.message}")
+    }
+}
+
 
 @BindingAdapter(SET_DATE_ATTRIBUTE)
 fun TextView.setDate(date: LocalDate?) {

@@ -82,7 +82,6 @@ class OnlineExamsFragment : Fragment() {
             val readOnly= onlineExam.examStatus == OnlineExamStatus.COMPLETED
             ExamPaperFragment.newInstance(parentFragmentManager, onlineExam, readOnly)
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

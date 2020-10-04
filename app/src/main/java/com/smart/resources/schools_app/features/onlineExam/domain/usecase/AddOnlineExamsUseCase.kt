@@ -4,17 +4,20 @@ import com.hadiyarajesh.flower.Resource
 import com.smart.resources.schools_app.features.onlineExam.domain.model.CompleteOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.repository.IOnlineExamsRepository
 import com.smart.resources.schools_app.features.onlineExam.domain.repository.IQuestionsRepository
+import com.smart.resources.schools_app.features.users.data.UserRepository
 import javax.inject.Inject
 
 class AddOnlineExamsUseCase @Inject constructor(
     private val onlineExamsRepository: IOnlineExamsRepository,
     private val questionsRepository: IQuestionsRepository,
-) : IAddOnlineExamsUseCase {
+    private val userRepository: UserRepository,
+    ) : IAddOnlineExamsUseCase {
     override suspend operator fun invoke(vararg completeOnlineExam: CompleteOnlineExam): Resource<Unit> {
         val examDetails = completeOnlineExam.map { it.onlineExam }.toTypedArray()
 
         // 1. add exam
-        onlineExamsRepository.addOnlineExams(*examDetails)
+        val userId= userRepository.getCurrentUserAccount()?.originalId.toString() // TODO: change this to usecase
+        onlineExamsRepository.addOnlineExams(userId, *examDetails)
 
         // 2. add exam questions
         // this must be done second since it is linked to the exam with Foreign key

@@ -83,5 +83,4 @@ class OnlineExamAnswersFragment : Fragment() {
         }
         recyclerViewLoader.recyclerView.createGridLayout(adapter)
     }
-
 }

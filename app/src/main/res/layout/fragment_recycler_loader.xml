@@ -20,9 +20,9 @@
          android:id="@+id/errorText"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:gravity="start"
+         android:gravity="center"
          android:text="@{listState.bodyError}"
-         android:textAlignment="textStart"
+         android:textAlignment="center"
          android:layout_margin="@dimen/error_text_margin"/>
 
         <ProgressBar

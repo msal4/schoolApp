@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 2,
-    "identityHash": "ab9045856831fb8cafdfe839fc1d24b2",
+    "version": 3,
+    "identityHash": "8b2bc6ed4e5cd5de6966efbdbb96a6e7",
     "entities": [
       {
         "tableName": "UserAccount",
@@ -99,56 +99,6 @@
         "foreignKeys": []
       },
       {
-        "tableName": "UserOnlineExamCrossRef",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` TEXT NOT NULL, `onlineExamId` TEXT NOT NULL, PRIMARY KEY(`uid`, `onlineExamId`), FOREIGN KEY(`uid`) REFERENCES `UserAccount`(`uid`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`onlineExamId`) REFERENCES `OnlineExams`(`onlineExamId`) ON UPDATE CASCADE ON DELETE CASCADE )",
-        "fields": [
-          {
-            "fieldPath": "uid",
-            "columnName": "uid",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "onlineExamId",
-            "columnName": "onlineExamId",
-            "affinity": "TEXT",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "uid",
-            "onlineExamId"
-          ],
-          "autoGenerate": false
-        },
-        "indices": [],
-        "foreignKeys": [
-          {
-            "table": "UserAccount",
-            "onDelete": "CASCADE",
-            "onUpdate": "CASCADE",
-            "columns": [
-              "uid"
-            ],
-            "referencedColumns": [
-              "uid"
-            ]
-          },
-          {
-            "table": "OnlineExams",
-            "onDelete": "CASCADE",
-            "onUpdate": "CASCADE",
-            "columns": [
-              "onlineExamId"
-            ],
-            "referencedColumns": [
-              "onlineExamId"
-            ]
-          }
-        ]
-      },
-      {
         "tableName": "Questions",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`questionId` TEXT NOT NULL, `onlineExamId` TEXT NOT NULL, `questionText` TEXT NOT NULL, `questionType` INTEGER NOT NULL, `options` TEXT, PRIMARY KEY(`questionId`), FOREIGN KEY(`onlineExamId`) REFERENCES `OnlineExams`(`onlineExamId`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
@@ -217,7 +167,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ab9045856831fb8cafdfe839fc1d24b2')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8b2bc6ed4e5cd5de6966efbdbb96a6e7')"
     ]
   }
 }
