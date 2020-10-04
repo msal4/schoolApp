@@ -10,10 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.haytham.coder.extensions.hide
+import com.haytham.coder.extensions.show
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.activity.SectionActivity
-import com.smart.resources.schools_app.core.extentions.hide
-import com.smart.resources.schools_app.core.extentions.show
 import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.core.myTypes.ConnectionError
 import com.smart.resources.schools_app.core.myTypes.ResponseError

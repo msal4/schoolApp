@@ -4,9 +4,9 @@ import android.annotation.SuppressLint
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.extentions.hide
-import com.smart.resources.schools_app.core.extentions.startCountDown
-import com.smart.resources.schools_app.core.extentions.toUnicodeString
+import com.haytham.coder.extensions.hide
+import com.haytham.coder.extensions.startCountDown
+import com.haytham.coder.extensions.unicodeWrap
 import com.smart.resources.schools_app.features.users.data.UserRepository
 import org.threeten.bp.Duration
 
@@ -39,7 +39,7 @@ fun TextView.setTimer(duration: Duration?, onTimerFinished: (() -> Unit)?, start
             onTicked = {
                 setTimeInMinutesSeconds(it)
             },
-            countDownIntervalInMilli = 1000
+            intervalInMilli = 1000
         )
     }
 }
@@ -59,12 +59,12 @@ fun TextView.setUnOrderedList(list: List<String>) {
         hide()
         return
     }
-    text = list.joinToString(separator = "\n") { it }.toUnicodeString()
+    text = list.joinToString(separator = "\n") { it }.unicodeWrap()
 }
 
 @BindingAdapter("android:textCommaSeparated")
 fun TextView.setText(list: List<String>?) {
-    text = list.orEmpty().joinToString(separator = "، ") { it }.toUnicodeString()
+    text = list.orEmpty().joinToString(separator = "، ") { it }.unicodeWrap()
 }
 
 @BindingAdapter("android:verticalTextTitle", "android:verticalTextSubtitle", requireAll = true)

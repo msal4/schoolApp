@@ -9,13 +9,13 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import com.haytham.coder.extensions.setSoftInputMode
+import com.haytham.coder.extensions.setStatusBarColor
+import com.haytham.coder.extensions.setStatusBarColorToWhite
+import com.haytham.coder.extensions.toColor
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.callbacks.ViewPager2Helper
-import com.smart.resources.schools_app.core.extentions.setSoftInputMode
-import com.smart.resources.schools_app.core.extentions.setStatusBarColor
-import com.smart.resources.schools_app.core.extentions.setStatusBarColorToWhite
-import com.smart.resources.schools_app.core.extentions.toColor
 import com.smart.resources.schools_app.databinding.FragmentExamPaperBinding
 import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnswer
 import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExam

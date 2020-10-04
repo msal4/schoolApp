@@ -4,9 +4,9 @@ import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.haytham.coder.extensions.hide
+import com.haytham.coder.extensions.show
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.extentions.hide
-import com.smart.resources.schools_app.core.extentions.show
 import com.smart.resources.schools_app.databinding.PageQuestionCorrectnessBinding
 import com.smart.resources.schools_app.features.onlineExam.domain.model.CorrectnessAnswer
 import com.smart.resources.schools_app.features.onlineExam.domain.model.CorrectnessAnswerableQuestion

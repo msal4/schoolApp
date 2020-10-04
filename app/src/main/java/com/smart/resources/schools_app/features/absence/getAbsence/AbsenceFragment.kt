@@ -5,9 +5,10 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import com.haytham.coder.extensions.hide
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.*
-import com.smart.resources.schools_app.core.extentions.hide
+
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.absence.StudentAbsenceModel
 import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment

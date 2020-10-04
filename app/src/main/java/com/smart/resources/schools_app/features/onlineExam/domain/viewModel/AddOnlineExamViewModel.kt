@@ -2,11 +2,11 @@ package com.smart.resources.schools_app.features.onlineExam.domain.viewModel
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import com.haytham.coder.extensions.isNotNullOrBlank
+import com.haytham.coder.extensions.isNotNullOrEmpty
+import com.haytham.coder.extensions.isValidIndex
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.extentions.isNotNullOrBlank
-import com.smart.resources.schools_app.core.extentions.isNotNullOrEmpty
-import com.smart.resources.schools_app.core.extentions.isValidIndex
 import com.smart.resources.schools_app.core.myTypes.Event
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import com.smart.resources.schools_app.core.typeConverters.room.QuestionType

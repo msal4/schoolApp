@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.haytham.coder.extensions.hide
+import com.haytham.coder.extensions.openKeyboard
+import com.haytham.coder.extensions.show
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.extentions.hide
-import com.smart.resources.schools_app.core.extentions.show
-import com.smart.resources.schools_app.core.extentions.openKeyboard
 import com.smart.resources.schools_app.core.typeConverters.room.QuestionType
 import com.smart.resources.schools_app.databinding.FragmentAddQuestionBinding
 import com.smart.resources.schools_app.features.onlineExam.domain.model.Question

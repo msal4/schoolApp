@@ -4,7 +4,7 @@ import android.graphics.Canvas
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.extentions.toDrawable
+import com.haytham.coder.extensions.toDrawable
 
 class SwipeAdapter(
     private val fixedPositions: List<Int> = listOf(),

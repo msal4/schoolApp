@@ -6,8 +6,8 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
-import com.smart.resources.schools_app.core.extentions.hide
-import com.smart.resources.schools_app.core.extentions.show
+import com.haytham.coder.extensions.hide
+import com.haytham.coder.extensions.show
 import com.smart.resources.schools_app.core.activity.SectionActivity
 
 abstract class LoadableActionMenuItemFragment : Fragment() {

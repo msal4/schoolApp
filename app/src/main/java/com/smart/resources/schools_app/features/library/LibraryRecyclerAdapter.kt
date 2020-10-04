@@ -3,8 +3,8 @@ package com.smart.resources.schools_app.features.library
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.haytham.coder.extensions.openPdfViewer
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.extentions.openPdfViewer
 import com.smart.resources.schools_app.core.extentions.isPdf
 import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.databinding.ItemLibraryBinding

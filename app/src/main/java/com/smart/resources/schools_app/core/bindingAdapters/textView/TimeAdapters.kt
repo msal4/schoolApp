@@ -5,8 +5,8 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
+import com.haytham.coder.extensions.activity
 import com.smart.resources.schools_app.core.typeConverters.retrofit.timeDisFormatter
-import com.smart.resources.schools_app.core.extentions.activity
 import com.smart.resources.schools_app.features.dateTimePickers.TimePickerFragment
 import org.threeten.bp.LocalTime
 import java.lang.Exception

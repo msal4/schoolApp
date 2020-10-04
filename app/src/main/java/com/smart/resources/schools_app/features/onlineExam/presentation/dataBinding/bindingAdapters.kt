@@ -2,8 +2,8 @@ package com.smart.resources.schools_app.features.onlineExam.presentation.dataBin
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.haytham.coder.extensions.toString
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.extentions.toString
 
 @BindingAdapter("android:answer")
 fun TextView.answer(answer:String?){

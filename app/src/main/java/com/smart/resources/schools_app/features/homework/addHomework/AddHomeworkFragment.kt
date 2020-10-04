@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
+import com.haytham.coder.extensions.*
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.bindingAdapters.loadImageUrl
 import com.smart.resources.schools_app.core.bindingAdapters.setSpinnerList
@@ -197,7 +198,6 @@ class AddHomeworkFragment : Fragment(), PostListener {
         when (item.itemId) {
             R.id.saveMenuItem -> {
                 viewModel.addHomework()
-                true
             }
         }
 

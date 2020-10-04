@@ -8,12 +8,12 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
+import com.haytham.coder.extensions.hide
+import com.haytham.coder.extensions.show
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.bindingAdapters.setSpinnerList
 import com.smart.resources.schools_app.core.bindingAdapters.textView.setDate
-import com.smart.resources.schools_app.core.extentions.hide
-import com.smart.resources.schools_app.core.extentions.show
 import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.core.myTypes.PostListener
 import com.smart.resources.schools_app.databinding.FragmentAddExamBinding

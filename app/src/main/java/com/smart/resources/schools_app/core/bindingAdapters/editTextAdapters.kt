@@ -4,11 +4,8 @@ import android.transition.TransitionManager
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.databinding.BindingAdapter
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.google.android.material.textfield.TextInputLayout
-import com.smart.resources.schools_app.core.extentions.toString
-import com.smart.resources.schools_app.features.filter.FilterBottomSheet
+import com.haytham.coder.extensions.toString
 
 private const val EDIT_TEXT_ERROR_MSG_ATTRIBUTE = "android:errorMsg"
 

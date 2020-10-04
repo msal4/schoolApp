@@ -5,11 +5,9 @@ import android.widget.ArrayAdapter
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
-import com.smart.resources.schools_app.core.extentions.toUnicodeString
 import com.tiper.MaterialSpinner
 
 private const val SPINNER_SET_LIST_ATTRIBUTE= "android:setList"
-private const val SPINNER_ERROR_MSG_ATTRIBUTE= "android:errorMsg"
 private const val SPINNER_SELECT_ITEM_ATTRIBUTE= "android:selectedItem"
 
 @BindingAdapter(SPINNER_SET_LIST_ATTRIBUTE)

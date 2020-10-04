@@ -2,58 +2,33 @@ package com.smart.resources.schools_app.core.extentions
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.LinearGradient
+import android.graphics.Shader
 import android.net.Uri
 import android.text.BidiFormatter
 import android.util.Base64
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import com.haytham.coder.extensions.toColor
+import com.smart.resources.schools_app.R
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.threeten.bp.Duration
 import java.io.File
 import java.nio.charset.StandardCharsets
-
-
-fun String.decodeTokenBody(): String {
-    val splitString = this.split('.')
-//    val base64EncodedHeader = splitString[0]
-    val base64EncodedBody = splitString[1]
-//    val base64EncodedSignature = splitString[2]
-    return base64EncodedBody.base64Decode()
-}
-
-private fun String.base64Decode(): String {
-    val bytes: ByteArray = Base64.decode(this, Base64.URL_SAFE)
-    return String(bytes, StandardCharsets.UTF_8)
-}
-
-fun String.openUrl(context: Context) {
-    val url =
-        if (!startsWith("http://") && !startsWith("https://"))
-            "http://$this"
-        else this
-
-    val uri = Uri.parse(url)
-    val intent = Intent(Intent.ACTION_VIEW, uri)
-    context.startActivity(intent)
-}
 
 fun String?.isImage() = (this != null && (this.toLowerCase().endsWith(".jpg") || this.toLowerCase()
     .endsWith(".jpeg") || this.toLowerCase().endsWith(".png")))
 
 fun String?.isPdf(): Boolean = this?.toLowerCase()?.endsWith(".pdf") ?: false
-
-
-fun String.replaceArNumbersWithEn() = this
-    .replace('٠', '0')
-    .replace('١', '1')
-    .replace('٢', '2')
-    .replace('٣', '3')
-    .replace('٤', '4')
-    .replace('٥', '5')
-    .replace('٦', '6')
-    .replace('٧', '7')
-    .replace('٨', '8')
-    .replace('٩', '9')
 
 
 fun String.asRequestBody(): RequestBody {
@@ -69,20 +44,35 @@ fun <T> MutableLiveData<T>.notifyObservers() {
     this.value = this.value
 }
 
-/// fixes bidirectional text
-fun String.toUnicodeString(): String = BidiFormatter.getInstance().unicodeWrap(this)
+fun ViewGroup.showSnackBar(msg: String, isError: Boolean = true) {
+    Snackbar.make(this, msg, Snackbar.LENGTH_LONG).apply {
+        val color = if (isError) Color.RED else R.color.light_green_a700
+        setTextColor(color)
+        setBackgroundTint(R.color.snackbar_background.toColor(context))
+        view.layoutDirection = View.LAYOUT_DIRECTION_RTL
+        show()
+    }
+}
 
-fun String?.isNotNullOrBlank ()= !isNullOrBlank()
-fun List<Any>?.isNotNullOrEmpty ()= !isNullOrEmpty()
+fun RecyclerView.createGridLayout(adapter: RecyclerView.Adapter<out RecyclerView.ViewHolder>) {
+    val itemMargin = resources.getDimension(R.dimen.item_margin).toInt()
+    setPadding(itemMargin, itemMargin, 0, itemMargin)
+    layoutManager = GridLayoutManager(context, 2)
+    this.adapter = adapter
+}
 
-/**
- * validate an integer to be:
- *
- * 1- not null
- *
- * 2- more than > -1
- *
- * 3- less than < max
- *
- */
-fun Int?.isValidIndex (max:Int= Integer.MAX_VALUE)= this!=null && this > -1 && this < max
+fun TextView.applyGradient(@ColorInt vararg colors: Int) {
+    measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+    val textShader: Shader = LinearGradient(
+        x + measuredWidth,
+        0f,
+        x,
+        textSize,
+        colors,
+        null,
+        Shader.TileMode.CLAMP
+    )
+    paint.shader = textShader
+}
+
+fun Long.toDuration(): Duration = Duration.ofMillis(this)

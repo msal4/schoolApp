@@ -7,9 +7,9 @@ import android.widget.ProgressBar
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.haytham.coder.extensions.hide
+import com.haytham.coder.extensions.show
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.extentions.hide
-import com.smart.resources.schools_app.core.extentions.show
 import com.smart.resources.schools_app.databinding.ActivitySectionBinding
 import com.smart.resources.schools_app.features.notification.NotificationFragment
 import com.smart.resources.schools_app.core.myTypes.Section

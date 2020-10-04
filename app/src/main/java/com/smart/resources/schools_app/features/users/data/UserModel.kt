@@ -1,6 +1,6 @@
 package com.smart.resources.schools_app.features.users.data
 
-import com.smart.resources.schools_app.core.extentions.decodeTokenBody
+import com.haytham.coder.extensions.decodeTokenBody
 import com.smart.resources.schools_app.core.utils.RetrofitHelper
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.Period

@@ -10,9 +10,9 @@ import androidx.core.view.children
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.haytham.coder.extensions.hide
+import com.haytham.coder.extensions.show
 import com.smart.resources.schools_app.core.callbacks.SwipeAdapter
-import com.smart.resources.schools_app.core.extentions.hide
-import com.smart.resources.schools_app.core.extentions.show
 
 @BindingAdapter("android:checkedButtonIndex")
 fun RadioGroup.setCheckedButtonIndex(checkButtonIndex:Int){

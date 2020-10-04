@@ -5,8 +5,8 @@ import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.haytham.coder.extensions.replaceArNumbersWithEn
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.extentions.replaceArNumbersWithEn
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.users.data.StudentModel
 import com.smart.resources.schools_app.features.users.data.TeacherModel

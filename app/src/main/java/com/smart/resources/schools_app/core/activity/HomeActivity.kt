@@ -7,9 +7,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.haytham.coder.extensions.decodeTokenBody
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.bindingAdapters.setAccountImage
-import com.smart.resources.schools_app.core.extentions.decodeTokenBody
 import com.smart.resources.schools_app.databinding.ActivityHomeBinding
 import com.smart.resources.schools_app.features.profile.ProfileActivity
 import com.smart.resources.schools_app.core.myTypes.Section

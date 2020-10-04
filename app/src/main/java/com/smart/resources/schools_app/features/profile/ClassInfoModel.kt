@@ -1,12 +1,13 @@
 package com.smart.resources.schools_app.features.profile
 
-import com.smart.resources.schools_app.core.extentions.toUnicodeString
+import com.haytham.coder.extensions.unicodeWrap
+
 
 data class ClassInfoModel(
     val classId: Int,
     val className: String,
     val sectionName: String
 ){
-    val getClassSection get() = "${className.toUnicodeString()} - ${sectionName.toUnicodeString()}"
+    val getClassSection get() = "${className.unicodeWrap()} - ${sectionName.unicodeWrap()}"
     override fun toString(): String = getClassSection
 }

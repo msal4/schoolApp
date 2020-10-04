@@ -10,10 +10,10 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.observe
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.haytham.coder.extensions.GET_IMAGE_REQUEST
+import com.haytham.coder.extensions.getImage
+import com.haytham.coder.extensions.openImagePickerApp
 import com.smart.resources.schools_app.core.myTypes.Event
-import com.smart.resources.schools_app.core.extentions.GET_IMAGE_REQUEST
-import com.smart.resources.schools_app.core.extentions.getImage
-import com.smart.resources.schools_app.core.extentions.openImagePickerApp
 import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.databinding.BottomSheetAnswerHomeworkBinding
 import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel

@@ -2,8 +2,8 @@ package com.smart.resources.schools_app.features.onlineExam.presentation.adapter
 
 import android.content.Context
 import android.graphics.Color
+import com.haytham.coder.extensions.toColor
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.extentions.toColor
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
