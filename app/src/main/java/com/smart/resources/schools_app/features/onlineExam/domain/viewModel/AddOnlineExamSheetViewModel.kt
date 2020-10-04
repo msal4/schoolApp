@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class AddOnlineExamSheetViewModel @ViewModelInject constructor(
     private val addOnlineExamByKeyUseCase: IAddOnlineExamByKeyUseCase,
-) : ViewModel(), CanLogout {
+) : ViewModel() {
 
     private val _examKeyError= MutableLiveData<Int?>()
     private val _isLoading = MutableLiveData<Boolean>(false)

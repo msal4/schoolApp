@@ -30,7 +30,7 @@ class OnlineExamViewModel @ViewModelInject constructor(
     private val removeOnlineExamUseCase: IRemoveOnlineExamUseCase,
     private val addOnlineExamsUseCase: IAddOnlineExamsUseCase, // TODO: remove this
     private val getCurrentUserTypeUseCase: IGetCurrentUserTypeUseCase
-) : AndroidViewModel(application), CanLogout {
+) : AndroidViewModel(application) {
 
     private val c = application.applicationContext
     val listState = ListState()

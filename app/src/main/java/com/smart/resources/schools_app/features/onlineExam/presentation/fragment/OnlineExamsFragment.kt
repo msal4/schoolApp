@@ -68,9 +68,21 @@ class OnlineExamsFragment : Fragment() {
     }
 
     private fun onOnlineExamPressed(onlineExam: OnlineExam) {
-        // TODO: test this logic
-        val readOnly= viewModel.isTeacher || (onlineExam.examStatus != OnlineExamStatus.ACTIVE)
-        ExamPaperFragment.newInstance(parentFragmentManager, onlineExam, readOnly)
+
+        if(viewModel.isTeacher){
+            if(onlineExam.examStatus == OnlineExamStatus.INACTIVE) {
+                ExamPaperFragment.newInstance(parentFragmentManager, onlineExam, true)
+            }else{
+                OnlineExamAnswersFragment.newInstance(parentFragmentManager)
+            }
+
+        }else{
+            if(onlineExam.examStatus == OnlineExamStatus.INACTIVE) return
+
+            val readOnly= onlineExam.examStatus == OnlineExamStatus.COMPLETED
+            ExamPaperFragment.newInstance(parentFragmentManager, onlineExam, readOnly)
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

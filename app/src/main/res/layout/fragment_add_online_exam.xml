@@ -39,6 +39,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/fields_spacing"
                         android:focusable="false"
+                        android:errorMsg="@{model.showErrors?model.classesErrorMsg:null}"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toTopOf="@id/subjectsSpinner"
                         app:layout_constraintStart_toStartOf="parent"
@@ -192,6 +193,7 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:errorMsg="@{model.showErrors?model.examKeyErrorMsg:null}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/guideline"
                         app:layout_constraintTop_toTopOf="@id/subjectsSpinner"
@@ -201,7 +203,6 @@
                             style="@style/MyEditTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:errorMsg="@{model.showErrors?model.examKeyErrorMsg:null}"
                             android:hint="@string/key"
                             android:inputType="text"
                             android:text="@={model.examKey}" />

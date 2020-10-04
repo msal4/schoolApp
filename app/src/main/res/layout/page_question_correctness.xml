@@ -68,7 +68,8 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/answerLayout"
-                style="@style/QuestionAnswerStyle">
+                style="@style/QuestionAnswerStyle"
+                android:visibility="gone">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/answerEditText"
@@ -84,6 +85,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{questionModel.answer.correctAnswer}"
                 android:textAlignment="viewStart"
+                android:visibility="gone"
                 />
         </FrameLayout>
 

@@ -50,7 +50,7 @@ class AddAbsenceViewModel(application: Application, private val postListener: Po
                 if (studentsResult.data.isNullOrEmpty()) listState.setBodyError(c.getString(R.string.no_students))
                 else {
                     listState.setLoading(false)
-                    return studentsResult.data.map { AddAbsenceModel(it.idStudent, name = it.name) }
+                    return studentsResult.data.map { AddAbsenceModel(it.id, name = it.name) }
                 }
 
             }

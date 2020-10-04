@@ -7,7 +7,7 @@ import com.smart.resources.schools_app.features.onlineExam.domain.model.*
 
 typealias ListOfAnswerableQuestions = List<BaseAnswerableQuestion<out Any>>
 
-class QuestionsViewModel(val onlineExam: OnlineExam, val readOnly: Boolean) : ViewModel(), CanLogout {
+class QuestionsViewModel(val onlineExam: OnlineExam, val readOnly: Boolean) : ViewModel() {
 
     private val _questions:MutableLiveData<ListOfAnswerableQuestions> = MutableLiveData(dummyAnswerableQuestions)
     val questions: LiveData<ListOfAnswerableQuestions> = _questions

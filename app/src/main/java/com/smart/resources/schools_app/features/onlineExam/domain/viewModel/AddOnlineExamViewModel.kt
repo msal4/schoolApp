@@ -5,16 +5,16 @@ import androidx.lifecycle.*
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.extentions.isNotNullOrBlank
+import com.smart.resources.schools_app.core.extentions.isNotNullOrEmpty
 import com.smart.resources.schools_app.core.extentions.isValidIndex
 import com.smart.resources.schools_app.core.myTypes.Event
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import com.smart.resources.schools_app.core.typeConverters.room.QuestionType
-import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.onlineExam.domain.model.CompleteOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.model.Question
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IAddOnlineExamsUseCase
-import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentTeacherDataUseCase
+import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentTeacherModelUseCase
 import kotlinx.coroutines.launch
 import org.threeten.bp.Duration
 import org.threeten.bp.LocalDate
@@ -24,10 +24,8 @@ import org.threeten.bp.LocalTime
 
 class AddOnlineExamViewModel @ViewModelInject constructor(
     private val addOnlineExamsUseCase: IAddOnlineExamsUseCase,
-    private val getCurrentTeacherDataUseCase: IGetCurrentTeacherDataUseCase
-
-) : ViewModel(),
-    CanLogout {
+    private val getCurrentTeacherModelUseCase: IGetCurrentTeacherModelUseCase
+) : ViewModel(){
     companion object {
         private const val TAG = "AddOnlineExamViewModel"
     }
@@ -40,24 +38,20 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
     private val _examAddedEvent = MutableLiveData<Event<Boolean>>()
 
 
-    val subjects = liveData {
-        val subjects = getCurrentTeacherDataUseCase()?.subjects.orEmpty()
-        emit(subjects)
-    }
-    val classes: List<String> by lazy {
-            listOf(
-                "رياضيات",
-                "عربي",
-                "english",
-                "arabic",
-                "تيست",
-            )
+    private val teacherModel by lazy {
+        getCurrentTeacherModelUseCase()
     }
 
+    val subjects = liveData {
+        emit(teacherModel?.subjects.orEmpty())
+    }
+
+    val classes: List<String> get() = teacherModel?.classesInfo.orEmpty().map { it.getClassSection }
     val selectedClassesPositions = MutableLiveData<List<Int>>(emptyList())
     val selectedClasses = selectedClassesPositions.map {
         classes.filterIndexed { index, _ -> it.contains(index) }
     }
+
     val selectedSubject = MutableLiveData<Int>(0)
     val examDate = MutableLiveData<LocalDate>(null)
     val examTime = MutableLiveData<LocalTime>(null)
@@ -66,6 +60,10 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
     val examKey = MutableLiveData<String>("")
     val questions: LiveData<List<Question>> = _questions
 
+    val classesErrorMsg: LiveData<Int?> = selectedClasses.map {
+        if (it.isNotNullOrEmpty()) null
+        else R.string.class_not_selected_error
+    }
     val subjectErrorMsg: LiveData<Int?> = selectedSubject.map {
         val subjectsCount = subjects.value?.size ?: 0
         if (it.isValidIndex(subjectsCount)) null
@@ -92,6 +90,9 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
 
 
     private val isFormValid = MediatorLiveData<Boolean>().apply {
+        addSource(classesErrorMsg) {
+            value = isFormValid()
+        }
         addSource(subjectErrorMsg) {
             value = isFormValid()
         }
@@ -136,6 +137,7 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
             return
         }
 
+        // TODO: add classes to model
         val onlineExam = OnlineExam(
             id = "",
             subjectName = subjects.value!![selectedSubject.value!!],
@@ -160,6 +162,7 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
 
     private fun isFormValid(): Boolean {
         return when {
+            classesErrorMsg.value != null ||
             subjectErrorMsg.value != null ||
                     examDateErrorMsg.value != null ||
                     examTimeErrorMsg.value != null ||

@@ -15,7 +15,7 @@ fun Int.toDimen(context: Context) = context.resources.getDimension(this)
 
 fun Int.toDrawable(context: Context): Drawable? =
     ResourcesCompat.getDrawable(context.resources, this, null)
-fun Int.toString(context: Context) = context.resources.getString(this)
+fun Int.toString(context: Context,vararg args: Any) = context.resources.getString(this, *args)
 
 fun pxToDp(px: Int): Int {
     return (px / Resources.getSystem().displayMetrics.density).toInt()

@@ -7,7 +7,7 @@ interface IGetCurrentUserTypeUseCase{
    operator fun invoke(): UserType
 }
 
-interface IGetCurrentTeacherDataUseCase{
+interface IGetCurrentTeacherModelUseCase{
    operator fun invoke(): TeacherModel?
 }
 

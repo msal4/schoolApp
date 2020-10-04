@@ -21,7 +21,7 @@ class RatingModel  (
         parcel.readSerializable() as LocalDate
     )
 
-    constructor(student: StudentWithMark):this(student.idStudent, student.name)
+    constructor(student: StudentWithMark):this(student.id, student.name)
 
     val isRated get() =  rate > -1.0F
     fun reset(){

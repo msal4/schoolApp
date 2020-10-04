@@ -35,6 +35,7 @@ class AddOnlineExamBottomSheet : BottomSheetDialogFragment() {
         binding = BottomSheetAddOnlineExamBinding.inflate(inflater, container, false).apply {
             lifecycleOwner= this@AddOnlineExamBottomSheet
             model= viewModel
+
         }
 
         observeViewModel()
