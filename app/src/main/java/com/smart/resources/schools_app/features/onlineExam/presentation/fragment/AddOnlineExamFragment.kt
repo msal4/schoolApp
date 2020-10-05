@@ -134,7 +134,7 @@ class AddOnlineExamFragment : LoadableActionMenuItemFragment() {
             val filterItems= classes.mapIndexed {index, item ->
                 FilterItem(
                     selected = viewModel.selectedClassesPositions.value.orEmpty().contains(index),
-                    item = item,
+                    item = item.getClassSection,
                 )
             }
             

@@ -12,7 +12,7 @@
 
         <variable
             name="model"
-            type="com.smart.resources.schools_app.features.onlineExam.domain.viewModel.QuestionsViewModel" />
+            type="com.smart.resources.schools_app.features.onlineExam.domain.viewModel.ExamPaperViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

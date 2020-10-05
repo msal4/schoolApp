@@ -6,12 +6,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.databinding.ItemOnlineExamBinding
-import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExam
+import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
 
 class OnlineExamAdapter(private val isStudent:Boolean) :
     ListAdapter<OnlineExam, OnlineExamAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
-    var onItemPressed: ((onlineExam:OnlineExam) -> Unit)? = null
+    var onItemPressed: ((onlineExam: OnlineExam) -> Unit)? = null
 
     override fun onBindViewHolder(
         holder: MyViewHolder,

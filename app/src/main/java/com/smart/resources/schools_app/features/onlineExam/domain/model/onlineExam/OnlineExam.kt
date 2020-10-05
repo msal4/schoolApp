@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.onlineExam.domain.model
+package com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam
 
 import android.os.Parcelable
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
@@ -9,12 +9,12 @@ import org.threeten.bp.LocalDateTime
 @Parcelize
 data class OnlineExam(
     val id: String,
-    val subjectName: String,
-    val examDate: LocalDateTime,
-    val examDuration: Duration,
-    val numberOfQuestions: Int,
-    val examStatus: OnlineExamStatus,
-) : Parcelable {
+    override val subjectName: String,
+    override val examDate: LocalDateTime,
+    override val examDuration: Duration,
+    override val numberOfQuestions: Int,
+    override val examStatus: OnlineExamStatus,
+) : BaseOnlineExam(), Parcelable {
 
     val remainingDuration: Duration
         get() {

@@ -2,12 +2,12 @@ package com.smart.resources.schools_app.features.onlineExam.domain.viewModel
 
 import androidx.lifecycle.*
 import com.orhanobut.logger.Logger
-import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.onlineExam.domain.model.*
+import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
 
 typealias ListOfAnswerableQuestions = List<BaseAnswerableQuestion<out Any>>
 
-class QuestionsViewModel(val onlineExam: OnlineExam, val readOnly: Boolean) : ViewModel() {
+class ExamPaperViewModel(val onlineExam: OnlineExam, val readOnly: Boolean) : ViewModel() {
 
     private val _questions:MutableLiveData<ListOfAnswerableQuestions> = MutableLiveData(dummyAnswerableQuestions)
     val questions: LiveData<ListOfAnswerableQuestions> = _questions
@@ -34,7 +34,7 @@ class QuestionsViewModelFactory(
 ) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return QuestionsViewModel(onlineExam, readOnly) as T
+        return ExamPaperViewModel(onlineExam, readOnly) as T
     }
 }
 

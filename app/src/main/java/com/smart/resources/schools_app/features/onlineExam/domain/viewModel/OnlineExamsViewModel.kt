@@ -12,8 +12,8 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.ListState
 import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
-import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExam
-import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IAddOnlineExamsUseCase
+import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
+import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IAddOnlineExamUseCase
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IGetOnlineExamsUseCase
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IRemoveOnlineExamUseCase
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserTypeUseCase
@@ -26,7 +26,7 @@ class OnlineExamViewModel @ViewModelInject constructor(
     application: Application,
     private val getOnlineExamsUseCase: IGetOnlineExamsUseCase,
     private val removeOnlineExamUseCase: IRemoveOnlineExamUseCase,
-    private val addOnlineExamsUseCase: IAddOnlineExamsUseCase, // TODO: remove this
+    private val addOnlineExamUseCase: IAddOnlineExamUseCase, // TODO: remove this
     private val getCurrentUserTypeUseCase: IGetCurrentUserTypeUseCase
 ) : AndroidViewModel(application) {
 
@@ -45,18 +45,18 @@ class OnlineExamViewModel @ViewModelInject constructor(
     // TODO: remove this
     init {
 //        viewModelScope.launch {
-//           addOnlineExamsUseCase(
+//           addOnlineExamUseCase(
 //               dummyOnlineExams[0]
 //           )
 //           delay(2000)
-//           addOnlineExamsUseCase(
+//           addOnlineExamUseCase(
 //               dummyOnlineExams[2]
 //           )
 //           delay(5000)
-//            addOnlineExamsUseCase(
+//            addOnlineExamUseCase(
 //                *dummyOnlineExams.map {
 //                    CompleteOnlineExam(
-//                        onlineExam = it,
+//                        addOnlineExam = it,
 //                        questions = dummyQuestions,
 //                    )
 //                }.toTypedArray()

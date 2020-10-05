@@ -18,8 +18,8 @@ import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.callbacks.ViewPager2Helper
 import com.smart.resources.schools_app.databinding.FragmentExamPaperBinding
 import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnswer
-import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExam
-import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.QuestionsViewModel
+import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
+import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.ExamPaperViewModel
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.QuestionsViewModelFactory
 import com.smart.resources.schools_app.features.onlineExam.presentation.adapter.AnswerableQuestionsPagerAdapter
 import com.smart.resources.schools_app.features.onlineExam.presentation.adapter.QuestionsNavigatorAdapter
@@ -27,7 +27,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigat
 
 class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
     private lateinit var binding: FragmentExamPaperBinding
-    private val viewModel: QuestionsViewModel by viewModels {
+    private val viewModel: ExamPaperViewModel by viewModels {
         requireArguments().run {
             QuestionsViewModelFactory(
                 getParcelable(EXTRA_EXAM_DETAILS)!!,

@@ -7,13 +7,15 @@ import com.haytham.coder.extensions.isNotNullOrEmpty
 import com.haytham.coder.extensions.isValidIndex
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.extentions.filterIndexes
 import com.smart.resources.schools_app.core.myTypes.Event
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import com.smart.resources.schools_app.core.typeConverters.room.QuestionType
-import com.smart.resources.schools_app.features.onlineExam.domain.model.CompleteOnlineExam
-import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExam
+import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.CompleteOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.model.Question
-import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IAddOnlineExamsUseCase
+import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.AddOnlineExam
+import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IAddOnlineExamUseCase
+import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentTeacherModelUseCase
 import kotlinx.coroutines.launch
 import org.threeten.bp.Duration
@@ -23,9 +25,9 @@ import org.threeten.bp.LocalTime
 
 
 class AddOnlineExamViewModel @ViewModelInject constructor(
-    private val addOnlineExamsUseCase: IAddOnlineExamsUseCase,
+    private val addOnlineExamUseCase: IAddOnlineExamUseCase,
     private val getCurrentTeacherModelUseCase: IGetCurrentTeacherModelUseCase
-) : ViewModel(){
+) : ViewModel() {
     companion object {
         private const val TAG = "AddOnlineExamViewModel"
     }
@@ -46,10 +48,10 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
         emit(teacherModel?.subjects.orEmpty())
     }
 
-    val classes: List<String> get() = teacherModel?.classesInfo.orEmpty().map { it.getClassSection }
+    val classes: List<ClassInfoModel> get() = teacherModel?.classesInfo.orEmpty()
     val selectedClassesPositions = MutableLiveData<List<Int>>(emptyList())
     val selectedClasses = selectedClassesPositions.map {
-        classes.filterIndexed { index, _ -> it.contains(index) }
+        classes.filterIndexed { index, _ -> it.contains(index) }.map { it.getClassSection }
     }
 
     val selectedSubject = MutableLiveData<Int>(0)
@@ -138,8 +140,11 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
         }
 
         // TODO: add classes to model
-        val onlineExam = OnlineExam(
-            id = "",
+        val selectedIndexes = selectedClassesPositions.value.orEmpty()
+        val classIds = classes.filterIndexes(selectedIndexes).map { it.classId }
+
+        val addOnlineExam = AddOnlineExam(
+            classIds =classIds,
             subjectName = subjects.value!![selectedSubject.value!!],
             examDate = LocalDateTime.of(examDate.value, examTime.value),
             examDuration = Duration.ofMinutes(examDurationInMinutes.value?.toLong() ?: 0),
@@ -148,22 +153,22 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
         )
 
         val completeOnlineExam = CompleteOnlineExam(
-            onlineExam = onlineExam,
+            addOnlineExam = addOnlineExam,
             questions = questions.value.orEmpty()
         )
 
         viewModelScope.launch {
-            addOnlineExamsUseCase(completeOnlineExam)
+            addOnlineExamUseCase(completeOnlineExam)
             // TODO: complete this
             _examAddedEvent.postValue(Event(true))
         }
-        Logger.d("$TAG, $onlineExam")
+        Logger.d("$TAG, $addOnlineExam")
     }
 
     private fun isFormValid(): Boolean {
         return when {
             classesErrorMsg.value != null ||
-            subjectErrorMsg.value != null ||
+                    subjectErrorMsg.value != null ||
                     examDateErrorMsg.value != null ||
                     examTimeErrorMsg.value != null ||
                     examKeyErrorMsg.value != null ||

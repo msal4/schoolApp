@@ -25,7 +25,7 @@ abstract class OnlineExamsDao : BaseDao<LocalOnlineExam>() {
      *  2- insert UserOnlineExamCrossRef for the many to many relation links to be valid
      */
     @Transaction
-    open fun insertUserOnlineExams(userId: String, onlineExams: List<LocalOnlineExam>) {
+    open fun upsertUserOnlineExams(userId: String, onlineExams: List<LocalOnlineExam>) {
 
         val userExamsCrossRef = onlineExams.map {
             UserOnlineExamCrossRef(

@@ -10,7 +10,7 @@ import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.bindingAdapters.setSwipeToDelete
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
-import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExam
+import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.OnlineExamViewModel
 import com.smart.resources.schools_app.features.onlineExam.presentation.adapter.OnlineExamAdapter
 import dagger.hilt.android.AndroidEntryPoint

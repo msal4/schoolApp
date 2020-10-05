@@ -10,7 +10,7 @@
 
         <variable
             name="onlineExamItem"
-            type="com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExam" />
+            type="com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam" />
 
         <variable
             name="isStudent"

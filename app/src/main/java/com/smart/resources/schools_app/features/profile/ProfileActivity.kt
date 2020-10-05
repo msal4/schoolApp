@@ -95,11 +95,9 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-
     fun selectImage(view: View) {
         openImagePickerApp(neededForLaterUsage = true)
     }
-
 
     fun selectMultiAccount(view: View) {
         AccountsDialog.newInstance().apply {

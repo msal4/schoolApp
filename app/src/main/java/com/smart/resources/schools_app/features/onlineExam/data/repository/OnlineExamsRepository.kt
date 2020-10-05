@@ -1,12 +1,16 @@
 package com.smart.resources.schools_app.features.onlineExam.data.repository
 
+import com.hadiyarajesh.flower.ApiResponse
+import com.hadiyarajesh.flower.ApiSuccessResponse
 import com.hadiyarajesh.flower.Resource
 import com.hadiyarajesh.flower.networkBoundResource
 import com.orhanobut.logger.Logger
+import com.smart.resources.schools_app.core.extentions.withNewData
 import com.smart.resources.schools_app.features.onlineExam.data.local.dataSource.OnlineExamsDao
 import com.smart.resources.schools_app.features.onlineExam.data.mappers.onlineExams.OnlineExamMappersFacade
 import com.smart.resources.schools_app.features.onlineExam.data.remote.dataSource.OnlineExamsClient
-import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExam
+import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
+import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.AddOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.repository.IOnlineExamsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -34,15 +38,15 @@ class OnlineExamsRepository(
                 onlineExamsDao
                     .getUserOnlineExams(userId)
                     .map {
-                        onlineExamMappersFacade.mapLocalOnlineExams(it.first().onlineExams)
+                        onlineExamMappersFacade.mapLocalOnlineExam(it.first().onlineExams)
                     }
             },
             fetchFromRemote = {
                 onlineExamsClient.getOnlineExams()
             },
             saveRemoteData = {
-                    val localExams= onlineExamMappersFacade.mapNetworkToLocalOnlineExams(it)
-                    onlineExamsDao.insertUserOnlineExams(userId,localExams)
+                    val localExams= onlineExamMappersFacade.mapNetworkToLocalOnlineExam(it)
+                    onlineExamsDao.upsertUserOnlineExams(userId,localExams)
             },
             onFetchFailed = {errorBody, statusCode ->
                 Logger.e("$TAG: $statusCode -> $errorBody")
@@ -54,10 +58,18 @@ class OnlineExamsRepository(
         }.flowOn(Dispatchers.IO)
     }
 
-    override suspend fun addOnlineExams(userId: String, vararg onlineExam: OnlineExam): Resource<Unit> {
-        val localExams = onlineExamMappersFacade.mapOnlineExams(onlineExam.toList())
-        onlineExamsDao.insertUserOnlineExams(userId, localExams)
-        return Resource.success(Unit)
+    override suspend fun addOnlineExam(userId: String, addOnlineExam: AddOnlineExam): ApiResponse<OnlineExam> {
+        val networkExam = onlineExamMappersFacade.mapOnlineExamAddToNetwork(addOnlineExam)
+        val res= onlineExamsClient.addOnlineExam(networkExam)
+
+        if(res is ApiSuccessResponse && res.body!=null){
+            val localExams= onlineExamMappersFacade.mapNetworkToLocalOnlineExam(res.body!!)
+             onlineExamsDao.upsertUserOnlineExams(userId, listOf(localExams))
+        }
+
+        return res.withNewData {
+            onlineExamMappersFacade.mapNetworkOnlineExam(it)
+        }
     }
 
     override suspend fun addOnlineExamByKey(examKey: String): Resource<Unit> {

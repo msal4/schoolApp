@@ -1,13 +1,8 @@
 package com.smart.resources.schools_app.core.extentions
 
-import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Shader
-import android.net.Uri
-import android.text.BidiFormatter
-import android.util.Base64
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -16,6 +11,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.hadiyarajesh.flower.ApiEmptyResponse
+import com.hadiyarajesh.flower.ApiErrorResponse
+import com.hadiyarajesh.flower.ApiResponse
+import com.hadiyarajesh.flower.ApiSuccessResponse
 import com.haytham.coder.extensions.toColor
 import com.smart.resources.schools_app.R
 import okhttp3.MediaType
@@ -23,7 +22,6 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.threeten.bp.Duration
 import java.io.File
-import java.nio.charset.StandardCharsets
 
 fun String?.isImage() = (this != null && (this.toLowerCase().endsWith(".jpg") || this.toLowerCase()
     .endsWith(".jpeg") || this.toLowerCase().endsWith(".png")))
@@ -36,7 +34,7 @@ fun String.asRequestBody(): RequestBody {
 }
 
 fun File.asBodyPart(fieldName: String): MultipartBody.Part? {
-    val requestBody= RequestBody.create(MediaType.parse("Image/*"), this)
+    val requestBody = RequestBody.create(MediaType.parse("Image/*"), this)
     return MultipartBody.Part.createFormData(fieldName, name, requestBody)
 }
 
@@ -76,3 +74,29 @@ fun TextView.applyGradient(@ColorInt vararg colors: Int) {
 }
 
 fun Long.toDuration(): Duration = Duration.ofMillis(this)
+
+fun <T : Any> Collection<T>.filterIndexes(indexFilter: List<Int>): Collection<T> =
+    filterIndexed { index, _ ->
+        indexFilter.contains(index)
+    }
+
+
+fun <T, R> ApiResponse<T>.withNewData(mapper: (T) -> R): ApiResponse<R> {
+    return when (this) {
+        is ApiEmptyResponse -> ApiEmptyResponse()
+        is ApiSuccessResponse -> {
+            if (body != null) {
+                ApiSuccessResponse(
+                    body = mapper(body!!),
+                    headers = headers,
+                )
+            } else {
+                ApiEmptyResponse()
+            }
+        }
+        is ApiErrorResponse -> ApiErrorResponse(
+            errorMessage = errorMessage,
+            statusCode = statusCode,
+        )
+    }
+}

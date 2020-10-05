@@ -1,21 +1,43 @@
 package com.smart.resources.schools_app.features.onlineExam.data.mappers.onlineExams
 
+import com.smart.resources.schools_app.core.utils.mapList
 import com.smart.resources.schools_app.features.onlineExam.data.local.model.LocalOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.data.remote.model.NetworkOnlineExam
-import com.smart.resources.schools_app.features.onlineExam.domain.model.OnlineExam
+import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
+import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.AddOnlineExam
 
 class OnlineExamMappersFacade(
-    private val localOnlineExamsMapper: (List<LocalOnlineExam>) -> List<OnlineExam>,
-    private val networkOnlineExamsMapper: (List<NetworkOnlineExam>?) -> List<OnlineExam>,
-    private val onlineExamsMapper: (List<OnlineExam>) -> List<LocalOnlineExam>
+    private val localOnlineExamMapper: (LocalOnlineExam) -> OnlineExam,
+    private val networkOnlineExamMapper: (NetworkOnlineExam) -> OnlineExam,
+    private val onlineExamToLocalMapper: (OnlineExam) -> LocalOnlineExam,
+    private val addOnlineExamToNetworkMapper: (AddOnlineExam) -> NetworkOnlineExam
 ) {
 
-    fun mapLocalOnlineExams(onlineExams: List<LocalOnlineExam>) = localOnlineExamsMapper(onlineExams)
-    fun mapOnlineExams(onlineExams: List<OnlineExam>) = onlineExamsMapper(onlineExams)
-    private fun mapNetworkOnlineExams(onlineExams: List<NetworkOnlineExam>?) = networkOnlineExamsMapper(onlineExams)
+    fun mapLocalOnlineExam(input: LocalOnlineExam):OnlineExam = localOnlineExamMapper(input)
+    fun mapNetworkOnlineExam(input: NetworkOnlineExam):OnlineExam  = networkOnlineExamMapper(input)
+    fun mapOnlineExamToLocal(input: OnlineExam):LocalOnlineExam  = onlineExamToLocalMapper(input)
+    fun mapOnlineExamAddToNetwork(input: AddOnlineExam) :NetworkOnlineExam = addOnlineExamToNetworkMapper(input)
+    fun mapNetworkToLocalOnlineExam(input: NetworkOnlineExam): LocalOnlineExam = mapOnlineExamToLocal(mapNetworkOnlineExam(input))
 
-    fun mapNetworkToLocalOnlineExams(onlineExams: List<NetworkOnlineExam>):List<LocalOnlineExam>{
-        val domainOnlineExams= mapNetworkOnlineExams(onlineExams)
-        return mapOnlineExams(domainOnlineExams)
-    }
+
+    fun mapLocalOnlineExam(input: List<LocalOnlineExam>): List<OnlineExam> = mapList(
+        input = input,
+        mapSingle = localOnlineExamMapper
+    )
+    fun mapNetworkOnlineExam(input: List<NetworkOnlineExam>): List<OnlineExam> = mapList(
+        input = input,
+        mapSingle = networkOnlineExamMapper
+    )
+    fun mapOnlineExamToLocal(input: List<OnlineExam>): List<LocalOnlineExam> = mapList(
+        input = input,
+        mapSingle = onlineExamToLocalMapper
+    )
+    fun mapOnlineExamAddToNetwork(input: List<AddOnlineExam>): List<NetworkOnlineExam> = mapList(
+        input = input,
+        mapSingle = addOnlineExamToNetworkMapper
+    )
+    fun mapNetworkToLocalOnlineExam(input: List<NetworkOnlineExam>): List<LocalOnlineExam> = mapList(
+        input = input,
+        mapSingle = ::mapNetworkToLocalOnlineExam
+    )
 }

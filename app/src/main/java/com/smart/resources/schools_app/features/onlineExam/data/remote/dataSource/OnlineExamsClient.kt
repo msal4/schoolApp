@@ -17,7 +17,7 @@ interface OnlineExamsClient {
     fun getOnlineExams(): Flow<ApiResponse<List<NetworkOnlineExam>>>
 
     @POST("addOnlineExam")
-    suspend fun addOnlineExam(@Body networkOnlineExam: NetworkOnlineExam): Response<Unit>
+    suspend fun addOnlineExam(@Body networkOnlineExam: NetworkOnlineExam): ApiResponse<NetworkOnlineExam>
 
     @PUT("examFinish/{$EXAM_ID_PATH}")
     suspend fun finishExam(@Path(EXAM_ID_PATH) examId:String, @Body networkExamFinishedStatus: NetworkExamFinishedStatus): Response<Unit>
