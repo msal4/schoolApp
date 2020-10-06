@@ -105,8 +105,7 @@ class AddOnlineExamFragment : LoadableActionMenuItemFragment() {
             }
 
             errorMsgEvent.observe(viewLifecycleOwner) {
-                it.getContentIfNotHandled()?.let { errorMsgId ->
-                    val errorMsg = errorMsgId.toString(requireContext())
+                it.getContentIfNotHandled()?.let { errorMsg ->
                     binding.coordinatorLayout.showSnackBar(errorMsg)
                 }
             }

@@ -17,7 +17,7 @@ data class LocalOnlineExam(
     val subjectName: String,
     val date: LocalDateTime,
     val examDuration: Duration,
-    val numberOfQuestions: Int,
+    val numberOfRequiredQuestions: Int,
     val examStatus: OnlineExamStatus,
 ) {
     companion object {

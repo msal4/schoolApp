@@ -19,7 +19,7 @@ import com.smart.resources.schools_app.core.myTypes.ConnectionError
 import com.smart.resources.schools_app.core.myTypes.ResponseError
 import com.smart.resources.schools_app.core.myTypes.Success
 import com.smart.resources.schools_app.core.myTypes.toMyResult
-import com.smart.resources.schools_app.core.utils.RetrofitHelper
+import com.smart.resources.schools_app.core.network.RetrofitHelper
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.students.SendStudentResult
 import com.smart.resources.schools_app.features.students.StudentWithMark

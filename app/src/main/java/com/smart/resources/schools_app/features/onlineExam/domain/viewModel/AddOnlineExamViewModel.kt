@@ -1,10 +1,15 @@
 package com.smart.resources.schools_app.features.onlineExam.domain.viewModel
 
+import android.app.Application
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import com.hadiyarajesh.flower.ApiEmptyResponse
+import com.hadiyarajesh.flower.ApiErrorResponse
+import com.hadiyarajesh.flower.ApiSuccessResponse
 import com.haytham.coder.extensions.isNotNullOrBlank
 import com.haytham.coder.extensions.isNotNullOrEmpty
 import com.haytham.coder.extensions.isValidIndex
+import com.haytham.coder.extensions.toString
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.extentions.filterIndexes
@@ -26,19 +31,20 @@ import org.threeten.bp.LocalTime
 
 class AddOnlineExamViewModel @ViewModelInject constructor(
     private val addOnlineExamUseCase: IAddOnlineExamUseCase,
-    private val getCurrentTeacherModelUseCase: IGetCurrentTeacherModelUseCase
-) : ViewModel() {
+    private val getCurrentTeacherModelUseCase: IGetCurrentTeacherModelUseCase,
+    application: Application,
+) : AndroidViewModel(application) {
     companion object {
         private const val TAG = "AddOnlineExamViewModel"
     }
 
+    private val c=application.baseContext
     private val _showErrors = MutableLiveData<Boolean>(false)
     private val _isLoading = MutableLiveData<Event<Boolean>>(Event(false))
     private val _questions =
         MutableLiveData<List<Question>>(dummyQuestions) // TODO: remove initial data
-    private val _errorMsgEvent = MutableLiveData<Event<Int?>>()
+    private val _errorMsgEvent = MutableLiveData<Event<String>>()
     private val _examAddedEvent = MutableLiveData<Event<Boolean>>()
-
 
     private val teacherModel by lazy {
         getCurrentTeacherModelUseCase()
@@ -85,7 +91,7 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
     }
     private var questionsListError: Int? = null
 
-    val errorMsgEvent: LiveData<Event<Int?>> = _errorMsgEvent
+    val errorMsgEvent: LiveData<Event<String>> = _errorMsgEvent
     val examAddedEvent: LiveData<Event<Boolean>> = _examAddedEvent
     val showErrors: LiveData<Boolean> = _showErrors
     val isLoading: LiveData<Event<Boolean>> = _isLoading
@@ -133,22 +139,22 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
         _showErrors.value = true
         if (isFormValid.value != true) {
             if (questionsListError != null) {
-                _errorMsgEvent.value = Event(questionsListError)
+                _errorMsgEvent.value = Event(questionsListError?.toString(c)?:"")
                 questionsListError = null
             }
             return
         }
 
-        // TODO: add classes to model
         val selectedIndexes = selectedClassesPositions.value.orEmpty()
-        val classIds = classes.filterIndexes(selectedIndexes).map { it.classId }
+        val classIds = classes.filterIndexes(selectedIndexes).map { it.classId}
 
         val addOnlineExam = AddOnlineExam(
             classIds =classIds,
-            subjectName = subjects.value!![selectedSubject.value!!],
+            examKey = examKey.value?:"",
+            subjectName = subjects.value?.getOrNull(selectedSubject.value?:0)?:"",
             examDate = LocalDateTime.of(examDate.value, examTime.value),
             examDuration = Duration.ofMinutes(examDurationInMinutes.value?.toLong() ?: 0),
-            numberOfQuestions = questions.value?.size ?: 0,
+            numberOfRequiredQuestions = numberOfRequiredQuestions.value ?: 0,
             examStatus = OnlineExamStatus.INACTIVE,
         )
 
@@ -158,9 +164,11 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
         )
 
         viewModelScope.launch {
-            addOnlineExamUseCase(completeOnlineExam)
-            // TODO: complete this
-            _examAddedEvent.postValue(Event(true))
+            val res= addOnlineExamUseCase(completeOnlineExam)
+            when(res){
+                is ApiErrorResponse -> _errorMsgEvent.postValue(Event(res.errorMessage))
+                else -> _examAddedEvent.postValue(Event(true))
+            }
         }
         Logger.d("$TAG, $addOnlineExam")
     }

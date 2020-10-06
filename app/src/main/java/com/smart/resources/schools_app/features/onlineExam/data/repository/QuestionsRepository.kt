@@ -9,6 +9,7 @@ import com.smart.resources.schools_app.features.onlineExam.domain.model.Question
 import com.smart.resources.schools_app.features.onlineExam.domain.repository.IQuestionsRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
@@ -37,7 +38,7 @@ class QuestionsRepository(
         questions: List<Question>
     ): ApiResponse<List<Question>> {
         val res =
-            questionsClient.addQuestions(questionMappersFacade.mapQuestionToNetwork(questions, examId))
+            questionsClient.addQuestions(questionMappersFacade.mapQuestionToNetwork(questions, examId)).first()
 
         if (res is ApiSuccessResponse && res.body != null) {
             val localQuestions =

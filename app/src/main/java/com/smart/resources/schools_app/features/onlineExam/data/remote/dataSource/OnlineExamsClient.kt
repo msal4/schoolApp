@@ -2,8 +2,9 @@ package com.smart.resources.schools_app.features.onlineExam.data.remote.dataSour
 
 import com.hadiyarajesh.flower.ApiResponse
 import com.smart.resources.schools_app.features.onlineExam.data.remote.model.NetworkExamFinishedStatus
-import com.smart.resources.schools_app.features.onlineExam.data.remote.model.NetworkOnlineExam
+import com.smart.resources.schools_app.features.onlineExam.data.remote.model.onlineExam.NetworkOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.data.remote.model.NetworkOnlineExamStatus
+import com.smart.resources.schools_app.features.onlineExam.data.remote.model.onlineExam.PostNetworkOnlineExam
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 import retrofit2.http.*
@@ -17,7 +18,7 @@ interface OnlineExamsClient {
     fun getOnlineExams(): Flow<ApiResponse<List<NetworkOnlineExam>>>
 
     @POST("addOnlineExam")
-    suspend fun addOnlineExam(@Body networkOnlineExam: NetworkOnlineExam): ApiResponse<NetworkOnlineExam>
+    fun addOnlineExam(@Body postModel: PostNetworkOnlineExam): Flow<ApiResponse<NetworkOnlineExam>>
 
     @PUT("examFinish/{$EXAM_ID_PATH}")
     suspend fun finishExam(@Path(EXAM_ID_PATH) examId:String, @Body networkExamFinishedStatus: NetworkExamFinishedStatus): Response<Unit>

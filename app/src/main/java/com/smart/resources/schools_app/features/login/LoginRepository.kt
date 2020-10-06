@@ -1,7 +1,7 @@
 package com.smart.resources.schools_app.features.login
 
 import com.orhanobut.logger.Logger
-import com.smart.resources.schools_app.core.utils.RetrofitHelper
+import com.smart.resources.schools_app.core.network.RetrofitHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import java.lang.Exception
 

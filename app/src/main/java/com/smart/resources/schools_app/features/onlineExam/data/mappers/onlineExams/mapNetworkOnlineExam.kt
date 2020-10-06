@@ -1,7 +1,7 @@
 package com.smart.resources.schools_app.features.onlineExam.data.mappers.onlineExams
 
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
-import com.smart.resources.schools_app.features.onlineExam.data.remote.model.NetworkOnlineExam
+import com.smart.resources.schools_app.features.onlineExam.data.remote.model.onlineExam.NetworkOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
 import org.threeten.bp.Duration
 import org.threeten.bp.LocalDateTime
@@ -9,10 +9,10 @@ import org.threeten.bp.LocalDateTime
 fun mapNetworkOnlineExam(input: NetworkOnlineExam): OnlineExam {
     return OnlineExam(
         id = input.idOnlineExam.toString(),
-        subjectName = "subjectName${input.idOnlineExam}", // TODO get from backend
+        subjectName = input.subjectName.toString(),
         examDate = LocalDateTime.of(input.date, input.time),
-        examDuration = Duration.ofMinutes(input.examTime?.toLong()?:0),
-        numberOfQuestions = input.nuOfRequiredQuestion?:0,
+        examDuration = Duration.ofMinutes(input.examTime?:0),
+        numberOfRequiredQuestions = input.nuOfRequiredQuestion?:0,
         examStatus = input.getExamStatus(),
     )
 }

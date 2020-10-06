@@ -12,7 +12,7 @@ data class OnlineExam(
     override val subjectName: String,
     override val examDate: LocalDateTime,
     override val examDuration: Duration,
-    override val numberOfQuestions: Int,
+    override val numberOfRequiredQuestions: Int,
     override val examStatus: OnlineExamStatus,
 ) : BaseOnlineExam(), Parcelable {
 

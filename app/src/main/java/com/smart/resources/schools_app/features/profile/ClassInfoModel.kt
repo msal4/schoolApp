@@ -4,7 +4,7 @@ import com.haytham.coder.extensions.unicodeWrap
 
 
 data class ClassInfoModel(
-    val classId: Int,
+    val classId: String,
     val className: String,
     val sectionName: String
 ){

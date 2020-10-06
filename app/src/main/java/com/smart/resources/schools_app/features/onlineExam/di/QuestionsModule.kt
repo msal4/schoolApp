@@ -1,11 +1,9 @@
 package com.smart.resources.schools_app.features.onlineExam.di
 
 import com.smart.resources.schools_app.core.appDatabase.AppDatabase
-import com.smart.resources.schools_app.core.utils.RetrofitHelper
+import com.smart.resources.schools_app.core.network.RetrofitHelper
 import com.smart.resources.schools_app.features.onlineExam.data.local.dataSource.QuestionsDao
-import com.smart.resources.schools_app.features.onlineExam.data.mappers.onlineExams.*
 import com.smart.resources.schools_app.features.onlineExam.data.mappers.questions.*
-import com.smart.resources.schools_app.features.onlineExam.data.remote.dataSource.OnlineExamsClient
 import com.smart.resources.schools_app.features.onlineExam.data.remote.dataSource.QuestionsClient
 import com.smart.resources.schools_app.features.onlineExam.data.repository.QuestionsRepository
 import com.smart.resources.schools_app.features.onlineExam.domain.repository.IQuestionsRepository

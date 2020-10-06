@@ -5,10 +5,12 @@ import com.smart.resources.schools_app.features.onlineExam.data.remote.model.Net
 import com.smart.resources.schools_app.features.onlineExam.domain.model.Question
 
 fun mapQuestionToNetwork(input: Question, examId:String):NetworkQuestion{
-    // TODO: complete options
     return NetworkQuestion(
-        onlineExamId = examId.toLong(),
-        typeId = input.questionType.value, // TODO: complete mapping
+        onlineExamId = examId.toLongOrNull(),
+        typeId = input.questionType.value,
         question = input.question,
+        optionOne = input.options.getOrNull(0),
+        optionTwo = input.options.getOrNull(1),
+        optionThree = input.options.getOrNull(2)
     )
 }

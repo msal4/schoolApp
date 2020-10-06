@@ -2,6 +2,7 @@ package com.smart.resources.schools_app.features.onlineExam.domain.usecase
 
 import com.hadiyarajesh.flower.ApiResponse
 import com.hadiyarajesh.flower.ApiSuccessResponse
+import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.core.extentions.withNewData
 import com.smart.resources.schools_app.features.onlineExam.domain.model.Question
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.CompleteOnlineExam
@@ -34,6 +35,7 @@ class AddOnlineExamUseCase @Inject constructor(
         addedExam: OnlineExam,
         question: List<Question>
     ): ApiResponse<Unit> {
+        Logger.wtf(addedExam.toString())
         val questionsRes = questionsRepository.addQuestions(
             examId = addedExam.id,
             questions = question

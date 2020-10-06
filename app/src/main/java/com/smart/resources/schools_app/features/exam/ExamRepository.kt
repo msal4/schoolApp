@@ -1,7 +1,7 @@
 package com.smart.resources.schools_app.features.exam
 
 import androidx.lifecycle.MutableLiveData
-import com.smart.resources.schools_app.core.utils.RetrofitHelper
+import com.smart.resources.schools_app.core.network.RetrofitHelper
 import com.smart.resources.schools_app.core.myTypes.MyResult
 import com.smart.resources.schools_app.core.myTypes.Success
 import com.smart.resources.schools_app.core.myTypes.toMyResult

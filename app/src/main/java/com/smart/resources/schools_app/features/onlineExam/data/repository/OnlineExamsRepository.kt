@@ -14,10 +14,7 @@ import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineEx
 import com.smart.resources.schools_app.features.onlineExam.domain.repository.IOnlineExamsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 
 class OnlineExamsRepository(
     private val onlineExamsDao: OnlineExamsDao,
@@ -60,7 +57,7 @@ class OnlineExamsRepository(
 
     override suspend fun addOnlineExam(userId: String, addOnlineExam: AddOnlineExam): ApiResponse<OnlineExam> {
         val networkExam = onlineExamMappersFacade.mapOnlineExamAddToNetwork(addOnlineExam)
-        val res= onlineExamsClient.addOnlineExam(networkExam)
+        val res= onlineExamsClient.addOnlineExam(networkExam).first()
 
         if(res is ApiSuccessResponse && res.body!=null){
             val localExams= onlineExamMappersFacade.mapNetworkToLocalOnlineExam(res.body!!)

@@ -7,11 +7,12 @@ import org.threeten.bp.Duration
 import org.threeten.bp.LocalDateTime
 
 data class AddOnlineExam(
-    val classIds:List<Int>,
+    val classIds:List<String>,
+    val examKey:String,
     override val subjectName: String,
     override val examDate: LocalDateTime,
     override val examDuration: Duration,
-    override val numberOfQuestions: Int,
+    override val numberOfRequiredQuestions: Int,
     override val examStatus: OnlineExamStatus,
 ) : BaseOnlineExam()
 

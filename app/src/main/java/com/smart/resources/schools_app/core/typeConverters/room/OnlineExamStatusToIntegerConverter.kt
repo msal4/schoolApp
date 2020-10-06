@@ -2,10 +2,10 @@ package com.smart.resources.schools_app.core.typeConverters.room
 
 import androidx.room.TypeConverter
 
-enum class OnlineExamStatus {
-    INACTIVE,
-    ACTIVE,
-    COMPLETED,
+enum class OnlineExamStatus(val value: Int) {
+    INACTIVE(0),
+    ACTIVE(1),
+    COMPLETED(2),
 }
 
 class OnlineExamStatusToIntegerConverter {

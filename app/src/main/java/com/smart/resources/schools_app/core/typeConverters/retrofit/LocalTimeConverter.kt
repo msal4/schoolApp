@@ -3,6 +3,7 @@ package com.smart.resources.schools_app.core.typeConverters.retrofit
 import com.google.gson.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
+import org.threeten.bp.format.DateTimeFormatter
 import java.lang.Exception
 import java.lang.reflect.Type
 
@@ -22,6 +23,6 @@ class LocalTimeConverter : JsonDeserializer<LocalTime>, JsonSerializer<LocalTime
         src: LocalTime,
         typeOfSrc: Type?,
         context: JsonSerializationContext?
-    ): JsonElement = JsonPrimitive(src.format(dateTimeBackendSendFormatter))
+    ): JsonElement = JsonPrimitive(src.format(DateTimeFormatter.ISO_TIME))
 
 }

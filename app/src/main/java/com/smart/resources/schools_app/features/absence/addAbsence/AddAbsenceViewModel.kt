@@ -4,12 +4,11 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.utils.RetrofitHelper
+import com.smart.resources.schools_app.core.network.RetrofitHelper
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.absence.AddAbsenceModel
 import com.smart.resources.schools_app.features.absence.PostAbsenceModel
 import com.smart.resources.schools_app.core.myTypes.ListState
-import com.smart.resources.schools_app.features.login.CanLogout
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
