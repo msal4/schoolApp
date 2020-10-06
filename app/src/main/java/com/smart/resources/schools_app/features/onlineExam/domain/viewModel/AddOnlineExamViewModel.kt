@@ -1,17 +1,14 @@
 package com.smart.resources.schools_app.features.onlineExam.domain.viewModel
 
-import android.app.Application
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.hadiyarajesh.flower.ApiEmptyResponse
 import com.hadiyarajesh.flower.ApiErrorResponse
-import com.hadiyarajesh.flower.ApiSuccessResponse
 import com.haytham.coder.extensions.isNotNullOrBlank
 import com.haytham.coder.extensions.isNotNullOrEmpty
 import com.haytham.coder.extensions.isValidIndex
-import com.haytham.coder.extensions.toString
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.extentions.combinedMessage
 import com.smart.resources.schools_app.core.extentions.filterIndexes
 import com.smart.resources.schools_app.core.myTypes.Event
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
@@ -32,19 +29,18 @@ import org.threeten.bp.LocalTime
 class AddOnlineExamViewModel @ViewModelInject constructor(
     private val addOnlineExamUseCase: IAddOnlineExamUseCase,
     private val getCurrentTeacherModelUseCase: IGetCurrentTeacherModelUseCase,
-    application: Application,
-) : AndroidViewModel(application) {
+) : ViewModel() {
     companion object {
         private const val TAG = "AddOnlineExamViewModel"
     }
 
-    private val c=application.baseContext
     private val _showErrors = MutableLiveData<Boolean>(false)
     private val _isLoading = MutableLiveData<Event<Boolean>>(Event(false))
     private val _questions =
         MutableLiveData<List<Question>>(dummyQuestions) // TODO: remove initial data
-    private val _errorMsgEvent = MutableLiveData<Event<String>>()
+    private val _errorMsgEvent = MutableLiveData<Event<Int?>>()
     private val _examAddedEvent = MutableLiveData<Event<Boolean>>()
+
 
     private val teacherModel by lazy {
         getCurrentTeacherModelUseCase()
@@ -91,7 +87,7 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
     }
     private var questionsListError: Int? = null
 
-    val errorMsgEvent: LiveData<Event<String>> = _errorMsgEvent
+    val errorMsgEvent: LiveData<Event<Int?>> = _errorMsgEvent
     val examAddedEvent: LiveData<Event<Boolean>> = _examAddedEvent
     val showErrors: LiveData<Boolean> = _showErrors
     val isLoading: LiveData<Event<Boolean>> = _isLoading
@@ -139,7 +135,7 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
         _showErrors.value = true
         if (isFormValid.value != true) {
             if (questionsListError != null) {
-                _errorMsgEvent.value = Event(questionsListError?.toString(c)?:"")
+                _errorMsgEvent.value = Event(questionsListError)
                 questionsListError = null
             }
             return
@@ -166,9 +162,15 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
         viewModelScope.launch {
             val res= addOnlineExamUseCase(completeOnlineExam)
             when(res){
-                is ApiErrorResponse -> _errorMsgEvent.postValue(Event(res.errorMessage))
+                is ApiErrorResponse -> {
+                    Logger.e(res.combinedMessage)
+                    val errorMessageId = if(res.statusCode == 0) R.string.connection_error else R.string.add_failed
+
+                    _errorMsgEvent.postValue(Event(errorMessageId))
+                }
                 else -> _examAddedEvent.postValue(Event(true))
             }
+
         }
         Logger.d("$TAG, $addOnlineExam")
     }

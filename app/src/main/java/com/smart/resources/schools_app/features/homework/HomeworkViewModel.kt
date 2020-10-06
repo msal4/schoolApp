@@ -6,7 +6,6 @@ import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
-import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.users.data.UserRepository
 import kotlinx.coroutines.*
 

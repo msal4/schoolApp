@@ -23,6 +23,8 @@
     <string name="section">الشعبة</string>
     <string name="no_homework">لا توجد واجبات</string>
     <string name="connection_error">خطأ في الاتصال!</string>
+    <string name="delete_failed">فشل الحذف!</string>
+    <string name="add_failed">فشل الاضافة!</string>
     <string name="error">خطأ %1$s!</string>
     <string name="questions_of_subject">اسئلة %1$s</string>
     <string name="answers_of_subject">اجوبة %1$s</string>

@@ -1,9 +1,6 @@
 package com.smart.resources.schools_app.features.onlineExam.data.repository
 
-import com.hadiyarajesh.flower.ApiResponse
-import com.hadiyarajesh.flower.ApiSuccessResponse
-import com.hadiyarajesh.flower.Resource
-import com.hadiyarajesh.flower.networkBoundResource
+import com.hadiyarajesh.flower.*
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.core.extentions.withNewData
 import com.smart.resources.schools_app.features.onlineExam.data.local.dataSource.OnlineExamsDao
@@ -15,6 +12,7 @@ import com.smart.resources.schools_app.features.onlineExam.domain.repository.IOn
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
+import java.net.HttpURLConnection
 
 class OnlineExamsRepository(
     private val onlineExamsDao: OnlineExamsDao,
@@ -43,7 +41,7 @@ class OnlineExamsRepository(
             },
             saveRemoteData = {
                     val localExams= onlineExamMappersFacade.mapNetworkToLocalOnlineExam(it)
-                    onlineExamsDao.upsertUserOnlineExams(userId,localExams)
+                    onlineExamsDao.syncWithDatabase(userId,localExams)
             },
             onFetchFailed = {errorBody, statusCode ->
                 Logger.e("$TAG: $statusCode -> $errorBody")
@@ -73,8 +71,23 @@ class OnlineExamsRepository(
         return Resource.success(null)
     }
 
-    override suspend fun removeOnlineExam(examId: String): Resource<Unit> {
-        onlineExamsDao.removeUserOnlineExam(examId)
-        return Resource.success(Unit)
+    override suspend fun removeOnlineExam(examId: String): ApiResponse<Unit> {
+        val res= onlineExamsClient.deleteOnlineExam(examId).first()
+        if(res !is ApiErrorResponse){
+
+        }
+
+        when(res){
+            is ApiErrorResponse -> {
+                if(res.statusCode == HttpURLConnection.HTTP_NOT_FOUND){
+                    onlineExamsDao.deleteOnlineExamById(examId)
+                    return ApiEmptyResponse()
+                }
+            }
+            else -> {
+                onlineExamsDao.deleteOnlineExamById(examId)
+            }
+        }
+        return res
     }
 }

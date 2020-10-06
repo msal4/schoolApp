@@ -20,5 +20,5 @@ interface IAddOnlineExamByKeyUseCase{
 
 
 interface IRemoveOnlineExamUseCase{
-    suspend operator fun invoke(examId:String): Resource<Unit>
+    suspend operator fun invoke(examId:String): ApiResponse<Unit>
 }

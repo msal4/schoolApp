@@ -100,3 +100,5 @@ fun <T, R> ApiResponse<T>.withNewData(mapper: (T) -> R): ApiResponse<R> {
         )
     }
 }
+
+val <T>ApiErrorResponse<T>.combinedMessage:String get() = "Status Code:$statusCode\n $errorMessage"

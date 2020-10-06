@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.*
-import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.users.data.StudentModel
 import com.smart.resources.schools_app.features.users.data.UserRepository
 import java.net.HttpURLConnection

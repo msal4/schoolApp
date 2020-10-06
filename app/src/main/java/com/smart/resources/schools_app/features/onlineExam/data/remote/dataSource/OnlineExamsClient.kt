@@ -20,6 +20,9 @@ interface OnlineExamsClient {
     @POST("addOnlineExam")
     fun addOnlineExam(@Body postModel: PostNetworkOnlineExam): Flow<ApiResponse<NetworkOnlineExam>>
 
+    @DELETE("onlineExam/{$EXAM_ID_PATH}")
+    fun deleteOnlineExam(@Path(EXAM_ID_PATH) examId:String): Flow<ApiResponse<Unit>>
+
     @PUT("examFinish/{$EXAM_ID_PATH}")
     suspend fun finishExam(@Path(EXAM_ID_PATH) examId:String, @Body networkExamFinishedStatus: NetworkExamFinishedStatus): Response<Unit>
 

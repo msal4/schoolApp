@@ -9,7 +9,6 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.ConnectionError
 import com.smart.resources.schools_app.core.myTypes.ResponseError
 import com.smart.resources.schools_app.core.myTypes.Success
-import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.profile.certificate.CertificateModel
 import com.smart.resources.schools_app.features.profile.certificate.CertificateRepository
 import com.smart.resources.schools_app.features.users.data.UserRepository

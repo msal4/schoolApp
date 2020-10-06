@@ -5,9 +5,11 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import com.haytham.coder.extensions.toString
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.bindingAdapters.setSwipeToDelete
+import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
@@ -52,8 +54,17 @@ class OnlineExamsFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.onlineExams.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+        viewModel.apply {
+            onlineExams.observe(viewLifecycleOwner) {
+                adapter.submitList(it)
+            }
+            deleteFailedEvent.observe(viewLifecycleOwner) {
+                it.getContentIfNotHandled()?.let { pair ->
+                    adapter.notifyItemChanged(pair.first)
+                    val errorMsg= pair.second.toString(requireContext())
+                    binding.layout.showSnackBar(errorMsg)
+                }
+            }
         }
     }
 

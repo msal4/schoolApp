@@ -10,5 +10,5 @@ interface IOnlineExamsRepository {
     fun getOnlineExams(userId:String): Flow<Resource<List<OnlineExam>>>
     suspend fun addOnlineExam(userId: String, addOnlineExam: AddOnlineExam): ApiResponse<OnlineExam>
     suspend fun addOnlineExamByKey(examKey: String): Resource<Unit>
-    suspend fun removeOnlineExam(examId:String): Resource<Unit>
+    suspend fun removeOnlineExam(examId:String): ApiResponse<Unit>
 }

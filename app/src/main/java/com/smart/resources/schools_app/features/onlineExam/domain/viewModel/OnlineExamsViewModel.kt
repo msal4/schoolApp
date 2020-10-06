@@ -2,13 +2,14 @@ package com.smart.resources.schools_app.features.onlineExam.domain.viewModel
 
 import android.app.Application
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.hadiyarajesh.flower.ApiErrorResponse
 import com.hadiyarajesh.flower.Resource
 import com.haytham.coder.extensions.toString
+import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.extentions.combinedMessage
+import com.smart.resources.schools_app.core.myTypes.Event
 import com.smart.resources.schools_app.core.myTypes.ListState
 import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
@@ -31,16 +32,18 @@ class OnlineExamViewModel @ViewModelInject constructor(
 ) : AndroidViewModel(application) {
 
     private val c = application.applicationContext
-    val listState = ListState()
 
+    val listState = ListState()
     private val userType by lazy {
         getCurrentUserTypeUseCase()
     }
-
     val isTeacher: Boolean
         get() {
             return userType == UserType.TEACHER
         }
+
+    private val _deleteFailedEvent = MutableLiveData<Event<Pair<Int, Int>>>()
+    val deleteFailedEvent: LiveData<Event<Pair<Int, Int>>> = _deleteFailedEvent
 
     // TODO: remove this
     init {
@@ -64,7 +67,10 @@ class OnlineExamViewModel @ViewModelInject constructor(
 //        }
     }
 
-    val onlineExams: LiveData<List<OnlineExam>> = getOnlineExamsUseCase().map {
+    private val examsFlow by lazy {
+        getOnlineExamsUseCase()
+    }
+    val onlineExams: LiveData<List<OnlineExam>> = examsFlow.map {
         if (it.data.isNullOrEmpty()) {
             when (it.status) {
                 Resource.Status.SUCCESS -> {
@@ -77,14 +83,18 @@ class OnlineExamViewModel @ViewModelInject constructor(
             listState.setLoading(false)
         }
 
-
         it.data ?: listOf()
     }.asLiveData(context = viewModelScope.coroutineContext)
 
     fun removeExam(position: Int) {
         onlineExams.value?.get(position)?.let {
             viewModelScope.launch {
-                removeOnlineExamUseCase(it.id)
+                val res= removeOnlineExamUseCase(it.id)
+                if(res is ApiErrorResponse){
+                    Logger.e( res.combinedMessage)
+                    val errorMessageId = if(res.statusCode == 0) R.string.connection_error else R.string.delete_failed
+                    _deleteFailedEvent.postValue(Event(Pair(position, errorMessageId)))
+                }
             }
         }
     }

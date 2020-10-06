@@ -6,10 +6,7 @@ import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import org.threeten.bp.Duration
 import org.threeten.bp.LocalDateTime
 
-/**
- * database can be improved slightly by converting relationship into many to many
- * however it is too rare that multiple students with a teacher in the same class using same device!!
- */
+
 @Entity(tableName = LocalOnlineExam.TABLE_NAME)
 data class LocalOnlineExam(
     @PrimaryKey
