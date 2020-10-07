@@ -251,7 +251,7 @@
 
             <fragment
                 android:id="@+id/addQuestionFragmentContainer"
-                android:name="com.smart.resources.schools_app.features.onlineExam.presentation.fragment.AddQuestionFragment"
+                android:name="com.smart.resources.schools_app.features.onlineExam.presentation.fragments.AddQuestionFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"

@@ -41,7 +41,7 @@ class AddAbsenceViewModel(application: Application, private val postListener: Po
 
         Logger.i("absence model: $postAbsenceModel")
         val studentsResult =
-            viewModelScope.async { RetrofitHelper.studentClient.getStudentsByClass(classId) }
+            viewModelScope.async { RetrofitHelper.studentClient.getStudentsMarksByClass(classId) }
                 .toMyResult()
 
         when (studentsResult) {

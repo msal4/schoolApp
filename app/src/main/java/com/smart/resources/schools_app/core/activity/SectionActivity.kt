@@ -22,7 +22,7 @@ import com.smart.resources.schools_app.features.exam.ExamFragment
 import com.smart.resources.schools_app.features.homework.getHomeworks.HomeworkFragment
 import com.smart.resources.schools_app.features.lecture.LectureFragment
 import com.smart.resources.schools_app.features.library.LibraryFragment
-import com.smart.resources.schools_app.features.onlineExam.presentation.fragment.OnlineExamsFragment
+import com.smart.resources.schools_app.features.onlineExam.presentation.fragments.OnlineExamsFragment
 import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.smart.resources.schools_app.features.rating.RatingFragment
 import com.smart.resources.schools_app.features.ratingAdd.AddRatingFragment

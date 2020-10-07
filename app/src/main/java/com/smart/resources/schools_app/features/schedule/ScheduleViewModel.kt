@@ -26,11 +26,10 @@ class ScheduleViewModel(application: Application) : AndroidViewModel(application
             listState.apply {
                 setLoading(true)
 
-                val result = GlobalScope.async { RetrofitHelper.scheduleClient.fetchSchedule() }.toMyResult()
-                when (result) {
+                when (val result = GlobalScope.async { RetrofitHelper.scheduleClient.fetchSchedule() }.toMyResult()) {
                     is Success -> {
                         if (result.data.isNullOrEmpty())
-                            setBodyError(c.getString(R.string.no_advertisements))
+                            setBodyError(c.getString(R.string.no_schedule))
                         else {
                             setLoading(false)
                             schedule.value = result.data

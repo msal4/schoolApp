@@ -66,7 +66,7 @@ class HomeworkSolutionFragment : Fragment() {
             viewModel.answers.observe(viewLifecycleOwner, ::onAnswersReceived)
         }
 
-        (activity as SectionActivity).setCustomTitle(R.string.answers)
+        (activity as SectionActivity).setCustomTitle(R.string.the_answers)
         return binding.root
     }
 

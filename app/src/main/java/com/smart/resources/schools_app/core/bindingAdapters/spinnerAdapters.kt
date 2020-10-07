@@ -5,6 +5,7 @@ import android.widget.ArrayAdapter
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
+import com.haytham.coder.extensions.isValidIndex
 import com.tiper.MaterialSpinner
 
 private const val SPINNER_SET_LIST_ATTRIBUTE= "android:setList"
@@ -26,7 +27,7 @@ fun <T>MaterialSpinner.setSpinnerList(list:List<T>?) {
 
 @BindingAdapter(SPINNER_SELECT_ITEM_ATTRIBUTE)
 fun MaterialSpinner.setSelectedItem(index:Int?){
-    selection= index?:-1
+        selection=index?:0
 }
 
 @InverseBindingAdapter(attribute = SPINNER_SELECT_ITEM_ATTRIBUTE)

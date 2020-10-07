@@ -13,6 +13,9 @@ interface UseCaseModule {
     fun bindGetOnlineExamsUseCase(getOnlineExamsUseCase: GetOnlineExamsUseCase): IGetOnlineExamsUseCase
 
     @Binds
+    fun bindGetOnlineExamQuestionsUseCase(getOnlineExamQuestionsUseCase: GetOnlineExamQuestionsUseCase): IGetOnlineExamQuestionsUseCase
+
+    @Binds
     fun bindAddOnlineExamsUseCase(addOnlineExamUseCase: AddOnlineExamUseCase): IAddOnlineExamUseCase
 
     @Binds
@@ -21,4 +24,9 @@ interface UseCaseModule {
     @Binds
     fun bindRemoveOnlineExamUseCase(removeOnlineExamUseCase: RemoveOnlineExamUseCase): IRemoveOnlineExamUseCase
 
+    @Binds
+    fun bindFinishOnlineExamUseCase(finishExamUseCase: FinishOnlineExamUseCase): IFinishOnlineExamUseCase
+
+    @Binds
+    fun bindActivateOnlineExamUseCase(activateExamUseCase: ActivateOnlineExamUseCase): IActivateOnlineExamUseCase
 }

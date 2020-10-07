@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.onlineExam.presentation.fragment
+package com.smart.resources.schools_app.features.onlineExam.presentation.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,15 +8,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.haytham.coder.extensions.showSnackBar
 import com.haytham.coder.extensions.toString
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.abstractTypes.LoadableActionMenuItemFragment
 import com.smart.resources.schools_app.core.activity.SectionActivity
-import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.databinding.FragmentAddOnlineExamBinding
-import com.smart.resources.schools_app.features.filter.FilterBottomSheet
-import com.smart.resources.schools_app.features.filter.FilterItem
+import com.smart.resources.schools_app.features.filterSheet.FilterBottomSheet
+import com.smart.resources.schools_app.features.filterSheet.FilterItem
 import com.smart.resources.schools_app.features.onlineExam.domain.model.Question
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.AddOnlineExamViewModel
 import com.smart.resources.schools_app.features.onlineExam.presentation.adapter.QuestionsQuickAdapter

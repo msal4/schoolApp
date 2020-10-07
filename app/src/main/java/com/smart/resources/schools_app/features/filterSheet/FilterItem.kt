@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.filter
+package com.smart.resources.schools_app.features.filterSheet
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

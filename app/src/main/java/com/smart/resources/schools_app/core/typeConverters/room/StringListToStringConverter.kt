@@ -9,7 +9,7 @@ class StringListToStringConverter {
     @TypeConverter
     fun fromString(value: String?): List<String>? {
         if(value !=null) {
-            val listType: Type = object : TypeToken<List<Int>>() {}.type
+            val listType: Type = object : TypeToken<List<String>>() {}.type
             return Gson().fromJson(value, listType)
         }
         return null

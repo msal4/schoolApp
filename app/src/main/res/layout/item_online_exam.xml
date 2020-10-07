@@ -62,7 +62,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="12dp"
             android:fontFamily="@font/monadi"
             android:includeFontPadding="true"
             android:text="@{onlineExamItem.subjectName}"
@@ -70,25 +69,48 @@
             android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/remainingQuestions"
-            app:layout_constraintEnd_toStartOf="@+id/examDate"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/onlineExamIcon"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="spread"
             tools:text="المادة" />
 
-
         <TextView
             android:id="@+id/examDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:setDateTime="@{onlineExamItem.examDate}"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:setDate="@{onlineExamItem.examDate.toLocalDate()}"
+            android:textAlignment="viewStart"
+            app:layout_constraintBottom_toBottomOf="@+id/subjectName"
+            app:layout_constraintEnd_toStartOf="@+id/examTime"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/dash1"
+            app:layout_constraintTop_toTopOf="@+id/subjectName"
+            tools:text="8/10/2019" />
+
+        <TextView
+            android:id="@+id/dash1"
+            style="@style/DashTextStyle"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="2dp"
+            android:includeFontPadding="false"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/subjectName"
+            app:layout_constraintStart_toEndOf="@+id/subjectName"
+            app:layout_constraintTop_toTopOf="@+id/subjectName" />
+
+        <TextView
+            android:id="@+id/examTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:setTime="@{onlineExamItem.examDate.toLocalTime()}"
             android:textAlignment="center"
-            app:layout_constraintBottom_toTopOf="@+id/circleIndicatorIcon"
+            app:layout_constraintBottom_toBottomOf="@+id/examDate"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/examDate"
             app:layout_constraintVertical_bias="0.0"
-            tools:text="8/10/2019\n10:30 ص" />
+            tools:text="10:30 ص" />
 
 
         <TextView

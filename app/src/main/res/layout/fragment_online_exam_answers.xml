@@ -38,6 +38,7 @@
             android:layout_marginEnd="@dimen/item_margin"
             android:hint="@string/classAndDivision"
             android:setList="@{model.classes}"
+            android:selectedItem="@={model.selectedClassPos}"
             app:layout_constraintBottom_toTopOf="@+id/recyclerViewLoader"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

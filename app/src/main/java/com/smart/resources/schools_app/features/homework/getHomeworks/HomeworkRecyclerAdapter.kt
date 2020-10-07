@@ -48,7 +48,7 @@ class HomeworkRecyclerAdapter(private val isStudent:Boolean) :
         if (isStudent) {
             if (model.solution == null) R.string.answer_action else R.string.show_answer
         } else {
-            R.string.answers
+            R.string.the_answers
         }
 
     override fun submitList(list: List<HomeworkModel>?) {

@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.filter
+package com.smart.resources.schools_app.features.filterSheet
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,13 +7,12 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.orhanobut.logger.Logger
-import com.smart.resources.schools_app.databinding.BottomSheetFilterBinding
+import com.smart.resources.schools_app.databinding.BottomSheetRecyclerBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FilterBottomSheet : BottomSheetDialogFragment() {
-    private lateinit var binding: BottomSheetFilterBinding
+    private lateinit var binding: BottomSheetRecyclerBinding
     private val options: MutableList<FilterItem> by lazy { getOptionsList() }
     var onSelectionChanged: ((selectedPositions: List<Int>) -> Unit)? = null
 
@@ -47,10 +46,10 @@ class FilterBottomSheet : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = BottomSheetFilterBinding.inflate(inflater, container, false).apply {
+        binding = BottomSheetRecyclerBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = this@FilterBottomSheet
 
-            filterRecycler.adapter = FilterQuickAdapter().apply {
+            recycler.adapter = FilterQuickAdapter().apply {
                 setNewInstance(options)
                 setOnItemClickListener(::onItemPressed)
             }

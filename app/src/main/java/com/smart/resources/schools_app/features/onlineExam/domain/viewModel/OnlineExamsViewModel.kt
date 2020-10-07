@@ -14,7 +14,8 @@ import com.smart.resources.schools_app.core.myTypes.ListState
 import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
-import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IAddOnlineExamUseCase
+import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IActivateOnlineExamUseCase
+import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IFinishOnlineExamUseCase
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IGetOnlineExamsUseCase
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IRemoveOnlineExamUseCase
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserTypeUseCase
@@ -27,49 +28,23 @@ class OnlineExamViewModel @ViewModelInject constructor(
     application: Application,
     private val getOnlineExamsUseCase: IGetOnlineExamsUseCase,
     private val removeOnlineExamUseCase: IRemoveOnlineExamUseCase,
-    private val addOnlineExamUseCase: IAddOnlineExamUseCase, // TODO: remove this
-    private val getCurrentUserTypeUseCase: IGetCurrentUserTypeUseCase
+    private val getCurrentUserTypeUseCase: IGetCurrentUserTypeUseCase,
+    private val activateOnlineExamUseCase: IActivateOnlineExamUseCase,
+    private val finishOnlineExamUseCase: IFinishOnlineExamUseCase,
 ) : AndroidViewModel(application) {
 
     private val c = application.applicationContext
-
     val listState = ListState()
-    private val userType by lazy {
-        getCurrentUserTypeUseCase()
-    }
-    val isTeacher: Boolean
-        get() {
-            return userType == UserType.TEACHER
-        }
+    private val userType by lazy { getCurrentUserTypeUseCase() }
+    val isTeacher: Boolean get() = userType == UserType.TEACHER
 
     private val _deleteFailedEvent = MutableLiveData<Event<Pair<Int, Int>>>()
     val deleteFailedEvent: LiveData<Event<Pair<Int, Int>>> = _deleteFailedEvent
 
-    // TODO: remove this
-    init {
-//        viewModelScope.launch {
-//           addOnlineExamUseCase(
-//               dummyOnlineExams[0]
-//           )
-//           delay(2000)
-//           addOnlineExamUseCase(
-//               dummyOnlineExams[2]
-//           )
-//           delay(5000)
-//            addOnlineExamUseCase(
-//                *dummyOnlineExams.map {
-//                    CompleteOnlineExam(
-//                        addOnlineExam = it,
-//                        questions = dummyQuestions,
-//                    )
-//                }.toTypedArray()
-//            )
-//        }
-    }
+    private val _errorEvent = MutableLiveData<Event<Int>>()
+    val errorEvent: LiveData<Event<Int>> = _errorEvent
 
-    private val examsFlow by lazy {
-        getOnlineExamsUseCase()
-    }
+    private val examsFlow by lazy { getOnlineExamsUseCase() }
     val onlineExams: LiveData<List<OnlineExam>> = examsFlow.map {
         if (it.data.isNullOrEmpty()) {
             when (it.status) {
@@ -79,22 +54,53 @@ class OnlineExamViewModel @ViewModelInject constructor(
                 Resource.Status.ERROR -> listState.setBodyError(it.message.toString())
                 Resource.Status.LOADING -> listState.setLoading(true)
             }
-        }else{
+        } else {
             listState.setLoading(false)
         }
 
         it.data ?: listOf()
     }.asLiveData(context = viewModelScope.coroutineContext)
 
+
     fun removeExam(position: Int) {
         onlineExams.value?.get(position)?.let {
-            viewModelScope.launch {
-                val res= removeOnlineExamUseCase(it.id)
-                if(res is ApiErrorResponse){
-                    Logger.e( res.combinedMessage)
-                    val errorMessageId = if(res.statusCode == 0) R.string.connection_error else R.string.delete_failed
-                    _deleteFailedEvent.postValue(Event(Pair(position, errorMessageId)))
-                }
+            removeExam(it.id)
+        }
+    }
+
+    fun removeExam(examId: String) {
+        viewModelScope.launch {
+            val res = removeOnlineExamUseCase(examId)
+            if (res is ApiErrorResponse) {
+                Logger.e(res.combinedMessage)
+                val errorMessageId =
+                    if (res.statusCode == 0) R.string.connection_error else R.string.delete_failed
+                // TODO: handle this
+                //_deleteFailedEvent.postValue(Event(Pair(position, errorMessageId)))
+            }
+        }
+    }
+
+    fun activateExam(examId: String) {
+        viewModelScope.launch {
+           val res = activateOnlineExamUseCase(examId)
+            if (res is ApiErrorResponse) {
+                Logger.e(res.combinedMessage)
+                val messageId =
+                    if (res.statusCode == 0) R.string.connection_error else R.string.activation_failed
+                _errorEvent.postValue(Event(messageId))
+            }
+        }
+    }
+
+    fun finishExam(examId: String) {
+        viewModelScope.launch {
+            val res = finishOnlineExamUseCase(examId)
+            if (res is ApiErrorResponse) {
+                Logger.e(res.combinedMessage)
+                val messageId =
+                    if (res.statusCode == 0) R.string.connection_error else R.string.finish_failed
+                _errorEvent.postValue(Event(messageId))
             }
         }
     }

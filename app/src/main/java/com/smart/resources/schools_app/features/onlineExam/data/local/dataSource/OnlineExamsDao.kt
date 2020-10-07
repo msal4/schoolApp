@@ -2,6 +2,7 @@ package com.smart.resources.schools_app.features.onlineExam.data.local.dataSourc
 
 import androidx.room.*
 import com.smart.resources.schools_app.core.appDatabase.BaseDao
+import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import com.smart.resources.schools_app.features.onlineExam.data.local.model.LocalOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.data.local.model.UserOnlineExamCrossRef
 import com.smart.resources.schools_app.features.onlineExam.data.local.model.UserWithOnlineExams
@@ -37,7 +38,7 @@ abstract class OnlineExamsDao : BaseDao<LocalOnlineExam>() {
     /**
      * sync database with server
      * 1- upsert (insert or update) data in the database
-     * 2- delete old userExam references not in the list
+     * 2- delete old userExamCrossRefs not in the list
      * 3- delete any remaining OnlineExams without relations
      */
     @Transaction
@@ -77,5 +78,9 @@ abstract class OnlineExamsDao : BaseDao<LocalOnlineExam>() {
     }
 
     @Query("DELETE FROM ${LocalOnlineExam.TABLE_NAME} WHERE onlineExamId = :examId")
-    abstract fun deleteOnlineExamById(examId: String)
+    abstract fun deleteOnlineExam(examId: String)
+
+    @Query("UPDATE ${LocalOnlineExam.TABLE_NAME} SET examStatus = :onlineExamStatus WHERE onlineExamId = :examId")
+    abstract fun updateExamStatus(examId: String, onlineExamStatus: Int)
+
 }

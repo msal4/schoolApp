@@ -33,7 +33,7 @@ class AddRatingViewModel(application: Application, private val postListener: Pos
         listState.setLoading(true)
 
         val studentsResult =
-            viewModelScope.async { RetrofitHelper.studentClient.getStudentsByClass(classId) }
+            viewModelScope.async { RetrofitHelper.studentClient.getStudentsMarksByClass(classId) }
                 .toMyResult()
         when (studentsResult) {
             is Success -> {

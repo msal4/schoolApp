@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import android.widget.RatingBar
 import androidx.core.view.children
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -15,8 +14,9 @@ import com.haytham.coder.extensions.show
 import com.smart.resources.schools_app.core.callbacks.SwipeAdapter
 
 @BindingAdapter("android:checkedButtonIndex")
-fun RadioGroup.setCheckedButtonIndex(checkButtonIndex:Int){
-    val radioBtnId= children.filter { it is RadioButton }.toList()[checkButtonIndex].id
+fun RadioGroup.setCheckedButtonIndex(checkedButtonIndex:Int?){
+    if(checkedButtonIndex == null) return
+    val radioBtnId= children.filter { it is RadioButton }.toList()[checkedButtonIndex].id
     check(radioBtnId)
 }
 

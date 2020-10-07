@@ -5,7 +5,7 @@
     <string name="login_as_teacher">تسجيل الدخول كمدرس</string>
     <string name="login_as_student">تسجيل الدخول كطالب</string>
     <string name="homework">الواجبات</string>
-    <string name="answers">الاجوبة</string>
+    <string name="the_answers">الاجوبة</string>
     <string name="section_icon_desc">ايقونة القسم</string>
     <string name="notifications">الاشعارات</string>
     <string name="exams">الامتحانات</string>
@@ -23,6 +23,8 @@
     <string name="section">الشعبة</string>
     <string name="no_homework">لا توجد واجبات</string>
     <string name="connection_error">خطأ في الاتصال!</string>
+    <string name="activation_failed">فشل التفعيل!</string>
+    <string name="finish_failed">فشل الانهاء!</string>
     <string name="delete_failed">فشل الحذف!</string>
     <string name="add_failed">فشل الاضافة!</string>
     <string name="error">خطأ %1$s!</string>
@@ -78,6 +80,7 @@
     <string name="rate">تقييم</string>
     <string name="subject">المادة</string>
     <string name="no_students">لا يوجد طلاب</string>
+    <string name="no_questions">لا توجد اسئلة</string>
     <string name="select_section">اختر شعبة</string>
     <string name="no_student_selected">لم يتم اختيار طالب!</string>
     <string name="no_student_rated">لم يتم تقييم طالب!</string>
@@ -130,8 +133,12 @@
     <string name="empty_exam_time_error">يرجى اختيار وقت الامتحان!</string>
     <string name="empty_exam_key_error">يرجى ادخال رمز الامتحان!</string>
     <string name="empty_questions_error">يرجى اضافة سؤال!</string>
-    <string name="no_answer">لا يوجد جواب!</string>
+    <string name="no_answer">لا يوجد جواب</string>
     <string name="exam_key">رمز الامتحان</string>
     <string name="classes">الصفوف</string>
+    <string name="the_questions">الاسئلة</string>
+    <string name="activate">تفعيل</string>
+    <string name="finish">انهاء</string>
+    <string name="delete">حذف</string>
 
 </resources>

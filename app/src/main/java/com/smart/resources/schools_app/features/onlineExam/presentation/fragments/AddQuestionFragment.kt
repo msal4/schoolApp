@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.onlineExam.presentation.fragment
+package com.smart.resources.schools_app.features.onlineExam.presentation.fragments
 
 import android.os.Bundle
 import android.text.InputType

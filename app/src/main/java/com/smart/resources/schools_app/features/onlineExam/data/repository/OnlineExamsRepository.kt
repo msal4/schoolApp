@@ -3,9 +3,12 @@ package com.smart.resources.schools_app.features.onlineExam.data.repository
 import com.hadiyarajesh.flower.*
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.core.extentions.withNewData
+import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import com.smart.resources.schools_app.features.onlineExam.data.local.dataSource.OnlineExamsDao
 import com.smart.resources.schools_app.features.onlineExam.data.mappers.onlineExams.OnlineExamMappersFacade
 import com.smart.resources.schools_app.features.onlineExam.data.remote.dataSource.OnlineExamsClient
+import com.smart.resources.schools_app.features.onlineExam.data.remote.model.NetworkExamFinishedStatus
+import com.smart.resources.schools_app.features.onlineExam.data.remote.model.NetworkOnlineExamStatus
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.AddOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.repository.IOnlineExamsRepository
@@ -73,21 +76,36 @@ class OnlineExamsRepository(
 
     override suspend fun removeOnlineExam(examId: String): ApiResponse<Unit> {
         val res= onlineExamsClient.deleteOnlineExam(examId).first()
-        if(res !is ApiErrorResponse){
-
-        }
 
         when(res){
             is ApiErrorResponse -> {
                 if(res.statusCode == HttpURLConnection.HTTP_NOT_FOUND){
-                    onlineExamsDao.deleteOnlineExamById(examId)
+                    onlineExamsDao.deleteOnlineExam(examId)
                     return ApiEmptyResponse()
                 }
             }
             else -> {
-                onlineExamsDao.deleteOnlineExamById(examId)
+                onlineExamsDao.deleteOnlineExam(examId)
             }
         }
+        return res
+    }
+
+    override suspend fun activateOnlineExam(examId: String): ApiResponse<Unit> {
+       val res= onlineExamsClient.updateStatus(examId, NetworkOnlineExamStatus.createActiveStatus()).first()
+        if(res !is ApiErrorResponse<*>){
+            onlineExamsDao.updateExamStatus(examId, OnlineExamStatus.ACTIVE.value)
+        }
+
+        return res
+    }
+
+    override suspend fun finishOnlineExam(examId: String): ApiResponse<Unit> {
+        val res= onlineExamsClient.finishExam(examId, NetworkExamFinishedStatus.createExamFinishedStatus()).first()
+        if(res !is ApiErrorResponse<*>){
+            onlineExamsDao.updateExamStatus(examId, OnlineExamStatus.COMPLETED.value)
+        }
+
         return res
     }
 }

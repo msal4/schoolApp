@@ -10,7 +10,7 @@ sealed class BaseAnswerableQuestion<AnswerType> constructor(
 
 }
 
-data class AnswerableQuestion private constructor(
+data class AnswerableQuestion constructor(
     override val question: Question,
     override val answer: Answer?
 ) : BaseAnswerableQuestion<String>(question, answer) {
@@ -31,7 +31,7 @@ data class AnswerableQuestion private constructor(
     )
 }
 
-data class MultiChoiceAnswerableQuestion private constructor(
+data class MultiChoiceAnswerableQuestion constructor(
     override val question: Question,
     override val answer: MultiChoiceAnswer?
 
@@ -52,7 +52,7 @@ data class MultiChoiceAnswerableQuestion private constructor(
     )
 }
 
-data class CorrectnessAnswerableQuestion private constructor (
+data class CorrectnessAnswerableQuestion constructor (
     override val question: Question,
     override val answer: CorrectnessAnswer?
 
