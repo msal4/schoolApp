@@ -30,19 +30,17 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
     private lateinit var binding: FragmentExamPaperBinding
     private val viewModel: ExamPaperViewModel by viewModels()
 
-    private lateinit var pagerAdapterAnswerable: AnswerableQuestionsPagerAdapter
+    private lateinit var pagerAdapter: AnswerableQuestionsPagerAdapter
     private lateinit var navigatorAdapter: QuestionsNavigatorAdapter
 
     companion object {
         private const val QUESTIONS_FRAGMENT = "questionsFragment"
         const val EXTRA_EXAM_DETAILS = "extraExamDetails"
-        const val EXTRA_READ_ONLY = "extraReadOnly"
 
-        fun newInstance(fm: FragmentManager, exam: OnlineExam, readOnly: Boolean = false) {
+        fun newInstance(fm: FragmentManager, exam: OnlineExam) {
             val fragment = ExamPaperFragment()
             fragment.arguments = bundleOf(
                 EXTRA_EXAM_DETAILS to exam,
-                EXTRA_READ_ONLY to readOnly
             )
             fm.beginTransaction().apply {
                 setCustomAnimations(
@@ -94,19 +92,27 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
     }
 
     private fun observeViewModel() {
-        viewModel.questions.observe(viewLifecycleOwner) {
-            pagerAdapterAnswerable.submitList(it)
-        }
+        viewModel.apply {
+            questions.observe(viewLifecycleOwner) {
+                pagerAdapter.submitList(it)
+            }
 
-        viewModel.solvedQuestions.observe(viewLifecycleOwner) {
-            navigatorAdapter.submitList(it ?: emptyList())
+            solvedQuestions.observe(viewLifecycleOwner) {
+                navigatorAdapter.submitList(it ?: emptyList())
+            }
+
+            readOnly.observe(viewLifecycleOwner) {
+                it?.let {
+                    pagerAdapter.updateReadOnly(it)
+                }
+            }
         }
     }
 
     private fun FragmentExamPaperBinding.setupViewPager() {
-        pagerAdapterAnswerable = AnswerableQuestionsPagerAdapter(viewModel.readOnly)
-        pagerAdapterAnswerable.listener = this@ExamPaperFragment
-        questionsPager.adapter = pagerAdapterAnswerable
+        pagerAdapter = AnswerableQuestionsPagerAdapter()
+        pagerAdapter.listener = this@ExamPaperFragment
+        questionsPager.adapter = pagerAdapter
 
         magicIndicator.navigator = CommonNavigator(requireContext()).apply {
             navigatorAdapter = QuestionsNavigatorAdapter()

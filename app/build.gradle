@@ -132,7 +132,7 @@ dependencies {
     implementation 'com.github.hadiyarajesh:flower:1.0.0'
 
     // my extensions library
-    implementation 'com.github.haytham-c01:android-extensions:1.0.4'
+    implementation 'com.github.haytham-c01:android-extensions:1.0.5'
 
     // loading hud
     implementation 'com.kaopiz:kprogresshud:1.2.0'

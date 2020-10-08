@@ -7,33 +7,44 @@ import androidx.lifecycle.*
 import com.hadiyarajesh.flower.Resource
 import com.haytham.coder.extensions.toString
 import com.orhanobut.logger.Logger
+import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.ListState
+import com.smart.resources.schools_app.core.myTypes.UserType
+import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import com.smart.resources.schools_app.core.typeConverters.room.QuestionType
 import com.smart.resources.schools_app.features.onlineExam.domain.model.*
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IGetOnlineExamQuestionsUseCase
 import com.smart.resources.schools_app.features.onlineExam.presentation.fragments.ExamPaperFragment
+import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserTypeUseCase
 import kotlinx.coroutines.flow.map
-import com.smart.resources.schools_app.R
 
 typealias ListOfAnswerableQuestions = List<BaseAnswerableQuestion<out Any>>
 
 class ExamPaperViewModel @ViewModelInject constructor(
     private val getOnlineExamQuestionUseCase: IGetOnlineExamQuestionsUseCase,
+    private val getCurrentUserTypeUseCase: IGetCurrentUserTypeUseCase,
     @Assisted private val savedStateHandle: SavedStateHandle,
     application: Application
 ) : AndroidViewModel(application) {
 
-    val onlineExam: OnlineExam = savedStateHandle.get(ExamPaperFragment.EXTRA_EXAM_DETAILS)!!
-    val readOnly: Boolean = savedStateHandle.get(ExamPaperFragment.EXTRA_READ_ONLY)!!
-
-    private val c= application.applicationContext
+    private val c = application.applicationContext
     val listState = ListState()
+    //        MutableLiveData(dummyAnswerableQuestions)
 //    private val _questions: MutableLiveData<ListOfAnswerableQuestions> =
-//        MutableLiveData(dummyAnswerableQuestions)
+
+    val initialOnlineExam: OnlineExam get() = savedStateHandle.get(ExamPaperFragment.EXTRA_EXAM_DETAILS)!!
+    val userType: UserType = getCurrentUserTypeUseCase()
+    val onlineExam: MutableLiveData<OnlineExam> = MutableLiveData(initialOnlineExam)
+
+    val readOnly = onlineExam.map {
+        !(it.examStatus == OnlineExamStatus.ACTIVE
+                && userType == UserType.STUDENT)
+    }
+
 
     val questions: LiveData<ListOfAnswerableQuestions> =
-        getOnlineExamQuestionUseCase(onlineExam.id).map {
+        getOnlineExamQuestionUseCase(initialOnlineExam.id).map {
             // if data is empty show message, or loading indicator
             if (it.data.isNullOrEmpty()) {
                 updateListState(it)

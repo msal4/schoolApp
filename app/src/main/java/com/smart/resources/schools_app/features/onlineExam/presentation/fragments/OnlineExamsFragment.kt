@@ -125,15 +125,13 @@ class OnlineExamsFragment : Fragment() {
     private fun onOnlineExamPressed(onlineExam: OnlineExam) {
         if (viewModel.isTeacher) {
             if (onlineExam.examStatus == OnlineExamStatus.INACTIVE) {
-                ExamPaperFragment.newInstance(parentFragmentManager, onlineExam, true)
+                ExamPaperFragment.newInstance(parentFragmentManager, onlineExam)
             } else {
                 OnlineExamAnswersFragment.newInstance(parentFragmentManager)
             }
         } else {
             if (onlineExam.examStatus == OnlineExamStatus.INACTIVE) return
-
-            val readOnly = onlineExam.examStatus == OnlineExamStatus.COMPLETED
-            ExamPaperFragment.newInstance(parentFragmentManager, onlineExam, readOnly)
+            ExamPaperFragment.newInstance(parentFragmentManager, onlineExam)
         }
     }
 
@@ -151,7 +149,7 @@ class OnlineExamsFragment : Fragment() {
                 OnlineExamAnswersFragment.newInstance(parentFragmentManager)
             }
             R.string.the_questions -> {
-                ExamPaperFragment.newInstance(parentFragmentManager, onlineExam, true)
+                ExamPaperFragment.newInstance(parentFragmentManager, onlineExam)
             }
             R.string.activate -> {
                 viewModel.activateExam(onlineExam.id)

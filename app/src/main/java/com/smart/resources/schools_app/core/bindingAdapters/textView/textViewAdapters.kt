@@ -7,6 +7,7 @@ import com.smart.resources.schools_app.R
 import com.haytham.coder.extensions.hide
 import com.haytham.coder.extensions.startCountDown
 import com.haytham.coder.extensions.unicodeWrap
+import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.features.users.data.UserRepository
 import org.threeten.bp.Duration
 
@@ -34,6 +35,7 @@ fun TextView.setDurationInMinutes(duration: Duration?) {
 )
 fun TextView.setTimer(duration: Duration?, onTimerFinished: (() -> Unit)?, startTimer: Boolean?) {
     if (startTimer == true) {
+        Logger.wtf(duration?.toMinutes().toString())
         duration?.startCountDown(
             onFinished = onTimerFinished,
             onTicked = {

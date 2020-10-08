@@ -9,8 +9,9 @@ import com.smart.resources.schools_app.features.onlineExam.presentation.viewHold
 import com.smart.resources.schools_app.features.onlineExam.presentation.viewHolder.MultiChoiceQuestionViewHolder
 import com.smart.resources.schools_app.features.onlineExam.presentation.viewHolder.QuestionViewHolder
 
-class AnswerableQuestionsPagerAdapter(private val readOnly:Boolean) :
+class AnswerableQuestionsPagerAdapter :
     ListAdapter<BaseAnswerableQuestion<out Any>, RecyclerView.ViewHolder>(DIFF_UTIL) {
+    private var readOnly:Boolean= true
 
     companion object {
         private const val QUESTION_ITEM_TYPE = 0
@@ -36,15 +37,15 @@ class AnswerableQuestionsPagerAdapter(private val readOnly:Boolean) :
 
     interface Listener {
         fun onQuestionAnswerStateUpdated(answer: BaseAnswer<out Any>, position: Int)
-
-//        fun onQuestionAnswered(index: Int, answer: String)
-//        fun onMultiChoiceQuestionAnswered(index: Int, answer: Int)
-//        fun onCorrectnessQuestionAnswered(index: Int, answer: Boolean, correctAnswer: String)
     }
 
     var listener: Listener? = null
 
 
+    fun updateReadOnly(readOnly: Boolean){
+        this.readOnly= readOnly
+        notifyDataSetChanged()
+    }
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
         position: Int
