@@ -47,6 +47,7 @@ fun ViewGroup.showSnackBar(msg: String, isError: Boolean = true) {
         val color = if (isError) Color.RED else R.color.light_green_a700
         setTextColor(color)
         setBackgroundTint(R.color.snackbar_background.toColor(context))
+        layoutDirection= View.LAYOUT_DIRECTION_RTL
         view.layoutDirection = View.LAYOUT_DIRECTION_RTL
         show()
     }

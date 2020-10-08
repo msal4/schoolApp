@@ -12,6 +12,7 @@ class OnlineExamAdapter(private val isStudent:Boolean) :
     ListAdapter<OnlineExam, OnlineExamAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     var onItemPressed: ((onlineExam: OnlineExam) -> Unit)? = null
+    var onItemLongPressed: ((onlineExam: OnlineExam) -> Unit)? = null
 
     override fun onBindViewHolder(
         holder: MyViewHolder,
@@ -20,7 +21,13 @@ class OnlineExamAdapter(private val isStudent:Boolean) :
         val model = getItem(position)
         holder.apply {
             bind(model, isStudent)
-            binding.root.setOnClickListener { onItemPressed?.invoke(model) }
+            binding.root.apply {
+                setOnClickListener { onItemPressed?.invoke(model) }
+                setOnLongClickListener {
+                    onItemLongPressed?.invoke(model)
+                    onItemLongPressed!= null
+                }
+            }
         }
 
     }

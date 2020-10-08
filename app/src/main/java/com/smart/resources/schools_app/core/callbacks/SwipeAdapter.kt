@@ -3,12 +3,14 @@ package com.smart.resources.schools_app.core.callbacks
 import android.graphics.Canvas
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.haytham.coder.extensions.toColor
 import com.smart.resources.schools_app.R
 import com.haytham.coder.extensions.toDrawable
 
 class SwipeAdapter(
     private val fixedPositions: List<Int> = listOf(),
-    private val onSwiped: (viewHolder: RecyclerView.ViewHolder) -> Unit,
+    private val swipedRightForOptions:Boolean= false,
+    private val onSwiped: (swipeDirection: Int, viewHolder: RecyclerView.ViewHolder) -> Unit
 ) :
     ItemTouchHelper.SimpleCallback(
         0,
@@ -26,25 +28,26 @@ class SwipeAdapter(
     ) {
 
         viewHolder.itemView.apply {
-            val mBackground =
-                R.drawable.bg_swipe_delete.toDrawable(context)//ColorDrawable(R.color.lightRed.toColorResource(itemView.context))
-            val mIcon = R.drawable.ic_delete_white_24dp.toDrawable(context)
-            if (mBackground == null || mIcon == null) return
+            val background = R.drawable.bg_swipe_delete.toDrawable(context)
+            background?.setTint(R.color.swipeToDeleteColor.toColor(context))
+            var icon = R.drawable.ic_delete_white_24dp.toDrawable(context)
+            if (background == null || icon == null) return
 
             //so mBackground is behind the rounded corners of itemView
             val backgroundCornerOffset = 25
 
-            val iconMargin = (height - (mIcon.intrinsicHeight)) / 2
+            val iconMargin = (height - (icon.intrinsicHeight)) / 2
             val iconTop =
-                top + (height - (mIcon.intrinsicHeight)) / 2
-            val iconBottom = iconTop + (mIcon.intrinsicHeight)
+                top + (height - (icon.intrinsicHeight)) / 2
+            val iconBottom = iconTop + (icon.intrinsicHeight)
 
             when {
                 dX > 0 -> { // Swiping to the right
+
                     val iconLeft = left + iconMargin
-                    val iconRight: Int = iconLeft + (mIcon.intrinsicWidth)
-                    mIcon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
-                    mBackground.setBounds(
+                    val iconRight: Int = iconLeft + (icon.intrinsicWidth)
+                    icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
+                    background.setBounds(
                         left,
                         top,
                         left + dX.toInt() + backgroundCornerOffset,
@@ -52,11 +55,17 @@ class SwipeAdapter(
                     )
                 }
                 dX < 0 -> { // Swiping to the left
+                    if(swipedRightForOptions){
+                        background.setTint(R.color.swipeForOptionsColor.toColor(context))
+                        icon= R.drawable.ic_round_menu_white_24.toDrawable(context)
+                        if(icon == null) return
+                    }
+
                     val iconLeft =
-                        right - iconMargin - (mIcon.intrinsicWidth)
+                        right - iconMargin - (icon.intrinsicWidth)
                     val iconRight = right - iconMargin
-                    mIcon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
-                    mBackground.setBounds(
+                    icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
+                    background.setBounds(
                         right + dX.toInt() - backgroundCornerOffset,
                         top,
                         right,
@@ -64,14 +73,14 @@ class SwipeAdapter(
                     )
                 }
                 else -> { // view is unSwiped
-                    mIcon.setBounds(0, 0, 0, 0)
-                    mBackground.setBounds(0, 0, 0, 0)
+                    icon.setBounds(0, 0, 0, 0)
+                    background.setBounds(0, 0, 0, 0)
                 }
             }
 
 
-            mBackground.draw(c)
-            mIcon.draw(c)
+            background.draw(c)
+            icon.draw(c)
             super.onChildDraw(
                 c,
                 recyclerView,
@@ -98,7 +107,7 @@ class SwipeAdapter(
         direction: Int
     ) { // remove from adapter
 
-        onSwiped(viewHolder)
+        onSwiped(direction, viewHolder)
 
     }
 

@@ -93,7 +93,7 @@ class AccountsDialog : DialogFragment(), CanLogout,
     }
 
 
-    private fun onSwiped(viewHolder: RecyclerView.ViewHolder) {
+    private fun onSwiped(swipeDirection:Int, viewHolder: RecyclerView.ViewHolder) {
         if (viewHolder is AccountsRecyclerAdapter.MyViewHolder) {
             viewHolder.binding.itemModel?.uid?.let {
                 accountsManager.deleteUser(it)

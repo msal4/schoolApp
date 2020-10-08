@@ -28,8 +28,8 @@ fun interface SwipeListener{
 fun RecyclerView.setSwipeToDelete(swipeListener: SwipeListener, headersCount:Int?=0){
     val fixedPositions= if(headersCount!=null) (0 until headersCount).toList() else emptyList()
 
-    val swipeAdapter = SwipeAdapter(fixedPositions) {
-        swipeListener.onSwiped(it.adapterPosition - (headersCount?:0))
+    val swipeAdapter = SwipeAdapter(fixedPositions) { _, holder ->
+        swipeListener.onSwiped(holder.adapterPosition - (headersCount?:0))
     }
     ItemTouchHelper(swipeAdapter).attachToRecyclerView(this)
 }

@@ -5,11 +5,15 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
-import com.haytham.coder.extensions.showSnackBar
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.haytham.coder.extensions.toString
+import com.kaopiz.kprogresshud.KProgressHUD
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.activity.SectionActivity
-import com.smart.resources.schools_app.core.bindingAdapters.setSwipeToDelete
+import com.smart.resources.schools_app.core.callbacks.SwipeAdapter
+import com.smart.resources.schools_app.core.extentions.showSnackBar
+import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.menuSheet.MenuBottomSheet
 import com.smart.resources.schools_app.features.menuSheet.MenuItemData
@@ -19,12 +23,18 @@ import com.smart.resources.schools_app.features.onlineExam.presentation.adapter.
 import com.smart.resources.schools_app.features.onlineExam.presentation.bottomSheets.AddOnlineExamBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
+// TODO: add confirmation dialogs
 @AndroidEntryPoint
 class OnlineExamsFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
     private lateinit var adapter: OnlineExamAdapter
     private val viewModel: OnlineExamViewModel by viewModels()
-
+    private val progressHud: KProgressHUD by lazy {
+        KProgressHUD.create(requireActivity())
+            .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+            .setCancellable(false)
+            .setDimAmount(0.5f)
+    }
 
     companion object {
         fun newInstance(fm: FragmentManager) {
@@ -64,65 +74,97 @@ class OnlineExamsFragment : Fragment() {
             deleteFailedEvent.observe(viewLifecycleOwner) {
                 it.getContentIfNotHandled()?.let { pair ->
                     adapter.notifyItemChanged(pair.first)
-                    val errorMsg= pair.second.toString(requireContext())
-                    binding.layout.showSnackBar(errorMsg)
+                    showErrorSnackbar(pair.second)
+                }
+            }
+            errorEvent.observe(viewLifecycleOwner) {
+                it.getContentIfNotHandled()?.let { errorMsgId ->
+                    showErrorSnackbar(errorMsgId)
+                }
+            }
+
+            menuActionInProgress.observe(viewLifecycleOwner) {
+                it?.let { isLoading ->
+                    if (isLoading) progressHud.show()
+                    else progressHud.dismiss()
                 }
             }
         }
     }
 
+    private fun showErrorSnackbar(errorMsgId: Int) {
+        val errorMsg = errorMsgId.toString(requireContext())
+        binding.layout.showSnackBar(errorMsg)
+    }
+
+
     private fun FragmentRecyclerLoaderBinding.setupRecycler() {
         adapter = OnlineExamAdapter(true)
         adapter.onItemPressed = ::onOnlineExamPressed
 
-        if(viewModel.isTeacher) {
-            recyclerView.setSwipeToDelete(viewModel::removeExam)
+        if (viewModel.isTeacher) {
+            // add swipe functionality
+            val swipeAdapter = SwipeAdapter(onSwiped = ::onItemSwiped, swipedRightForOptions = true)
+            ItemTouchHelper(swipeAdapter).attachToRecyclerView(recyclerView)
+            adapter.onItemLongPressed = ::showOptionsMenu
         }
         recyclerView.adapter = adapter
     }
 
-    private fun onOnlineExamPressed(onlineExam: OnlineExam) {
-
-        MenuBottomSheet.newOnlineExamsInstance(onlineExam.examStatus).apply {
-            onMenuItemPressed= {
-                onSheetMenuItemPressed(it, onlineExam)
-            }
-
-        }.show(parentFragmentManager, "")
-
-//        if(viewModel.isTeacher){
-//            if(onlineExam.examStatus == OnlineExamStatus.INACTIVE) {
-//                ExamPaperFragment.newInstance(parentFragmentManager, onlineExam, true)
-//            }else{
-//                OnlineExamAnswersFragment.newInstance(parentFragmentManager)
-//            }
-//        }else{
-//            if(onlineExam.examStatus == OnlineExamStatus.INACTIVE) return
-//
-//            val readOnly= onlineExam.examStatus == OnlineExamStatus.COMPLETED
-//            ExamPaperFragment.newInstance(parentFragmentManager, onlineExam, readOnly)
-//        }
+    private fun onItemSwiped(swipeDirection: Int, viewHolder: RecyclerView.ViewHolder) {
+        val position = viewHolder.adapterPosition
+        if (swipeDirection == ItemTouchHelper.RIGHT) {
+            viewModel.removeExam(position)
+        } else {
+            adapter.notifyItemChanged(position)
+            val onlineExam = viewModel.onlineExams.value?.getOrNull(position)
+            if (onlineExam != null) showOptionsMenu(onlineExam)
+        }
     }
 
-    private fun onSheetMenuItemPressed(menuItemData:MenuItemData, onlineExam:OnlineExam){
-        when(menuItemData.label){
-            R.string.the_answers ->{
+    private fun onOnlineExamPressed(onlineExam: OnlineExam) {
+        if (viewModel.isTeacher) {
+            if (onlineExam.examStatus == OnlineExamStatus.INACTIVE) {
+                ExamPaperFragment.newInstance(parentFragmentManager, onlineExam, true)
+            } else {
                 OnlineExamAnswersFragment.newInstance(parentFragmentManager)
             }
-            R.string.the_questions ->{
+        } else {
+            if (onlineExam.examStatus == OnlineExamStatus.INACTIVE) return
+
+            val readOnly = onlineExam.examStatus == OnlineExamStatus.COMPLETED
+            ExamPaperFragment.newInstance(parentFragmentManager, onlineExam, readOnly)
+        }
+    }
+
+    private fun showOptionsMenu(onlineExam: OnlineExam) {
+        MenuBottomSheet.newOnlineExamsInstance(onlineExam.examStatus).apply {
+            onMenuItemPressed = {
+                onSheetMenuItemPressed(it, onlineExam)
+            }
+        }.show(parentFragmentManager, "")
+    }
+
+    private fun onSheetMenuItemPressed(menuItemData: MenuItemData, onlineExam: OnlineExam) {
+        when (menuItemData.label) {
+            R.string.the_answers -> {
+                OnlineExamAnswersFragment.newInstance(parentFragmentManager)
+            }
+            R.string.the_questions -> {
                 ExamPaperFragment.newInstance(parentFragmentManager, onlineExam, true)
             }
-            R.string.activate ->{
+            R.string.activate -> {
                 viewModel.activateExam(onlineExam.id)
             }
-            R.string.finish ->{
+            R.string.finish -> {
                 viewModel.finishExam(onlineExam.id)
             }
-            R.string.delete ->{
+            R.string.delete -> {
                 viewModel.removeExam(onlineExam.id)
             }
         }
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_add_btn, menu)
@@ -132,9 +174,9 @@ class OnlineExamsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.addMenuItem -> if (isAdded) {
-                if(viewModel.isTeacher) {
+                if (viewModel.isTeacher) {
                     AddOnlineExamFragment.newInstance(parentFragmentManager)
-                }else{
+                } else {
                     AddOnlineExamBottomSheet.newInstance().show(parentFragmentManager, "")
                 }
             }

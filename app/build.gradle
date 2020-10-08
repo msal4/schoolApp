@@ -54,7 +54,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.core:core-ktx:1.3.1'
+    implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
@@ -65,7 +65,7 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9'
 
     implementation 'com.google.android.material:material:1.2.1'
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
     implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit2_version"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit2_version"
@@ -132,5 +132,8 @@ dependencies {
     implementation 'com.github.hadiyarajesh:flower:1.0.0'
 
     // my extensions library
-    implementation 'com.github.haytham-c01:android-extensions:1.0.2'
+    implementation 'com.github.haytham-c01:android-extensions:1.0.4'
+
+    // loading hud
+    implementation 'com.kaopiz:kprogresshud:1.2.0'
 }

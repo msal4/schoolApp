@@ -44,6 +44,10 @@ class OnlineExamViewModel @ViewModelInject constructor(
     private val _errorEvent = MutableLiveData<Event<Int>>()
     val errorEvent: LiveData<Event<Int>> = _errorEvent
 
+
+    private val _menuActionInProgress = MutableLiveData<Boolean>()
+    val menuActionInProgress: LiveData<Boolean> = _menuActionInProgress
+
     private val examsFlow by lazy { getOnlineExamsUseCase() }
     val onlineExams: LiveData<List<OnlineExam>> = examsFlow.map {
         if (it.data.isNullOrEmpty()) {
@@ -64,37 +68,59 @@ class OnlineExamViewModel @ViewModelInject constructor(
 
     fun removeExam(position: Int) {
         onlineExams.value?.get(position)?.let {
-            removeExam(it.id)
+            viewModelScope.launch {
+                val errorMsgId = deleteExam(it.id)
+                if (errorMsgId != null) {
+                    _deleteFailedEvent.postValue(Event(Pair(position, errorMsgId)))
+                }
+            }
         }
     }
 
     fun removeExam(examId: String) {
         viewModelScope.launch {
-            val res = removeOnlineExamUseCase(examId)
-            if (res is ApiErrorResponse) {
-                Logger.e(res.combinedMessage)
-                val errorMessageId =
-                    if (res.statusCode == 0) R.string.connection_error else R.string.delete_failed
-                // TODO: handle this
-                //_deleteFailedEvent.postValue(Event(Pair(position, errorMessageId)))
+            _menuActionInProgress.postValue(true)
+
+            val errorMsgId = deleteExam(examId)
+            if (errorMsgId != null) {
+                _errorEvent.postValue(Event(errorMsgId))
             }
+
+            _menuActionInProgress.postValue(false)
+
         }
+    }
+
+    private suspend fun deleteExam(examId: String): Int? {
+        val res = removeOnlineExamUseCase(examId)
+        if (res is ApiErrorResponse) {
+            Logger.e(res.combinedMessage)
+            return if (res.statusCode == 0) R.string.connection_error else R.string.delete_failed
+        }
+
+        return null
     }
 
     fun activateExam(examId: String) {
         viewModelScope.launch {
-           val res = activateOnlineExamUseCase(examId)
+            _menuActionInProgress.postValue(true)
+
+            val res = activateOnlineExamUseCase(examId)
             if (res is ApiErrorResponse) {
                 Logger.e(res.combinedMessage)
                 val messageId =
                     if (res.statusCode == 0) R.string.connection_error else R.string.activation_failed
                 _errorEvent.postValue(Event(messageId))
             }
+
+            _menuActionInProgress.postValue(false)
+
         }
     }
 
     fun finishExam(examId: String) {
         viewModelScope.launch {
+            _menuActionInProgress.postValue(true)
             val res = finishOnlineExamUseCase(examId)
             if (res is ApiErrorResponse) {
                 Logger.e(res.combinedMessage)
@@ -102,6 +128,8 @@ class OnlineExamViewModel @ViewModelInject constructor(
                     if (res.statusCode == 0) R.string.connection_error else R.string.finish_failed
                 _errorEvent.postValue(Event(messageId))
             }
+
+            _menuActionInProgress.postValue(false)
         }
     }
 }

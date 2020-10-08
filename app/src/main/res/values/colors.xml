@@ -28,6 +28,9 @@
     <color name="red_a100_alpha_87">#DEFF8A80</color>
     <color name="pink_a100_alpha_87">#DEFF80AB</color>
 
+    <color name="swipeForOptionsColor">@color/orange_200_alpha_87</color>
+    <color name="swipeToDeleteColor">@color/lightRed</color>
+
     <color name="questionNormalColor">@color/orange_200_alpha_87</color>
     <color name="questionCorrectnessColor">@color/red_a100_alpha_87</color>
     <color name="questionMultiChoiceColor">@color/pink_a100_alpha_87</color>

@@ -73,7 +73,7 @@ class HomeworkFragment : Fragment() {
         return binding.root
     }
 
-    private fun onSwiped(viewHolder: RecyclerView.ViewHolder) {
+    private fun onSwiped(swipeDirection:Int, viewHolder: RecyclerView.ViewHolder) {
         viewModel.deleteHomework(viewHolder.adapterPosition)
     }
 
