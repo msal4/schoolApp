@@ -126,7 +126,8 @@
     <string name="required_questions">الاسئلة المطلوبة</string>
     <string name="key">الرمز</string>
     <string name="tag_add_question_fragment">addQuestionFragmentTag</string>
-    <string name="empty_options_error_msg">يرجى اضافة اختيار على الاقل عن طريق كتابة الاختيار على سطر جديد!</string>
+    <string name="empty_options_error_msg">يرجى اضافة اختيارين على الاقل عن طريق كتابة الاختيار على سطر جديد!</string>
+    <string name="too_many_options_error_msg">يرجى اضافة ثلاث اختيارات كحد اقصى!</string>
     <string name="subject_not_selected_error">يرجى اختيار المادة!</string>
     <string name="class_not_selected_error">يرجى اختيار الصف!</string>
     <string name="empty_exam_date_error">يرجى اختيار تاريخ الامتحان!</string>

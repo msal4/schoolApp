@@ -10,7 +10,7 @@ data class UserWithOnlineExams(
     @Relation(
         parentColumn = "uid",
         entityColumn = "onlineExamId",
-        associateBy = Junction(UserOnlineExamCrossRef::class)
+        associateBy = Junction(UserOnlineExamCrossRef::class),
     )
     val onlineExams: List<LocalOnlineExam>
 )

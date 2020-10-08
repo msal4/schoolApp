@@ -14,6 +14,8 @@ class AddQuestionViewModel : ViewModel() {
 
     companion object {
         private const val TAG = "AddQuestionViewModel"
+        private const val MIN_QUESTION_OPTIONS= 2
+        private const val MAX_QUESTION_OPTIONS= 3
     }
 
     private var count= 0
@@ -31,7 +33,8 @@ class AddQuestionViewModel : ViewModel() {
     val onQuestionAdded: LiveData<Event<Question>> = _onQuestionAdded
 
     fun addQuestion() {
-        val questionVal = question.value
+        var questionText = question.value
+        var questionOptions:List<String> = emptyList()
         val questionTypeVal = questionType.value
 
 
@@ -39,24 +42,32 @@ class AddQuestionViewModel : ViewModel() {
             _questionErrorMsg.postValue(R.string.no_question_type_selected_msg)
             return
         }
-        if (questionVal.isNullOrBlank()) {
+        if (questionText.isNullOrBlank()) {
             _questionErrorMsg.postValue(R.string.empty_question_msg)
             return
         }
-        val parts = questionVal.split("\n").filter { !it.isBlank() }
-        if (questionTypeVal == QuestionType.MULTI_CHOICE) {
 
-            if (parts.size < 2) {
+        val parts = questionText.split("\n").map { it.trim() }.filter { !it.isBlank() }
+        if (questionTypeVal == QuestionType.MULTI_CHOICE) {
+            val optionsCount= parts.size-1
+            if (optionsCount < MIN_QUESTION_OPTIONS) {
                 _questionErrorMsg.value = R.string.empty_options_error_msg
                 return
             }
+            if (optionsCount > MAX_QUESTION_OPTIONS) {
+                _questionErrorMsg.value = R.string.too_many_options_error_msg
+                return
+            }
+
+            questionText= parts[0]
+            questionOptions= parts.subList(1, parts.size)
         }
 
         val questionModel = Question(
             id = count.toString(),
-            question = questionVal,
+            question = questionText,
             questionType = questionTypeVal,
-            options = parts.subList(1, parts.size)
+            options = questionOptions
         )
 
         _onQuestionAdded.value = Event(questionModel)

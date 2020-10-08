@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.onlineExam.presentation.fragments
+package com.smart.resources.schools_app.features.onlineExam.presentation.bottomSheets
 
 import android.os.Bundle
 import android.text.InputType
@@ -69,6 +69,7 @@ class AddQuestionFragment : Fragment() {
                     QuestionType.NORMAL
                 }
             }
+            questionField.setSelection(questionField.text?.length?:0)
         }
         viewModel.questionType.observe(viewLifecycleOwner) {
             val radioBtnId = when (it) {

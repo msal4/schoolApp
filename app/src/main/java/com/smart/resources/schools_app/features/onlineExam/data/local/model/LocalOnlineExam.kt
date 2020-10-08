@@ -20,4 +20,5 @@ data class LocalOnlineExam(
     companion object {
         const val TABLE_NAME = "OnlineExams"
     }
+
 }

@@ -36,7 +36,9 @@ class OnlineExamsRepository(
                 onlineExamsDao
                     .getUserOnlineExams(userId)
                     .map {
-                        onlineExamMappersFacade.mapLocalOnlineExam(it.first().onlineExams)
+                        onlineExamMappersFacade
+                            .mapLocalOnlineExam(it.first().onlineExams)
+                            .sortedBy { exam -> exam.examStatus.ordinal }
                     }
             },
             fetchFromRemote = {
