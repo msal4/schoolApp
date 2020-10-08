@@ -14,6 +14,9 @@ abstract class OnlineExamsDao : BaseDao<LocalOnlineExam>() {
     @Query("SELECT * FROM UserAccount where uid= :userId")
     abstract fun getUserOnlineExams(userId: String): Flow<List<UserWithOnlineExams>>
 
+    @Query("SELECT * FROM ${LocalOnlineExam.TABLE_NAME} where onlineExamId= :examId")
+    abstract fun getOnlineExamById(examId: String): Flow<LocalOnlineExam>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertUserOnlineExamCrossRef(onlineExam: List<UserOnlineExamCrossRef>)
 

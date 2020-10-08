@@ -7,8 +7,12 @@ import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineEx
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
 import kotlinx.coroutines.flow.Flow
 
-interface IGetOnlineExamsUseCase{
+interface IGetUserOnlineExamsUseCase{
    operator fun invoke(): Flow<Resource<List<OnlineExam>>>
+}
+
+interface IGetOnlineExamUseCase{
+    operator fun invoke(examId:String): Flow<Resource<OnlineExam>>
 }
 
 interface IGetOnlineExamQuestionsUseCase{

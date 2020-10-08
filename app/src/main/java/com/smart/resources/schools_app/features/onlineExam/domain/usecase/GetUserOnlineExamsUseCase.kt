@@ -7,14 +7,14 @@ import com.smart.resources.schools_app.features.users.data.UserRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetOnlineExamsUseCase @Inject constructor(
+class GetUserOnlineExamsUseCase @Inject constructor(
     private val onlineExamsRepository: IOnlineExamsRepository,
     private val userRepository: UserRepository,
-) : IGetOnlineExamsUseCase {
+) : IGetUserOnlineExamsUseCase {
     override operator fun invoke(): Flow<Resource<List<OnlineExam>>> {
         val userId =
             userRepository.getCurrentUserAccount()?.uid.toString() // TODO: change this to usecase
 
-        return onlineExamsRepository.getOnlineExams(userId)
+        return onlineExamsRepository.getUserOnlineExams(userId)
     }
 }

@@ -14,9 +14,13 @@ import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import com.smart.resources.schools_app.core.typeConverters.room.QuestionType
 import com.smart.resources.schools_app.features.onlineExam.domain.model.*
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
+import com.smart.resources.schools_app.features.onlineExam.domain.usecase.GetOnlineExamUseCase
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IGetOnlineExamQuestionsUseCase
+import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IGetOnlineExamUseCase
 import com.smart.resources.schools_app.features.onlineExam.presentation.fragments.ExamPaperFragment
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserTypeUseCase
+import kotlinx.coroutines.flow.filterNot
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 
 typealias ListOfAnswerableQuestions = List<BaseAnswerableQuestion<out Any>>
@@ -24,6 +28,7 @@ typealias ListOfAnswerableQuestions = List<BaseAnswerableQuestion<out Any>>
 class ExamPaperViewModel @ViewModelInject constructor(
     private val getOnlineExamQuestionUseCase: IGetOnlineExamQuestionsUseCase,
     private val getCurrentUserTypeUseCase: IGetCurrentUserTypeUseCase,
+    private val getOnlineExamUseCase: IGetOnlineExamUseCase,
     @Assisted private val savedStateHandle: SavedStateHandle,
     application: Application
 ) : AndroidViewModel(application) {
@@ -33,9 +38,17 @@ class ExamPaperViewModel @ViewModelInject constructor(
     //        MutableLiveData(dummyAnswerableQuestions)
 //    private val _questions: MutableLiveData<ListOfAnswerableQuestions> =
 
-    val initialOnlineExam: OnlineExam get() = savedStateHandle.get(ExamPaperFragment.EXTRA_EXAM_DETAILS)!!
-    val userType: UserType = getCurrentUserTypeUseCase()
-    val onlineExam: MutableLiveData<OnlineExam> = MutableLiveData(initialOnlineExam)
+    private val initialOnlineExam: OnlineExam get() = savedStateHandle.get(ExamPaperFragment.EXTRA_EXAM_DETAILS)!!
+    private val userType: UserType = getCurrentUserTypeUseCase()
+    val onlineExam = liveData {
+        emit(initialOnlineExam)
+
+        val examLiveData= getOnlineExamUseCase(initialOnlineExam.id)
+            .map { it.data }
+            .filterNotNull()
+            .asLiveData(viewModelScope.coroutineContext)
+        emitSource(examLiveData)
+    }
 
     val readOnly = onlineExam.map {
         !(it.examStatus == OnlineExamStatus.ACTIVE

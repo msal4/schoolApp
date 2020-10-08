@@ -5,12 +5,13 @@ import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.core.extentions.withNewData
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import com.smart.resources.schools_app.features.onlineExam.data.local.dataSource.OnlineExamsDao
+import com.smart.resources.schools_app.features.onlineExam.data.local.model.LocalOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.data.mappers.onlineExams.OnlineExamMappersFacade
 import com.smart.resources.schools_app.features.onlineExam.data.remote.dataSource.OnlineExamsClient
 import com.smart.resources.schools_app.features.onlineExam.data.remote.model.NetworkExamFinishedStatus
 import com.smart.resources.schools_app.features.onlineExam.data.remote.model.NetworkOnlineExamStatus
-import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.AddOnlineExam
+import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.repository.IOnlineExamsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -23,12 +24,12 @@ class OnlineExamsRepository(
     private val onlineExamMappersFacade: OnlineExamMappersFacade,
 ) : IOnlineExamsRepository {
 
-    companion object{
-        private const val TAG= "OnlineExamsRepository"
+    companion object {
+        private const val TAG = "OnlineExamsRepository"
     }
 
     @ExperimentalCoroutinesApi
-    override fun getOnlineExams(
+    override fun getUserOnlineExams(
         userId: String
     ): Flow<Resource<List<OnlineExam>>> {
         return networkBoundResource(
@@ -45,10 +46,10 @@ class OnlineExamsRepository(
                 onlineExamsClient.getOnlineExams()
             },
             saveRemoteData = {
-                    val localExams= onlineExamMappersFacade.mapNetworkToLocalOnlineExam(it)
-                    onlineExamsDao.syncWithDatabase(userId,localExams)
+                val localExams = onlineExamMappersFacade.mapNetworkToLocalOnlineExam(it)
+                onlineExamsDao.syncWithDatabase(userId, localExams)
             },
-            onFetchFailed = {errorBody, statusCode ->
+            onFetchFailed = { errorBody, statusCode ->
                 Logger.e("$TAG: $statusCode -> $errorBody")
             }
         ).catch {
@@ -58,13 +59,37 @@ class OnlineExamsRepository(
         }.flowOn(Dispatchers.IO)
     }
 
-    override suspend fun addOnlineExam(userId: String, addOnlineExam: AddOnlineExam): ApiResponse<OnlineExam> {
-        val networkExam = onlineExamMappersFacade.mapOnlineExamAddToNetwork(addOnlineExam)
-        val res= onlineExamsClient.addOnlineExam(networkExam).first()
+    @ExperimentalCoroutinesApi
+    override fun getOnlineExam(examId: String): Flow<Resource<OnlineExam>> {
+        return networkBoundResource<OnlineExam, Unit>(
+            fetchFromLocal = {
+                onlineExamsDao
+                    .getOnlineExamById(examId)
+                    .map {
+                        onlineExamMappersFacade.mapLocalOnlineExam(it)
+                    }
+            },
+            fetchFromRemote = {
+               emptyFlow()
+            },
+            shouldFetchFromRemote = { false },
+        ).catch {
+            // must be used to catch exceptions
+            Logger.e("$TAG: $it")
+            emit(Resource.error(msg = it.message.toString()))
+        }.flowOn(Dispatchers.IO)
+    }
 
-        if(res is ApiSuccessResponse && res.body!=null){
-            val localExams= onlineExamMappersFacade.mapNetworkToLocalOnlineExam(res.body!!)
-             onlineExamsDao.upsertUserOnlineExams(userId, listOf(localExams))
+    override suspend fun addOnlineExam(
+        userId: String,
+        addOnlineExam: AddOnlineExam
+    ): ApiResponse<OnlineExam> {
+        val networkExam = onlineExamMappersFacade.mapOnlineExamAddToNetwork(addOnlineExam)
+        val res = onlineExamsClient.addOnlineExam(networkExam).first()
+
+        if (res is ApiSuccessResponse && res.body != null) {
+            val localExams = onlineExamMappersFacade.mapNetworkToLocalOnlineExam(res.body!!)
+            onlineExamsDao.upsertUserOnlineExams(userId, listOf(localExams))
         }
 
         return res.withNewData {
@@ -77,11 +102,11 @@ class OnlineExamsRepository(
     }
 
     override suspend fun removeOnlineExam(examId: String): ApiResponse<Unit> {
-        val res= onlineExamsClient.deleteOnlineExam(examId).first()
+        val res = onlineExamsClient.deleteOnlineExam(examId).first()
 
-        when(res){
+        when (res) {
             is ApiErrorResponse -> {
-                if(res.statusCode == HttpURLConnection.HTTP_NOT_FOUND){
+                if (res.statusCode == HttpURLConnection.HTTP_NOT_FOUND) {
                     onlineExamsDao.deleteOnlineExam(examId)
                     return ApiEmptyResponse()
                 }
@@ -94,8 +119,10 @@ class OnlineExamsRepository(
     }
 
     override suspend fun activateOnlineExam(examId: String): ApiResponse<Unit> {
-       val res= onlineExamsClient.updateStatus(examId, NetworkOnlineExamStatus.createActiveStatus()).first()
-        if(res !is ApiErrorResponse<*>){
+        val res =
+            onlineExamsClient.updateStatus(examId, NetworkOnlineExamStatus.createActiveStatus())
+                .first()
+        if (res !is ApiErrorResponse<*>) {
             onlineExamsDao.updateExamStatus(examId, OnlineExamStatus.ACTIVE.value)
         }
 
@@ -103,8 +130,11 @@ class OnlineExamsRepository(
     }
 
     override suspend fun finishOnlineExam(examId: String): ApiResponse<Unit> {
-        val res= onlineExamsClient.finishExam(examId, NetworkExamFinishedStatus.createExamFinishedStatus()).first()
-        if(res !is ApiErrorResponse<*>){
+        val res = onlineExamsClient.finishExam(
+            examId,
+            NetworkExamFinishedStatus.createExamFinishedStatus()
+        ).first()
+        if (res !is ApiErrorResponse<*>) {
             onlineExamsDao.updateExamStatus(examId, OnlineExamStatus.COMPLETED.value)
         }
 

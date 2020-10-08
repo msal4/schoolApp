@@ -7,7 +7,8 @@ import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineEx
 import kotlinx.coroutines.flow.Flow
 
 interface IOnlineExamsRepository {
-    fun getOnlineExams(userId:String): Flow<Resource<List<OnlineExam>>>
+    fun getUserOnlineExams(userId:String): Flow<Resource<List<OnlineExam>>>
+    fun getOnlineExam(examId:String): Flow<Resource<OnlineExam>>
     suspend fun addOnlineExam(userId: String, addOnlineExam: AddOnlineExam): ApiResponse<OnlineExam>
     suspend fun addOnlineExamByKey(examKey: String): Resource<Unit>
     suspend fun removeOnlineExam(examId:String): ApiResponse<Unit>

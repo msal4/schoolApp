@@ -16,7 +16,7 @@ import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IActivateOnlineExamUseCase
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IFinishOnlineExamUseCase
-import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IGetOnlineExamsUseCase
+import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IGetUserOnlineExamsUseCase
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IRemoveOnlineExamUseCase
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserTypeUseCase
 import kotlinx.coroutines.flow.map
@@ -26,7 +26,7 @@ import org.threeten.bp.LocalDateTime
 
 class OnlineExamViewModel @ViewModelInject constructor(
     application: Application,
-    private val getOnlineExamsUseCase: IGetOnlineExamsUseCase,
+    private val getUserOnlineExamsUseCase: IGetUserOnlineExamsUseCase,
     private val removeOnlineExamUseCase: IRemoveOnlineExamUseCase,
     private val getCurrentUserTypeUseCase: IGetCurrentUserTypeUseCase,
     private val activateOnlineExamUseCase: IActivateOnlineExamUseCase,
@@ -44,11 +44,10 @@ class OnlineExamViewModel @ViewModelInject constructor(
     private val _errorEvent = MutableLiveData<Event<Int>>()
     val errorEvent: LiveData<Event<Int>> = _errorEvent
 
-
     private val _menuActionInProgress = MutableLiveData<Boolean>()
     val menuActionInProgress: LiveData<Boolean> = _menuActionInProgress
 
-    private val examsFlow by lazy { getOnlineExamsUseCase() }
+    private val examsFlow by lazy { getUserOnlineExamsUseCase() }
     val onlineExams: LiveData<List<OnlineExam>> = examsFlow.map {
         if (it.data.isNullOrEmpty()) {
             when (it.status) {

@@ -10,7 +10,10 @@ import dagger.hilt.android.components.ActivityRetainedComponent
 @InstallIn(ActivityRetainedComponent::class)
 interface UseCaseModule {
     @Binds
-    fun bindGetOnlineExamsUseCase(getOnlineExamsUseCase: GetOnlineExamsUseCase): IGetOnlineExamsUseCase
+    fun bindGetUserOnlineExamsUseCase(getUserOnlineExamsUseCase: GetUserOnlineExamsUseCase): IGetUserOnlineExamsUseCase
+
+    @Binds
+    fun bindGetOnlineExamUseCase(getOnlineExamUseCase: GetOnlineExamUseCase): IGetOnlineExamUseCase
 
     @Binds
     fun bindGetOnlineExamQuestionsUseCase(getOnlineExamQuestionsUseCase: GetOnlineExamQuestionsUseCase): IGetOnlineExamQuestionsUseCase
