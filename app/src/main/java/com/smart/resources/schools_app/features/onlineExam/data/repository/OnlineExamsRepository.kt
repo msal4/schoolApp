@@ -46,8 +46,13 @@ class OnlineExamsRepository(
                 onlineExamsClient.getOnlineExams()
             },
             saveRemoteData = {
-                val localExams = onlineExamMappersFacade.mapNetworkToLocalOnlineExam(it)
-                onlineExamsDao.syncWithDatabase(userId, localExams)
+                try {
+                    val localExams = onlineExamMappersFacade.mapNetworkToLocalOnlineExam(it)
+                    onlineExamsDao.syncWithDatabase(userId, localExams)
+                }catch(e:Exception){
+                    Logger.e("$TAG: $e")
+                }
+
             },
             onFetchFailed = { errorBody, statusCode ->
                 Logger.e("$TAG: $statusCode -> $errorBody")

@@ -18,13 +18,13 @@ class QuestionTypeToIntegerConverter {
     @TypeConverter
     fun fromInteger(value: Int?): QuestionType? {
         if (value != null) {
-            return QuestionType.values()[value]
+            return QuestionType.fromValue(value)
         }
         return null
     }
 
     @TypeConverter
     fun toInteger(questionType: QuestionType?): Int? {
-        return questionType?.ordinal
+        return questionType?.value
     }
 }

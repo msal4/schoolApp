@@ -7,10 +7,10 @@ import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnsw
 import com.smart.resources.schools_app.features.onlineExam.domain.model.Question
 import kotlinx.coroutines.flow.Flow
 
-typealias ListOfAnswers = List<BaseAnswer<out Any>>
+typealias ListOfAnswers = List<BaseAnswer<Any>>
 
 interface IAnswersRepository {
-    fun getAnswers(examId: String, studentId:String): Flow<Resource<ListOfAnswers>>
-    fun saveAnswersLocally(answers:ListOfAnswers)
-    fun sendAnswers(answers:ListOfAnswers):ApiResponse<Unit>
+    fun getStudentExamAnswers(examId: String, studentId:String): Flow<Resource<ListOfAnswers>>
+    suspend fun saveAnswerLocally(answer:BaseAnswer<Any>, questionId:String, userId:String)
+    suspend fun sendAnswers(answers:ListOfAnswers, questionIds:List<String>, userId:String):ApiResponse<Unit>
 }

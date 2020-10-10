@@ -18,7 +18,7 @@ abstract class UsersModule {
     @Binds
     abstract fun bindGetCurrentTeacherDataUseCase(getCurrentTeacherModelUseCase: GetCurrentTeacherModelUseCase): IGetCurrentTeacherModelUseCase
     @Binds
-    abstract fun bindGetLocalUserIdUseCase(getLocalUserIdUseCase: GetLocalLocalUserIdUseCase): IGetUserIdUseCase
+    abstract fun bindGetLocalUserIdUseCase(getLocalUserIdUseCase: GetLocalUserIdUseCase): IGetUserIdUseCase
 
     companion object{
         @Singleton

@@ -13,7 +13,7 @@ class GetUserOnlineExamsUseCase @Inject constructor(
 ) : IGetUserOnlineExamsUseCase {
     override operator fun invoke(): Flow<Resource<List<OnlineExam>>> {
         val userId =
-            userRepository.getCurrentUserAccount()?.uid.toString() // TODO: change this to usecase
+            userRepository.getCurrentUserAccount()?.uid.toString()
 
         return onlineExamsRepository.getUserOnlineExams(userId)
     }

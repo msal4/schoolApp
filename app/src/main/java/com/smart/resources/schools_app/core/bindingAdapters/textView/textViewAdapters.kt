@@ -35,7 +35,6 @@ fun TextView.setDurationInMinutes(duration: Duration?) {
 )
 fun TextView.setTimer(duration: Duration?, onTimerFinished: (() -> Unit)?, startTimer: Boolean?) {
     if (startTimer == true) {
-        Logger.wtf(duration?.toMinutes().toString())
         duration?.startCountDown(
             onFinished = onTimerFinished,
             onTicked = {
@@ -61,7 +60,9 @@ fun TextView.setUnOrderedList(list: List<String>) {
         hide()
         return
     }
-    text = list.joinToString(separator = "\n") { it }.unicodeWrap()
+    text = list.joinToString(separator = "\n") { it }.unicodeWrap().apply {
+        Logger.wtf(this)
+    }
 }
 
 @BindingAdapter("android:textCommaSeparated")

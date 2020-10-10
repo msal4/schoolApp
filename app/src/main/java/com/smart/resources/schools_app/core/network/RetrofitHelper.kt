@@ -16,6 +16,7 @@ import com.smart.resources.schools_app.features.lecture.LectureClient
 import com.smart.resources.schools_app.features.library.LibraryClient
 import com.smart.resources.schools_app.features.login.AccountClient
 import com.smart.resources.schools_app.features.notification.NotificationsClient
+import com.smart.resources.schools_app.features.onlineExam.data.remote.dataSource.AnswersClient
 import com.smart.resources.schools_app.features.onlineExam.data.remote.dataSource.OnlineExamsClient
 import com.smart.resources.schools_app.features.onlineExam.data.remote.dataSource.QuestionsClient
 import com.smart.resources.schools_app.features.profile.certificate.CertificateClient
@@ -90,6 +91,7 @@ object RetrofitHelper {
     val examClient: ExamClient get() = retrofitWithAuth.create(ExamClient::class.java)
     val onlineExamsClient: OnlineExamsClient get() = retrofitWithAuth.create(OnlineExamsClient::class.java) // TO not break old code
     val questionsClient: QuestionsClient get() = retrofitWithAuth.create(QuestionsClient::class.java) // TO not break old code
+    val answersClient: AnswersClient get() = retrofitWithAuth.create(AnswersClient::class.java) // TO not break old code
     val lectureClient: LectureClient get() = retrofitWithAuth.create(LectureClient::class.java)
     val certificateClient: CertificateClient get() = retrofitWithAuth.create(CertificateClient::class.java)
     val libraryClient: LibraryClient get() = retrofitWithAuth.create(LibraryClient::class.java)

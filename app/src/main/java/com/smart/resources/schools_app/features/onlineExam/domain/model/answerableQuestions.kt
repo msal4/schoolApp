@@ -2,7 +2,7 @@ package com.smart.resources.schools_app.features.onlineExam.domain.model
 
 import com.smart.resources.schools_app.core.typeConverters.room.QuestionType
 
-sealed class BaseAnswerableQuestion<AnswerType> constructor(
+sealed class BaseAnswerableQuestion<out AnswerType> constructor(
     open val question: Question,
     open val answer: BaseAnswer<AnswerType>?,
 ) {

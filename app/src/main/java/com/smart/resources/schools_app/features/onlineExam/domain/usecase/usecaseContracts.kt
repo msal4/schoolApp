@@ -3,10 +3,12 @@ package com.smart.resources.schools_app.features.onlineExam.domain.usecase
 import com.hadiyarajesh.flower.ApiResponse
 import com.hadiyarajesh.flower.Resource
 import com.smart.resources.schools_app.features.onlineExam.domain.model.AnswerableQuestion
+import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnswer
 import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnswerableQuestion
 import com.smart.resources.schools_app.features.onlineExam.domain.model.Question
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.CompleteOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
+import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.ListOfAnswerableQuestions
 import kotlinx.coroutines.flow.Flow
 
 interface IGetUserOnlineExamsUseCase{
@@ -22,7 +24,7 @@ interface IGetExamQuestionsUseCase{
 }
 
 interface IGetExamQuestionsWithAnswersUseCase{
-    operator fun invoke(examId:String, userId:String): Flow<Resource<List<BaseAnswerableQuestion<out Any>>>>
+    operator fun invoke(examId:String, userId:String):  Flow<Resource<ListOfAnswerableQuestions>>
 }
 
 interface IAddOnlineExamUseCase{
@@ -43,4 +45,16 @@ interface IFinishOnlineExamUseCase{
 
 interface IActivateOnlineExamUseCase{
     suspend operator fun invoke(examId:String): ApiResponse<Unit>
+}
+
+interface ISaveAnswerLocallyUseCase{
+    suspend operator fun invoke(answer: BaseAnswer<Any>, questionId:String)
+}
+
+interface ISendAnswersUseCase{
+    suspend operator fun invoke(answers: List<BaseAnswer<Any>>, questionIds:List<String>)
+}
+
+interface IGetStudentExamAnswersUseCase{
+    operator fun invoke(examId: String, studentId:String):Flow<Resource<List<BaseAnswer<Any>>>>
 }

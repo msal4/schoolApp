@@ -1,6 +1,6 @@
 package com.smart.resources.schools_app.features.onlineExam.domain.model
 
-sealed class BaseAnswer<AnswerType> (
+sealed class BaseAnswer<out AnswerType> (
     open val answer: AnswerType
 )
 

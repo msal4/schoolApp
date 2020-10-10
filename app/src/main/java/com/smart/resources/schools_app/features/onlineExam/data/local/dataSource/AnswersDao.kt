@@ -20,4 +20,5 @@ abstract class AnswersDao: BaseDao<LocalAnswer>() {
         )""")
     abstract fun getUserExamAnswers(examId:String, userId:String): Flow<List<LocalAnswer>>
 
+
 }

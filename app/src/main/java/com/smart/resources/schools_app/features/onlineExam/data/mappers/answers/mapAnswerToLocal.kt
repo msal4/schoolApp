@@ -6,7 +6,7 @@ import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnsw
 import com.smart.resources.schools_app.features.onlineExam.domain.model.CorrectnessAnswer
 import com.smart.resources.schools_app.features.onlineExam.domain.model.MultiChoiceAnswer
 
-fun mapAnswerToLocal(answer: BaseAnswer<out Any>, userId:String, questionId:String): LocalAnswer{
+fun mapAnswerToLocal(answer: BaseAnswer<out Any>, questionId:String, userId:String): LocalAnswer{
     return LocalAnswer(
         userId = userId,
         questionId = questionId,

@@ -5,6 +5,7 @@ import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.hadiyarajesh.flower.Resource
+import com.haytham.coder.extensions.isNotNullOrEmpty
 import com.haytham.coder.extensions.toString
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
@@ -14,19 +15,23 @@ import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import com.smart.resources.schools_app.core.typeConverters.room.QuestionType
 import com.smart.resources.schools_app.features.onlineExam.domain.model.*
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
-import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IGetExamQuestionsUseCase
-import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IGetOnlineExamUseCase
+import com.smart.resources.schools_app.features.onlineExam.domain.usecase.*
+import com.smart.resources.schools_app.features.onlineExam.domain.usecase.questions.GetExamQuestionsWithAnswersUseCase
 import com.smart.resources.schools_app.features.onlineExam.presentation.fragments.ExamPaperFragment
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserTypeUseCase
+import com.smart.resources.schools_app.features.users.domain.usecase.IGetUserIdUseCase
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 
-typealias ListOfAnswerableQuestions = List<BaseAnswerableQuestion<out Any>>
+typealias ListOfAnswerableQuestions = List<BaseAnswerableQuestion<Any>>
 
 class ExamPaperViewModel @ViewModelInject constructor(
-    private val getExamQuestionUseCase: IGetExamQuestionsUseCase,
     private val getCurrentUserTypeUseCase: IGetCurrentUserTypeUseCase,
     private val getOnlineExamUseCase: IGetOnlineExamUseCase,
+    private val saveAnswerLocallyUseCase: ISaveAnswerLocallyUseCase,
+    private val sendAnswersUseCase: ISendAnswersUseCase,
+    private val getUserIdUseCase: IGetUserIdUseCase,
+    private val getExamQuestionsWithAnswersUseCase: IGetExamQuestionsWithAnswersUseCase,
     @Assisted private val savedStateHandle: SavedStateHandle,
     application: Application
 ) : AndroidViewModel(application) {
@@ -54,19 +59,13 @@ class ExamPaperViewModel @ViewModelInject constructor(
     }
 
 
-    val questions: LiveData<ListOfAnswerableQuestions> =
-        getExamQuestionUseCase(initialOnlineExam.id).map {
-            // if data is empty show message, or loading indicator
-            if (it.data.isNullOrEmpty()) {
-                updateListState(it)
-            }
-
-            // map questions any way
-            mapQuestionToAnswerableQuestions(it).apply {
-                listState.setLoading(false)
-            }
+    private val userId:LiveData<String> = liveData { emit(getUserIdUseCase()) }
+    val questions: LiveData<ListOfAnswerableQuestions> = userId.switchMap { userId ->
+        getExamQuestionsWithAnswersUseCase(initialOnlineExam.id, userId).map {
+            updateListState(it)
+            it.data.orEmpty()
         }.asLiveData(viewModelScope.coroutineContext)
-
+    }
 
     val solvedQuestions = questions.switchMap {
         questions.map { it.map { q -> q.answer != null } }
@@ -75,10 +74,11 @@ class ExamPaperViewModel @ViewModelInject constructor(
         "${it.filter { solved -> !solved }.size}/${it.size}"
     }
 
-    private fun updateListState(it: Resource<List<Question>>) {
-        when (it.status) {
+    private fun updateListState(it: Resource<List<Any>>) {
+        if(it.data.isNotNullOrEmpty()) listState.setLoading(false)
+        else when (it.status) {
             Resource.Status.SUCCESS -> {
-                listState.setBodyError(R.string.no_questions.toString(c))
+                    listState.setBodyError(R.string.no_questions.toString(c))
             }
             Resource.Status.ERROR -> {
                 Logger.e(it.message.toString())
@@ -90,36 +90,36 @@ class ExamPaperViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun mapQuestionToAnswerableQuestions(it: Resource<List<Question>>): ListOfAnswerableQuestions {
-        return it.data.orEmpty().map { question ->
-            when (question.questionType) {
-                QuestionType.MULTI_CHOICE -> {
-                    MultiChoiceAnswerableQuestion(
-                        question = question,
-                        answer = null,
-                    )
-                }
-                QuestionType.CORRECTNESS -> {
-                    CorrectnessAnswerableQuestion(
-                        question = question,
-                        answer = null,
-                    )
-                }
-                QuestionType.NORMAL -> {
-                    AnswerableQuestion(
-                        question = question,
-                        answer = null,
-                    )
-                }
-            }
-        }
-    }
+//    private fun mapQuestionToAnswerableQuestions(it: Resource<List<Question>>): ListOfAnswerableQuestions {
+//        return it.data.orEmpty().map { question ->
+//            when (question.questionType) {
+//                QuestionType.MULTI_CHOICE -> {
+//                    MultiChoiceAnswerableQuestion(
+//                        question = question,
+//                        answer = null,
+//                    )
+//                }
+//                QuestionType.CORRECTNESS -> {
+//                    CorrectnessAnswerableQuestion(
+//                        question = question,
+//                        answer = null,
+//                    )
+//                }
+//                QuestionType.NORMAL -> {
+//                    AnswerableQuestion(
+//                        question = question,
+//                        answer = null,
+//                    )
+//                }
+//            }
+//        }
+//    }
 
     fun onTimerFinished() {
         Logger.wtf("timer finished")
     }
 
-    fun updateAnswer(answer: BaseAnswer<out Any>, position: Int) {
+    fun updateAnswer(answer: BaseAnswer<Any>, position: Int) {
 
     }
 }

@@ -9,14 +9,14 @@ class ListState(
     fun setLoading(isLoading: Boolean) {
         if(this.isLoading.value != isLoading) {
             if (isLoading) setBodyError("")
-            this.isLoading.value = isLoading
+            this.isLoading.postValue(isLoading)
         }
     }
 
     fun setBodyError(errorMsg: String) {
         if(bodyError.value != errorMsg){
-            bodyError.value= errorMsg
-            isLoading.value= false
+            bodyError.postValue(errorMsg)
+            isLoading.postValue(false)
         }
 
     }
