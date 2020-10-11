@@ -17,6 +17,10 @@ import com.hadiyarajesh.flower.ApiResponse
 import com.hadiyarajesh.flower.ApiSuccessResponse
 import com.haytham.coder.extensions.toColor
 import com.smart.resources.schools_app.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -116,3 +120,18 @@ internal val Any.TAG: String
             if (name.length <= 23) name else name.substring(name.length - 23, name.length)
         }
     }
+
+fun <T> debounce(
+    waitMs: Long = 300L,
+    coroutineScope: CoroutineScope,
+    destinationFunction: (T) -> Unit
+): (T) -> Unit {
+    var debounceJob: Job? = null
+    return { param: T ->
+        debounceJob?.cancel()
+        debounceJob = coroutineScope.launch {
+            delay(waitMs)
+            destinationFunction(param)
+        }
+    }
+}

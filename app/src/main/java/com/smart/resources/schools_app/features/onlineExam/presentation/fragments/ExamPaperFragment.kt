@@ -130,7 +130,6 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
 
     override fun onQuestionAnswerStateUpdated(answer: BaseAnswer<Any>, position: Int) {
             viewModel.updateAnswer(answer, position)
-
     }
 
 

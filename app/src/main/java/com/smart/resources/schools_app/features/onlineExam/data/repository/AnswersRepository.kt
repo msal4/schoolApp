@@ -56,7 +56,6 @@ class AnswersRepository(
     ) {
         try{
             val localAnswer= answerMappersFacade.mapAnswerToLocal(answer, questionId, userId)
-            Logger.e("$TAG: $localAnswer")
             answersDao.upsert(localAnswer)
         }catch (e:Exception){
             Logger.e("$TAG: $e")
