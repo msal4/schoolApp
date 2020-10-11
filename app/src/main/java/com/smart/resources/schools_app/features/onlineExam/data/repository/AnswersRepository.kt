@@ -1,8 +1,8 @@
 package com.smart.resources.schools_app.features.onlineExam.data.repository
 
-import com.hadiyarajesh.flower.ApiResponse
-import com.hadiyarajesh.flower.Resource
-import com.hadiyarajesh.flower.networkBoundResource
+import com.hadiyarajesh.flower.*
+import com.orhanobut.logger.Logger
+import com.smart.resources.schools_app.core.extentions.TAG
 import com.smart.resources.schools_app.core.extentions.withNewData
 import com.smart.resources.schools_app.features.onlineExam.data.local.dataSource.AnswersDao
 import com.smart.resources.schools_app.features.onlineExam.data.mappers.answers.AnswerMappersFacade
@@ -11,11 +11,9 @@ import com.smart.resources.schools_app.features.onlineExam.data.remote.model.Net
 import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnswer
 import com.smart.resources.schools_app.features.onlineExam.domain.repository.IAnswersRepository
 import com.smart.resources.schools_app.features.onlineExam.domain.repository.ListOfAnswers
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 
 class AnswersRepository(
     private val answersDao: AnswersDao,
@@ -24,7 +22,7 @@ class AnswersRepository(
 ) : IAnswersRepository {
 
     @ExperimentalCoroutinesApi
-    override fun getStudentExamAnswers(examId: String, studentId: String): Flow<Resource<ListOfAnswers>> =
+    override fun getStudentExamAnswers(examId: String, studentId: String, shouldFetchFromRemote:Boolean): Flow<Resource<ListOfAnswers>> =
         networkBoundResource<ListOfAnswers, List<NetworkAnswer>>(
             fetchFromLocal = {
                 answersDao
@@ -33,21 +31,36 @@ class AnswersRepository(
                         answerMappersFacade.mapLocalAnswer(it)
                     }
             },
+            shouldFetchFromRemote = {
+               // shouldFetchFromRemote || it.isNullOrEmpty()
+                false
+            },
             fetchFromRemote = {
-                emptyFlow()
+                // fetch from api if local db is empty only
+                flow {
+                }
             },
             saveRemoteData = {
 
             }
-        )
+        ).catch {
+            // must be used to catch exceptions
+            Logger.e("$TAG: $it")
+            emit(Resource.error(msg = it.message.toString()))
+        }.flowOn(Dispatchers.IO)
 
     override suspend fun saveAnswerLocally(
         answer: BaseAnswer<Any>,
         questionId: String,
         userId: String
     ) {
-        val localAnswer= answerMappersFacade.mapAnswerToLocal(answer, questionId, userId)
-        answersDao.upsert(localAnswer)
+        try{
+            val localAnswer= answerMappersFacade.mapAnswerToLocal(answer, questionId, userId)
+            Logger.e("$TAG: $localAnswer")
+            answersDao.upsert(localAnswer)
+        }catch (e:Exception){
+            Logger.e("$TAG: $e")
+        }
     }
 
 

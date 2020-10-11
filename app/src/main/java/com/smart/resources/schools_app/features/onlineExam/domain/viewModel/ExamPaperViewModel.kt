@@ -9,6 +9,7 @@ import com.haytham.coder.extensions.isNotNullOrEmpty
 import com.haytham.coder.extensions.toString
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.extentions.TAG
 import com.smart.resources.schools_app.core.myTypes.ListState
 import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
@@ -22,6 +23,7 @@ import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrent
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetUserIdUseCase
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 typealias ListOfAnswerableQuestions = List<BaseAnswerableQuestion<Any>>
 
@@ -88,6 +90,7 @@ class ExamPaperViewModel @ViewModelInject constructor(
                 listState.setLoading(true)
             }
         }
+        Logger.e("$TAG: $it")
     }
 
 //    private fun mapQuestionToAnswerableQuestions(it: Resource<List<Question>>): ListOfAnswerableQuestions {
@@ -116,11 +119,12 @@ class ExamPaperViewModel @ViewModelInject constructor(
 //    }
 
     fun onTimerFinished() {
-        Logger.wtf("timer finished")
     }
 
     fun updateAnswer(answer: BaseAnswer<Any>, position: Int) {
-
+        viewModelScope.launch {
+            questions.value?.getOrNull(position)?.id?.let { saveAnswerLocallyUseCase(answer, it) }
+        }
     }
 }
 

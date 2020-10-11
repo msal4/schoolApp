@@ -13,9 +13,11 @@ import com.haytham.coder.extensions.setSoftInputMode
 import com.haytham.coder.extensions.setStatusBarColor
 import com.haytham.coder.extensions.setStatusBarColorToWhite
 import com.haytham.coder.extensions.toColor
+import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.callbacks.ViewPager2Helper
+import com.smart.resources.schools_app.core.extentions.TAG
 import com.smart.resources.schools_app.databinding.FragmentExamPaperBinding
 import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnswer
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
@@ -126,8 +128,9 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
         binding.questionsPager.setCurrentItem(index, true)
     }
 
-    override fun onQuestionAnswerStateUpdated(answer: BaseAnswer<out Any>, position: Int) {
-        viewModel.updateAnswer(answer, position)
+    override fun onQuestionAnswerStateUpdated(answer: BaseAnswer<Any>, position: Int) {
+            viewModel.updateAnswer(answer, position)
+
     }
 
 

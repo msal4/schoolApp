@@ -10,30 +10,30 @@ import com.smart.resources.schools_app.features.onlineExam.domain.repository.Lis
 
 
 class AnswerMappersFacade(
-    private val localAnswerMapper: (LocalAnswer) -> BaseAnswer<out Any>,
-    private val networkAnswerMapper: (NetworkAnswer) -> BaseAnswer<out Any>,
-    private val answerToLocalMapper: (BaseAnswer<out Any>, String, String) -> LocalAnswer,
-    private val answerToNetworkMapper: (BaseAnswer<out Any>, String, String) -> PostNetworkAnswer
+    private val localAnswerMapper: (LocalAnswer) -> BaseAnswer< Any>,
+    private val networkAnswerMapper: (NetworkAnswer) -> BaseAnswer< Any>,
+    private val answerToLocalMapper: (BaseAnswer< Any>, String, String) -> LocalAnswer,
+    private val answerToNetworkMapper: (BaseAnswer< Any>, String, String) -> PostNetworkAnswer
 ) {
 
-    fun mapLocalAnswer(input: LocalAnswer): BaseAnswer<out Any> = localAnswerMapper(input)
-    fun mapNetworkAnswer(input: NetworkAnswer): BaseAnswer<out Any> = networkAnswerMapper(input)
+    fun mapLocalAnswer(input: LocalAnswer): BaseAnswer< Any> = localAnswerMapper(input)
+    fun mapNetworkAnswer(input: NetworkAnswer): BaseAnswer< Any> = networkAnswerMapper(input)
     fun mapAnswerToLocal(
-        input: BaseAnswer<out Any>,
-        userId: String,
-        questionId: String
+        input: BaseAnswer< Any>,
+        questionId: String,
+        userId: String
     ): LocalAnswer = answerToLocalMapper(input, questionId, userId)
 
     fun mapAnswerToNetwork(
-        input: BaseAnswer<out Any>,
-        userId: String,
-        questionId: String
+        input: BaseAnswer<Any>,
+        questionId: String,
+        userId: String
     ): PostNetworkAnswer = answerToNetworkMapper(input, questionId, userId)
 
     fun mapNetworkToLocalAnswer(
         input: NetworkAnswer,
-        userId: String,
-        questionId: String
+        questionId: String,
+        userId: String
     ): LocalAnswer = mapAnswerToLocal(mapNetworkAnswer(input), userId, questionId)
 
     fun mapLocalAnswer(input: List<LocalAnswer>): ListOfAnswers = mapList(
