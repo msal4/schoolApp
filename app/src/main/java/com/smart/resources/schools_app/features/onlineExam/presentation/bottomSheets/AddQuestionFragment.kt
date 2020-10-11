@@ -66,7 +66,7 @@ class AddQuestionFragment : Fragment() {
                 }
                 else -> {
                     questionField.inputType= InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
-                    QuestionType.NORMAL
+                    QuestionType.DEFINE
                 }
             }
             questionField.setSelection(questionField.text?.length?:0)

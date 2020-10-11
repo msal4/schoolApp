@@ -103,7 +103,7 @@
     <string name="available">متوفرة</string>
     <string name="send_answer">ارسال الاجابة</string>
     <string name="answer_action">اجابة</string>
-    <string name="answer">الجواب</string>
+    <string name="the_answer">الجواب</string>
     <string name="show_answer">اظهار الاجابة</string>
     <string name="empty_answer_msg">يرجى اضافة وصف او صورة!</string>
     <string name="empty_question_msg">يرجى كتابة السؤال</string>
@@ -118,7 +118,10 @@
     <string name="wrong">خطأ</string>
     <string name="correcting_answer">تصحيح الخطأ</string>
     <string name="options">اختيارات</string>
-    <string name="normal">اعتيادي</string>
+    <string name="define">عرف</string>
+    <string name="why_question">علل</string>
+    <string name="answer_the_following">اجب عن التالي</string>
+    <string name="answer">اجب</string>
     <string name="true_and_false">صح وخطأ</string>
     <string name="the_question">السؤال</string>
     <string name="send_icon_description">ايقونة الارسال</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape android:shape="rectangle"
     xmlns:android="http://schemas.android.com/apk/res/android" >
-    <solid android:color="@color/questionNormalColor"/>
+    <solid android:color="@color/questionDefineColor"/>
 
     <corners android:bottomLeftRadius="@dimen/item_corner_radius"
         android:topRightRadius="@dimen/item_corner_radius"/>

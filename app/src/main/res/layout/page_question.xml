@@ -52,7 +52,7 @@
                     android:id="@+id/answerEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/answer"
+                    android:hint="@string/the_answer"
                     style="@style/MyEditTextStyle"
                     android:text="@{answerableQuestion.answer.answer}"
                     android:inputType="textMultiLine" />

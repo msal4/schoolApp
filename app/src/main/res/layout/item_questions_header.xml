@@ -4,61 +4,95 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable
-            name="normalQuestionsCount"
-            type="Integer" />
+
         <variable
             name="multiChoiceQuestionsCount"
             type="Integer" />
         <variable
             name="correctnessQuestionsCount"
             type="Integer" />
+
+        <variable
+            name="defineQuestionsCount"
+            type="Integer" />
+
+        <variable
+            name="whyQuestionsCount"
+            type="Integer" />
+
+        <variable
+            name="answerQuestionsCount"
+            type="Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
+        android:padding="@dimen/item_padding">
 
-        android:padding="@dimen/item_padding"
-        android:layoutDirection="rtl">
 
-        <TextView
-            android:id="@+id/normalQuestionsCountText"
-            style="@style/questionTypeCountTextStyle"
-            android:backgroundTint="@color/questionNormalColor"
-            android:verticalTextTitle="@{normalQuestionsCount.toString()}"
-            android:verticalTextSubtitle="@{@string/normal}"
-            android:layout_marginBottom="@dimen/item_margin"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/multiChoiceQuestionsCountText"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            tools:text="15\nاعتيادي"
-            />
         <TextView
             android:id="@+id/multiChoiceQuestionsCountText"
             style="@style/questionTypeCountTextStyle"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp"
             android:backgroundTint="@color/questionMultiChoiceColor"
-            android:verticalTextTitle="@{multiChoiceQuestionsCount.toString()}"
             android:verticalTextSubtitle="@{@string/options}"
-            app:layout_constraintBottom_toBottomOf="@+id/normalQuestionsCountText"
+            android:verticalTextTitle="@{multiChoiceQuestionsCount.toString()}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/correctnessQuestionsCountText"
-            app:layout_constraintStart_toEndOf="@+id/normalQuestionsCountText"
-            app:layout_constraintTop_toTopOf="@+id/normalQuestionsCountText"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/defineQuestionsCountText"
             tools:text="15\nاختيارات" />
 
         <TextView
             android:id="@+id/correctnessQuestionsCountText"
             style="@style/questionTypeCountTextStyle"
             android:backgroundTint="@color/questionCorrectnessColor"
-            android:verticalTextTitle="@{correctnessQuestionsCount.toString()}"
             android:verticalTextSubtitle="@{@string/true_and_false}"
-            app:layout_constraintBottom_toBottomOf="@+id/multiChoiceQuestionsCountText"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:verticalTextTitle="@{correctnessQuestionsCount.toString()}"
+            app:layout_constraintBottom_toBottomOf="@id/multiChoiceQuestionsCountText"
+            app:layout_constraintEnd_toEndOf="@+id/answerQuestionsCountText"
             app:layout_constraintStart_toEndOf="@+id/multiChoiceQuestionsCountText"
             app:layout_constraintTop_toTopOf="@+id/multiChoiceQuestionsCountText"
-            tools:text="15\nصح وخطأ"/>
+            tools:text="15\nصح وخطأ" />
+
+        <TextView
+            android:id="@+id/defineQuestionsCountText"
+            style="@style/questionTypeCountTextStyle"
+            android:backgroundTint="@color/questionDefineColor"
+            android:verticalTextSubtitle="@{@string/define}"
+            android:verticalTextTitle="@{defineQuestionsCount.toString()}"
+            app:layout_constraintEnd_toStartOf="@id/whyQuestionsCountText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="15\nعرف" />
+
+        <TextView
+            android:id="@+id/whyQuestionsCountText"
+            style="@style/questionTypeCountTextStyle"
+            android:backgroundTint="@color/questionWhyColor"
+            android:verticalTextSubtitle="@{@string/why_question}"
+            android:verticalTextTitle="@{whyQuestionsCount.toString()}"
+            app:layout_constraintBottom_toBottomOf="@+id/defineQuestionsCountText"
+            app:layout_constraintEnd_toStartOf="@id/answerQuestionsCountText"
+            app:layout_constraintStart_toEndOf="@+id/defineQuestionsCountText"
+            app:layout_constraintTop_toTopOf="@+id/defineQuestionsCountText"
+            tools:text="15\nعلل" />
+
+        <TextView
+            android:id="@+id/answerQuestionsCountText"
+            style="@style/questionTypeCountTextStyle"
+            android:backgroundTint="@color/questionAnswerColor"
+            android:verticalTextSubtitle="@{@string/answer}"
+            android:verticalTextTitle="@{answerQuestionsCount.toString()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/whyQuestionsCountText"
+            app:layout_constraintBottom_toBottomOf="@+id/defineQuestionsCountText"
+            app:layout_constraintTop_toTopOf="@+id/defineQuestionsCountText"
+            tools:text="15\nاجب" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

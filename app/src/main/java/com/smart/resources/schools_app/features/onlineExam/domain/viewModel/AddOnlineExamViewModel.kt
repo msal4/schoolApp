@@ -197,7 +197,7 @@ val dummyQuestions = listOf(
     Question(
         id = "0",
         question = "ما هو الحيوان الذي إن تم قطع رجل من أرجله تنمو مجدداً؟",
-        questionType = QuestionType.NORMAL,
+        questionType = QuestionType.DEFINE,
     ),
     Question(
         id = "1",
@@ -213,5 +213,15 @@ val dummyQuestions = listOf(
         id = "2",
         question = "ان الشعور بالاكتئاب وتقلب المزاج مرتبط بنقص معدن المغنيسوم",
         questionType = QuestionType.CORRECTNESS,
+    ),
+    Question(
+        id = "3",
+        question = "ان الشعور بالاكتئاب وتقلب المزاج مرتبط بنقص معدن المغنيسوم",
+        questionType = QuestionType.WHY,
+    ),
+    Question(
+        id = "4",
+        question = "ان الشعور بالاكتئاب وتقلب المزاج مرتبط بنقص معدن المغنيسوم",
+        questionType = QuestionType.ANSWER_THE_FOLLOWING,
     ),
 )

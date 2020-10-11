@@ -110,7 +110,7 @@ class ExamPaperViewModel @ViewModelInject constructor(
 //                        answer = null,
 //                    )
 //                }
-//                QuestionType.NORMAL -> {
+//                QuestionType.DEFINE -> {
 //                    AnswerableQuestion(
 //                        question = question,
 //                        answer = null,

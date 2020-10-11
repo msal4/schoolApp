@@ -82,7 +82,7 @@
                 android:id="@+id/normalQuestionRadioBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/normal"
+                android:text="@string/define"
                 android:layout_marginEnd="12dp" />
 
             <RadioButton

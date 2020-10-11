@@ -5,11 +5,13 @@ import androidx.room.TypeConverter
 enum class QuestionType(val value: Int) {
     MULTI_CHOICE(1),
     CORRECTNESS(2),
-    NORMAL(3);
+    DEFINE(3),
+    WHY(4),
+    ANSWER_THE_FOLLOWING(5);
 
     companion object {
         fun fromValue(value: Int): QuestionType {
-            return values().find { it.value== value }?:NORMAL
+            return values().find { it.value== value }?:ANSWER_THE_FOLLOWING
         }
     }
 }

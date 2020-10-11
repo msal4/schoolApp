@@ -25,11 +25,15 @@ class QuestionsQuickAdapter : BaseQuickAdapter<Question, BaseDataBindingHolder<I
             val questionTypeGroups = list.groupBy { it.questionType }
             QuestionType.values().forEach {
                 when (it) {
-                    QuestionType.NORMAL -> normalQuestionsCount =
-                        questionTypeGroups[it]?.count() ?: 0
                     QuestionType.CORRECTNESS -> correctnessQuestionsCount =
                         questionTypeGroups[it]?.count() ?: 0
                     QuestionType.MULTI_CHOICE -> multiChoiceQuestionsCount =
+                        questionTypeGroups[it]?.count() ?: 0
+                    QuestionType.DEFINE -> defineQuestionsCount =
+                        questionTypeGroups[it]?.count() ?: 0
+                    QuestionType.WHY -> whyQuestionsCount =
+                        questionTypeGroups[it]?.count() ?: 0
+                    QuestionType.ANSWER_THE_FOLLOWING -> answerQuestionsCount =
                         questionTypeGroups[it]?.count() ?: 0
                 }
             }

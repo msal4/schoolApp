@@ -28,7 +28,7 @@ class AddQuestionViewModel : ViewModel() {
         }
     }
 
-    val questionType = MutableLiveData(QuestionType.NORMAL)
+    val questionType = MutableLiveData(QuestionType.DEFINE)
     private val _onQuestionAdded: MutableLiveData<Event<Question>> = MutableLiveData()
     val onQuestionAdded: LiveData<Event<Question>> = _onQuestionAdded
 

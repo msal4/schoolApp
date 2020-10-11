@@ -25,7 +25,7 @@ data class AnswerableQuestion constructor(
             questionId,
             question,
             options,
-            QuestionType.NORMAL,
+            QuestionType.DEFINE,
         ),
         answer = if (answer != null) Answer(answer) else null
     )
