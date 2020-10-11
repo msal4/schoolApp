@@ -48,7 +48,6 @@ android {
 dependencies {
     def lifecycle_version = "2.2.0"
     def nav_version = "2.3.0"
-    def retrofit2_version = "2.7.0"
     def multidex_version = "2.0.1"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -66,9 +65,18 @@ dependencies {
 
     implementation 'com.google.android.material:material:1.2.1'
     testImplementation 'junit:junit:4.13'
+
+
+    // networking
+        // new version of ok http
+    implementation("com.squareup.okhttp3:okhttp:4.9.0")
+        // retrofit
+    def retrofit2_version = "2.9.0"
     implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit2_version"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit2_version"
+
+
     // Check this from the link
     implementation 'com.github.tiper:MaterialSpinner:1.4.1'
     implementation "androidx.multidex:multidex:$multidex_version"
@@ -100,10 +108,10 @@ dependencies {
     implementation "androidx.room:room-ktx:$room_version"
 
     // for logging requests
-    implementation("com.squareup.okhttp3:logging-interceptor:4.8.1")
-//    def watch_tower_version = "2.0.2"
-//    debugImplementation "com.snakyapps.watchtower:interceptor-okhttp:$watch_tower_version"
-//    releaseImplementation "com.snakyapps.watchtower:interceptor-okhttp-no-op:$watch_tower_version"
+   // implementation("com.squareup.okhttp3:logging-interceptor:4.8.1")
+    def watch_tower_version = "2.0.2"
+    debugImplementation "com.snakyapps.watchtower:interceptor-okhttp:$watch_tower_version"
+    releaseImplementation "com.snakyapps.watchtower:interceptor-okhttp-no-op:$watch_tower_version"
 
     // hilt for dependency injection
     def hilt_jetpack_version = "1.0.0-alpha02"

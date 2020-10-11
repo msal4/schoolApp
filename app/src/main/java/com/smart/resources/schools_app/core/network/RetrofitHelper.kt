@@ -3,7 +3,6 @@ package com.smart.resources.schools_app.core.network
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.hadiyarajesh.flower.calladpater.FlowCallAdapterFactory
-import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.core.typeConverters.retrofit.LocalDateConverter
 import com.smart.resources.schools_app.core.typeConverters.retrofit.LocalTimeConverter
 import com.smart.resources.schools_app.core.typeConverters.retrofit.LocalDateTimeConverter
@@ -24,8 +23,8 @@ import com.smart.resources.schools_app.features.profile.certificate.CertificateC
 import com.smart.resources.schools_app.features.rating.RatingClient
 import com.smart.resources.schools_app.features.schedule.ScheduleClient
 import com.smart.resources.schools_app.features.students.StudentClient
+import com.snakydesign.watchtower.interceptor.WatchTowerInterceptor
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
@@ -52,6 +51,13 @@ object RetrofitHelper {
         )
         .create()
 
+    private val watchTowerInterceptor by lazy {
+        WatchTowerInterceptor()
+    }
+
+//    private val loggingInterceptor= HttpLoggingInterceptor().apply {
+//        setLevel(HttpLoggingInterceptor.Level.BODY)
+//    }
 
     private val mBuilder
         get() = Retrofit.Builder()
@@ -59,16 +65,13 @@ object RetrofitHelper {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(FlowCallAdapterFactory.create())
 
-    private val loggingInterceptor= HttpLoggingInterceptor().apply {
-        setLevel(HttpLoggingInterceptor.Level.BODY) // TODO: disable log at release
-    }
     private val retrofit: Retrofit
         get() =
             mBuilder
                 .client(
                     OkHttpClient
                         .Builder()
-                        .addInterceptor(loggingInterceptor)
+                        .addInterceptor(watchTowerInterceptor)
                         .build()
                 )
                 .build()
@@ -76,7 +79,7 @@ object RetrofitHelper {
     private val retrofitWithAuth: Retrofit
         get() =
             with(OkHttpClient.Builder()) {
-                addInterceptor(loggingInterceptor)
+                addInterceptor(watchTowerInterceptor)
                 addInterceptor(AuthorizationInterceptor.instance)
                 mBuilder
                     .client(build())

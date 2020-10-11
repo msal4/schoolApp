@@ -20,9 +20,9 @@ abstract class OnlineExamsDao : BaseDao<LocalOnlineExam>() {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertUserOnlineExamCrossRef(onlineExam: List<UserOnlineExamCrossRef>)
 
-    @Query("DELETE FROM ${UserOnlineExamCrossRef.TABLE_NAME} WHERE uid NOT IN(:userIds) AND onlineExamId NOT IN(:examIds)")
+    @Query("DELETE FROM ${UserOnlineExamCrossRef.TABLE_NAME} WHERE uid = :userId AND onlineExamId NOT IN(:examIds)")
     abstract fun deleteRemainingUserOnlineExamCrossRefs(
-        userIds: List<String>,
+        userId: String,
         examIds: List<String>
     )
 
@@ -50,7 +50,7 @@ abstract class OnlineExamsDao : BaseDao<LocalOnlineExam>() {
         upsertUserOnlineExams(userId, onlineExams)
 
         // 2
-        deleteRemainingUserOnlineExamCrossRefs(listOf(userId), onlineExams.map { it.onlineExamId })
+        deleteRemainingUserOnlineExamCrossRefs(userId, onlineExams.map { it.onlineExamId })
 
         //3
         deleteOnlineExamsWithoutRelations()
