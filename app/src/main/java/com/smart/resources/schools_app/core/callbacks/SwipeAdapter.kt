@@ -30,7 +30,7 @@ class SwipeAdapter(
         viewHolder.itemView.apply {
             val background = R.drawable.bg_swipe_delete.toDrawable(context)
             background?.setTint(R.color.swipeToDeleteColor.toColor(context))
-            var icon = R.drawable.ic_delete_white_24dp.toDrawable(context)
+            var icon = R.drawable.ic_delete_white_with_spacing.toDrawable(context)
             if (background == null || icon == null) return
 
             //so mBackground is behind the rounded corners of itemView

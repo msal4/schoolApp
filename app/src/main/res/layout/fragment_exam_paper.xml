@@ -14,7 +14,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layoutDirection="rtl">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/paperHolesGuideLine"
@@ -43,17 +44,18 @@
 
         <TextView
             android:id="@+id/subjectName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:alpha="0.87"
             android:fontFamily="@font/monadi"
             android:text="@{String.format(@string/questions_of_subject, model.onlineExam.subjectName)}"
+            android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/examRemainingTimeTitle"
+            app:layout_constraintStart_toEndOf="@+id/remainingQuestionsTitle"
             app:layout_constraintTop_toTopOf="@id/paperHolesGuideLine"
-            tools:text="اسئلة رياضيات"/>
+            tools:text="اسئلة رياضيات" />
 
         <TextView
             android:id="@+id/remainingQuestionsTitle"
@@ -61,8 +63,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@string/remainingQuestions"
-            app:layout_constraintEnd_toStartOf="@+id/subjectName"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/paperHolesGuideLine" />
 
@@ -84,8 +84,6 @@
             android:layout_marginEnd="8dp"
             android:text="@string/remainingTime"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/subjectName"
             app:layout_constraintTop_toTopOf="@id/paperHolesGuideLine" />
 
         <TextView

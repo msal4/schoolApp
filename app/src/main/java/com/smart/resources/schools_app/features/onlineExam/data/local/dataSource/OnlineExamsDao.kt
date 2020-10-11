@@ -2,7 +2,6 @@ package com.smart.resources.schools_app.features.onlineExam.data.local.dataSourc
 
 import androidx.room.*
 import com.smart.resources.schools_app.core.appDatabase.BaseDao
-import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import com.smart.resources.schools_app.features.onlineExam.data.local.model.LocalOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.data.local.model.UserOnlineExamCrossRef
 import com.smart.resources.schools_app.features.onlineExam.data.local.model.UserWithOnlineExams
@@ -21,7 +20,7 @@ abstract class OnlineExamsDao : BaseDao<LocalOnlineExam>() {
     abstract fun insertUserOnlineExamCrossRef(onlineExam: List<UserOnlineExamCrossRef>)
 
     @Query("DELETE FROM ${UserOnlineExamCrossRef.TABLE_NAME} WHERE uid = :userId AND onlineExamId NOT IN(:examIds)")
-    abstract fun deleteRemainingUserOnlineExamCrossRefs(
+    abstract fun deleteUserOnlineExamCrossRefsNotInList(
         userId: String,
         examIds: List<String>
     )
@@ -50,7 +49,7 @@ abstract class OnlineExamsDao : BaseDao<LocalOnlineExam>() {
         upsertUserOnlineExams(userId, onlineExams)
 
         // 2
-        deleteRemainingUserOnlineExamCrossRefs(userId, onlineExams.map { it.onlineExamId })
+        deleteUserOnlineExamCrossRefsNotInList(userId, onlineExams.map { it.onlineExamId })
 
         //3
         deleteOnlineExamsWithoutRelations()

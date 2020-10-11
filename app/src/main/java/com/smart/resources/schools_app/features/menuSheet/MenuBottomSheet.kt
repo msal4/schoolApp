@@ -27,19 +27,49 @@ class MenuBottomSheet : BottomSheetDialogFragment() {
     companion object Factory {
         private const val EXTRA_MENU_ITEMS = "extraMenuItems"
 
-        fun newOnlineExamsInstance(examStatus: OnlineExamStatus):MenuBottomSheet {
+        fun newOnlineExamsInstance(examStatus: OnlineExamStatus): MenuBottomSheet {
             val menuItems: List<MenuItemData> = mutableListOf<MenuItemData>().apply {
-                if (examStatus != OnlineExamStatus.INACTIVE){
-                    add(MenuItemData(R.string.the_answers, R.drawable.ic_plus))
+                if (examStatus != OnlineExamStatus.INACTIVE) {
+                    add(
+                        MenuItemData(
+                            label = R.string.the_answers,
+                            iconDrawable = R.drawable.ic_a_letter,
+                            backgroundColor = R.color.answersMenuItemBackgroundColor,
+                        )
+                    )
                 }
-                add(MenuItemData(R.string.the_questions, R.drawable.ic_plus))
-                if (examStatus == OnlineExamStatus.INACTIVE){
-                    add(MenuItemData(R.string.activate, R.drawable.ic_plus))
+                add(
+                    MenuItemData(
+                        label = R.string.the_questions,
+                        iconDrawable = R.drawable.ic_question_mark,
+                        backgroundColor = R.color.questionsMenuItemBackgroundColor,
+                    )
+                )
+                if (examStatus == OnlineExamStatus.INACTIVE) {
+                    add(
+                        MenuItemData(
+                            label = R.string.activate,
+                            iconDrawable = R.drawable.ic_electricity,
+                            backgroundColor = R.color.activateMenuItemBackgroundColor,
+                        )
+                    )
                 }
-                if (examStatus == OnlineExamStatus.ACTIVE){
-                    add(MenuItemData(R.string.finish, R.drawable.ic_plus))
+                if (examStatus == OnlineExamStatus.ACTIVE) {
+                    add(
+                        MenuItemData(
+                            label = R.string.finish,
+                            iconDrawable = R.drawable.ic_f_letter,
+                            backgroundColor = R.color.finishMenuItemBackgroundColor,
+                        )
+                    )
                 }
-                add(MenuItemData(R.string.delete, R.drawable.ic_plus))
+                add(
+                    MenuItemData(
+                        label = R.string.delete,
+                        iconDrawable = R.drawable.ic_delete_outlined,
+                        backgroundColor = R.color.deleteMenuItemBackgroundColor,
+                    )
+                )
             }
 
             return newInstance(menuItems)

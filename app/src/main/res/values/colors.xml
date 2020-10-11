@@ -20,20 +20,28 @@
     <color name="lightBlue">#EDF1F6</color>
     <color name="veryLightBrown">#D6D2CE</color>
 
-    <color name="orange_300">#EFAD58</color>
-    <color name="examActiveColor">@color/orange_300</color>
     <color name="light_green_a700">#41CF21</color>
 
     <color name="orange_200_alpha_87">#DEEAC078</color>
     <color name="red_a100_alpha_87">#DEFF8A80</color>
     <color name="pink_a100_alpha_87">#DEFF80AB</color>
+    <color name="cyan_400">#25B7D3</color>
+    <color name="brown_900">#392A2A</color>
 
     <color name="swipeForOptionsColor">@color/orange_200_alpha_87</color>
     <color name="swipeToDeleteColor">@color/lightRed</color>
 
-    <color name="questionNormalColor">@color/orange_200_alpha_87</color>
     <color name="questionCorrectnessColor">@color/red_a100_alpha_87</color>
     <color name="questionMultiChoiceColor">@color/pink_a100_alpha_87</color>
+    <color name="questionNormalColor">@color/orange_200_alpha_87</color>
+    <color name="questionNormalColor2">@color/cyan_400</color>
+    <color name="questionNormalColor3">@color/green_a200</color>
+
+    <color name="questionsMenuItemBackgroundColor">@color/pink_a100_alpha_87</color>
+    <color name="answersMenuItemBackgroundColor">@color/cyan_400</color>
+    <color name="activateMenuItemBackgroundColor">@color/green_a200</color>
+    <color name="finishMenuItemBackgroundColor">@color/brown_900</color>
+    <color name="deleteMenuItemBackgroundColor">@color/swipeToDeleteColor</color>
 
     <color name="snackbar_background">#383E4A</color>
 </resources>

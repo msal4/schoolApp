@@ -43,5 +43,6 @@
     <dimen name="bottom_sheet_elevation">12dp</dimen>
     <dimen name="errorMsgSpacing">2dp</dimen>
     <dimen name="online_exam_state_indicator_size">12dp</dimen>
-    <dimen name="menu_item_icon_size">24dp</dimen>
+    <dimen name="menu_item_icon_size">28dp</dimen>
+    <dimen name="menu_item_icon_padding">8dp</dimen>
 </resources>

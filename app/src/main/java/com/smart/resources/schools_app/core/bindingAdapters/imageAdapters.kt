@@ -2,8 +2,10 @@ package com.smart.resources.schools_app.core.bindingAdapters
 
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
+import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.haytham.coder.extensions.toDrawable
 import com.smart.resources.schools_app.R
 
 
@@ -49,4 +51,11 @@ fun loadImageDrawable(iv: ImageView, drawable: Drawable) {
         .with(iv.context)
         .load(drawable)
         .into(iv)
+}
+
+@BindingAdapter("android:srcDrawableId")
+fun ImageView.setSrcDrawableId(@DrawableRes drawableId: Int?) {
+    if(drawableId!=null){
+        setImageDrawable(drawableId.toDrawable(context))
+    }
 }

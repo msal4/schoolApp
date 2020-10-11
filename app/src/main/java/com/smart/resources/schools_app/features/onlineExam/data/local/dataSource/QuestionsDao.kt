@@ -27,7 +27,7 @@ abstract class QuestionsDao: BaseDao<LocalQuestion>() {
         upsert(questions)
 
         // 2
-        //deleteExamQuestionsNotInList(examId, questions.map { it.onlineExamId })
+        deleteExamQuestionsNotInList(examId, questions.map { it.questionId })
     }
 
 }

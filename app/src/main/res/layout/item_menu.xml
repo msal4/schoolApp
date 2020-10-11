@@ -34,15 +34,19 @@
             android:id="@+id/icon"
             android:layout_width="@dimen/menu_item_icon_size"
             android:layout_height="@dimen/menu_item_icon_size"
+            android:padding="@dimen/menu_item_icon_padding"
             android:alpha="0.87"
-            android:src="@{menuItem.iconDrawable}"
-            android:scaleType="centerCrop"
+            android:srcDrawableId="@{menuItem.iconDrawable}"
+            android:backgroundTintDrawableId="@{menuItem.backgroundColor}"
+            android:scaleType="fitCenter"
+            android:background="@drawable/bg_circle_primary"
             app:layout_constraintBottom_toBottomOf="@+id/labelText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/labelText"
-            tools:src="@drawable/ic_round_check_24_white"
-            tools:tint="@color/green_a200"
-            tools:visibility="visible" />
+            tools:src="@drawable/ic_delete_outlined"
+            tools:visibility="visible"
+            tools:backgroundTint="@color/pink_a100_alpha_87"
+            app:tint="@android:color/white" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -3,14 +3,18 @@ package com.smart.resources.schools_app.core.bindingAdapters
 import android.transition.TransitionManager
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import androidx.annotation.DrawableRes
 import androidx.core.view.children
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.haytham.coder.extensions.hide
 import com.haytham.coder.extensions.show
+import com.haytham.coder.extensions.toColorStateList
+import com.haytham.coder.extensions.toDrawable
 import com.smart.resources.schools_app.core.callbacks.SwipeAdapter
 
 @BindingAdapter("android:checkedButtonIndex")
@@ -60,3 +64,9 @@ fun RadioGroup.setRadioGroupReadOnly(readOnly: Boolean?){
     }
 }
 
+@BindingAdapter("android:backgroundTintDrawableId")
+fun View.setBackgroundTintDrawableId(@DrawableRes drawableId: Int?) {
+    if(drawableId!=null){
+        backgroundTintList= drawableId.toColorStateList(context)
+    }
+}
