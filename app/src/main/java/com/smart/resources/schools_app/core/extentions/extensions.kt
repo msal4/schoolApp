@@ -22,8 +22,11 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.threeten.bp.Duration
 import java.io.File
 
@@ -34,11 +37,11 @@ fun String?.isPdf(): Boolean = this?.toLowerCase()?.endsWith(".pdf") ?: false
 
 
 fun String.asRequestBody(): RequestBody {
-    return RequestBody.create(MediaType.parse("text/plain"), this.trim())
+    return this.trim().toRequestBody("text/plain".toMediaTypeOrNull())
 }
 
 fun File.asBodyPart(fieldName: String): MultipartBody.Part? {
-    val requestBody = RequestBody.create(MediaType.parse("Image/*"), this)
+    val requestBody = this.asRequestBody("Image/*".toMediaTypeOrNull())
     return MultipartBody.Part.createFormData(fieldName, name, requestBody)
 }
 

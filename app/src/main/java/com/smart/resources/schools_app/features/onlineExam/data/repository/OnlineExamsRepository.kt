@@ -85,6 +85,17 @@ class OnlineExamsRepository(
         }.flowOn(Dispatchers.IO)
     }
 
+    override suspend fun syncOnlineExam(examId: String): ApiResponse<Unit> {
+        val res= onlineExamsClient.getOnlineExam(examId).first()
+        if(res is ApiSuccessResponse && res.body!=null){
+            val localExam= onlineExamMappersFacade.mapNetworkToLocalOnlineExam(res.body!!)
+            onlineExamsDao.update(localExam)
+        }
+
+        return res.withNewData { Unit }
+    }
+
+
     override suspend fun addOnlineExam(
         userId: String,
         addOnlineExam: AddOnlineExam

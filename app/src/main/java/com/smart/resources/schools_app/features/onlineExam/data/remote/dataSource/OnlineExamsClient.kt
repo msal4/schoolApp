@@ -17,6 +17,9 @@ interface OnlineExamsClient {
     @GET("onlineExams")
     fun getOnlineExams(): Flow<ApiResponse<List<NetworkOnlineExam>>>
 
+    @GET("onlineExam/{$EXAM_ID_PATH}")
+    fun getOnlineExam(@Path(EXAM_ID_PATH) examId:String): Flow<ApiResponse<NetworkOnlineExam>>
+
     @POST("addOnlineExam")
     fun addOnlineExam(@Body postModel: PostNetworkOnlineExam): Flow<ApiResponse<NetworkOnlineExam>>
 

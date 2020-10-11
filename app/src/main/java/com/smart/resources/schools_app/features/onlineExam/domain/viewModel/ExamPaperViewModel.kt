@@ -18,6 +18,7 @@ import com.smart.resources.schools_app.features.onlineExam.domain.model.*
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.*
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.questions.GetExamQuestionsWithAnswersUseCase
+import com.smart.resources.schools_app.features.onlineExam.domain.usecase.questions.SyncOnlineExamUseCase
 import com.smart.resources.schools_app.features.onlineExam.presentation.fragments.ExamPaperFragment
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserTypeUseCase
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetUserIdUseCase
@@ -30,6 +31,7 @@ typealias ListOfAnswerableQuestions = List<BaseAnswerableQuestion<Any>>
 class ExamPaperViewModel @ViewModelInject constructor(
     private val getCurrentUserTypeUseCase: IGetCurrentUserTypeUseCase,
     private val getOnlineExamUseCase: IGetOnlineExamUseCase,
+    private val syncOnlineExamUseCase: ISyncOnlineExamUseCase,
     private val saveAnswerLocallyUseCase: ISaveAnswerLocallyUseCase,
     private val sendAnswersUseCase: ISendAnswersUseCase,
     private val getUserIdUseCase: IGetUserIdUseCase,
@@ -90,7 +92,7 @@ class ExamPaperViewModel @ViewModelInject constructor(
                 listState.setLoading(true)
             }
         }
-        Logger.e("$TAG: $it")
+        Logger.d("$TAG: $it")
     }
 
 //    private fun mapQuestionToAnswerableQuestions(it: Resource<List<Question>>): ListOfAnswerableQuestions {
@@ -121,6 +123,14 @@ class ExamPaperViewModel @ViewModelInject constructor(
     fun onTimerFinished() {
     }
 
+    fun checkExamStatus(){
+        onlineExam.value?.id?.let {
+            viewModelScope.launch {
+                syncOnlineExamUseCase(it)
+            }
+        }
+    }
+
     fun updateAnswer(answer: BaseAnswer<Any>, position: Int) {
         viewModelScope.launch {
             questions.value?.getOrNull(position)?.id?.let { saveAnswerLocallyUseCase(answer, it) }
@@ -141,7 +151,7 @@ class ExamPaperViewModel @ViewModelInject constructor(
 //}
 
 
-private val dummyAnswerableQuestions: MutableList<BaseAnswerableQuestion<out Any>> = mutableListOf(
+private val dummyAnswerableQuestions: MutableList<BaseAnswerableQuestion<Any>> = mutableListOf(
     AnswerableQuestion(
         questionId = "0",
         question = "ما هو الحيوان الذي إن تم قطع رجل من أرجله تنمو مجدداً؟",

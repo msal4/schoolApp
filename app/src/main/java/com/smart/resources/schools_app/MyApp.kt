@@ -3,12 +3,12 @@ package com.smart.resources.schools_app
 import android.app.Application
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.FormatStrategy
 import com.orhanobut.logger.Logger
+import com.orhanobut.logger.PrettyFormatStrategy
 import com.smart.resources.schools_app.core.utils.AuthorizationInterceptor
 import com.smart.resources.schools_app.core.utils.SharedPrefHelper
 import com.smart.resources.schools_app.features.users.data.UserRepository
-import com.snakydesign.watchtower.WatchTower
-import com.snakydesign.watchtower.interceptor.WebWatchTowerObserver
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
@@ -25,7 +25,15 @@ class MyApp : Application() {
         UserRepository.instance= userRepository // To not break old code
         SharedPrefHelper.instance= sharedPrefHelper // To not break old code
         AuthorizationInterceptor.instance= authorizationInterceptor  // To not break old code
-        Logger.addLogAdapter(AndroidLogAdapter())
-        WatchTower.start(WebWatchTowerObserver(port = 8085))
+        setupLogger()
+
+    }
+
+    private fun setupLogger() {
+        Logger.addLogAdapter(object : AndroidLogAdapter() {
+            override fun isLoggable(priority: Int, tag: String?): Boolean {
+                return BuildConfig.DEBUG
+            }
+        })
     }
 }

@@ -9,6 +9,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import androidx.viewpager2.widget.ViewPager2
 import com.haytham.coder.extensions.setSoftInputMode
 import com.haytham.coder.extensions.setStatusBarColor
 import com.haytham.coder.extensions.setStatusBarColorToWhite
@@ -104,8 +105,11 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
             }
 
             readOnly.observe(viewLifecycleOwner) {
-                it?.let {
-                    pagerAdapter.updateReadOnly(it)
+                it?.let {readOnly->
+                    pagerAdapter.updateReadOnly(readOnly)
+                    if(!readOnly){
+                        registerPageChangeCallback()
+                    }
                 }
             }
         }
@@ -124,6 +128,14 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
         ViewPager2Helper.bind(magicIndicator, questionsPager)
     }
 
+    private fun registerPageChangeCallback() {
+        binding.questionsPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                viewModel.checkExamStatus()
+            }
+        })
+    }
+
     private fun onPageNumberPressed(index: Int) {
         binding.questionsPager.setCurrentItem(index, true)
     }
@@ -132,6 +144,7 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
             viewModel.updateAnswer(answer, position)
     }
 
-
 }
+
+
 

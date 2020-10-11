@@ -32,7 +32,7 @@ class AuthorizationInterceptor @Inject constructor(@ApplicationContext private v
 
         val res = chain.proceed(newRequest)
 
-        if (res.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+        if (res.code == HttpURLConnection.HTTP_UNAUTHORIZED) {
             logout()
         }
 

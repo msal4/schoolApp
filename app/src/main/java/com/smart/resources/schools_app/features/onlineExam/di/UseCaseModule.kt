@@ -6,6 +6,7 @@ import com.smart.resources.schools_app.features.onlineExam.domain.usecase.answer
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.answers.SendAnswersUseCase
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.questions.GetExamQuestionsUseCase
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.questions.GetExamQuestionsWithAnswersUseCase
+import com.smart.resources.schools_app.features.onlineExam.domain.usecase.questions.SyncOnlineExamUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -18,7 +19,10 @@ interface UseCaseModule {
     fun bindGetUserOnlineExamsUseCase(getUserOnlineExamsUseCase: GetUserOnlineExamsUseCase): IGetUserOnlineExamsUseCase
 
     @Binds
-    fun bindGetOnlineExamUseCase(getOnlineExamUseCase: GetOnlineExamUseCase): IGetOnlineExamUseCase
+    fun bindGetOnlineExamUseCase(getUserOnlineExamUseCase: GetUserOnlineExamUseCase): IGetOnlineExamUseCase
+
+    @Binds
+    fun bindSyncOnlineExamUseCase(syncOnlineExamUseCase: SyncOnlineExamUseCase): ISyncOnlineExamUseCase
 
     @Binds
     fun bindGetOnlineExamQuestionsUseCase(getOnlineExamQuestionsUseCase: GetExamQuestionsUseCase): IGetExamQuestionsUseCase
