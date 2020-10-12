@@ -5,7 +5,6 @@ import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.core.extentions.withNewData
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import com.smart.resources.schools_app.features.onlineExam.data.local.dataSource.OnlineExamsDao
-import com.smart.resources.schools_app.features.onlineExam.data.local.model.LocalOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.data.mappers.onlineExams.OnlineExamMappersFacade
 import com.smart.resources.schools_app.features.onlineExam.data.remote.dataSource.OnlineExamsClient
 import com.smart.resources.schools_app.features.onlineExam.data.remote.model.NetworkExamFinishedStatus
@@ -49,7 +48,7 @@ class OnlineExamsRepository(
                 try {
                     val localExams = onlineExamMappersFacade.mapNetworkToLocalOnlineExam(it)
                     onlineExamsDao.syncWithDatabase(userId, localExams)
-                }catch(e:Exception){
+                } catch (e: Exception) {
                     Logger.e("$TAG: $e")
                 }
 
@@ -75,20 +74,21 @@ class OnlineExamsRepository(
                     }
             },
             fetchFromRemote = {
-               emptyFlow()
+                emptyFlow()
             },
             shouldFetchFromRemote = { false },
-        ).catch {
-            // must be used to catch exceptions
-            Logger.e("$TAG: $it")
-            emit(Resource.error(msg = it.message.toString()))
-        }.flowOn(Dispatchers.IO)
+        ).distinctUntilChanged()
+            .catch {
+                // must be used to catch exceptions
+                Logger.e("$TAG: $it")
+                emit(Resource.error(msg = it.message.toString()))
+            }.flowOn(Dispatchers.IO)
     }
 
     override suspend fun syncOnlineExam(examId: String): ApiResponse<Unit> {
-        val res= onlineExamsClient.getOnlineExam(examId).first()
-        if(res is ApiSuccessResponse && res.body!=null){
-            val localExam= onlineExamMappersFacade.mapNetworkToLocalOnlineExam(res.body!!)
+        val res = onlineExamsClient.getOnlineExam(examId).first()
+        if (res is ApiSuccessResponse && res.body != null) {
+            val localExam = onlineExamMappersFacade.mapNetworkToLocalOnlineExam(res.body!!)
             onlineExamsDao.update(localExam)
         }
 
