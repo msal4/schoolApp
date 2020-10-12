@@ -12,8 +12,6 @@ import com.smart.resources.schools_app.databinding.ItemQuestionsHeaderBinding
 import com.smart.resources.schools_app.features.onlineExam.domain.model.Question
 
 class QuestionsQuickAdapter : BaseQuickAdapter<Question, BaseDataBindingHolder<ItemQuestionBinding>>(R.layout.item_question) {
-
-
     init {
         setDiffCallback(QuestionDiffCallback())
     }

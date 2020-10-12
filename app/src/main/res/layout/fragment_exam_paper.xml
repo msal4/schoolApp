@@ -57,6 +57,35 @@
             app:layout_constraintTop_toTopOf="@id/paperHolesGuideLine"
             tools:text="اسئلة رياضيات" />
 
+
+        <TextView
+            android:id="@+id/requiredQuestionsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:alpha="0.87"
+            android:text="@string/answer_on"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toStartOf="@+id/requiredQuestionsCount"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@+id/subjectName"
+            app:layout_constraintTop_toBottomOf="@id/subjectName" />
+
+        <TextView
+            android:id="@+id/requiredQuestionsCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="4dp"
+            android:alpha="0.87"
+            android:text="@{String.valueOf(model.onlineExam.numberOfRequiredQuestions)}"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="@id/requiredQuestionsText"
+            app:layout_constraintEnd_toEndOf="@+id/subjectName"
+            app:layout_constraintStart_toEndOf="@+id/requiredQuestionsText"
+            app:layout_constraintTop_toTopOf="@id/requiredQuestionsText"
+            tools:text="5" />
+
         <TextView
             android:id="@+id/remainingQuestionsTitle"
             android:layout_width="wrap_content"
@@ -91,10 +120,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:alpha="0.87"
-            android:timeInMinutesSeconds="@{model.onlineExam.examDuration}"
-            android:timer="@{model.onlineExam.remainingDuration}"
-            android:onTimerFinished="@{()-> model.onTimerFinished()}"
-            android:startTimer="@{!model.readOnly}"
+            android:timeInMinutesSeconds="@{model.remainingDuration}"
             android:textColor="@android:color/black"
             app:layout_constraintEnd_toEndOf="@+id/examRemainingTimeTitle"
             app:layout_constraintStart_toStartOf="@+id/examRemainingTimeTitle"

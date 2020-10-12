@@ -12,18 +12,16 @@ import com.smart.resources.schools_app.features.onlineExam.domain.model.Correctn
 import com.smart.resources.schools_app.features.onlineExam.domain.model.CorrectnessAnswerableQuestion
 
 class CorrectnessQuestionViewHolder(
-    val binding: PageQuestionCorrectnessBinding,
-    private val readOnly: Boolean
-) :
-    RecyclerView.ViewHolder(binding.root) {
+    val binding: PageQuestionCorrectnessBinding
+): RecyclerView.ViewHolder(binding.root) {
     var onQuestionAnswerUpdated: ((correctnessAnswer: CorrectnessAnswer) -> Unit)? = null
 
-    fun setup(answerableQuestion: CorrectnessAnswerableQuestion) {
+    fun setup(answerableQuestion: CorrectnessAnswerableQuestion, readOnly: Boolean) {
         binding.apply {
             isCorrectRadioGroup.setOnCheckedChangeListener { _, checkedId ->
                 TransitionManager.beginDelayedTransition(root as ViewGroup)
                 val answer = if (checkedId == R.id.incorrectRadioBtn) {
-                    showAnswer()
+                    showAnswer(readOnly)
 
                     val correctAnswer = this.answerEditText.text?.trim()?.toString() ?: ""
                     CorrectnessAnswer(answer = false, correctAnswer = correctAnswer)
@@ -35,19 +33,19 @@ class CorrectnessQuestionViewHolder(
                 onQuestionAnswerUpdated?.invoke(answer)
             }
 
-            bind(answerableQuestion)
+            bind(answerableQuestion, readOnly)
         }
     }
 
     private fun hideAnswer() {
-        if (readOnly) {
-            binding.answerText.hide()
-        } else {
-            binding.answerLayout.hide()
+        binding.apply {
+            answerText.hide()
+            answerLayout.hide()
         }
     }
 
-    private fun showAnswer() {
+    private fun showAnswer(readOnly: Boolean) {
+        hideAnswer()
         if (readOnly) {
             binding.answerText.show()
         } else {
@@ -55,22 +53,21 @@ class CorrectnessQuestionViewHolder(
         }
     }
 
-    private fun bind(answerableQuestion: CorrectnessAnswerableQuestion) {
+    private fun bind(answerableQuestion: CorrectnessAnswerableQuestion, readOnly: Boolean) {
         binding.apply {
             questionModel = answerableQuestion
-            readOnly = this@CorrectnessQuestionViewHolder.readOnly
+            this.readOnly = readOnly
             executePendingBindings()
         }
     }
 
     companion object {
-        fun create(parent: ViewGroup, readOnly: Boolean) = CorrectnessQuestionViewHolder(
+        fun create(parent: ViewGroup) = CorrectnessQuestionViewHolder(
             PageQuestionCorrectnessBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            ),
-            readOnly
+            )
         )
     }
 }

@@ -17,13 +17,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 
 class QuestionViewHolder(
-    var binding: PageQuestionBinding,
-    private val readOnly: Boolean
-) :
+    var binding: PageQuestionBinding) :
     RecyclerView.ViewHolder(binding.root) {
     var onQuestionAnswerStateUpdated: ((answer: Answer) -> Unit)? = null
 
-    fun setup(answerableQuestion: AnswerableQuestion) {
+    fun setup(answerableQuestion: AnswerableQuestion, readOnly: Boolean) {
         val afterTextChanged:(Editable?)->Unit= debounce(
             coroutineScope = CoroutineScope(IO),
             destinationFunction = {
@@ -33,25 +31,24 @@ class QuestionViewHolder(
         )
 
         binding.answerEditText.addTextChangedListener(afterTextChanged = afterTextChanged)
-        bind(answerableQuestion)
+        bind(answerableQuestion, readOnly)
     }
 
-    private fun bind(answerableQuestion: AnswerableQuestion) {
+    private fun bind(answerableQuestion: AnswerableQuestion, readOnly: Boolean) {
         binding.apply {
             this.answerableQuestion = answerableQuestion
-            readOnly = this@QuestionViewHolder.readOnly
+            this.readOnly = readOnly
             executePendingBindings()
         }
     }
 
     companion object {
-        fun create(parent: ViewGroup, readOnly: Boolean) = QuestionViewHolder(
+        fun create(parent: ViewGroup) = QuestionViewHolder(
             PageQuestionBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            ),
-            readOnly
+            )
         )
     }
 }

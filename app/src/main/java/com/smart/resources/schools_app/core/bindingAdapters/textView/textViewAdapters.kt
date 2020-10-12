@@ -1,6 +1,7 @@
 package com.smart.resources.schools_app.core.bindingAdapters.textView
 
 import android.annotation.SuppressLint
+import android.os.CountDownTimer
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.smart.resources.schools_app.R
@@ -27,27 +28,12 @@ fun TextView.setDurationInMinutes(duration: Duration?) {
     text = context.getString(R.string.durationInMinutes, duration?.toMinutes() ?: 0)
 }
 
-@BindingAdapter(
-    "android:timer",
-    "android:onTimerFinished",
-    "android:startTimer",
-    requireAll = false
-)
-fun TextView.setTimer(duration: Duration?, onTimerFinished: (() -> Unit)?, startTimer: Boolean?) {
-    if (startTimer == true) {
-        duration?.startCountDown(
-            onFinished = onTimerFinished,
-            onTicked = {
-                setTimeInMinutesSeconds(it)
-            },
-            intervalInMilli = 1000
-        )
-    }
-}
 
 @SuppressLint("SetTextI18n")
 @BindingAdapter("android:timeInMinutesSeconds")
-fun TextView.setTimeInMinutesSeconds(time: Duration) {
+fun TextView.setTimeInMinutesSeconds(time: Duration?) {
+    if(time == null) return
+
     val minutes = time.toMinutes()
     val remainingSeconds = time.seconds - (minutes * 60)
     text = "%02d:%02d".format(minutes, remainingSeconds)

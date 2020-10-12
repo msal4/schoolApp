@@ -10,7 +10,7 @@ import com.smart.resources.schools_app.features.onlineExam.presentation.viewHold
 import com.smart.resources.schools_app.features.onlineExam.presentation.viewHolder.QuestionViewHolder
 
 class AnswerableQuestionsPagerAdapter :
-    ListAdapter<BaseAnswerableQuestion<out Any>, RecyclerView.ViewHolder>(DIFF_UTIL) {
+    ListAdapter<BaseAnswerableQuestion<Any>, RecyclerView.ViewHolder>(DIFF_UTIL) {
     private var readOnly:Boolean= true
 
     companion object {
@@ -20,15 +20,15 @@ class AnswerableQuestionsPagerAdapter :
 
         val DIFF_UTIL = object : DiffUtil.ItemCallback<BaseAnswerableQuestion<out Any>>() {
             override fun areItemsTheSame(
-                oldItem: BaseAnswerableQuestion<out Any>,
-                newItem: BaseAnswerableQuestion<out Any>
+                oldItem: BaseAnswerableQuestion<Any>,
+                newItem: BaseAnswerableQuestion<Any>
             ): Boolean {
                 return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: BaseAnswerableQuestion<out Any>,
-                newItem: BaseAnswerableQuestion<out Any>
+                oldItem: BaseAnswerableQuestion<Any>,
+                newItem: BaseAnswerableQuestion<Any>
             ): Boolean {
                 return oldItem == newItem
             }
@@ -36,7 +36,7 @@ class AnswerableQuestionsPagerAdapter :
     }
 
     interface Listener {
-        fun onQuestionAnswerStateUpdated(answer: BaseAnswer<out Any>, position: Int)
+        fun onQuestionAnswerStateUpdated(answer: BaseAnswer<Any>, position: Int)
     }
 
     var listener: Listener? = null
@@ -53,21 +53,21 @@ class AnswerableQuestionsPagerAdapter :
         when (val answerableQuestion = getItem(position)) {
             is AnswerableQuestion -> if (holder is QuestionViewHolder) {
                 holder.apply {
-                    setup(answerableQuestion)
+                    setup(answerableQuestion, readOnly)
                     onQuestionAnswerStateUpdated =
                         { listener?.onQuestionAnswerStateUpdated(it, position) }
                 }
             }
             is MultiChoiceAnswerableQuestion -> if (holder is MultiChoiceQuestionViewHolder) {
                 holder.apply {
-                        setup(answerableQuestion)
+                        setup(answerableQuestion, readOnly)
                         onQuestionAnswerUpdated =
                             { listener?.onQuestionAnswerStateUpdated(it, position) }
                 }
             }
             is CorrectnessAnswerableQuestion -> if (holder is CorrectnessQuestionViewHolder) {
                 holder.apply {
-                        setup(answerableQuestion)
+                        setup(answerableQuestion, readOnly)
                         onQuestionAnswerUpdated =
                             { listener?.onQuestionAnswerStateUpdated(it, position) }
                     }
@@ -85,9 +85,9 @@ class AnswerableQuestionsPagerAdapter :
         parent: ViewGroup,
         viewType: Int
     ) = when (viewType) {
-        MULTI_CHOICE_QUESTION_ITEM_TYPE -> MultiChoiceQuestionViewHolder.create(parent, readOnly)
-        CORRECTNESS_QUESTION_ITEM_TYPE -> CorrectnessQuestionViewHolder.create(parent, readOnly)
-        else -> QuestionViewHolder.create(parent, readOnly)
+        MULTI_CHOICE_QUESTION_ITEM_TYPE -> MultiChoiceQuestionViewHolder.create(parent)
+        CORRECTNESS_QUESTION_ITEM_TYPE -> CorrectnessQuestionViewHolder.create(parent)
+        else -> QuestionViewHolder.create(parent)
     }
 
 }

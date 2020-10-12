@@ -77,7 +77,7 @@ class OnlineExamsRepository(
                 emptyFlow()
             },
             shouldFetchFromRemote = { false },
-        ).distinctUntilChanged()
+        )
             .catch {
                 // must be used to catch exceptions
                 Logger.e("$TAG: $it")

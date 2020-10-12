@@ -9,13 +9,11 @@ import com.smart.resources.schools_app.features.onlineExam.domain.model.MultiCho
 import com.smart.resources.schools_app.features.onlineExam.domain.model.MultiChoiceAnswerableQuestion
 
 class MultiChoiceQuestionViewHolder(
-    val binding: PageQuestionMultiChoiceBinding,
-    private val readOnly: Boolean
-) :
+    val binding: PageQuestionMultiChoiceBinding) :
     RecyclerView.ViewHolder(binding.root) {
     var onQuestionAnswerUpdated: ((answer: MultiChoiceAnswer) -> Unit)? = null
 
-    fun setup(answerableQuestion: MultiChoiceAnswerableQuestion) {
+    fun setup(answerableQuestion: MultiChoiceAnswerableQuestion, readOnly: Boolean) {
         binding.apply {
             choicesRadioGroup.setOnCheckedChangeListener { _, checkedId ->
                 val selection = when (checkedId) {
@@ -29,25 +27,24 @@ class MultiChoiceQuestionViewHolder(
             }
         }
 
-        bind(answerableQuestion)
+        bind(answerableQuestion, readOnly)
     }
 
-    private fun bind(answerableQuestion: MultiChoiceAnswerableQuestion) {
+    private fun bind(answerableQuestion: MultiChoiceAnswerableQuestion, readOnly: Boolean) {
         binding.apply {
             this.answerableQuestion = answerableQuestion
-            readOnly = this@MultiChoiceQuestionViewHolder.readOnly
+            this.readOnly = readOnly
             executePendingBindings()
         }
     }
 
     companion object {
-        fun create(parent: ViewGroup, readOnly: Boolean) = MultiChoiceQuestionViewHolder(
+        fun create(parent: ViewGroup) = MultiChoiceQuestionViewHolder(
             PageQuestionMultiChoiceBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            ),
-            readOnly
+            )
         )
     }
 }

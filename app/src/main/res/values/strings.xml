@@ -144,5 +144,6 @@
     <string name="activate">تفعيل</string>
     <string name="finish">انهاء</string>
     <string name="delete">حذف</string>
+    <string name="answer_on">الاجابة على</string>
 
 </resources>

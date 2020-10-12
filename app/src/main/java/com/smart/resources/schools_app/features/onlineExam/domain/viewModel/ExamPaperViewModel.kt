@@ -1,11 +1,13 @@
 package com.smart.resources.schools_app.features.onlineExam.domain.viewModel
 
 import android.app.Application
+import android.os.CountDownTimer
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.hadiyarajesh.flower.Resource
 import com.haytham.coder.extensions.isNotNullOrEmpty
+import com.haytham.coder.extensions.startCountDown
 import com.haytham.coder.extensions.toString
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
@@ -13,18 +15,17 @@ import com.smart.resources.schools_app.core.extentions.TAG
 import com.smart.resources.schools_app.core.myTypes.ListState
 import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
-import com.smart.resources.schools_app.core.typeConverters.room.QuestionType
 import com.smart.resources.schools_app.features.onlineExam.domain.model.*
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.*
-import com.smart.resources.schools_app.features.onlineExam.domain.usecase.questions.GetExamQuestionsWithAnswersUseCase
-import com.smart.resources.schools_app.features.onlineExam.domain.usecase.questions.SyncOnlineExamUseCase
 import com.smart.resources.schools_app.features.onlineExam.presentation.fragments.ExamPaperFragment
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserTypeUseCase
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetUserIdUseCase
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import org.threeten.bp.Duration
 
 typealias ListOfAnswerableQuestions = List<BaseAnswerableQuestion<Any>>
 
@@ -42,28 +43,59 @@ class ExamPaperViewModel @ViewModelInject constructor(
 
     private val c = application.applicationContext
     val listState = ListState()
-    //        MutableLiveData(dummyAnswerableQuestions)
-    //    private val _questions: MutableLiveData<ListOfAnswerableQuestions> =
 
     private val initialOnlineExam: OnlineExam get() = savedStateHandle.get(ExamPaperFragment.EXTRA_EXAM_DETAILS)!!
     private val userType: UserType = getCurrentUserTypeUseCase()
+    private var timer: CountDownTimer? = null
+
     val onlineExam = liveData {
         emit(initialOnlineExam)
 
-        val examLiveData= getOnlineExamUseCase(initialOnlineExam.id)
+        val examLiveData = getOnlineExamUseCase(initialOnlineExam.id)
             .map { it.data }
             .filterNotNull()
+            .distinctUntilChanged()
             .asLiveData(viewModelScope.coroutineContext)
         emitSource(examLiveData)
     }
 
     val readOnly = onlineExam.map {
+        Logger.d("$TAG: readOnly $it")
         !(it.examStatus == OnlineExamStatus.ACTIVE
                 && userType == UserType.STUDENT)
     }
 
 
-    private val userId:LiveData<String> = liveData { emit(getUserIdUseCase()) }
+    private val _remainingDuration = MediatorLiveData<Duration>().apply {
+        addSource(readOnly) {
+            onlineExam.value?.let { onlineExam ->
+                it?.let { updateRemainingTime(onlineExam, it) }
+            }
+        }
+        addSource(onlineExam) {
+            readOnly.value?.let { readOnly ->
+                it?.let { updateRemainingTime(it, readOnly) }
+            }
+        }
+    }
+    val remainingDuration: LiveData<Duration> = _remainingDuration
+
+    private fun updateRemainingTime(onlineExam: OnlineExam, readOnly: Boolean) {
+        timer?.cancel()
+        if (readOnly) {
+            _remainingDuration.value = onlineExam.examDuration
+        } else {
+            timer = onlineExam.remainingDuration.startCountDown(
+                onTicked = {
+                    _remainingDuration.value = it
+                },
+                intervalInMilli = 1000
+            )
+        }
+    }
+
+
+    private val userId: LiveData<String> = liveData { emit(getUserIdUseCase()) }
     val questions: LiveData<ListOfAnswerableQuestions> = userId.switchMap { userId ->
         getExamQuestionsWithAnswersUseCase(initialOnlineExam.id, userId).map {
             updateListState(it)
@@ -79,10 +111,10 @@ class ExamPaperViewModel @ViewModelInject constructor(
     }
 
     private fun updateListState(it: Resource<List<Any>>) {
-        if(it.data.isNotNullOrEmpty()) listState.setLoading(false)
+        if (it.data.isNotNullOrEmpty()) listState.setLoading(false)
         else when (it.status) {
             Resource.Status.SUCCESS -> {
-                    listState.setBodyError(R.string.no_questions.toString(c))
+                listState.setBodyError(R.string.no_questions.toString(c))
             }
             Resource.Status.ERROR -> {
                 Logger.e(it.message.toString())
@@ -120,10 +152,8 @@ class ExamPaperViewModel @ViewModelInject constructor(
 //        }
 //    }
 
-    fun onTimerFinished() {
-    }
 
-    fun checkExamStatus(){
+    fun checkExamStatus() {
         onlineExam.value?.id?.let {
             viewModelScope.launch {
                 Logger.d(syncOnlineExamUseCase(it).toString())
@@ -136,6 +166,7 @@ class ExamPaperViewModel @ViewModelInject constructor(
             questions.value?.getOrNull(position)?.id?.let { saveAnswerLocallyUseCase(answer, it) }
         }
     }
+
 }
 
 
