@@ -126,7 +126,7 @@ class ExamPaperViewModel @ViewModelInject constructor(
     fun checkExamStatus(){
         onlineExam.value?.id?.let {
             viewModelScope.launch {
-                syncOnlineExamUseCase(it)
+                Logger.d(syncOnlineExamUseCase(it).toString())
             }
         }
     }

@@ -18,7 +18,6 @@ import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.callbacks.ViewPager2Helper
-import com.smart.resources.schools_app.core.extentions.TAG
 import com.smart.resources.schools_app.databinding.FragmentExamPaperBinding
 import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnswer
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
@@ -32,7 +31,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigat
 class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
     private lateinit var binding: FragmentExamPaperBinding
     private val viewModel: ExamPaperViewModel by viewModels()
-
+    private var pageChangeCallback:ViewPager2.OnPageChangeCallback?= null
     private lateinit var pagerAdapter: AnswerableQuestionsPagerAdapter
     private lateinit var navigatorAdapter: QuestionsNavigatorAdapter
 
@@ -105,9 +104,11 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
             }
 
             readOnly.observe(viewLifecycleOwner) {
-                it?.let {readOnly->
+                it?.let { readOnly ->
                     pagerAdapter.updateReadOnly(readOnly)
-                    if(!readOnly){
+                    if (readOnly) {
+                        unregisterPageChangeCallback()
+                    }else{
                         registerPageChangeCallback()
                     }
                 }
@@ -129,11 +130,19 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
     }
 
     private fun registerPageChangeCallback() {
-        binding.questionsPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        if(pageChangeCallback != null) return
+
+        pageChangeCallback=  object: ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 viewModel.checkExamStatus()
+                Logger.wtf(position.toString())
             }
-        })
+        }
+        pageChangeCallback?.let { binding.questionsPager.registerOnPageChangeCallback(it)}
+    }
+
+    private fun unregisterPageChangeCallback(){
+        pageChangeCallback?.let { binding.questionsPager.unregisterOnPageChangeCallback(it) }
     }
 
     private fun onPageNumberPressed(index: Int) {
@@ -141,7 +150,7 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
     }
 
     override fun onQuestionAnswerStateUpdated(answer: BaseAnswer<Any>, position: Int) {
-            viewModel.updateAnswer(answer, position)
+        viewModel.updateAnswer(answer, position)
     }
 
 }
