@@ -27,11 +27,13 @@
 
         <TextView
             android:id="@+id/questionText"
-            android:text="@{answerableQuestion.question.question}"
+            android:questionText="@{answerableQuestion.question.question}"
+            android:questionType="@{answerableQuestion.question.questionType}"
+            android:textDirection="anyRtl"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="1/ ما هو الحيوان الذي إن تم قطع رجل من أرجله تنمو مجدداً؟"
+            tools:text=" ما هو الحيوان الذي إن تم قطع رجل من أرجله تنمو مجدداً؟"
             style="@style/QuestionTextStyle" />
 
         <FrameLayout
