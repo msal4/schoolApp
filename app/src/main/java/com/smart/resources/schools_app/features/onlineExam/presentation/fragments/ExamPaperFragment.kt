@@ -4,13 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.core.os.bundleOf
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
-import com.haytham.coder.extensions.setSoftInputMode
 import com.haytham.coder.extensions.setStatusBarColor
 import com.haytham.coder.extensions.setStatusBarColorToWhite
 import com.haytham.coder.extensions.toColor
@@ -31,7 +30,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigat
 class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
     private lateinit var binding: FragmentExamPaperBinding
     private val viewModel: ExamPaperViewModel by viewModels()
-    private var pageChangeCallback:ViewPager2.OnPageChangeCallback?= null
+    private var pageChangeCallback: ViewPager2.OnPageChangeCallback? = null
     private lateinit var pagerAdapter: AnswerableQuestionsPagerAdapter
     private lateinit var navigatorAdapter: QuestionsNavigatorAdapter
 
@@ -60,7 +59,7 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+        //activity?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         (activity as SectionActivity).hideToolbar()
     }
 
@@ -72,7 +71,7 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
     override fun onDestroy() {
         super.onDestroy()
         activity?.apply {
-            setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+            //setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
             setStatusBarColor(R.color.colorPrimaryDark.toColor(requireContext()))
         }
         (activity as SectionActivity).showToolbar()
@@ -82,7 +81,6 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = FragmentExamPaperBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = this@ExamPaperFragment
             model = viewModel
@@ -99,7 +97,7 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
                 pagerAdapter.submitList(it)
             }
 
-            solvedQuestions.observe(viewLifecycleOwner) {
+            questionsSolvedState.observe(viewLifecycleOwner) {
                 navigatorAdapter.submitList(it ?: emptyList())
             }
 
@@ -108,7 +106,7 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
                     pagerAdapter.updateReadOnly(readOnly)
                     if (readOnly) {
                         unregisterPageChangeCallback()
-                    }else{
+                    } else {
                         registerPageChangeCallback()
                     }
                 }
@@ -130,18 +128,18 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
     }
 
     private fun registerPageChangeCallback() {
-        if(pageChangeCallback != null) return
+        if (pageChangeCallback != null) return
 
-        pageChangeCallback=  object: ViewPager2.OnPageChangeCallback() {
+        pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 viewModel.checkExamStatus()
                 Logger.wtf(position.toString())
             }
         }
-        pageChangeCallback?.let { binding.questionsPager.registerOnPageChangeCallback(it)}
+        pageChangeCallback?.let { binding.questionsPager.registerOnPageChangeCallback(it) }
     }
 
-    private fun unregisterPageChangeCallback(){
+    private fun unregisterPageChangeCallback() {
         pageChangeCallback?.let { binding.questionsPager.unregisterOnPageChangeCallback(it) }
     }
 

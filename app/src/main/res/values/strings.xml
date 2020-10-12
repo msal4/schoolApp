@@ -145,5 +145,6 @@
     <string name="finish">انهاء</string>
     <string name="delete">حذف</string>
     <string name="answer_on">الاجابة على</string>
+    <string name="send_answers">ارسال الاجوبة</string>
 
 </resources>

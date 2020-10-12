@@ -1,39 +1,44 @@
 package com.smart.resources.schools_app.core.bindingAdapters
 
+import android.graphics.Rect
 import android.transition.TransitionManager
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.annotation.DrawableRes
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.haytham.coder.extensions.hide
 import com.haytham.coder.extensions.show
 import com.haytham.coder.extensions.toColorStateList
-import com.haytham.coder.extensions.toDrawable
 import com.smart.resources.schools_app.core.callbacks.SwipeAdapter
+import com.smart.resources.schools_app.core.extentions.windowHeight
+
 
 @BindingAdapter("android:checkedButtonIndex")
-fun RadioGroup.setCheckedButtonIndex(checkedButtonIndex:Int?){
+fun RadioGroup.setCheckedButtonIndex(checkedButtonIndex: Int?){
     if(checkedButtonIndex == null) return
     val radioBtnId= children.filter { it is RadioButton }.toList()[checkedButtonIndex].id
     check(radioBtnId)
 }
 
 fun interface SwipeListener{
-    fun onSwiped(position:Int)
+    fun onSwiped(position: Int)
 }
 
 @BindingAdapter("android:swipeToDelete", "android:headersCount", requireAll = false)
-fun RecyclerView.setSwipeToDelete(swipeListener: SwipeListener, headersCount:Int?=0){
+fun RecyclerView.setSwipeToDelete(swipeListener: SwipeListener, headersCount: Int? = 0){
     val fixedPositions= if(headersCount!=null) (0 until headersCount).toList() else emptyList()
 
     val swipeAdapter = SwipeAdapter(fixedPositions) { _, holder ->
-        swipeListener.onSwiped(holder.adapterPosition - (headersCount?:0))
+        swipeListener.onSwiped(holder.adapterPosition - (headersCount ?: 0))
     }
     ItemTouchHelper(swipeAdapter).attachToRecyclerView(this)
 }
@@ -42,10 +47,26 @@ fun RecyclerView.setSwipeToDelete(swipeListener: SwipeListener, headersCount:Int
 @BindingAdapter("android:visible")
 fun View.setVisible(visible: Boolean?){
     if(visible == true){
-        show()
+        when (this) {
+            is FloatingActionButton -> show()
+            is ExtendedFloatingActionButton -> show()
+            else -> show()
+        }
     }else{
-        hide()
+        when (this) {
+            is FloatingActionButton -> hide()
+            is ExtendedFloatingActionButton -> hide()
+            else -> hide()
+        }
     }
+}
+
+@BindingAdapter("android:setScreenHeightAsMinimum")
+fun View.setScreenHeightAsMinimum(setScreenHeightAsMinimum: Boolean?){
+    val minHeightValue= if(setScreenHeightAsMinimum == true) windowHeight else MATCH_PARENT
+
+    if(this is ConstraintLayout) minHeight= minHeightValue
+    else minimumHeight= minHeightValue
 }
 
 @BindingAdapter("android:animatedVisible")

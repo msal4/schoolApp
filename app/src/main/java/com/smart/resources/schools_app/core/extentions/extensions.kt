@@ -2,6 +2,7 @@ package com.smart.resources.schools_app.core.extentions
 
 import android.graphics.Color
 import android.graphics.LinearGradient
+import android.graphics.Rect
 import android.graphics.Shader
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +22,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -137,4 +137,10 @@ fun <T> debounce(
             destinationFunction(param)
         }
     }
+}
+
+val View.windowHeight get():Int{
+    val windowRect= Rect()
+    getWindowVisibleDisplayFrame(windowRect)
+    return windowRect.height()
 }

@@ -11,11 +11,17 @@
             type="com.smart.resources.schools_app.features.onlineExam.domain.viewModel.ExamPaperViewModel" />
     </data>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layoutDirection="rtl">
+        android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
+        android:setScreenHeightAsMinimum="@{true}">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/paperHolesGuideLine"
@@ -174,5 +180,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/sendAnswersButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="12dp"
+            app:backgroundTint="@color/colorPrimary"
+            android:text="@string/send_answers"
+            android:textColor="@android:color/white"
+            app:icon="@drawable/ic_send_white"
+            app:iconTint="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/questionsPager"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visible="@{model.canSendAnswers}"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

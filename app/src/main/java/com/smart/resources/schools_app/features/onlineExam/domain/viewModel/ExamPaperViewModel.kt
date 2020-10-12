@@ -65,7 +65,6 @@ class ExamPaperViewModel @ViewModelInject constructor(
                 && userType == UserType.STUDENT)
     }
 
-
     private val _remainingDuration = MediatorLiveData<Duration>().apply {
         addSource(readOnly) {
             onlineExam.value?.let { onlineExam ->
@@ -94,7 +93,6 @@ class ExamPaperViewModel @ViewModelInject constructor(
         }
     }
 
-
     private val userId: LiveData<String> = liveData { emit(getUserIdUseCase()) }
     val questions: LiveData<ListOfAnswerableQuestions> = userId.switchMap { userId ->
         getExamQuestionsWithAnswersUseCase(initialOnlineExam.id, userId).map {
@@ -103,10 +101,31 @@ class ExamPaperViewModel @ViewModelInject constructor(
         }.asLiveData(viewModelScope.coroutineContext)
     }
 
-    val solvedQuestions = questions.switchMap {
-        questions.map { it.map { q -> q.answer != null } }
+    val questionsSolvedState = questions.switchMap {
+        mapQuestionsToAnswerableQuestions()
     }
-    val remainingQuestionsText = solvedQuestions.map {
+
+    private fun mapQuestionsToAnswerableQuestions() =
+        questions.map { it.map { q -> q.answer != null } }
+
+    val canSendAnswers:LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
+        addSource(readOnly){
+            value= canSendAnswers()
+        }
+        addSource(questionsSolvedState){
+            value= canSendAnswers()
+        }
+    }
+
+    private fun canSendAnswers():Boolean{
+        val onlineExam= onlineExam.value?: return false
+        val readOnly:Boolean= readOnly.value?:true
+        val solvedQuestionsCount= questionsSolvedState.value.orEmpty().filter { it }.size
+
+        return (solvedQuestionsCount >= onlineExam.numberOfRequiredQuestions && !readOnly)
+    }
+
+    val remainingQuestionsText = questionsSolvedState.map {
         "${it.filter { solved -> !solved }.size}/${it.size}"
     }
 
@@ -127,32 +146,6 @@ class ExamPaperViewModel @ViewModelInject constructor(
         Logger.d("$TAG: $it")
     }
 
-//    private fun mapQuestionToAnswerableQuestions(it: Resource<List<Question>>): ListOfAnswerableQuestions {
-//        return it.data.orEmpty().map { question ->
-//            when (question.questionType) {
-//                QuestionType.MULTI_CHOICE -> {
-//                    MultiChoiceAnswerableQuestion(
-//                        question = question,
-//                        answer = null,
-//                    )
-//                }
-//                QuestionType.CORRECTNESS -> {
-//                    CorrectnessAnswerableQuestion(
-//                        question = question,
-//                        answer = null,
-//                    )
-//                }
-//                QuestionType.DEFINE -> {
-//                    AnswerableQuestion(
-//                        question = question,
-//                        answer = null,
-//                    )
-//                }
-//            }
-//        }
-//    }
-
-
     fun checkExamStatus() {
         onlineExam.value?.id?.let {
             viewModelScope.launch {
@@ -161,12 +154,12 @@ class ExamPaperViewModel @ViewModelInject constructor(
         }
     }
 
+    // TODO: remove empty answer from count
     fun updateAnswer(answer: BaseAnswer<Any>, position: Int) {
         viewModelScope.launch {
             questions.value?.getOrNull(position)?.id?.let { saveAnswerLocallyUseCase(answer, it) }
         }
     }
-
 }
 
 
