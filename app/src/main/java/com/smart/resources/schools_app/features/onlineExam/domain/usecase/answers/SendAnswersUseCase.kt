@@ -1,5 +1,6 @@
 package com.smart.resources.schools_app.features.onlineExam.domain.usecase.answers
 
+import com.hadiyarajesh.flower.ApiResponse
 import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnswer
 import com.smart.resources.schools_app.features.onlineExam.domain.repository.IAnswersRepository
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.ISendAnswersUseCase
@@ -10,8 +11,8 @@ class SendAnswersUseCase @Inject constructor(
     private val getUserIdUseCase: IGetUserIdUseCase,
     private val answersRepository: IAnswersRepository
 ) : ISendAnswersUseCase {
-    override suspend fun invoke(answers: List<BaseAnswer<Any>>, questionIds: List<String>) {
+    override suspend fun invoke(answers: List<BaseAnswer<Any>>, questionIds: List<String>) : ApiResponse<Unit>{
         val userId = getUserIdUseCase()
-        answersRepository.sendAnswers(answers, questionIds, userId)
+        return answersRepository.sendAnswers(answers, questionIds, userId)
     }
 }

@@ -24,6 +24,7 @@
     <string name="no_homework">لا توجد واجبات</string>
     <string name="connection_error">خطأ في الاتصال!</string>
     <string name="activation_failed">فشل التفعيل!</string>
+    <string name="send_failed">فشل الارسال!</string>
     <string name="finish_failed">فشل الانهاء!</string>
     <string name="delete_failed">فشل الحذف!</string>
     <string name="add_failed">فشل الاضافة!</string>
@@ -85,6 +86,7 @@
     <string name="no_student_selected">لم يتم اختيار طالب!</string>
     <string name="no_student_rated">لم يتم تقييم طالب!</string>
     <string name="done_successfully">تمت العملية بنجاح ✓</string>
+    <string name="answers_sent_successfully">تم ارسال الاجوبة بنجاح ✓</string>
     <string name="must_enter_degree">يجب ادخال درجة الطالب</string>
     <string name="no_degree_added">لم يتم اضافة درجة</string>
     <string name="mark">الدرجة</string>

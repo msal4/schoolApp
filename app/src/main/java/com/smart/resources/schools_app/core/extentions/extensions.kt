@@ -51,7 +51,7 @@ fun <T> MutableLiveData<T>.notifyObservers() {
 
 fun ViewGroup.showSnackBar(msg: String, isError: Boolean = true) {
     Snackbar.make(this, msg, Snackbar.LENGTH_LONG).apply {
-        val color = if (isError) Color.RED else R.color.light_green_a700
+        val color = if (isError) Color.RED else R.color.light_green_a700.toColor(context)
         setTextColor(color)
         setBackgroundTint(R.color.snackbar_background.toColor(context))
         layoutDirection= View.LAYOUT_DIRECTION_RTL

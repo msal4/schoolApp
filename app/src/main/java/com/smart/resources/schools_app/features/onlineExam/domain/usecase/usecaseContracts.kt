@@ -57,7 +57,7 @@ interface ISaveAnswerLocallyUseCase{
 }
 
 interface ISendAnswersUseCase{
-    suspend operator fun invoke(answers: List<BaseAnswer<Any>>, questionIds:List<String>)
+    suspend operator fun invoke(answers: List<BaseAnswer<Any>>, questionIds:List<String>):ApiResponse<Unit>
 }
 
 interface IGetStudentExamAnswersUseCase{

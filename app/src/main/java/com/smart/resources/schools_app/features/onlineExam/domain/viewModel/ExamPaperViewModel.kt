@@ -5,6 +5,7 @@ import android.os.CountDownTimer
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import com.hadiyarajesh.flower.ApiErrorResponse
 import com.hadiyarajesh.flower.Resource
 import com.haytham.coder.extensions.isNotNullOrEmpty
 import com.haytham.coder.extensions.startCountDown
@@ -12,6 +13,7 @@ import com.haytham.coder.extensions.toString
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.extentions.TAG
+import com.smart.resources.schools_app.core.myTypes.Event
 import com.smart.resources.schools_app.core.myTypes.ListState
 import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
@@ -47,6 +49,13 @@ class ExamPaperViewModel @ViewModelInject constructor(
     private val initialOnlineExam: OnlineExam get() = savedStateHandle.get(ExamPaperFragment.EXTRA_EXAM_DETAILS)!!
     private val userType: UserType = getCurrentUserTypeUseCase()
     private var timer: CountDownTimer? = null
+
+    private val _successEvent = MutableLiveData<Event<Int>>()
+    private val _errorEvent = MutableLiveData<Event<Int>>()
+    private val _sendingAnswers = MutableLiveData(false)
+    val successEvent:LiveData<Event<Int>> = _successEvent
+    val errorEvent:LiveData<Event<Int>> = _errorEvent
+    val sendingAnswers:LiveData<Boolean> = _sendingAnswers
 
     val onlineExam = liveData {
         emit(initialOnlineExam)
@@ -94,19 +103,19 @@ class ExamPaperViewModel @ViewModelInject constructor(
     }
 
     private val userId: LiveData<String> = liveData { emit(getUserIdUseCase()) }
-    val questions: LiveData<ListOfAnswerableQuestions> = userId.switchMap { userId ->
+    val answerableQuestions: LiveData<ListOfAnswerableQuestions> = userId.switchMap { userId ->
         getExamQuestionsWithAnswersUseCase(initialOnlineExam.id, userId).map {
             updateListState(it)
             it.data.orEmpty()
         }.asLiveData(viewModelScope.coroutineContext)
     }
 
-    val questionsSolvedState = questions.switchMap {
+    val questionsSolvedState = answerableQuestions.switchMap {
         mapQuestionsToAnswerableQuestions()
     }
 
     private fun mapQuestionsToAnswerableQuestions() =
-        questions.map { it.map { q -> q.answer != null && q.answer?.isEmptyAnswer == false } }
+        answerableQuestions.map { it.map { q -> q.answer != null && q.answer?.isEmptyAnswer == false } }
 
     val canSendAnswers: LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
         addSource(readOnly) {
@@ -156,9 +165,33 @@ class ExamPaperViewModel @ViewModelInject constructor(
 
     fun updateAnswer(answer: BaseAnswer<Any>, position: Int) {
         viewModelScope.launch {
-            questions.value?.getOrNull(position)?.id?.let {
+            answerableQuestions.value?.getOrNull(position)?.id?.let {
                 saveAnswerLocallyUseCase(answer, it)
             }
+        }
+    }
+
+    fun sendAnswers() {
+        viewModelScope.launch {
+            _sendingAnswers.postValue(true)
+            val questionsWithAnswers = answerableQuestions.value.orEmpty()
+            val answers = questionsWithAnswers.mapNotNull { it.answer }
+            val questionIds = questionsWithAnswers.map { it.question.id }
+
+            when (val res = sendAnswersUseCase(answers, questionIds)) {
+                is ApiErrorResponse -> {
+                    Logger.e("$TAG: ${res.errorMessage}")
+                    val errorMsgId = if (res.statusCode == 0) R.string.connection_error
+                    else R.string.activation_failed
+
+                    _errorEvent.postValue(Event(errorMsgId))
+                }
+                else -> {
+                    _successEvent.postValue(Event(R.string.answers_sent_successfully))
+                }
+            }
+
+            _sendingAnswers.postValue(false)
         }
     }
 }

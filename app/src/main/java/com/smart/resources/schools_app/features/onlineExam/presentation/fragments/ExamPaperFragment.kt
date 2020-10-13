@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
@@ -13,10 +12,13 @@ import androidx.viewpager2.widget.ViewPager2
 import com.haytham.coder.extensions.setStatusBarColor
 import com.haytham.coder.extensions.setStatusBarColorToWhite
 import com.haytham.coder.extensions.toColor
+import com.haytham.coder.extensions.toString
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.callbacks.ViewPager2Helper
+import com.smart.resources.schools_app.core.extentions.showSnackBar
+import com.smart.resources.schools_app.core.myTypes.Event
 import com.smart.resources.schools_app.databinding.FragmentExamPaperBinding
 import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnswer
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
@@ -59,7 +61,6 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //activity?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         (activity as SectionActivity).hideToolbar()
     }
 
@@ -71,7 +72,6 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
     override fun onDestroy() {
         super.onDestroy()
         activity?.apply {
-            //setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
             setStatusBarColor(R.color.colorPrimaryDark.toColor(requireContext()))
         }
         (activity as SectionActivity).showToolbar()
@@ -93,7 +93,7 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
 
     private fun observeViewModel() {
         viewModel.apply {
-            questions.observe(viewLifecycleOwner) {
+            answerableQuestions.observe(viewLifecycleOwner) {
                 pagerAdapter.submitList(it)
             }
 
@@ -111,6 +111,22 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
                     }
                 }
             }
+
+            errorEvent.observe(viewLifecycleOwner) {
+                showMsgIfNeeded(it, true)
+            }
+            successEvent.observe(viewLifecycleOwner) {
+                showMsgIfNeeded(it, false)
+            }
+        }
+    }
+
+    private fun showMsgIfNeeded(it: Event<Int>?, isError: Boolean) {
+        it?.getContentIfNotHandled()?.let { msgId ->
+            binding.layout.showSnackBar(
+                msgId.toString(requireContext()),
+                isError = isError,
+            )
         }
     }
 
