@@ -106,21 +106,21 @@ class ExamPaperViewModel @ViewModelInject constructor(
     }
 
     private fun mapQuestionsToAnswerableQuestions() =
-        questions.map { it.map { q -> q.answer != null } }
+        questions.map { it.map { q -> q.answer != null && q.answer?.isEmptyAnswer == false } }
 
-    val canSendAnswers:LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
-        addSource(readOnly){
-            value= canSendAnswers()
+    val canSendAnswers: LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
+        addSource(readOnly) {
+            value = canSendAnswers()
         }
-        addSource(questionsSolvedState){
-            value= canSendAnswers()
+        addSource(questionsSolvedState) {
+            value = canSendAnswers()
         }
     }
 
-    private fun canSendAnswers():Boolean{
-        val onlineExam= onlineExam.value?: return false
-        val readOnly:Boolean= readOnly.value?:true
-        val solvedQuestionsCount= questionsSolvedState.value.orEmpty().filter { it }.size
+    private fun canSendAnswers(): Boolean {
+        val onlineExam = onlineExam.value ?: return false
+        val readOnly: Boolean = readOnly.value ?: true
+        val solvedQuestionsCount = questionsSolvedState.value.orEmpty().filter { it }.size
 
         return (solvedQuestionsCount >= onlineExam.numberOfRequiredQuestions && !readOnly)
     }
@@ -154,10 +154,11 @@ class ExamPaperViewModel @ViewModelInject constructor(
         }
     }
 
-    // TODO: remove empty answer from count
     fun updateAnswer(answer: BaseAnswer<Any>, position: Int) {
         viewModelScope.launch {
-            questions.value?.getOrNull(position)?.id?.let { saveAnswerLocallyUseCase(answer, it) }
+            questions.value?.getOrNull(position)?.id?.let {
+                saveAnswerLocallyUseCase(answer, it)
+            }
         }
     }
 }

@@ -1,8 +1,10 @@
 package com.smart.resources.schools_app.features.onlineExam.domain.model
 
 sealed class BaseAnswer<out AnswerType> (
-    open val answer: AnswerType
-)
+    open val answer: AnswerType,
+){
+    val isEmptyAnswer:Boolean get() = this is Answer && answer.isBlank()
+}
 
 data class CorrectnessAnswer(
     override var answer:Boolean,
