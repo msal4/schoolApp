@@ -39,11 +39,13 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
     companion object {
         private const val QUESTIONS_FRAGMENT = "questionsFragment"
         const val EXTRA_EXAM_DETAILS = "extraExamDetails"
+        const val EXTRA_STUDENT_ID = "extraStudentId"
 
-        fun newInstance(fm: FragmentManager, exam: OnlineExam) {
+        fun newInstance(fm: FragmentManager, exam: OnlineExam, studentId:String?=null) {
             val fragment = ExamPaperFragment()
             fragment.arguments = bundleOf(
                 EXTRA_EXAM_DETAILS to exam,
+                EXTRA_STUDENT_ID to studentId,
             )
             fm.beginTransaction().apply {
                 setCustomAnimations(

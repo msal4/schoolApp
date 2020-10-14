@@ -39,54 +39,81 @@ class ExamPaperViewModel @ViewModelInject constructor(
     private val sendAnswersUseCase: ISendAnswersUseCase,
     private val getUserIdUseCase: IGetUserIdUseCase,
     private val getExamQuestionsWithAnswersUseCase: IGetExamQuestionsWithAnswersUseCase,
+    private val getExamQuestionsUseCase: IGetExamQuestionsUseCase,
     @Assisted private val savedStateHandle: SavedStateHandle,
     application: Application
 ) : AndroidViewModel(application) {
 
     private val c = application.applicationContext
-    val listState = ListState()
-
-    private val initialOnlineExam: OnlineExam get() = savedStateHandle.get(ExamPaperFragment.EXTRA_EXAM_DETAILS)!!
+    private val passedOnlineExam: OnlineExam get() = savedStateHandle.get(ExamPaperFragment.EXTRA_EXAM_DETAILS)!!
+    private val passedStudentId: String? get() = savedStateHandle.get(ExamPaperFragment.EXTRA_STUDENT_ID)
     private val userType: UserType = getCurrentUserTypeUseCase()
     private var timer: CountDownTimer? = null
 
     private val _successEvent = MutableLiveData<Event<Int>>()
     private val _errorEvent = MutableLiveData<Event<Int>>()
-    private val _sendingAnswers = MutableLiveData(false)
-    val successEvent:LiveData<Event<Int>> = _successEvent
-    val errorEvent:LiveData<Event<Int>> = _errorEvent
-    val sendingAnswers:LiveData<Boolean> = _sendingAnswers
+    private val _sendingAnswers = MutableLiveData<Boolean>(false)
+    private val studentId: LiveData<String?> = getStudentIdLiveData()
 
-    val onlineExam = liveData {
-        emit(initialOnlineExam)
+    val listState = ListState()
+    val successEvent: LiveData<Event<Int>> = _successEvent
+    val errorEvent: LiveData<Event<Int>> = _errorEvent
+    val sendingAnswers: LiveData<Boolean> = _sendingAnswers
+    val onlineExam = getExamLiveData()
+    val readOnly = mapOnlineExamToReadOnly()
+    val answerableQuestions = switchMapUserIdToAnswerableQuestions()
+    val questionsSolvedState = mapQuestionsToSolveState()
+    val canSendAnswers: LiveData<Boolean> = mapReadOnlyAndQuestionsStateToCanSendAnswers()
+    val remainingQuestionsText = mapQuestionsStateToRemainingQuestionsCount()
 
-        val examLiveData = getOnlineExamUseCase(initialOnlineExam.id)
-            .map { it.data }
-            .filterNotNull()
-            .distinctUntilChanged()
-            .asLiveData(viewModelScope.coroutineContext)
-        emitSource(examLiveData)
-    }
-
-    val readOnly = onlineExam.map {
-        Logger.d("$TAG: readOnly $it")
-        !(it.examStatus == OnlineExamStatus.ACTIVE
-                && userType == UserType.STUDENT)
-    }
-
-    private val _remainingDuration = MediatorLiveData<Duration>().apply {
-        addSource(readOnly) {
-            onlineExam.value?.let { onlineExam ->
-                it?.let { updateRemainingTime(onlineExam, it) }
-            }
-        }
-        addSource(onlineExam) {
-            readOnly.value?.let { readOnly ->
-                it?.let { updateRemainingTime(it, readOnly) }
-            }
-        }
-    }
+    private val _remainingDuration = mapReadOnlyAndExamToRemainingDuration()
     val remainingDuration: LiveData<Duration> = _remainingDuration
+
+    private fun getStudentIdLiveData(): LiveData<String?> {
+        return liveData {
+            val studentId = when {
+                passedStudentId != null -> passedStudentId
+                userType == UserType.STUDENT -> getUserIdUseCase()
+                else -> null
+            }
+
+            emit(studentId)
+        }
+    }
+
+    private fun getExamLiveData(): LiveData<OnlineExam> {
+        return liveData {
+            emit(passedOnlineExam)
+            val examLiveData = getOnlineExamUseCase(passedOnlineExam.id)
+                .map { it.data }
+                .filterNotNull()
+                .distinctUntilChanged()
+                .asLiveData(viewModelScope.coroutineContext)
+            emitSource(examLiveData)
+        }
+    }
+
+    private fun mapOnlineExamToReadOnly(): LiveData<Boolean> {
+        return onlineExam.map {
+            !(it.examStatus == OnlineExamStatus.ACTIVE
+                    && userType == UserType.STUDENT)
+        }
+    }
+
+    private fun mapReadOnlyAndExamToRemainingDuration(): MediatorLiveData<Duration> {
+        return MediatorLiveData<Duration>().apply {
+            addSource(readOnly) {
+                onlineExam.value?.let { onlineExam ->
+                    it?.let { updateRemainingTime(onlineExam, it) }
+                }
+            }
+            addSource(onlineExam) {
+                readOnly.value?.let { readOnly ->
+                    it?.let { updateRemainingTime(it, readOnly) }
+                }
+            }
+        }
+    }
 
     private fun updateRemainingTime(onlineExam: OnlineExam, readOnly: Boolean) {
         timer?.cancel()
@@ -102,27 +129,23 @@ class ExamPaperViewModel @ViewModelInject constructor(
         }
     }
 
-    private val userId: LiveData<String> = liveData { emit(getUserIdUseCase()) }
-    val answerableQuestions: LiveData<ListOfAnswerableQuestions> = userId.switchMap { userId ->
-        getExamQuestionsWithAnswersUseCase(initialOnlineExam.id, userId).map {
-            updateListState(it)
-            it.data.orEmpty()
-        }.asLiveData(viewModelScope.coroutineContext)
-    }
+    private fun mapQuestionsToSolveState() =
+        answerableQuestions
+            .map {
+                it.map { q ->
+                    q.answer != null &&
+                            q.answer?.isEmptyAnswer == false
+                }
+            }
 
-    val questionsSolvedState = answerableQuestions.switchMap {
-        mapQuestionsToAnswerableQuestions()
-    }
-
-    private fun mapQuestionsToAnswerableQuestions() =
-        answerableQuestions.map { it.map { q -> q.answer != null && q.answer?.isEmptyAnswer == false } }
-
-    val canSendAnswers: LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
-        addSource(readOnly) {
-            value = canSendAnswers()
-        }
-        addSource(questionsSolvedState) {
-            value = canSendAnswers()
+    private fun mapReadOnlyAndQuestionsStateToCanSendAnswers(): LiveData<Boolean> {
+        return MediatorLiveData<Boolean>().apply {
+            addSource(readOnly) {
+                value = canSendAnswers()
+            }
+            addSource(questionsSolvedState) {
+                value = canSendAnswers()
+            }
         }
     }
 
@@ -134,8 +157,34 @@ class ExamPaperViewModel @ViewModelInject constructor(
         return (solvedQuestionsCount >= onlineExam.numberOfRequiredQuestions && !readOnly)
     }
 
-    val remainingQuestionsText = questionsSolvedState.map {
-        "${it.filter { solved -> !solved }.size}/${it.size}"
+    private fun mapQuestionsStateToRemainingQuestionsCount(): LiveData<String> {
+        return questionsSolvedState.map {
+            "${it.filter { solved -> !solved }.size}/${it.size}"
+        }
+    }
+
+    private fun switchMapUserIdToAnswerableQuestions(): LiveData<ListOfAnswerableQuestions> {
+        return studentId.switchMap { userId ->
+            if (userId == null) {
+                getExamQuestionsUseCase(passedOnlineExam.id).map {
+                    updateListState(it)
+                    it.data.orEmpty().map { question ->
+                        BaseAnswerableQuestion.fromQuestionAnswer(question, null)
+                    }
+                }
+
+            } else {
+                getExamQuestionsWithAnswersUseCase(
+                    passedOnlineExam.id,
+                    userId,
+                    passedOnlineExam.examStatus == OnlineExamStatus.COMPLETED,
+                ).map {
+                    updateListState(it)
+                    it.data.orEmpty()
+                }
+
+            }.asLiveData(viewModelScope.coroutineContext)
+        }
     }
 
     private fun updateListState(it: Resource<List<Any>>) {
@@ -195,18 +244,6 @@ class ExamPaperViewModel @ViewModelInject constructor(
         }
     }
 }
-
-
-//class QuestionsViewModelFactory(
-//    private val onlineExam: OnlineExam,
-//    private val readOnly: Boolean,
-//    private val getOnlineExamQuestionUseCase: IGetExamQuestionsUseCase,
-//) :
-//    ViewModelProvider.Factory {
-//    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-//        return ExamPaperViewModel(onlineExam, readOnly, getOnlineExamQuestionUseCase) as T
-//    }
-//}
 
 
 private val dummyAnswerableQuestions: MutableList<BaseAnswerableQuestion<Any>> = mutableListOf(

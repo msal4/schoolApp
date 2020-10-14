@@ -15,9 +15,9 @@ class GetExamQuestionsWithAnswersUseCase @Inject constructor(
     private val getExamQuestionsUseCase: IGetExamQuestionsUseCase,
     private val getStudentExamAnswersUseCase: IGetStudentExamAnswersUseCase,
 ) : IGetExamQuestionsWithAnswersUseCase {
-    override  fun invoke(examId:String, userId:String): Flow<Resource<ListOfAnswerableQuestions>> {
+    override  fun invoke(examId:String, userId:String, shouldFetchFromRemote:Boolean): Flow<Resource<ListOfAnswerableQuestions>> {
         val questionsFlow= getExamQuestionsUseCase(examId)
-        val answersFlow= getStudentExamAnswersUseCase(examId,userId)
+        val answersFlow= getStudentExamAnswersUseCase(examId,userId, shouldFetchFromRemote)
          return questionsFlow.combine(answersFlow, ::transformFlows)
     }
 
@@ -50,26 +50,7 @@ class GetExamQuestionsWithAnswersUseCase @Inject constructor(
 
     private fun combineQuestionsAndAnswers(questions:List<Question>, answers: ListOfAnswers?): ListOfAnswerableQuestions{
         return questions.mapIndexed { index, question ->
-            when(question.questionType){
-                QuestionType.MULTI_CHOICE -> {
-                    MultiChoiceAnswerableQuestion(
-                        question = question,
-                        answer = answers?.getOrNull(index) as? MultiChoiceAnswer
-                    )
-                }
-                QuestionType.CORRECTNESS -> {
-                    CorrectnessAnswerableQuestion(
-                        question = question,
-                        answer = answers?.getOrNull(index) as? CorrectnessAnswer
-                    )
-                }
-                else -> {
-                    AnswerableQuestion(
-                        question = question,
-                        answer = answers?.getOrNull(index) as? Answer
-                    )
-                }
-            }
+            BaseAnswerableQuestion.fromQuestionAnswer(question = question, answers?.getOrNull(index))
         }
     }
 }

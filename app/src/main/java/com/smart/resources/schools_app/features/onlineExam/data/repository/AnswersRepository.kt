@@ -32,16 +32,15 @@ class AnswersRepository(
                     }
             },
             shouldFetchFromRemote = {
-                // TODO: complete
-               // shouldFetchFromRemote || it.isNullOrEmpty()
-                false
+                shouldFetchFromRemote||it.isNullOrEmpty()
             },
             fetchFromRemote = {
-                // TODO: fetch from api if local db is empty only
-                flow {}
+                answersClient.getExamAnswers(examId, studentId)
             },
             saveRemoteData = {
-
+                // TODO: add correct parameters
+                //val localAnswers= answerMappersFacade.mapNetworkToLocalAnswer(it, emptyList(), studentId)
+                //answersDao.insert(localAnswers)
             }
         ).catch {
             // must be used to catch exceptions

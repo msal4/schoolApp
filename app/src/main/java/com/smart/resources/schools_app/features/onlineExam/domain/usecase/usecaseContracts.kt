@@ -29,7 +29,7 @@ interface IGetExamQuestionsUseCase{
 }
 
 interface IGetExamQuestionsWithAnswersUseCase{
-    operator fun invoke(examId:String, userId:String):  Flow<Resource<ListOfAnswerableQuestions>>
+    operator fun invoke(examId:String, userId:String, shouldFetchFromRemote:Boolean):  Flow<Resource<ListOfAnswerableQuestions>>
 }
 
 interface IAddOnlineExamUseCase{
@@ -61,5 +61,5 @@ interface ISendAnswersUseCase{
 }
 
 interface IGetStudentExamAnswersUseCase{
-    operator fun invoke(examId: String, studentId:String):Flow<Resource<List<BaseAnswer<Any>>>>
+    operator fun invoke(examId: String, studentId:String, shouldFetchFromRemote:Boolean):Flow<Resource<List<BaseAnswer<Any>>>>
 }

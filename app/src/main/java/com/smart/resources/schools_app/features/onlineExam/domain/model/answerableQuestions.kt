@@ -8,6 +8,20 @@ sealed class BaseAnswerableQuestion<out AnswerType> constructor(
 ) {
     val id: String get() = question.id
 
+    companion object {
+        fun fromQuestionAnswer(question: Question, answer: BaseAnswer<Any>?) =
+            when (question.questionType) {
+                QuestionType.MULTI_CHOICE -> MultiChoiceAnswerableQuestion(
+                    question = question,
+                    answer = answer as? MultiChoiceAnswer
+                )
+                QuestionType.CORRECTNESS -> CorrectnessAnswerableQuestion(
+                    question = question,
+                    answer = answer as? CorrectnessAnswer
+                )
+                else -> AnswerableQuestion(question = question, answer = answer as? Answer)
+            }
+    }
 }
 
 data class AnswerableQuestion constructor(
@@ -35,7 +49,7 @@ data class MultiChoiceAnswerableQuestion constructor(
     override val question: Question,
     override val answer: MultiChoiceAnswer?
 
-) : BaseAnswerableQuestion<Int>(question, answer){
+) : BaseAnswerableQuestion<Int>(question, answer) {
     constructor(
         questionId: String,
         question: String,
@@ -52,11 +66,11 @@ data class MultiChoiceAnswerableQuestion constructor(
     )
 }
 
-data class CorrectnessAnswerableQuestion constructor (
+data class CorrectnessAnswerableQuestion constructor(
     override val question: Question,
     override val answer: CorrectnessAnswer?
 
-) : BaseAnswerableQuestion<Boolean>(question, answer){
+) : BaseAnswerableQuestion<Boolean>(question, answer) {
     constructor(
         questionId: String,
         question: String,

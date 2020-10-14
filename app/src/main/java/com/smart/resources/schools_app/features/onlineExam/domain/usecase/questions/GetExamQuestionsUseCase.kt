@@ -10,7 +10,7 @@ import javax.inject.Inject
 class GetExamQuestionsUseCase @Inject constructor(
     private val questionsRepository: IQuestionsRepository
 ) : IGetExamQuestionsUseCase {
-    override  fun invoke(examId:String): Flow<Resource<List<Question>>> {
+    override fun invoke(examId:String): Flow<Resource<List<Question>>> {
         return questionsRepository.getExamQuestions(examId)
     }
 }

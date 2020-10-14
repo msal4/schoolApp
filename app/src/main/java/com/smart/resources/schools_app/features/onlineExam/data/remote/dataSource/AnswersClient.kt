@@ -10,7 +10,7 @@ import retrofit2.http.*
 
 interface AnswersClient {
     @GET("examQuestions/{examId}")
-    fun getExamAnswers(@Path("examId") examId:String): Flow<ApiResponse<List<NetworkQuestion>>>
+    fun getExamAnswers(examId:String, studentId:String): Flow<ApiResponse<List<NetworkAnswer>>>
 
     @POST("addMultiAnswer")
     fun addAnswers(@Body answers: List<PostNetworkAnswer>): Flow<ApiResponse<List<NetworkAnswer>>>
