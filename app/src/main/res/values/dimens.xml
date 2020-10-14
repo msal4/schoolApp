@@ -45,4 +45,6 @@
     <dimen name="online_exam_state_indicator_size">12dp</dimen>
     <dimen name="menu_item_icon_size">28dp</dimen>
     <dimen name="menu_item_icon_padding">8dp</dimen>
+    <dimen name="home_circle_bottom_padding">48dp</dimen>
+    <dimen name="home_section_spacing">16dp</dimen>
 </resources>

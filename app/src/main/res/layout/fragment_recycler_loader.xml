@@ -8,6 +8,10 @@
         <variable
             name="listState"
             type="com.smart.resources.schools_app.core.myTypes.ListState" />
+        
+        <variable
+            name="nestedScrolling"
+            type="Boolean" />
     </data>
 
     <FrameLayout
@@ -40,6 +44,7 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         android:visibility="@{listState.loading? View.GONE: View.VISIBLE}"
+        android:nestedScrollingEnabled="@{nestedScrolling??true}"
         android:padding="@dimen/item_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -114,4 +114,28 @@
         <item name="android:minHeight">60dp</item>
     </style>
 
+    <style name="home_section_text_style">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_marginBottom">@dimen/home_section_spacing</item>
+        <item name="android:background">@drawable/bg_circle_white</item>
+        <item name="android:elevation">@dimen/home_circle_elevation</item>
+        <item name="android:gravity">center|bottom</item>
+        <item name="android:padding">@dimen/home_circle_padding</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/home_circle_text_size</item>
+    </style>
+
+    <style name="home_section_image_style">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_marginStart">@dimen/home_circle_padding</item>
+        <item name="android:layout_marginTop">@dimen/home_circle_top_padding</item>
+        <item name="android:layout_marginEnd">@dimen/home_circle_padding</item>
+        <item name="android:layout_marginBottom">@dimen/home_circle_bottom_padding</item>
+        <item name="android:contentDescription">@string/section_icon_desc</item>
+        <item name="android:elevation">6dp</item>
+        <item name="android:outlineProvider">none</item>
+    </style>
+
 </resources>

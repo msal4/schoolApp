@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
-        <import type="com.smart.resources.schools_app.core.myTypes.UserType"/>
+
+        <import type="com.smart.resources.schools_app.core.myTypes.UserType" />
+
         <variable
             name="userType"
             type="com.smart.resources.schools_app.core.myTypes.UserType" />
@@ -32,8 +33,17 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginBottom="@dimen/home_section_spacing"/>
 
+            <View
+                android:id="@+id/spacingView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/home_section_spacing"
+                app:layout_constraintTop_toBottomOf="@id/topPart"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
             <TextView
                 android:id="@+id/schoolName"
                 android:layout_width="0dp"
@@ -43,9 +53,9 @@
                 android:fontFamily="@font/monadi"
                 android:includeFontPadding="true"
                 android:text="@string/app_name"
+                android:textAlignment="viewEnd"
                 android:textColor="@android:color/white"
                 android:textSize="26sp"
-                android:textAlignment="viewEnd"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/profileImage"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -70,103 +80,61 @@
 
             <TextView
                 android:id="@+id/lectures"
-                android:visibility="@{userType == UserType.STUDENT? View.VISIBLE: View.GONE}"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/bg_circle_white"
-                android:elevation="@dimen/home_circle_elevation"
-                android:gravity="center|bottom"
+                style="@style/home_section_text_style"
                 android:onClick="navigate"
-                android:padding="@dimen/home_circle_padding"
                 android:text="@string/lectures"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/home_circle_text_size"
+                android:visible="@{userType == UserType.STUDENT}"
                 app:layout_constraintBottom_toTopOf="@+id/schedule"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintStart_toStartOf="@+id/guideline4"
-                app:layout_constraintTop_toBottomOf="@+id/topPart"
-                app:layout_constraintVertical_bias="0.0"
-                app:layout_constraintVertical_chainStyle="packed" />
+                app:layout_constraintTop_toBottomOf="@+id/spacingView"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintVertical_bias="0.0"/>
 
             <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="@dimen/home_circle_padding"
-                android:layout_marginTop="@dimen/home_circle_top_padding"
-                android:layout_marginEnd="@dimen/home_circle_padding"
-                android:layout_marginBottom="48dp"
-                android:contentDescription="@string/section_icon_desc"
-                android:elevation="6dp"
-                android:outlineProvider="none"
                 android:src="@drawable/ic_lecture"
                 app:layout_constraintBottom_toBottomOf="@+id/lectures"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toEndOf="@+id/lectures"
                 app:layout_constraintStart_toStartOf="@+id/lectures"
                 app:layout_constraintTop_toTopOf="@+id/lectures"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.5"
+                app:layout_constraintHorizontal_bias="0.5"
+                style="@style/home_section_image_style" />
 
             <TextView
                 android:id="@+id/homework"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/bg_circle_white"
-                android:elevation="@dimen/home_circle_elevation"
-                android:gravity="center|bottom"
+                style="@style/home_section_text_style"
                 android:onClick="navigate"
-                android:padding="@dimen/home_circle_padding"
                 android:text="@string/homework"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/home_circle_text_size"
                 app:layout_constraintBottom_toTopOf="@+id/exam"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toStartOf="@+id/guideline3"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toBottomOf="@+id/topPart"
+                app:layout_constraintTop_toBottomOf="@+id/spacingView"
+                app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintVertical_bias="0.0"
-                app:layout_constraintVertical_chainStyle="packed" />
+                />
 
             <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="@dimen/home_circle_padding"
-                android:layout_marginTop="@dimen/home_circle_top_padding"
-                android:layout_marginEnd="@dimen/home_circle_padding"
-                android:layout_marginBottom="48dp"
-                android:contentDescription="@string/section_icon_desc"
-                android:elevation="6dp"
-                android:outlineProvider="none"
+                style="@style/home_section_image_style"
                 android:src="@drawable/ic_homework"
                 app:layout_constraintBottom_toBottomOf="@+id/homework"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toEndOf="@+id/homework"
                 app:layout_constraintStart_toStartOf="@+id/homework"
                 app:layout_constraintTop_toTopOf="@+id/homework"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.5" />
 
             <TextView
                 android:id="@+id/schedule"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/bg_circle_white"
-                android:elevation="@dimen/home_circle_elevation"
-                android:gravity="center|bottom"
+                style="@style/home_section_text_style"
                 android:onClick="navigate"
-                android:padding="@dimen/home_circle_padding"
                 android:text="@string/schedule"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/home_circle_text_size"
-                android:visibility="@{userType == UserType.STUDENT? View.VISIBLE: View.GONE}"
+                android:visible="@{userType == UserType.STUDENT}"
                 app:layout_constraintBottom_toTopOf="@+id/notifications"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -174,16 +142,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/lectures" />
 
             <ImageView
-                android:id="@+id/imageView6"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="@dimen/home_circle_padding"
-                android:layout_marginTop="@dimen/home_circle_top_padding"
-                android:layout_marginEnd="@dimen/home_circle_padding"
-                android:layout_marginBottom="48dp"
-                android:contentDescription="@string/section_icon_desc"
-                android:elevation="6dp"
-                android:outlineProvider="none"
+                style="@style/home_section_image_style"
                 android:src="@drawable/ic_schedule"
                 app:layout_constraintBottom_toBottomOf="@+id/schedule"
                 app:layout_constraintDimensionRatio="h,1:1"
@@ -194,57 +153,31 @@
 
             <TextView
                 android:id="@+id/exam"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/bg_circle_white"
-                android:elevation="@dimen/home_circle_elevation"
+                style="@style/home_section_text_style"
                 android:gravity="center|bottom"
                 android:onClick="navigate"
-                android:padding="@dimen/home_circle_padding"
                 android:text="@string/exams"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/home_circle_text_size"
                 app:layout_constraintBottom_toTopOf="@+id/library"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toStartOf="@+id/guideline3"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toBottomOf="@+id/homework"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toBottomOf="@+id/homework" />
 
             <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="@dimen/home_circle_padding"
-                android:layout_marginTop="@dimen/home_circle_top_padding"
-                android:layout_marginEnd="@dimen/home_circle_padding"
-                android:layout_marginBottom="48dp"
-                android:contentDescription="@string/section_icon_desc"
-                android:elevation="6dp"
-                android:outlineProvider="none"
+                style="@style/home_section_image_style"
                 android:src="@drawable/ic_exam"
                 app:layout_constraintBottom_toBottomOf="@+id/exam"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toEndOf="@+id/exam"
                 app:layout_constraintStart_toStartOf="@+id/exam"
                 app:layout_constraintTop_toTopOf="@+id/exam"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.5" />
 
             <TextView
                 android:id="@+id/notifications"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/bg_circle_white"
-                android:elevation="@dimen/home_circle_elevation"
-                android:gravity="center|bottom"
+                style="@style/home_section_text_style"
                 android:onClick="navigate"
-                android:padding="@dimen/home_circle_padding"
                 android:text="@string/notifications"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/home_circle_text_size"
                 app:layout_constraintBottom_toTopOf="@id/absence"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -252,16 +185,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/schedule" />
 
             <ImageView
-                android:id="@+id/notificationsIcon"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="@dimen/home_circle_padding"
-                android:layout_marginTop="@dimen/home_circle_top_padding"
-                android:layout_marginEnd="@dimen/home_circle_padding"
-                android:layout_marginBottom="48dp"
-                android:contentDescription="@string/section_icon_desc"
-                android:elevation="6dp"
-                android:outlineProvider="none"
+                style="@style/home_section_image_style"
                 android:src="@drawable/ic_notification"
                 app:layout_constraintBottom_toBottomOf="@+id/notifications"
                 app:layout_constraintDimensionRatio="h,1:1"
@@ -272,17 +196,9 @@
 
             <TextView
                 android:id="@+id/absence"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/bg_circle_white"
-                android:elevation="@dimen/home_circle_elevation"
-                android:gravity="center|bottom"
+                style="@style/home_section_text_style"
                 android:onClick="navigate"
-                android:padding="@dimen/home_circle_padding"
                 android:text="@string/absence"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/home_circle_text_size"
                 app:layout_constraintBottom_toTopOf="@id/ratings"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -290,16 +206,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/notifications" />
 
             <ImageView
-                android:id="@+id/imageView8"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="@dimen/home_circle_padding"
-                android:layout_marginTop="@dimen/home_circle_top_padding"
-                android:layout_marginEnd="@dimen/home_circle_padding"
-                android:layout_marginBottom="48dp"
-                android:contentDescription="@string/section_icon_desc"
-                android:elevation="6dp"
-                android:outlineProvider="none"
+                style="@style/home_section_image_style"
                 android:src="@drawable/ic_absence"
                 app:layout_constraintBottom_toBottomOf="@+id/absence"
                 app:layout_constraintDimensionRatio="h,1:1"
@@ -310,37 +217,17 @@
 
             <TextView
                 android:id="@+id/advertisements"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/bg_circle_white"
-                android:elevation="@dimen/home_circle_elevation"
-                android:gravity="center|bottom"
+                style="@style/home_section_text_style"
                 android:onClick="navigate"
-                android:padding="@dimen/home_circle_padding"
                 android:text="@string/advertising"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/home_circle_text_size"
                 app:layout_constraintBottom_toTopOf="@id/onlineExams"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toStartOf="@+id/guideline3"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toBottomOf="@+id/library"
-                app:layout_constraintVertical_bias="0.0"
-               />
+                app:layout_constraintTop_toBottomOf="@+id/library" />
 
             <ImageView
-                android:id="@+id/advertisementsIcon"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="@dimen/home_circle_padding"
-                android:layout_marginTop="@dimen/home_circle_top_padding"
-                android:layout_marginEnd="@dimen/home_circle_padding"
-                android:layout_marginBottom="48dp"
-                android:contentDescription="@string/section_icon_desc"
-                android:elevation="6dp"
-                android:outlineProvider="none"
+                style="@style/home_section_image_style"
                 android:src="@drawable/ic_advert"
                 app:layout_constraintBottom_toBottomOf="@+id/advertisements"
                 app:layout_constraintDimensionRatio="h,1:1"
@@ -350,16 +237,7 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <ImageView
-                android:id="@+id/onlineExamsIcon"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="@dimen/home_circle_padding"
-                android:layout_marginEnd="@dimen/home_circle_padding"
-                android:layout_marginTop="@dimen/home_circle_top_padding"
-                android:layout_marginBottom="48dp"
-                android:contentDescription="@string/section_icon_desc"
-                android:elevation="6dp"
-                android:outlineProvider="none"
+                style="@style/home_section_image_style"
                 android:src="@drawable/ic_online_exam"
                 app:layout_constraintBottom_toBottomOf="@+id/onlineExams"
                 app:layout_constraintDimensionRatio="w,1:1"
@@ -370,57 +248,29 @@
 
             <TextView
                 android:id="@+id/onlineExams"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/bg_circle_white"
-                android:elevation="@dimen/home_circle_elevation"
-                android:gravity="center|bottom"
+                style="@style/home_section_text_style"
                 android:onClick="navigate"
-                android:padding="@dimen/home_circle_padding"
                 android:text="@string/online_exam"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/home_circle_text_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toStartOf="@+id/guideline3"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toBottomOf="@+id/advertisements"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toBottomOf="@+id/advertisements" />
 
             <TextView
                 android:id="@+id/library"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/bg_circle_white"
-                android:elevation="@dimen/home_circle_elevation"
-                android:gravity="center|bottom"
+                style="@style/home_section_text_style"
                 android:onClick="navigate"
-                android:padding="@dimen/home_circle_padding"
                 android:text="@string/library"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/home_circle_text_size"
-                android:visibility="@{userType == UserType.STUDENT? View.VISIBLE: View.GONE}"
+                android:visible="@{userType == UserType.STUDENT}"
                 app:layout_constraintBottom_toBottomOf="@id/advertisements"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toStartOf="@+id/guideline3"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toBottomOf="@+id/exam"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toBottomOf="@+id/exam" />
 
             <ImageView
-                android:id="@+id/imageView7"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="@dimen/home_circle_padding"
-                android:layout_marginTop="@dimen/home_circle_top_padding"
-                android:layout_marginEnd="@dimen/home_circle_padding"
-                android:layout_marginBottom="48dp"
-                android:contentDescription="@string/section_icon_desc"
-                android:elevation="6dp"
-                android:outlineProvider="none"
+                style="@style/home_section_image_style"
                 android:src="@drawable/ic_library"
                 app:layout_constraintBottom_toBottomOf="@+id/library"
                 app:layout_constraintDimensionRatio="h,1:1"
@@ -432,41 +282,24 @@
 
             <TextView
                 android:id="@+id/ratings"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/bg_circle_white"
-                android:elevation="@dimen/home_circle_elevation"
-                android:gravity="center|bottom"
+                style="@style/home_section_text_style"
                 android:onClick="navigate"
-                android:padding="@dimen/home_circle_padding"
                 android:text="@string/rating"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/home_circle_text_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintStart_toStartOf="@+id/guideline4"
-                app:layout_constraintTop_toBottomOf="@+id/absence"/>
+                app:layout_constraintTop_toBottomOf="@+id/absence" />
 
             <ImageView
-                android:id="@+id/ratingIcon"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="@dimen/home_circle_padding"
-                android:layout_marginTop="@dimen/home_circle_top_padding"
-                android:layout_marginEnd="@dimen/home_circle_padding"
-                android:layout_marginBottom="48dp"
-                android:contentDescription="@string/section_icon_desc"
-                android:elevation="6dp"
-                android:outlineProvider="none"
+                style="@style/home_section_image_style"
                 android:src="@drawable/ic_rating"
                 app:layout_constraintBottom_toBottomOf="@+id/ratings"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toEndOf="@+id/ratings"
                 app:layout_constraintStart_toStartOf="@+id/ratings"
                 app:layout_constraintTop_toTopOf="@+id/ratings"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.5" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline"

@@ -32,13 +32,13 @@ class AnswersRepository(
                     }
             },
             shouldFetchFromRemote = {
+                // TODO: complete
                // shouldFetchFromRemote || it.isNullOrEmpty()
                 false
             },
             fetchFromRemote = {
-                // fetch from api if local db is empty only
-                flow {
-                }
+                // TODO: fetch from api if local db is empty only
+                flow {}
             },
             saveRemoteData = {
 
