@@ -34,7 +34,7 @@ class AnswerMappersFacade(
         input: NetworkAnswer,
         questionId: String,
         userId: String
-    ): LocalAnswer = mapAnswerToLocal(mapNetworkAnswer(input), userId, questionId)
+    ): LocalAnswer = mapAnswerToLocal(mapNetworkAnswer(input), questionId, userId)
 
     fun mapLocalAnswer(input: List<LocalAnswer>): ListOfAnswers = mapList(
         input = input,
@@ -53,7 +53,7 @@ class AnswerMappersFacade(
     ): List<LocalAnswer> = mapListIndexed(
         input = input,
         mapSingle = { index, e ->
-            answerToLocalMapper(e, userId, questionIds[index])
+            answerToLocalMapper(e, questionIds[index], userId)
         }
     )
 
@@ -64,7 +64,7 @@ class AnswerMappersFacade(
     ): List<PostNetworkAnswer> = mapListIndexed(
         input = input,
         mapSingle = { index, e ->
-            answerToNetworkMapper(e, userId, questionIds[index])
+            answerToNetworkMapper(e, questionIds[index], userId)
         }
     )
 
@@ -75,7 +75,7 @@ class AnswerMappersFacade(
     ): List<LocalAnswer> = mapListIndexed(
         input = input,
         mapSingle = { index, e ->
-            mapNetworkToLocalAnswer(e, userId, questionIds[index])
+            mapNetworkToLocalAnswer(e, questionIds[index], userId)
         }
     )
 }

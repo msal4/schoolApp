@@ -35,7 +35,7 @@ class AnswersRepository(
                 shouldFetchFromRemote||it.isNullOrEmpty()
             },
             fetchFromRemote = {
-                answersClient.getExamAnswers(examId, studentId)
+                answersClient.getStudentExamAnswers(examId, studentId)
             },
             saveRemoteData = {
                 // TODO: add correct parameters
@@ -61,10 +61,9 @@ class AnswersRepository(
         }
     }
 
-
-
     override suspend fun sendAnswers(answers: ListOfAnswers, questionIds:List<String>, userId:String): ApiResponse<Unit> {
-        val networkAnswers= answerMappersFacade.mapAnswerToNetwork(answers, questionIds, userId)
+        val networkId= userId.substring(1, userId.length)
+        val networkAnswers= answerMappersFacade.mapAnswerToNetwork(answers, questionIds, networkId)
         val res= answersClient.addAnswers(networkAnswers).first()
 
         return  res.withNewData { Unit }

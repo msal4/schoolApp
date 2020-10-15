@@ -70,7 +70,7 @@ class AddRatingFragment : LoadableActionMenuItemFragment(), MaterialSpinner.OnIt
         binding = FragmentAddRatingBinding
             .inflate(inflater, container, false).apply {
                 val currentUser = UserRepository.instance.getCurrentUserAccount()
-                val teacherInfoModel = currentUser?.accessToken?.let { TeacherModel.fromToken(it) }
+                val teacherInfoModel = currentUser?.accessToken?.let { TeacherModel.fromToken(it.value) }
                 teacherInfoModel?.let {
                     classAndSectionSpinner.setSpinnerList(it.classesInfo)
                     classAndSectionSpinner.onItemSelectedListener = this@AddRatingFragment

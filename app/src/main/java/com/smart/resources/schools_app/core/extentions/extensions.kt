@@ -8,14 +8,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.ColorInt
+import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.hadiyarajesh.flower.ApiEmptyResponse
 import com.hadiyarajesh.flower.ApiErrorResponse
 import com.hadiyarajesh.flower.ApiResponse
 import com.hadiyarajesh.flower.ApiSuccessResponse
+import com.haytham.coder.extensions.screenSize
 import com.haytham.coder.extensions.toColor
 import com.smart.resources.schools_app.R
 import kotlinx.coroutines.CoroutineScope
@@ -54,7 +58,7 @@ fun ViewGroup.showSnackBar(msg: String, isError: Boolean = true) {
         val color = if (isError) Color.RED else R.color.light_green_a700.toColor(context)
         setTextColor(color)
         setBackgroundTint(R.color.snackbar_background.toColor(context))
-        layoutDirection= View.LAYOUT_DIRECTION_RTL
+        layoutDirection = View.LAYOUT_DIRECTION_RTL
         view.layoutDirection = View.LAYOUT_DIRECTION_RTL
         show()
     }
@@ -109,7 +113,7 @@ fun <T, R> ApiResponse<T>.withNewData(mapper: (T) -> R): ApiResponse<R> {
     }
 }
 
-val <T>ApiErrorResponse<T>.combinedMessage:String get() = "Status Code:$statusCode\n $errorMessage"
+val <T>ApiErrorResponse<T>.combinedMessage: String get() = "Status Code:$statusCode\n $errorMessage"
 
 internal val Any.TAG: String
     get() {
@@ -139,8 +143,31 @@ fun <T> debounce(
     }
 }
 
-val View.windowHeight get():Int{
-    val windowRect= Rect()
-    getWindowVisibleDisplayFrame(windowRect)
-    return windowRect.height()
+val View.windowHeight
+    get():Int {
+        val windowRect = Rect()
+        getWindowVisibleDisplayFrame(windowRect)
+        return context.screenSize.y - windowRect.top
+    }
+
+fun Fragment.showConfirmationDialog(
+    @StringRes message: Int,
+    dismissAction: (() -> Unit)? = null,
+    okAction: () -> Unit,
+) {
+    MaterialAlertDialogBuilder(requireContext())
+        .setTitle(R.string.confirmation)
+        .setMessage(message)
+        .setNegativeButton(resources.getString(R.string.cancel)) { _, _ ->
+//            cancelAction?.invoke()
+        }
+        .setPositiveButton(resources.getString(R.string.ok)) { _, _ ->
+            okAction()
+        }.create().apply {
+            window?.decorView?.layoutDirection = View.LAYOUT_DIRECTION_RTL
+            setOnDismissListener {
+                dismissAction?.invoke()
+            }
+        }
+        .show()
 }

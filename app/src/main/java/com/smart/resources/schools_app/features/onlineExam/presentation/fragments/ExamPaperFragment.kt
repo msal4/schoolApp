@@ -1,19 +1,19 @@
 package com.smart.resources.schools_app.features.onlineExam.presentation.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
-import com.haytham.coder.extensions.setStatusBarColor
-import com.haytham.coder.extensions.setStatusBarColorToWhite
-import com.haytham.coder.extensions.toColor
-import com.haytham.coder.extensions.toString
-import com.orhanobut.logger.Logger
+import com.haytham.coder.extensions.*
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.callbacks.ViewPager2Helper
@@ -38,13 +38,13 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
 
     companion object {
         private const val QUESTIONS_FRAGMENT = "questionsFragment"
-        const val EXTRA_EXAM_DETAILS = "extraExamDetails"
+        const val EXTRA_ONLINE_EXAM = "extraOnlineExam"
         const val EXTRA_STUDENT_ID = "extraStudentId"
 
-        fun newInstance(fm: FragmentManager, exam: OnlineExam, studentId:String?=null) {
+        fun newInstance(fm: FragmentManager, exam: OnlineExam, studentId: String? = null) {
             val fragment = ExamPaperFragment()
             fragment.arguments = bundleOf(
-                EXTRA_EXAM_DETAILS to exam,
+                EXTRA_ONLINE_EXAM to exam,
                 EXTRA_STUDENT_ID to studentId,
             )
             fm.beginTransaction().apply {
@@ -61,9 +61,10 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
         }
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as SectionActivity).hideToolbar()
+        (activity as? SectionActivity)?.hideToolbar()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -151,7 +152,6 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
         pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 viewModel.checkExamStatus()
-                Logger.wtf(position.toString())
             }
         }
         pageChangeCallback?.let { binding.questionsPager.registerOnPageChangeCallback(it) }

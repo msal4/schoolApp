@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.core.utils
+package com.smart.resources.schools_app.core.network
 
 import android.content.Context
 import android.os.Handler
@@ -15,7 +15,7 @@ import javax.inject.Singleton
 @Singleton
 class AuthorizationInterceptor @Inject constructor(@ApplicationContext private val context: Context) :
     Interceptor, CanLogout {
-    private val token get() = UserRepository.instance.getCurrentUserAccount()?.accessToken
+    private val token:String? get() = UserRepository.instance.getCurrentUserAccount()?.accessToken?.value
 
     companion object {
         private const val HEADER_AUTHORIZATION = "Authorization"
@@ -31,7 +31,6 @@ class AuthorizationInterceptor @Inject constructor(@ApplicationContext private v
             .build()
 
         val res = chain.proceed(newRequest)
-
         if (res.code == HttpURLConnection.HTTP_UNAUTHORIZED) {
             logout()
         }
@@ -44,6 +43,4 @@ class AuthorizationInterceptor @Inject constructor(@ApplicationContext private v
             expireLogout(context)
         }
     }
-
-
 }

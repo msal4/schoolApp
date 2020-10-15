@@ -12,6 +12,7 @@ import com.kaopiz.kprogresshud.KProgressHUD
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.callbacks.SwipeAdapter
+import com.smart.resources.schools_app.core.extentions.showConfirmationDialog
 import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
@@ -20,8 +21,9 @@ import com.smart.resources.schools_app.features.menuSheet.MenuItemData
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.OnlineExamViewModel
 import com.smart.resources.schools_app.features.onlineExam.presentation.adapter.OnlineExamAdapter
-import com.smart.resources.schools_app.features.onlineExam.presentation.bottomSheets.AddOnlineExamBottomSheet
+import com.smart.resources.schools_app.features.onlineExam.presentation.bottomSheets.ExamKeyBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
+
 
 // TODO: add confirmation dialogs
 @AndroidEntryPoint
@@ -72,13 +74,13 @@ class OnlineExamsFragment : Fragment() {
                 adapter.submitList(it)
             }
             deleteFailedEvent.observe(viewLifecycleOwner) {
-                it.getContentIfNotHandled()?.let { pair ->
+                it?.getContentIfNotHandled()?.let { pair ->
                     adapter.notifyItemChanged(pair.first)
                     showErrorSnackbar(pair.second)
                 }
             }
             errorEvent.observe(viewLifecycleOwner) {
-                it.getContentIfNotHandled()?.let { errorMsgId ->
+                it?.getContentIfNotHandled()?.let { errorMsgId ->
                     showErrorSnackbar(errorMsgId)
                 }
             }
@@ -97,7 +99,6 @@ class OnlineExamsFragment : Fragment() {
         binding.layout.showSnackBar(errorMsg)
     }
 
-
     private fun FragmentRecyclerLoaderBinding.setupRecycler() {
         adapter = OnlineExamAdapter(true)
         adapter.onItemPressed = ::onOnlineExamPressed
@@ -114,7 +115,15 @@ class OnlineExamsFragment : Fragment() {
     private fun onItemSwiped(swipeDirection: Int, viewHolder: RecyclerView.ViewHolder) {
         val position = viewHolder.adapterPosition
         if (swipeDirection == ItemTouchHelper.RIGHT) {
-            viewModel.removeExam(position)
+            showConfirmationDialog(
+                R.string.delete_confirmation,
+                okAction = {
+                    viewModel.removeExam(position)
+                },
+                dismissAction = {
+                    adapter.notifyItemChanged(position)
+                },
+            )
         } else {
             adapter.notifyItemChanged(position)
             val onlineExam = viewModel.onlineExams.value?.getOrNull(position)
@@ -123,15 +132,20 @@ class OnlineExamsFragment : Fragment() {
     }
 
     private fun onOnlineExamPressed(onlineExam: OnlineExam) {
+        if(!isAdded) return
+
         if (viewModel.isTeacher) {
             if (onlineExam.examStatus == OnlineExamStatus.INACTIVE) {
                 ExamPaperFragment.newInstance(parentFragmentManager, onlineExam)
             } else {
-                OnlineExamAnswersFragment.newInstance(parentFragmentManager)
+                OnlineExamAnswersFragment.newInstance(parentFragmentManager, onlineExam)
             }
-        } else {
-            if (onlineExam.examStatus == OnlineExamStatus.INACTIVE) return
-            ExamPaperFragment.newInstance(parentFragmentManager, onlineExam)
+        } else if (onlineExam.examStatus != OnlineExamStatus.INACTIVE) {
+            ExamKeyBottomSheet.newInstance().apply {
+                onExamKeyMatch = {
+                    ExamPaperFragment.newInstance(parentFragmentManager, onlineExam)
+                }
+            }.show(parentFragmentManager, "")
         }
     }
 
@@ -146,37 +160,40 @@ class OnlineExamsFragment : Fragment() {
     private fun onSheetMenuItemPressed(menuItemData: MenuItemData, onlineExam: OnlineExam) {
         when (menuItemData.label) {
             R.string.the_answers -> {
-                OnlineExamAnswersFragment.newInstance(parentFragmentManager)
+                OnlineExamAnswersFragment.newInstance(parentFragmentManager, onlineExam)
             }
             R.string.the_questions -> {
                 ExamPaperFragment.newInstance(parentFragmentManager, onlineExam)
             }
             R.string.activate -> {
-                viewModel.activateExam(onlineExam.id)
+                showConfirmationDialog(R.string.exam_activation_confirmation) {
+                    viewModel.activateExam(onlineExam.id)
+                }
             }
             R.string.finish -> {
-                viewModel.finishExam(onlineExam.id)
+                showConfirmationDialog(R.string.exam_finish_confirmation) {
+                    viewModel.finishExam(onlineExam.id)
+                }
             }
             R.string.delete -> {
-                viewModel.removeExam(onlineExam.id)
+                showConfirmationDialog(R.string.delete_confirmation) {
+                    viewModel.removeExam(onlineExam.id)
+                }
             }
         }
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_add_btn, menu)
+        if (viewModel.isTeacher) {
+            inflater.inflate(R.menu.menu_add_btn, menu)
+        }
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.addMenuItem -> if (isAdded) {
-                if (viewModel.isTeacher) {
-                    AddOnlineExamFragment.newInstance(parentFragmentManager)
-                } else {
-                    AddOnlineExamBottomSheet.newInstance().show(parentFragmentManager, "")
-                }
+                AddOnlineExamFragment.newInstance(parentFragmentManager)
             }
         }
         return super.onOptionsItemSelected(item)

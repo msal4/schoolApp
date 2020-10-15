@@ -22,14 +22,13 @@ class OnlineExamsRepository(
     private val onlineExamsClient: OnlineExamsClient,
     private val onlineExamMappersFacade: OnlineExamMappersFacade,
 ) : IOnlineExamsRepository {
-
     companion object {
         private const val TAG = "OnlineExamsRepository"
     }
 
     @ExperimentalCoroutinesApi
     override fun getUserOnlineExams(
-        userId: String
+        userId: String, isTeacher:Boolean,
     ): Flow<Resource<List<OnlineExam>>> {
         return networkBoundResource(
             fetchFromLocal = {
@@ -42,7 +41,8 @@ class OnlineExamsRepository(
                     }
             },
             fetchFromRemote = {
-                onlineExamsClient.getOnlineExams()
+                if(isTeacher) onlineExamsClient.getTeacherExams()
+                else onlineExamsClient.getOnlineExams()//onlineExamsClient.getClassExams()
             },
             saveRemoteData = {
                 try {
@@ -55,6 +55,7 @@ class OnlineExamsRepository(
             },
             onFetchFailed = { errorBody, statusCode ->
                 Logger.e("$TAG: $statusCode -> $errorBody")
+
             }
         ).catch {
             // must be used to catch exceptions

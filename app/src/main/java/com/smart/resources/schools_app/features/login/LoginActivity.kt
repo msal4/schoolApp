@@ -13,7 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.utils.defaultGradient
-import com.smart.resources.schools_app.core.utils.SharedPrefHelper
+import com.smart.resources.schools_app.core.appDatabase.storages.SharedPrefHelper
 import com.smart.resources.schools_app.databinding.ActivityLoginBinding
 import com.smart.resources.schools_app.core.activity.HomeActivity
 import com.smart.resources.schools_app.core.extentions.applyGradient

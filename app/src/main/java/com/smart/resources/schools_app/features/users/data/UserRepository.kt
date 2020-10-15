@@ -1,6 +1,6 @@
 package com.smart.resources.schools_app.features.users.data
 
-import com.smart.resources.schools_app.core.utils.SharedPrefHelper
+import com.smart.resources.schools_app.core.appDatabase.storages.SharedPrefHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -26,9 +26,9 @@ class UserRepository @Inject constructor(
     fun getUser(): UserModel? {
         getCurrentUserAccount()?.apply {
             return if (userType == 0) {
-                StudentModel.fromToken(accessToken)
+                StudentModel.fromToken(accessToken.value)
             } else {
-                TeacherModel.fromToken(accessToken)
+                TeacherModel.fromToken(accessToken.value)
             }
         }
         return null

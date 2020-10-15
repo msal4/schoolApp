@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import com.haytham.coder.extensions.hideSystemUi
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.activity.HomeActivity
-import com.smart.resources.schools_app.core.utils.SharedPrefHelper
+import com.smart.resources.schools_app.core.appDatabase.storages.SharedPrefHelper
 import com.smart.resources.schools_app.databinding.ActivitySplashScreenBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

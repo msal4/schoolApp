@@ -17,9 +17,9 @@
         android:layout_marginBottom="@dimen/item_margin"
         android:background="@drawable/bg_card"
         android:elevation="@dimen/item_elevation"
-        android:layoutDirection="rtl"
         android:minHeight="@dimen/item_min_height"
         android:orientation="vertical"
+        android:layoutDirection="rtl"
         android:padding="@dimen/item_padding">
 
         <TextView
@@ -49,13 +49,6 @@
             app:layout_constraintStart_toStartOf="@+id/examDate"
             app:layout_constraintTop_toBottomOf="@+id/examDate" />
 
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrier"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="right"
-            app:constraint_referenced_ids="rate_id,examDate"
-            app:layout_constraintEnd_toEndOf="parent" />
 
         <ImageView
             android:id="@+id/advertisementsIcon"
@@ -65,7 +58,8 @@
             android:src="@drawable/ic_rating"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
 
         <TextView
@@ -95,7 +89,7 @@
             android:text="@{itemModel.note}"
             android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/barrier"
+            app:layout_constraintEnd_toStartOf="@+id/rate_id"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/advertisementsIcon"
             app:layout_constraintTop_toBottomOf="@+id/subjectName"

@@ -54,7 +54,7 @@ class HomeActivity : AppCompatActivity() {
     private fun setSchoolName(){
         UserRepository.instance.getCurrentUserAccount()?.apply {
             try {
-                JSONObject(accessToken.decodeTokenBody()).getString("schoolName").apply {
+                JSONObject(accessToken.value.decodeTokenBody()).getString("schoolName").apply {
                     binding.schoolName.text = this
                 }
             }catch (e:Exception){

@@ -1,9 +1,10 @@
-package com.smart.resources.schools_app.core.appDatabase
+package com.smart.resources.schools_app.core.appDatabase.storages
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.smart.resources.schools_app.core.typeConverters.room.*
+import com.smart.resources.schools_app.core.utils.EncryptionHelper
 import com.smart.resources.schools_app.features.onlineExam.data.local.dataSource.AnswersDao
 import com.smart.resources.schools_app.features.onlineExam.data.local.dataSource.OnlineExamsDao
 import com.smart.resources.schools_app.features.onlineExam.data.local.dataSource.QuestionsDao
@@ -26,11 +27,12 @@ import com.smart.resources.schools_app.features.users.data.UserAccount
 )
 @TypeConverters(
     value = [
-    DurationToLongConverter::class,
-    LocalDateTimeToTimestampConverter::class,
-    OnlineExamStatusToIntegerConverter::class,
-    QuestionTypeToIntegerConverter::class,
-    StringListToStringConverter::class,
+        DurationToLongConverter::class,
+        LocalDateTimeToTimestampConverter::class,
+        OnlineExamStatusToIntegerConverter::class,
+        QuestionTypeToIntegerConverter::class,
+        StringListToStringConverter::class,
+        DecryptedStringToStringConverter::class,
     ]
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -40,20 +42,9 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun getAnswersDao(): AnswersDao
 
     companion object {
-        //        private var instance: AppDatabase? = null
         const val DATABASE_NAME = "App_Database"
-//
-//        fun getAppDatabase(context: Context): AppDatabase? {
-//            if (instance == null) {
-//                instance = Room.databaseBuilder(
-//                    context.applicationContext,
-//                    AppDatabase::class.java,
-//                    DATABASE_NAME
-//                )
-//                    .allowMainThreadQueries()
-//                    .build()
-//            }
-//            return instance
-//        }
+
+        // converters Dependencies
+        lateinit var encryptionHelper: EncryptionHelper
     }
 }

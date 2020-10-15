@@ -3,11 +3,11 @@ package com.smart.resources.schools_app
 import android.app.Application
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.orhanobut.logger.AndroidLogAdapter
-import com.orhanobut.logger.FormatStrategy
+import com.orhanobut.logger.BuildConfig
 import com.orhanobut.logger.Logger
-import com.orhanobut.logger.PrettyFormatStrategy
-import com.smart.resources.schools_app.core.utils.AuthorizationInterceptor
-import com.smart.resources.schools_app.core.utils.SharedPrefHelper
+import com.smart.resources.schools_app.core.network.AuthorizationInterceptor
+import com.smart.resources.schools_app.core.appDatabase.storages.SharedPrefHelper
+import com.smart.resources.schools_app.core.utils.EncryptionHelper
 import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.snakydesign.watchtower.WatchTower
 import com.snakydesign.watchtower.interceptor.WebWatchTowerObserver
@@ -29,6 +29,7 @@ class MyApp : Application() {
         AuthorizationInterceptor.instance= authorizationInterceptor  // To not break old code
         setupLogger()
         WatchTower.start(WebWatchTowerObserver(port = 8085))
+
     }
 
     private fun setupLogger() {

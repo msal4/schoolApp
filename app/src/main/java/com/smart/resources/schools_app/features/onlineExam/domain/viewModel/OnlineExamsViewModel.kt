@@ -54,6 +54,7 @@ class OnlineExamViewModel @ViewModelInject constructor(
                 Resource.Status.SUCCESS -> {
                     listState.setBodyError(R.string.no_exams.toString(c))
                 }
+                // TODO: handle status code 404 for not found
                 Resource.Status.ERROR -> listState.setBodyError(it.message.toString())
                 Resource.Status.LOADING -> listState.setLoading(true)
             }

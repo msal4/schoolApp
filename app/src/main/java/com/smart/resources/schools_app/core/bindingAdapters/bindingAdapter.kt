@@ -63,7 +63,7 @@ fun View.setVisible(visible: Boolean?){
 
 @BindingAdapter("android:setScreenHeightAsMinimum")
 fun View.setScreenHeightAsMinimum(setScreenHeightAsMinimum: Boolean?){
-    val minHeightValue= if(setScreenHeightAsMinimum == true) windowHeight else MATCH_PARENT
+    val minHeightValue= if(setScreenHeightAsMinimum == true) windowHeight else 0
 
     if(this is ConstraintLayout) minHeight= minHeightValue
     else minimumHeight= minHeightValue

@@ -4,21 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.smart.resources.schools_app.databinding.BottomSheetAddOnlineExamBinding
+import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.AddOnlineExamSheetViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddOnlineExamBottomSheet : BottomSheetDialogFragment() {
+class ExamKeyBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetAddOnlineExamBinding
     private val viewModel:AddOnlineExamSheetViewModel by viewModels()
+    var onExamKeyMatch:(()->Unit)?= null
 
     companion object Factory {
 
-        fun newInstance(): AddOnlineExamBottomSheet {
-            return AddOnlineExamBottomSheet()
+        fun newInstance(): ExamKeyBottomSheet {
+            return ExamKeyBottomSheet()
         }
     }
 
@@ -28,7 +31,7 @@ class AddOnlineExamBottomSheet : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = BottomSheetAddOnlineExamBinding.inflate(inflater, container, false).apply {
-            lifecycleOwner= this@AddOnlineExamBottomSheet
+            lifecycleOwner= this@ExamKeyBottomSheet
             model= viewModel
 
         }
@@ -41,6 +44,7 @@ class AddOnlineExamBottomSheet : BottomSheetDialogFragment() {
         viewModel.onExamAdded.observe(viewLifecycleOwner) {
             it?.getContentIfNotHandled()?.let { examAdded ->
                 if (examAdded) {
+                    onExamKeyMatch?.invoke()
                     dismiss()
                 }
             }

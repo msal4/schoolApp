@@ -1,6 +1,6 @@
 package com.smart.resources.schools_app.features.users
 
-import com.smart.resources.schools_app.core.appDatabase.AppDatabase
+import com.smart.resources.schools_app.core.appDatabase.storages.AppDatabase
 import com.smart.resources.schools_app.features.users.data.AccountsDao
 import com.smart.resources.schools_app.features.users.domain.usecase.*
 import dagger.Binds

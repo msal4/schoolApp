@@ -122,7 +122,7 @@ class AddExamFragment : Fragment(), PostListener {
             .apply {
                 val currentUser =
                     UserRepository.instance.getCurrentUserAccount()
-                val teacherInfoModel = currentUser?.accessToken?.let { TeacherModel.fromToken(it) }
+                val teacherInfoModel = currentUser?.accessToken?.let { TeacherModel.fromToken(it.value) }
                 teacherInfoModel?.apply {
                     classAndSectionSpinner.setSpinnerList(
                         classesInfo

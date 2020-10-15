@@ -19,6 +19,7 @@
         <item name="snackbarStyle">@style/Widget.MaterialComponents.Snackbar</item>
     </style>
 
+
     <style name="BottomSheetDialogStyle" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
@@ -41,6 +42,7 @@
     <style name="MyEditTextStyle" parent="@style/Widget.AppCompat.EditText">
         <item name="android:inputType">text</item>
         <item name="android:textAlignment">viewStart</item>
+        <item name="android:textDirection">anyRtl</item>
         <item name="android:lineSpacingMultiplier">1.3</item>
     </style>
 

@@ -85,7 +85,7 @@ class AddAbsenceFragment : Fragment(), MaterialSpinner.OnItemSelectedListener, P
                 if (currentUser != null) {
                     if (currentUser.userType == 1) {
                         val teacherInfoModel =
-                            currentUser.accessToken.let { TeacherModel.fromToken(it) }
+                            currentUser.accessToken.let { TeacherModel.fromToken(it.value) }
                         teacherInfoModel?.let {
                             classAndSectionSpinner.setSpinnerList(it.classesInfo)
                             classAndSectionSpinner.onItemSelectedListener = this@AddAbsenceFragment

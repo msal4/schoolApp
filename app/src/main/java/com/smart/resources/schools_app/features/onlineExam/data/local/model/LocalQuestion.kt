@@ -19,7 +19,7 @@ import com.smart.resources.schools_app.core.typeConverters.room.QuestionType
     ],
     indices = [
         Index(value = ["onlineExamId"]),
-    ]
+    ],
 )
 data class LocalQuestion(
     @PrimaryKey

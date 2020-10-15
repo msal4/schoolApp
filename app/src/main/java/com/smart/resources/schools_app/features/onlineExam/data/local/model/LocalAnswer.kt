@@ -2,6 +2,7 @@ package com.smart.resources.schools_app.features.onlineExam.data.local.model
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import com.google.gson.annotations.SerializedName
 import com.smart.resources.schools_app.features.users.data.UserAccount
 
 @Entity(

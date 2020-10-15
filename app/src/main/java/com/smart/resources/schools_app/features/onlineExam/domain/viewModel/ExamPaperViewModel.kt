@@ -45,7 +45,7 @@ class ExamPaperViewModel @ViewModelInject constructor(
 ) : AndroidViewModel(application) {
 
     private val c = application.applicationContext
-    private val passedOnlineExam: OnlineExam get() = savedStateHandle.get(ExamPaperFragment.EXTRA_EXAM_DETAILS)!!
+    private val passedOnlineExam: OnlineExam get() = savedStateHandle.get(ExamPaperFragment.EXTRA_ONLINE_EXAM)!!
     private val passedStudentId: String? get() = savedStateHandle.get(ExamPaperFragment.EXTRA_STUDENT_ID)
     private val userType: UserType = getCurrentUserTypeUseCase()
     private var timer: CountDownTimer? = null
@@ -231,7 +231,7 @@ class ExamPaperViewModel @ViewModelInject constructor(
                 is ApiErrorResponse -> {
                     Logger.e("$TAG: ${res.errorMessage}")
                     val errorMsgId = if (res.statusCode == 0) R.string.connection_error
-                    else R.string.activation_failed
+                    else R.string.send_failed
 
                     _errorEvent.postValue(Event(errorMsgId))
                 }

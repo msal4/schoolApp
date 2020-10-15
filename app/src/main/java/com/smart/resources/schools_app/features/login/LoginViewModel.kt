@@ -96,7 +96,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                     UserRepository.instance.insertCurrentUser(
                         UserAccount(
                             id,
-                            result.data,
+                            DecryptedString(it),
                             "",
                             name,
                             if (isTeacher) 1 else 0

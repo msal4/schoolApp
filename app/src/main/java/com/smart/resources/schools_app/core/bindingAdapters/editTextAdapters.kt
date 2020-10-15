@@ -38,3 +38,16 @@ fun TextInputLayout.setInputLayoutError(errorMsgId: Int?) {
 }
 
 
+///**
+// * used for edit text that is automatically reassigned when entering new text (for example from database LiveData...)
+// * - it prevent setting duplicate values
+// * - fixes cursor location issues
+// */
+//@BindingAdapter("android:syncableText")
+//fun EditText.setSyncableText(text: String?) {
+//    if(text!=this.text.toString()){
+//        setText(text)
+//       // setSelection(this.text?.length?:0)
+//    }
+//}
+

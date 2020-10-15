@@ -148,5 +148,11 @@
     <string name="delete">حذف</string>
     <string name="answer_on">الاجابة على</string>
     <string name="send_answers">ارسال الاجوبة</string>
+    <string name="confirmation">تأكيد</string>
+    <string name="ok">اجل</string>
+    <string name="cancel">الغاء</string>
+    <string name="delete_confirmation">هل انت متأكد من الحذف؟</string>
+    <string name="exam_finish_confirmation">هل انت متأكد من انهاء الامتحان؟</string>
+    <string name="exam_activation_confirmation">هل انت متأكد من تفعيل الامتحان؟</string>
 
 </resources>

@@ -1,6 +1,7 @@
 package com.smart.resources.schools_app.features.onlineExam.domain.viewModel
 
 import android.app.Application
+import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.hadiyarajesh.flower.ApiEmptyResponse
@@ -12,6 +13,9 @@ import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.extentions.combinedMessage
 import com.smart.resources.schools_app.core.myTypes.ListState
+import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
+import com.smart.resources.schools_app.features.onlineExam.presentation.fragments.ExamPaperFragment
+import com.smart.resources.schools_app.features.onlineExam.presentation.fragments.OnlineExamAnswersFragment.Factory.EXTRA_ONLINE_EXAM
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import com.smart.resources.schools_app.features.students.IGetClassStudentsUseCase
 import com.smart.resources.schools_app.features.students.Student
@@ -25,10 +29,12 @@ import kotlinx.coroutines.flow.map
 class OnlineExamAnswersViewModel @ViewModelInject constructor(
     private val getCurrentTeacherModelUseCase: IGetCurrentTeacherModelUseCase,
     private val getClassStudentsUseCase: IGetClassStudentsUseCase,
+    @Assisted private val savedStateHandle: SavedStateHandle,
     application: Application,
 ) : AndroidViewModel(application) {
 
     private val c = application.applicationContext
+    val passedOnlineExam: OnlineExam get() = savedStateHandle.get(EXTRA_ONLINE_EXAM)!!
     val listState = ListState()
     private val classModels: List<ClassInfoModel> by lazy {
         getCurrentTeacherModelUseCase()?.classesInfo.orEmpty()
@@ -66,7 +72,6 @@ class OnlineExamAnswersViewModel @ViewModelInject constructor(
             }
         }
     }
-
 }
 
 

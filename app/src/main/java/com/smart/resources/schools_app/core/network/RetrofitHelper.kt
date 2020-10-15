@@ -6,7 +6,6 @@ import com.hadiyarajesh.flower.calladpater.FlowCallAdapterFactory
 import com.smart.resources.schools_app.core.typeConverters.retrofit.LocalDateConverter
 import com.smart.resources.schools_app.core.typeConverters.retrofit.LocalTimeConverter
 import com.smart.resources.schools_app.core.typeConverters.retrofit.LocalDateTimeConverter
-import com.smart.resources.schools_app.core.utils.AuthorizationInterceptor
 import com.smart.resources.schools_app.features.absence.AbsenceClient
 import com.smart.resources.schools_app.features.advertising.AdvertisingClient
 import com.smart.resources.schools_app.features.exam.ExamClient

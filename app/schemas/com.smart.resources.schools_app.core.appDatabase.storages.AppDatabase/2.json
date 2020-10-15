@@ -1,0 +1,297 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "2644857ab309fb669f3f3e03b6b5a0a4",
+    "entities": [
+      {
+        "tableName": "UserAccount",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` TEXT NOT NULL, `accessToken` TEXT NOT NULL, `img` TEXT NOT NULL, `username` TEXT NOT NULL, `userType` INTEGER NOT NULL, PRIMARY KEY(`uid`))",
+        "fields": [
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accessToken",
+            "columnName": "accessToken",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "img",
+            "columnName": "img",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "username",
+            "columnName": "username",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userType",
+            "columnName": "userType",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "uid"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "OnlineExams",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`onlineExamId` TEXT NOT NULL, `subjectName` TEXT NOT NULL, `date` INTEGER NOT NULL, `examDuration` INTEGER NOT NULL, `numberOfRequiredQuestions` INTEGER NOT NULL, `examStatus` INTEGER NOT NULL, PRIMARY KEY(`onlineExamId`))",
+        "fields": [
+          {
+            "fieldPath": "onlineExamId",
+            "columnName": "onlineExamId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "subjectName",
+            "columnName": "subjectName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "examDuration",
+            "columnName": "examDuration",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "numberOfRequiredQuestions",
+            "columnName": "numberOfRequiredQuestions",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "examStatus",
+            "columnName": "examStatus",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "onlineExamId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "UserOnlineExamCrossRef",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` TEXT NOT NULL, `onlineExamId` TEXT NOT NULL, PRIMARY KEY(`uid`, `onlineExamId`), FOREIGN KEY(`uid`) REFERENCES `UserAccount`(`uid`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`onlineExamId`) REFERENCES `OnlineExams`(`onlineExamId`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "onlineExamId",
+            "columnName": "onlineExamId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "uid",
+            "onlineExamId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "UserAccount",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "uid"
+            ],
+            "referencedColumns": [
+              "uid"
+            ]
+          },
+          {
+            "table": "OnlineExams",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "onlineExamId"
+            ],
+            "referencedColumns": [
+              "onlineExamId"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Questions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`questionId` TEXT NOT NULL, `onlineExamId` TEXT NOT NULL, `questionText` TEXT NOT NULL, `questionType` INTEGER NOT NULL, `options` TEXT, PRIMARY KEY(`questionId`), FOREIGN KEY(`onlineExamId`) REFERENCES `OnlineExams`(`onlineExamId`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "questionId",
+            "columnName": "questionId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "onlineExamId",
+            "columnName": "onlineExamId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "questionText",
+            "columnName": "questionText",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "questionType",
+            "columnName": "questionType",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "options",
+            "columnName": "options",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "questionId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_Questions_onlineExamId",
+            "unique": false,
+            "columnNames": [
+              "onlineExamId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Questions_onlineExamId` ON `${TABLE_NAME}` (`onlineExamId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "OnlineExams",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "onlineExamId"
+            ],
+            "referencedColumns": [
+              "onlineExamId"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Answers",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `questionId` TEXT NOT NULL, `answerNormal` TEXT, `answerMultiChoice` INTEGER, `answerCorrectness` INTEGER, `correctAnswer` TEXT NOT NULL, PRIMARY KEY(`userId`, `questionId`), FOREIGN KEY(`userId`) REFERENCES `UserAccount`(`uid`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`questionId`) REFERENCES `Questions`(`questionId`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "userId",
+            "columnName": "userId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "questionId",
+            "columnName": "questionId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "answerNormal",
+            "columnName": "answerNormal",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "answerMultiChoice",
+            "columnName": "answerMultiChoice",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "answerCorrectness",
+            "columnName": "answerCorrectness",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "correctAnswer",
+            "columnName": "correctAnswer",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "userId",
+            "questionId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "UserAccount",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "userId"
+            ],
+            "referencedColumns": [
+              "uid"
+            ]
+          },
+          {
+            "table": "Questions",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "questionId"
+            ],
+            "referencedColumns": [
+              "questionId"
+            ]
+          }
+        ]
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2644857ab309fb669f3f3e03b6b5a0a4')"
+    ]
+  }
+}

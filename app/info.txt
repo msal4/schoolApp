@@ -5,3 +5,7 @@ password: 12334
 teacher & student
 phone: +9640
 password: 12345
+================
+student
+phone: +9640
+password: 12

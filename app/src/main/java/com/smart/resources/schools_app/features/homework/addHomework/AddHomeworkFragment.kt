@@ -112,7 +112,7 @@ class AddHomeworkFragment : Fragment(), PostListener {
         binding = FragmentAddHomeworkBinding
             .inflate(inflater, container, false).apply {
                 val currentUser = UserRepository.instance.getCurrentUserAccount()
-                val teacherInfoModel = currentUser?.accessToken?.let { TeacherModel.fromToken(it) }
+                val teacherInfoModel = currentUser?.accessToken?.let { TeacherModel.fromToken(it.value) }
                 teacherInfoModel?.classesInfo
                     ?.let {
                         classAndSectionSpinner.setSpinnerList(it)
