@@ -19,6 +19,7 @@
         android:paddingEnd="@dimen/item_padding"
         android:paddingBottom="@dimen/item_padding"
         android:visibility="gone"
+        android:layout_gravity="bottom"
         tools:visibility="visible">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -54,52 +55,78 @@
             android:src="@drawable/ic_send_white"
             android:padding="4dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            app:layout_constraintBottom_toBottomOf="@+id/questionTypesRadioGroup"
+            app:layout_constraintBottom_toBottomOf="@+id/radio_group_table"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/questionTypesRadioGroup"
+            app:layout_constraintTop_toTopOf="@+id/radio_group_table"
             app:tint="@color/colorPrimary87"
             android:onClick="@{()->model.addQuestion()}"/>
 
-        <RadioGroup
-            android:id="@+id/questionTypesRadioGroup"
+        <com.smart.resources.schools_app.core.customUi.ToggleButtonGroupTableLayout
+            android:id="@+id/radio_group_table"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/item_padding"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/questionFieldLayout"
             app:layout_constraintStart_toEndOf="@+id/sendIcon"
             app:layout_constraintTop_toBottomOf="@+id/questionFieldLayout"
-            tools:checkedButton="@id/normalQuestionRadioBtn"
-            >
+            tools:checkedButton="@id/defineQuestionRadioBtn">
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-            <RadioButton
-                android:id="@+id/normalQuestionRadioBtn"
-                android:layout_width="wrap_content"
+            <TableRow
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/define"
-                android:layout_marginEnd="12dp" />
+                android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/multiChoiceQuestionRadioBtn"
-                android:layout_width="wrap_content"
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <RadioButton
+                    android:id="@+id/defineQuestionRadioBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/define"
+                    android:layout_marginEnd="12dp" />
+
+                <RadioButton
+                    android:id="@+id/whyQuestionRadioBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/why_question"
+                    android:layout_marginEnd="12dp" />
+
+                <RadioButton
+                    android:id="@+id/answerQuestionRadioBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/answer_the_following" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="12dp"
-                android:text="@string/options" />
+                android:orientation="horizontal">
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
 
-            <RadioButton
-                android:id="@+id/correctnessQuestionRadioBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/true_and_false" />
+                <RadioButton
+                    android:id="@+id/multiChoiceQuestionRadioBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:text="@string/options" />
 
-
-        </RadioGroup>
+                <RadioButton
+                    android:id="@+id/correctnessQuestionRadioBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/true_and_false" />
+            </TableRow>
+        </com.smart.resources.schools_app.core.customUi.ToggleButtonGroupTableLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

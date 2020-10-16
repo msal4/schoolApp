@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.core.abstractTypes
+package com.smart.resources.schools_app.core.customUi
 
 import android.os.Bundle
 import android.view.Menu

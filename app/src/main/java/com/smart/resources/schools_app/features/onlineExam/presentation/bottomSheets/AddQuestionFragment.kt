@@ -20,7 +20,7 @@ import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.AddQ
 class AddQuestionFragment : Fragment() {
     private lateinit var binding: FragmentAddQuestionBinding
     private val viewModel: AddQuestionViewModel by viewModels()
-     var onQuestionAdded: ((question: Question) -> Unit)? = null
+    var onQuestionAdded: ((question: Question) -> Unit)? = null
 
 
     override fun onCreateView(
@@ -34,15 +34,20 @@ class AddQuestionFragment : Fragment() {
 
             setFieldFocusListener()
             setQuestionFieldEditorActionListener()
-            bindQuestionType()
+            setRadioBtnListener()
         }
 
-        viewModel.onQuestionAdded.observe(viewLifecycleOwner){
+        observeOnQuestionAdded()
+        observeQuestionType()
+        return binding.root
+    }
+
+    private fun observeOnQuestionAdded() {
+        viewModel.onQuestionAdded.observe(viewLifecycleOwner) {
             it?.getContentIfNotHandled()?.let { question ->
                 onQuestionAdded?.invoke(question)
             }
         }
-        return binding.root
     }
 
     private fun FragmentAddQuestionBinding.setQuestionFieldEditorActionListener() {
@@ -53,32 +58,47 @@ class AddQuestionFragment : Fragment() {
             } else false
         }
     }
-    private fun FragmentAddQuestionBinding.bindQuestionType() {
-        questionTypesRadioGroup.setOnCheckedChangeListener { _, checkedId ->
-            viewModel.questionType.value = when (checkedId) {
+
+    private fun observeQuestionType() {
+        binding.apply {
+            viewModel.questionType.observe(viewLifecycleOwner) {
+                val radioBtn = when (it) {
+                    QuestionType.MULTI_CHOICE -> multiChoiceQuestionRadioBtn
+                    QuestionType.CORRECTNESS -> correctnessQuestionRadioBtn
+                    QuestionType.DEFINE -> defineQuestionRadioBtn
+                    QuestionType.WHY -> whyQuestionRadioBtn
+                    else -> answerQuestionRadioBtn
+                }
+                radioGroupTable.setChecked(radioBtn)
+            }
+        }
+    }
+
+    private fun FragmentAddQuestionBinding.setRadioBtnListener() {
+        radioGroupTable.onActiveBtnChanged = {
+            val checkedBtnId = radioGroupTable.checkedRadioButtonId
+            viewModel.questionType.value = when (checkedBtnId) {
                 R.id.multiChoiceQuestionRadioBtn -> {
-                    questionField.inputType= InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE
                     QuestionType.MULTI_CHOICE
                 }
                 R.id.correctnessQuestionRadioBtn -> {
-                    questionField.inputType= InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
                     QuestionType.CORRECTNESS
                 }
-                else -> {
-                    questionField.inputType= InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+                R.id.defineQuestionRadioBtn -> {
                     QuestionType.DEFINE
                 }
+                R.id.whyQuestionRadioBtn -> {
+                    QuestionType.WHY
+                }
+                else -> {
+                    QuestionType.ANSWER_THE_FOLLOWING
+                }
             }
-            questionField.setSelection(questionField.text?.length?:0)
-        }
-        viewModel.questionType.observe(viewLifecycleOwner) {
-            val radioBtnId = when (it) {
-                QuestionType.MULTI_CHOICE -> R.id.multiChoiceQuestionRadioBtn
-                QuestionType.CORRECTNESS -> R.id.correctnessQuestionRadioBtn
-                else -> R.id.normalQuestionRadioBtn
-            }
+            questionField.inputType = InputType.TYPE_CLASS_TEXT or
+                    if (checkedBtnId == R.id.multiChoiceQuestionRadioBtn) InputType.TYPE_TEXT_FLAG_MULTI_LINE
+                    else InputType.TYPE_TEXT_VARIATION_NORMAL
 
-            questionTypesRadioGroup.check(radioBtnId)
+            questionField.setSelection(questionField.text?.length ?: 0)
         }
     }
 

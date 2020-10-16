@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.observe
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.abstractTypes.LoadableActionMenuItemFragment
+import com.smart.resources.schools_app.core.customUi.LoadableActionMenuItemFragment
 import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.bindingAdapters.setSpinnerList
 import com.smart.resources.schools_app.core.extentions.showSnackBar
