@@ -10,29 +10,30 @@ import com.smart.resources.schools_app.features.onlineExam.presentation.viewHold
 import com.smart.resources.schools_app.features.onlineExam.presentation.viewHolder.QuestionViewHolder
 
 class AnswerableQuestionsPagerAdapter :
-    ListAdapter<BaseAnswerableQuestion<Any>, RecyclerView.ViewHolder>(DIFF_UTIL) {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var readOnly:Boolean= true
+    private var data:MutableList<BaseAnswerableQuestion<Any>> = mutableListOf()
 
     companion object {
         private const val QUESTION_ITEM_TYPE = 0
         private const val MULTI_CHOICE_QUESTION_ITEM_TYPE = 1
         private const val CORRECTNESS_QUESTION_ITEM_TYPE = 2
 
-        val DIFF_UTIL = object : DiffUtil.ItemCallback<BaseAnswerableQuestion<out Any>>() {
-            override fun areItemsTheSame(
-                oldItem: BaseAnswerableQuestion<Any>,
-                newItem: BaseAnswerableQuestion<Any>
-            ): Boolean {
-                return oldItem.id == newItem.id
-            }
-
-            override fun areContentsTheSame(
-                oldItem: BaseAnswerableQuestion<Any>,
-                newItem: BaseAnswerableQuestion<Any>
-            ): Boolean {
-                return oldItem == newItem
-            }
-        }
+//        val DIFF_UTIL = object : DiffUtil.ItemCallback<BaseAnswerableQuestion<out Any>>() {
+//            override fun areItemsTheSame(
+//                oldItem: BaseAnswerableQuestion<Any>,
+//                newItem: BaseAnswerableQuestion<Any>
+//            ): Boolean {
+//                return oldItem.id == newItem.id
+//            }
+//
+//            override fun areContentsTheSame(
+//                oldItem: BaseAnswerableQuestion<Any>,
+//                newItem: BaseAnswerableQuestion<Any>
+//            ): Boolean {
+//                return oldItem == newItem
+//            }
+//        }
     }
 
     interface Listener {
@@ -41,6 +42,10 @@ class AnswerableQuestionsPagerAdapter :
 
     var listener: Listener? = null
 
+    fun submitList(data: List<BaseAnswerableQuestion<Any>>?){
+        this.data= data.orEmpty().toMutableList()
+        notifyDataSetChanged()
+    }
 
     fun updateReadOnly(readOnly: Boolean){
         this.readOnly= readOnly
@@ -50,7 +55,7 @@ class AnswerableQuestionsPagerAdapter :
         holder: RecyclerView.ViewHolder,
         position: Int
     ) {
-        when (val answerableQuestion = getItem(position)) {
+        when (val answerableQuestion = data[position]) {
             is AnswerableQuestion -> if (holder is QuestionViewHolder) {
                 holder.apply {
                     setup(answerableQuestion, readOnly)
@@ -75,7 +80,7 @@ class AnswerableQuestionsPagerAdapter :
         }
     }
 
-    override fun getItemViewType(position: Int) = when (getItem(position)) {
+    override fun getItemViewType(position: Int) = when (data[position]) {
         is MultiChoiceAnswerableQuestion -> MULTI_CHOICE_QUESTION_ITEM_TYPE
         is CorrectnessAnswerableQuestion -> CORRECTNESS_QUESTION_ITEM_TYPE
         else -> QUESTION_ITEM_TYPE
@@ -89,5 +94,7 @@ class AnswerableQuestionsPagerAdapter :
         CORRECTNESS_QUESTION_ITEM_TYPE -> CorrectnessQuestionViewHolder.create(parent)
         else -> QuestionViewHolder.create(parent)
     }
+
+    override fun getItemCount() = data.size
 
 }

@@ -47,4 +47,6 @@
     <dimen name="menu_item_icon_padding">8dp</dimen>
     <dimen name="home_circle_bottom_padding">48dp</dimen>
     <dimen name="home_section_spacing">16dp</dimen>
+    <dimen name="home_top_image_height">160dp</dimen>
+    <dimen name="home_top_curvature">15dp</dimen>
 </resources>

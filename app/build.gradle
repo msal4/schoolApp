@@ -146,4 +146,7 @@ dependencies {
 
     // for Encrypted shared preference
     implementation "androidx.security:security-crypto:1.1.0-alpha02"
+
+    // for curved image view
+    implementation 'com.github.developer-shivam:Crescento:1.2.1'
 }

@@ -12,11 +12,13 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
 import androidx.viewpager2.widget.ViewPager2
 import com.haytham.coder.extensions.*
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.callbacks.ViewPager2Helper
+import com.smart.resources.schools_app.core.extentions.observeOnce
 import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.core.myTypes.Event
 import com.smart.resources.schools_app.databinding.FragmentExamPaperBinding
@@ -96,22 +98,20 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
 
     private fun observeViewModel() {
         viewModel.apply {
-            answerableQuestions.observe(viewLifecycleOwner) {
+            answerableQuestions.observeOnce(viewLifecycleOwner) {
                 pagerAdapter.submitList(it)
             }
 
             questionsSolvedState.observe(viewLifecycleOwner) {
-                navigatorAdapter.submitList(it ?: emptyList())
+                navigatorAdapter.submitList(it)
             }
 
-            readOnly.observe(viewLifecycleOwner) {
-                it?.let { readOnly ->
+            readOnly.observe(viewLifecycleOwner) {readOnly ->
                     pagerAdapter.updateReadOnly(readOnly)
                     if (readOnly) {
                         unregisterPageChangeCallback()
                     } else {
                         registerPageChangeCallback()
-                    }
                 }
             }
 

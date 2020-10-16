@@ -16,6 +16,7 @@ import com.smart.resources.schools_app.features.onlineExam.presentation.fragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 
+// TODO: fix fields refreshes when typing answer
 class QuestionViewHolder(
     var binding: PageQuestionBinding) :
     RecyclerView.ViewHolder(binding.root) {
