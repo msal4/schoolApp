@@ -4,15 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
-import com.haytham.coder.extensions.setStatusBarColor
-import com.haytham.coder.extensions.setStatusBarColorToWhite
-import com.haytham.coder.extensions.toColor
-import com.haytham.coder.extensions.toString
+import com.haytham.coder.extensions.*
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.callbacks.ViewPager2Helper
@@ -61,23 +59,26 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
         }
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as? SectionActivity)?.hideToolbar()
+        (requireActivity() as? SectionActivity)?.apply {
+            setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+            hideToolbar()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.setStatusBarColorToWhite(view)
+        requireActivity().setStatusBarColorToWhite(view)
+
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        activity?.apply {
+        (requireActivity() as? SectionActivity)?.apply {
+            setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
             setStatusBarColor(R.color.colorPrimaryDark.toColor(requireContext()))
         }
-        (activity as SectionActivity).showToolbar()
     }
 
     override fun onCreateView(

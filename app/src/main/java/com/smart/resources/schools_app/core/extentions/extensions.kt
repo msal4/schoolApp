@@ -1,7 +1,7 @@
 package com.smart.resources.schools_app.core.extentions
 
-import android.app.Activity
 import android.content.Context
+import android.content.Context.WINDOW_SERVICE
 import android.content.pm.ApplicationInfo
 import android.graphics.Color
 import android.graphics.LinearGradient
@@ -10,6 +10,7 @@ import android.graphics.Shader
 import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.annotation.ColorInt
@@ -27,8 +28,6 @@ import com.hadiyarajesh.flower.ApiEmptyResponse
 import com.hadiyarajesh.flower.ApiErrorResponse
 import com.hadiyarajesh.flower.ApiResponse
 import com.hadiyarajesh.flower.ApiSuccessResponse
-import com.haytham.coder.extensions.activity
-import com.haytham.coder.extensions.screenSize
 import com.haytham.coder.extensions.toColor
 import com.smart.resources.schools_app.R
 import kotlinx.coroutines.CoroutineScope
@@ -151,23 +150,6 @@ fun <T> debounce(
         }
     }
 }
-
-// TODO: update this in the library
-val View.windowHeight
-    get():Int {
-
-        val windowRect = Rect()
-        getWindowVisibleDisplayFrame(windowRect)
-
-        val displayMetrics = DisplayMetrics()
-        context.activity?.let {
-            it.windowManager.defaultDisplay.getRealMetrics(displayMetrics)
-            val height: Int = displayMetrics.heightPixels
-            return height - windowRect.top
-        }
-
-        return 0
-    }
 
 fun Fragment.showConfirmationDialog(
     @StringRes message: Int,

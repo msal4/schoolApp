@@ -19,7 +19,6 @@ import com.haytham.coder.extensions.hide
 import com.haytham.coder.extensions.show
 import com.haytham.coder.extensions.toColorStateList
 import com.smart.resources.schools_app.core.callbacks.SwipeAdapter
-import com.smart.resources.schools_app.core.extentions.windowHeight
 
 
 @BindingAdapter("android:checkedButtonIndex")
@@ -61,13 +60,6 @@ fun View.setVisible(visible: Boolean?){
     }
 }
 
-@BindingAdapter("android:setScreenHeightAsMinimum")
-fun View.setScreenHeightAsMinimum(setScreenHeightAsMinimum: Boolean?){
-    val minHeightValue= if(setScreenHeightAsMinimum == true) windowHeight else 0
-
-    if(this is ConstraintLayout) minHeight= minHeightValue
-    else minimumHeight= minHeightValue
-}
 
 @BindingAdapter("android:animatedVisible")
 fun View.setAnimatedVisible(visible: Boolean?){
