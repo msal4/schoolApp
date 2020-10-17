@@ -8,6 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.haytham.coder.extensions.toString
 import com.smart.resources.schools_app.R
@@ -73,7 +74,7 @@ class OnlineExamAnswersFragment : Fragment() {
 
     private fun setupObservers() {
         viewModel.students.observe(viewLifecycleOwner) {
-            adapter.setNewInstance(it?.toMutableList())
+            adapter.setNewInstance(it.toMutableList())
         }
     }
 

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="model"
-            type="com.smart.resources.schools_app.features.onlineExam.domain.viewModel.AddOnlineExamSheetViewModel" />
+            type="com.smart.resources.schools_app.features.onlineExam.domain.viewModel.ExamKeySheetViewModel" />
 
     </data>
 

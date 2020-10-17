@@ -83,6 +83,7 @@ class SharedPrefHelper @Inject constructor(@ApplicationContext context: Context)
             }
         }
 
+
     companion object {
         lateinit var instance: SharedPrefHelper
         private const val PREF_NAME = "appSettingsPref"

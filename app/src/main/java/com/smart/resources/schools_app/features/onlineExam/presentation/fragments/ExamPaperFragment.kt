@@ -1,20 +1,18 @@
 package com.smart.resources.schools_app.features.onlineExam.presentation.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import androidx.viewpager2.widget.ViewPager2
-import com.haytham.coder.extensions.*
+import com.haytham.coder.extensions.setStatusBarColor
+import com.haytham.coder.extensions.setStatusBarColorToWhite
+import com.haytham.coder.extensions.toColor
+import com.haytham.coder.extensions.toString
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.callbacks.ViewPager2Helper
@@ -106,7 +104,7 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
                 navigatorAdapter.submitList(it)
             }
 
-            readOnly.observe(viewLifecycleOwner) {readOnly ->
+            readOnly.observe(viewLifecycleOwner) { readOnly ->
                     pagerAdapter.updateReadOnly(readOnly)
                     if (readOnly) {
                         unregisterPageChangeCallback()

@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.core.activity.SectionActivity
+import androidx.lifecycle.observe
 
 class RatingFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding

@@ -31,7 +31,7 @@ interface UseCaseModule {
     fun bindAddOnlineExamsUseCase(addOnlineExamUseCase: AddOnlineExamUseCase): IAddOnlineExamUseCase
 
     @Binds
-    fun bindAddOnlineExamByKeyUseCase(addOnlineExamByKeyUseCase: AddOnlineExamByKeyUseCase): IAddOnlineExamByKeyUseCase
+    fun bindAddOnlineExamByKeyUseCase(addOnlineExamByKeyUseCase: IsExamKeyCorrectUseCase): IIsExamKeyCorrectUseCase
 
     @Binds
     fun bindRemoveOnlineExamUseCase(removeOnlineExamUseCase: RemoveOnlineExamUseCase): IRemoveOnlineExamUseCase

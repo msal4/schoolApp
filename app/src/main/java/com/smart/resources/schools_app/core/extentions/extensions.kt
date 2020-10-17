@@ -1,11 +1,14 @@
 package com.smart.resources.schools_app.core.extentions
 
+import android.content.Context
+import android.content.pm.ApplicationInfo
 import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Rect
 import android.graphics.Shader
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
@@ -192,4 +195,15 @@ fun <T> LiveData<T>.observeOnce(owner: LifecycleOwner, observer: (T) -> Unit) {
             }
         },
     )
+}
+
+/**
+ * where app in debug or release mode
+ */
+val Context.isAppInDebugMode get() = applicationInfo.flags != 0 and ApplicationInfo.FLAG_DEBUGGABLE
+
+fun View.hideKeyboard() {
+    val imm: InputMethodManager =
+        context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(this.windowToken, 0)
 }

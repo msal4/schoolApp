@@ -10,8 +10,7 @@ import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.addMark.AddMarkFragment
 import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.smart.resources.schools_app.core.activity.SectionActivity
-
-
+import androidx.lifecycle.observe
 
 class ExamFragment : Fragment(), ExamRecyclerAdapter.OnItemClickListener {
     private lateinit var binding: FragmentRecyclerLoaderBinding

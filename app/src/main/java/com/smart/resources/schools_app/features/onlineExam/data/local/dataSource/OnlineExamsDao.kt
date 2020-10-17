@@ -2,6 +2,7 @@ package com.smart.resources.schools_app.features.onlineExam.data.local.dataSourc
 
 import androidx.room.*
 import com.smart.resources.schools_app.core.appDatabase.BaseDao
+import com.smart.resources.schools_app.core.myTypes.DecryptedString
 import com.smart.resources.schools_app.features.onlineExam.data.local.model.LocalOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.data.local.model.UserOnlineExamCrossRef
 import com.smart.resources.schools_app.features.onlineExam.data.local.model.UserWithOnlineExams
@@ -15,6 +16,9 @@ abstract class OnlineExamsDao : BaseDao<LocalOnlineExam>() {
 
     @Query("SELECT * FROM ${LocalOnlineExam.TABLE_NAME} where onlineExamId= :examId")
     abstract fun getOnlineExamById(examId: String): Flow<LocalOnlineExam>
+
+    @Query("SELECT examKey FROM ${LocalOnlineExam.TABLE_NAME} where onlineExamId= :examId")
+    abstract fun getExamKey(examId: String): Flow<DecryptedString>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertUserOnlineExamCrossRef(onlineExam: List<UserOnlineExamCrossRef>)

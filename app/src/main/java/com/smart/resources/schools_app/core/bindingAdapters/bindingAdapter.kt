@@ -29,7 +29,7 @@ fun RadioGroup.setCheckedButtonIndex(checkedButtonIndex: Int?){
     check(radioBtnId)
 }
 
-fun interface SwipeListener{
+interface SwipeListener{
     fun onSwiped(position: Int)
 }
 

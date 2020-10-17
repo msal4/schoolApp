@@ -16,6 +16,8 @@ import com.smart.resources.schools_app.core.typeConverters.room.QuestionType
 import com.smart.resources.schools_app.databinding.FragmentAddQuestionBinding
 import com.smart.resources.schools_app.features.onlineExam.domain.model.Question
 import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.AddQuestionViewModel
+import androidx.lifecycle.observe
+
 
 class AddQuestionFragment : Fragment() {
     private lateinit var binding: FragmentAddQuestionBinding
@@ -44,7 +46,7 @@ class AddQuestionFragment : Fragment() {
 
     private fun observeOnQuestionAdded() {
         viewModel.onQuestionAdded.observe(viewLifecycleOwner) {
-            it?.getContentIfNotHandled()?.let { question ->
+            it.getContentIfNotHandled()?.let { question ->
                 onQuestionAdded?.invoke(question)
             }
         }

@@ -1,12 +1,10 @@
 package com.smart.resources.schools_app.core.bindingAdapters.textView
 
 import android.annotation.SuppressLint
-import android.os.CountDownTimer
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.smart.resources.schools_app.R
 import com.haytham.coder.extensions.hide
-import com.haytham.coder.extensions.startCountDown
 import com.haytham.coder.extensions.unicodeWrap
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.features.users.data.UserRepository
@@ -25,7 +23,7 @@ fun TextView.setNumberOfQuestions(numberOfQuestions: Int?) {
 
 @BindingAdapter("android:durationInMinutes")
 fun TextView.setDurationInMinutes(duration: Duration?) {
-    text = context.getString(R.string.durationInMinutes, duration?.toMinutes() ?: 0)
+    text = context.getString(R.string.minutes_count, duration?.toMinutes()?.toInt() ?: 0)
 }
 
 

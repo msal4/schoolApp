@@ -12,7 +12,7 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.core.activity.SectionActivity
-
+import androidx.lifecycle.observe
 
 class LectureFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding

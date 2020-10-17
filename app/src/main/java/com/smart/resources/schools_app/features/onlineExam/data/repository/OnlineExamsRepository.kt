@@ -28,7 +28,7 @@ class OnlineExamsRepository(
 
     @ExperimentalCoroutinesApi
     override fun getUserOnlineExams(
-        userId: String, isTeacher:Boolean,
+        userId: String, isTeacher: Boolean,
     ): Flow<Resource<List<OnlineExam>>> {
         return networkBoundResource(
             fetchFromLocal = {
@@ -41,12 +41,14 @@ class OnlineExamsRepository(
                     }
             },
             fetchFromRemote = {
-                if(isTeacher) onlineExamsClient.getTeacherExams()
+                if (isTeacher) onlineExamsClient.getTeacherExams()
                 else onlineExamsClient.getOnlineExams()//onlineExamsClient.getClassExams()
             },
             saveRemoteData = {
                 try {
-                    val localExams = onlineExamMappersFacade.mapNetworkToLocalOnlineExam(it)
+                    val examKeys = it.mapNotNull { exam -> exam.examKey }
+                    val localExams =
+                        onlineExamMappersFacade.mapNetworkToLocalOnlineExam(it, examKeys)
                     onlineExamsDao.syncWithDatabase(userId, localExams)
                 } catch (e: Exception) {
                     Logger.e("$TAG: $e")
@@ -88,14 +90,15 @@ class OnlineExamsRepository(
 
     override suspend fun syncOnlineExam(examId: String): ApiResponse<Unit> {
         val res = onlineExamsClient.getOnlineExam(examId).first()
+
         if (res is ApiSuccessResponse && res.body != null) {
-            val localExam = onlineExamMappersFacade.mapNetworkToLocalOnlineExam(res.body!!)
+            val examKey = res.body?.examKey.orEmpty()
+            val localExam = onlineExamMappersFacade.mapNetworkToLocalOnlineExam(res.body!!, examKey)
             onlineExamsDao.update(localExam)
         }
 
         return res.withNewData { Unit }
     }
-
 
     override suspend fun addOnlineExam(
         userId: String,
@@ -105,7 +108,9 @@ class OnlineExamsRepository(
         val res = onlineExamsClient.addOnlineExam(networkExam).first()
 
         if (res is ApiSuccessResponse && res.body != null) {
-            val localExams = onlineExamMappersFacade.mapNetworkToLocalOnlineExam(res.body!!)
+            val examKey = res.body?.examKey.orEmpty()
+            val localExams =
+                onlineExamMappersFacade.mapNetworkToLocalOnlineExam(res.body!!, examKey)
             onlineExamsDao.upsertUserOnlineExams(userId, listOf(localExams))
         }
 
@@ -114,9 +119,23 @@ class OnlineExamsRepository(
         }
     }
 
-    override suspend fun addOnlineExamByKey(examKey: String): Resource<Unit> {
-        return Resource.success(null)
+    @ExperimentalCoroutinesApi
+    override suspend fun getExamKey(examId: String): Flow<Resource<String>> {
+        return networkBoundResource<String, Unit>(
+            fetchFromLocal = {
+                onlineExamsDao.getExamKey(examId).map { it.value }
+            },
+            fetchFromRemote = {
+                emptyFlow()
+            },
+            shouldFetchFromRemote = { false },
+        )
+            .catch {
+                Logger.e("$TAG: $it")
+                emit(Resource.error(msg = it.message.toString()))
+            }.flowOn(Dispatchers.IO)
     }
+
 
     override suspend fun removeOnlineExam(examId: String): ApiResponse<Unit> {
         val res = onlineExamsClient.deleteOnlineExam(examId).first()

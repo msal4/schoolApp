@@ -10,6 +10,7 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.databinding.FragmentNotificationsBinding
+import androidx.lifecycle.observe
 
 class NotificationFragment : Fragment() {
     private lateinit var binding: FragmentNotificationsBinding
@@ -70,8 +71,8 @@ class NotificationFragment : Fragment() {
         viewModel.apply {
                 binding.recyclerViewLoader.listState= listState
                 getNotifications(NotificationType.STUDENT)
-                    .observe(viewLifecycleOwner, {onNotificationsDownloaded(it)})
-            }
+                    .observe(viewLifecycleOwner) {onNotificationsDownloaded(it)}
+        }
     }
 
     private fun setupAdapter() {

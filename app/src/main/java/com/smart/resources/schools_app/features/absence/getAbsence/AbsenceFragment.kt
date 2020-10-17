@@ -8,7 +8,7 @@ import androidx.fragment.app.viewModels
 import com.haytham.coder.extensions.hide
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.*
-
+import androidx.lifecycle.observe
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.absence.StudentAbsenceModel
 import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment

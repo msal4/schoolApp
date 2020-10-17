@@ -1,27 +1,34 @@
 package com.smart.resources.schools_app.features.onlineExam.presentation.bottomSheets
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.smart.resources.schools_app.core.extentions.hideKeyboard
 import com.smart.resources.schools_app.databinding.BottomSheetOnlineExamKeyBinding
-import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
-import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.AddOnlineExamSheetViewModel
+import com.smart.resources.schools_app.features.onlineExam.domain.viewModel.ExamKeySheetViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ExamKeyBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetOnlineExamKeyBinding
-    private val viewModel:AddOnlineExamSheetViewModel by viewModels()
+    private val viewModelKey:ExamKeySheetViewModel by viewModels()
     var onExamKeyMatch:(()->Unit)?= null
 
     companion object Factory {
+        const val EXTRA_EXAM_ID= "extraExamId"
 
-        fun newInstance(): ExamKeyBottomSheet {
-            return ExamKeyBottomSheet()
+        fun newInstance(examId:String): ExamKeyBottomSheet {
+            return ExamKeyBottomSheet().apply {
+                arguments= bundleOf(
+                    EXTRA_EXAM_ID to examId
+                )
+            }
         }
     }
 
@@ -32,7 +39,7 @@ class ExamKeyBottomSheet : BottomSheetDialogFragment() {
     ): View? {
         binding = BottomSheetOnlineExamKeyBinding.inflate(inflater, container, false).apply {
             lifecycleOwner= this@ExamKeyBottomSheet
-            model= viewModel
+            model= viewModelKey
 
         }
 
@@ -41,9 +48,10 @@ class ExamKeyBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.onExamAdded.observe(viewLifecycleOwner) {
+        viewModelKey.onExamAdded.observe(viewLifecycleOwner) {
             it?.getContentIfNotHandled()?.let { examAdded ->
                 if (examAdded) {
+                    view?.hideKeyboard()
                     onExamKeyMatch?.invoke()
                     dismiss()
                 }

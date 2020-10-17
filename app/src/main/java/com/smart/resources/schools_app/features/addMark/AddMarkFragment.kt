@@ -28,6 +28,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import androidx.lifecycle.observe
 
 class AddMarkFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding

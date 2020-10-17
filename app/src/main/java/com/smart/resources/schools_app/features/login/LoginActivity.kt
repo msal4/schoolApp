@@ -12,6 +12,7 @@ import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.activity.BaseActivity
 import com.smart.resources.schools_app.core.utils.defaultGradient
 import com.smart.resources.schools_app.core.appDatabase.storages.SharedPrefHelper
 import com.smart.resources.schools_app.databinding.ActivityLoginBinding
@@ -22,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var viewModel: LoginViewModel
     @Inject

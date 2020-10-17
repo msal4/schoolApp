@@ -9,6 +9,7 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.extentions.*
+import androidx.lifecycle.observe
 
 class LibraryFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding

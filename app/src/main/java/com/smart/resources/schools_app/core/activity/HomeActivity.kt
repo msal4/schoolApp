@@ -20,7 +20,7 @@ import java.lang.Exception
 import java.net.URI
 
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : BaseActivity(){
     private lateinit var binding:ActivityHomeBinding
 
     companion object Factory{

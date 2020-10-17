@@ -30,7 +30,7 @@ import com.smart.resources.schools_app.features.schedule.ScheduleFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SectionActivity : AppCompatActivity() {
+class SectionActivity : BaseActivity() {
     private lateinit var binding: ActivitySectionBinding
 
     companion object Factory{

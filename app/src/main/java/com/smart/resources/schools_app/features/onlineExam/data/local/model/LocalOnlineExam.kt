@@ -2,6 +2,7 @@ package com.smart.resources.schools_app.features.onlineExam.data.local.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.smart.resources.schools_app.core.myTypes.DecryptedString
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import org.threeten.bp.Duration
 import org.threeten.bp.LocalDateTime
@@ -16,6 +17,7 @@ data class LocalOnlineExam(
     val examDuration: Duration,
     val numberOfRequiredQuestions: Int,
     val examStatus: OnlineExamStatus,
+    val examKey: DecryptedString,
 ) {
     companion object {
         const val TABLE_NAME = "OnlineExams"

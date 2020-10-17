@@ -1,18 +1,19 @@
 package com.smart.resources.schools_app
 
 import android.app.Application
+import android.view.WindowManager
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.BuildConfig
 import com.orhanobut.logger.Logger
-import com.smart.resources.schools_app.core.network.AuthorizationInterceptor
 import com.smart.resources.schools_app.core.appDatabase.storages.SharedPrefHelper
-import com.smart.resources.schools_app.core.utils.EncryptionHelper
+import com.smart.resources.schools_app.core.network.AuthorizationInterceptor
 import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.snakydesign.watchtower.WatchTower
 import com.snakydesign.watchtower.interceptor.WebWatchTowerObserver
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
+
 
 @HiltAndroidApp
 class MyApp : Application() {
@@ -39,4 +40,5 @@ class MyApp : Application() {
             }
         })
     }
+
 }

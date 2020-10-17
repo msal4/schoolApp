@@ -11,6 +11,7 @@ import com.haytham.coder.extensions.GET_IMAGE_REQUEST
 import com.haytham.coder.extensions.getImage
 import com.haytham.coder.extensions.openImagePickerApp
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.activity.BaseActivity
 import com.smart.resources.schools_app.core.bindingAdapters.loadImageUrl
 import com.smart.resources.schools_app.core.bindingAdapters.setAccountImage
 import com.smart.resources.schools_app.databinding.ActivityProfileBinding
@@ -19,7 +20,7 @@ import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.smart.resources.schools_app.features.imageViewer.ImageViewerActivity
 import com.smart.resources.schools_app.features.users.data.TeacherModel
 
-class ProfileActivity : AppCompatActivity() {
+class ProfileActivity : BaseActivity() {
     private lateinit var binding: ActivityProfileBinding
     private lateinit var viewModel: ProfileViewModel
 

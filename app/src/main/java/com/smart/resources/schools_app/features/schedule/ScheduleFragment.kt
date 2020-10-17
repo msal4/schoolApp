@@ -11,6 +11,7 @@ import com.smart.resources.schools_app.core.myTypes.WeekDays
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.extentions.*
+import androidx.lifecycle.observe
 
 class ScheduleFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
@@ -45,8 +46,8 @@ class ScheduleFragment : Fragment() {
     private fun setupViewModel() {
         viewModel.apply {
                 binding.listState= listState
-                getSchedule().observe(viewLifecycleOwner, {onScheduleDownloaded(it)})
-            }
+                getSchedule().observe(viewLifecycleOwner) {onScheduleDownloaded(it)}
+        }
     }
 
     private  fun onScheduleDownloaded(result: List<List<String?>>) {

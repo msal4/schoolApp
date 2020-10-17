@@ -32,7 +32,7 @@
     <string name="questions_of_subject">اسئلة %1$s</string>
     <string name="answers_of_subject">اجوبة %1$s</string>
     <string name="questions_number">%1$d سؤال</string>
-    <string name="durationInMinutes">%1$d دقيقة</string>
+    <string name="minutes_count">%1$d دقيقة</string>
     <string name="field_required">هذا الحقل مطلوب!</string>
     <string name="wrong_login_info">رقم الهاتف او كلمة السر غير صحيحة!</string>
     <string name="no_student_absence">لا توجد غيابات</string>
@@ -138,6 +138,7 @@
     <string name="empty_exam_date_error">يرجى اختيار تاريخ الامتحان!</string>
     <string name="empty_exam_time_error">يرجى اختيار وقت الامتحان!</string>
     <string name="empty_exam_key_error">يرجى ادخال رمز الامتحان!</string>
+    <string name="invalid_key">الرمز غير صحيح!</string>
     <string name="empty_questions_error">يرجى اضافة سؤال!</string>
     <string name="no_answer">لا يوجد جواب</string>
     <string name="exam_key">رمز الامتحان</string>

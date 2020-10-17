@@ -24,7 +24,6 @@ import com.smart.resources.schools_app.features.onlineExam.presentation.adapter.
 import com.smart.resources.schools_app.features.onlineExam.presentation.bottomSheets.ExamKeyBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
-
 // TODO: add confirmation dialogs
 @AndroidEntryPoint
 class OnlineExamsFragment : Fragment() {
@@ -74,19 +73,19 @@ class OnlineExamsFragment : Fragment() {
                 adapter.submitList(it)
             }
             deleteFailedEvent.observe(viewLifecycleOwner) {
-                it?.getContentIfNotHandled()?.let { pair ->
+                it.getContentIfNotHandled()?.let { pair ->
                     adapter.notifyItemChanged(pair.first)
                     showErrorSnackbar(pair.second)
                 }
             }
             errorEvent.observe(viewLifecycleOwner) {
-                it?.getContentIfNotHandled()?.let { errorMsgId ->
+                it.getContentIfNotHandled()?.let { errorMsgId ->
                     showErrorSnackbar(errorMsgId)
                 }
             }
 
             menuActionInProgress.observe(viewLifecycleOwner) {
-                it?.let { isLoading ->
+                it.let { isLoading ->
                     if (isLoading) progressHud.show()
                     else progressHud.dismiss()
                 }
@@ -140,12 +139,16 @@ class OnlineExamsFragment : Fragment() {
             } else {
                 OnlineExamAnswersFragment.newInstance(parentFragmentManager, onlineExam)
             }
-        } else if (onlineExam.examStatus != OnlineExamStatus.INACTIVE) {
-            ExamKeyBottomSheet.newInstance().apply {
-                onExamKeyMatch = {
-                    ExamPaperFragment.newInstance(parentFragmentManager, onlineExam)
-                }
-            }.show(parentFragmentManager, "")
+        } else {
+            if(onlineExam.examStatus == OnlineExamStatus.ACTIVE) {
+                ExamKeyBottomSheet.newInstance(onlineExam.id).apply {
+                    onExamKeyMatch = {
+                        ExamPaperFragment.newInstance(parentFragmentManager, onlineExam)
+                    }
+                }.show(parentFragmentManager, "")
+            }else{
+                ExamPaperFragment.newInstance(parentFragmentManager, onlineExam)
+            }
         }
     }
 
