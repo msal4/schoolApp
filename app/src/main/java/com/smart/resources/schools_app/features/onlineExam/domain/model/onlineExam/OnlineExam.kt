@@ -9,6 +9,7 @@ import org.threeten.bp.LocalDateTime
 @Parcelize
 data class OnlineExam(
     val id: String,
+    val numberOfQuestions: Int,
     override val subjectName: String,
     override val examDate: LocalDateTime,
     override val examDuration: Duration,

@@ -5,30 +5,35 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import com.orhanobut.logger.Logger
-import com.smart.resources.schools_app.core.extentions.TAG
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
+
 
 @Singleton
 class SharedPrefHelper @Inject constructor(@ApplicationContext context: Context) {
     private val mSharedPreferences: SharedPreferences
 
     init {
-        mSharedPreferences = context.getSharedPreferences(
-            PREF_NAME,
-            Context.MODE_PRIVATE
-        )
-
-//        val masterKey = MasterKey.Builder(context).build()
-//        mSharedPreferences = EncryptedSharedPreferences.create(
-//            context,
+//        mSharedPreferences = context.getSharedPreferences(
 //            PREF_NAME,
-//            masterKey,
-//            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-//            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+//            Context.MODE_PRIVATE
 //        )
+
+
+        val masterKey =
+            MasterKey
+                .Builder(context)
+                .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+                .build()
+
+        mSharedPreferences = EncryptedSharedPreferences.create(
+            context,
+            PREF_NAME,
+            masterKey,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
 
     }
 
@@ -60,7 +65,7 @@ class SharedPrefHelper @Inject constructor(@ApplicationContext context: Context)
 
     var encryptionKey: String
         get() = try {
-            mSharedPreferences.getString(ENCRYPTION_KEY, "")?:""
+            mSharedPreferences.getString(ENCRYPTION_KEY, "") ?: ""
         } catch (e: ClassCastException) {
             // in case of value with same key is stored but with different type like INT-> this happens in older versions of app
             ""
@@ -73,7 +78,7 @@ class SharedPrefHelper @Inject constructor(@ApplicationContext context: Context)
 
     var initializationVector: String
         get() = try {
-            mSharedPreferences.getString(INITIALIZATION_VECTOR, "")?:""
+            mSharedPreferences.getString(INITIALIZATION_VECTOR, "") ?: ""
         } catch (e: ClassCastException) {
             ""
         }

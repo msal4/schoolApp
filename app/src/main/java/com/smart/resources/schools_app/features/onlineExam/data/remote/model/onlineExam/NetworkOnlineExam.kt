@@ -6,6 +6,7 @@ import org.threeten.bp.LocalTime
 class NetworkOnlineExam(
     val idOnlineExam: Long?,
     val teacherId: Long?,
+    val availableQuestions: Int?,
     override val subjectName: String?,
     override val date: LocalDate?,
     override val time: LocalTime?,

@@ -16,6 +16,7 @@ data class LocalOnlineExam(
     val date: LocalDateTime,
     val examDuration: Duration,
     val numberOfRequiredQuestions: Int,
+    val numberOfQuestions: Int,
     val examStatus: OnlineExamStatus,
     val examKey: DecryptedString,
 ) {

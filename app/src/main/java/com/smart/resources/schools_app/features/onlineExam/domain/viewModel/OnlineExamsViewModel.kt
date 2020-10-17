@@ -133,38 +133,3 @@ class OnlineExamViewModel @ViewModelInject constructor(
         }
     }
 }
-
-val dummyOnlineExams = listOf(
-    OnlineExam(
-        "0",
-        "رياضيات",
-        LocalDateTime.now(),
-        Duration.ofMinutes(150),
-        6,
-        OnlineExamStatus.ACTIVE,
-    ),
-    OnlineExam(
-        "1",
-        "اللغة العربية",
-        LocalDateTime.now(),
-        Duration.ofMinutes(500),
-        15,
-        OnlineExamStatus.COMPLETED,
-    ),
-    OnlineExam(
-        "2",
-        "انكليزي",
-        LocalDateTime.now(),
-        Duration.ofMinutes(300),
-        30,
-        OnlineExamStatus.INACTIVE,
-    ),
-    OnlineExam(
-        "3",
-        "فيزياء",
-        LocalDateTime.now(),
-        Duration.ofMinutes(50),
-        60,
-        OnlineExamStatus.COMPLETED,
-    ),
-)

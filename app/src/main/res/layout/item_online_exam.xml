@@ -119,7 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
-            android:numberOfQuestions="@{onlineExamItem.numberOfRequiredQuestions}"
+            android:numberOfQuestions="@{onlineExamItem.numberOfQuestions}"
             android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_chainStyle="packed"

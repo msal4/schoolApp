@@ -12,6 +12,7 @@ fun mapNetworkOnlineExam(input: NetworkOnlineExam): OnlineExam {
         subjectName = input.subjectName.toString(),
         examDate = LocalDateTime.of(input.date, input.time),
         examDuration = Duration.ofMinutes(input.examTime?:0),
+        numberOfQuestions = input.availableQuestions?:0,
         numberOfRequiredQuestions = input.nuOfRequiredQuestion?:0,
         examStatus = input.getExamStatus(),
     )

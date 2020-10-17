@@ -9,6 +9,7 @@ fun mapLocalOnlineExam(input: LocalOnlineExam): OnlineExam {
         subjectName = input.subjectName,
         examDate = input.date,
         examDuration = input.examDuration,
+        numberOfQuestions = input.numberOfQuestions,
         numberOfRequiredQuestions = input.numberOfRequiredQuestions,
         examStatus = input.examStatus,
     )
