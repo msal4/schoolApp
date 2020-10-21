@@ -14,21 +14,17 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.extentions.combinedMessage
 import com.smart.resources.schools_app.core.myTypes.ListState
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
-import com.smart.resources.schools_app.features.onlineExam.presentation.fragments.ExamPaperFragment
 import com.smart.resources.schools_app.features.onlineExam.presentation.fragments.OnlineExamAnswersFragment.Factory.EXTRA_ONLINE_EXAM
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
-import com.smart.resources.schools_app.features.students.IGetClassStudentsUseCase
-import com.smart.resources.schools_app.features.students.Student
+import com.smart.resources.schools_app.features.students.models.Student
+import com.smart.resources.schools_app.features.students.models.StudentWithAnswerStatus
+import com.smart.resources.schools_app.features.students.usecases.IGetStudentsWithAnswerStatus
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentTeacherModelUseCase
 import kotlinx.coroutines.flow.map
 
-
-// TODO: modify ApiResponse to
-// - not used null body
-// - to use object EmptyApiResponse
 class OnlineExamAnswersViewModel @ViewModelInject constructor(
     private val getCurrentTeacherModelUseCase: IGetCurrentTeacherModelUseCase,
-    private val getClassStudentsUseCase: IGetClassStudentsUseCase,
+    private val getStudentsWithAnswerStatus: IGetStudentsWithAnswerStatus,
     @Assisted private val savedStateHandle: SavedStateHandle,
     application: Application,
 ) : AndroidViewModel(application) {
@@ -44,7 +40,7 @@ class OnlineExamAnswersViewModel @ViewModelInject constructor(
         emit(fullClassNames)
     }
     val selectedClassPos = MutableLiveData(-1)
-    val students: LiveData<List<Student>> = selectedClassPos.asFlow().map {
+    val students: LiveData<List<StudentWithAnswerStatus>> = selectedClassPos.asFlow().map {
         listState.setLoading(true)
         val studentsList = if (it != null && it.isValidIndex(classModels.size)) {
             getClassStudents(classModels[it].classId)
@@ -53,8 +49,8 @@ class OnlineExamAnswersViewModel @ViewModelInject constructor(
         studentsList
     }.asLiveData(viewModelScope.coroutineContext)
 
-    private suspend fun getClassStudents(classId: String): List<Student> {
-        return when (val res = getClassStudentsUseCase(classId)) {
+    private suspend fun getClassStudents(classId: String): List<StudentWithAnswerStatus> {
+        return when (val res = getStudentsWithAnswerStatus(passedOnlineExam.id ,classId)) {
             is ApiEmptyResponse -> {
                 listState.setBodyError(R.string.no_students.toString(c))
                 emptyList()
@@ -73,23 +69,3 @@ class OnlineExamAnswersViewModel @ViewModelInject constructor(
         }
     }
 }
-
-
-val dummyStudents: List<Student> = listOf(
-    Student(
-        id = "0",
-        name = "student0",
-    ),
-    Student(
-        id = "1",
-        name = "student0",
-    ),
-    Student(
-        id = "2",
-        name = "student0",
-    ),
-    Student(
-        id = "3",
-        name = "student0",
-    ),
-)

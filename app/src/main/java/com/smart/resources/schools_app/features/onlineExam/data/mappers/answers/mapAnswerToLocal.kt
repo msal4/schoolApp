@@ -6,13 +6,13 @@ import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnsw
 import com.smart.resources.schools_app.features.onlineExam.domain.model.CorrectnessAnswer
 import com.smart.resources.schools_app.features.onlineExam.domain.model.MultiChoiceAnswer
 
-fun mapAnswerToLocal(answer: BaseAnswer<Any>, questionId:String, userId:String): LocalAnswer{
+fun mapAnswerToLocal(answer: BaseAnswer, questionId:String, userId:String): LocalAnswer{
     return LocalAnswer(
         userId = userId,
         questionId = questionId,
-        answerCorrectness = if (answer is CorrectnessAnswer) answer.answer else null,
+        answerCorrectness = if (answer is CorrectnessAnswer) answer.correctnessAnswer else null,
         correctAnswer = if (answer is CorrectnessAnswer) answer.correctAnswer else "",
-        answerMultiChoice = if (answer is MultiChoiceAnswer) answer.answer else null,
-        answerNormal = if (answer is Answer) answer.answer else null,
+        answerMultiChoice = if (answer is MultiChoiceAnswer) answer.multiChoiceAnswer else null,
+        answerNormal = answer.answer,
     )
 }

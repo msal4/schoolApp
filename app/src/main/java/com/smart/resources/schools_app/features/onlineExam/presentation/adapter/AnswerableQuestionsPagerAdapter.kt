@@ -12,7 +12,7 @@ import com.smart.resources.schools_app.features.onlineExam.presentation.viewHold
 class AnswerableQuestionsPagerAdapter :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var readOnly:Boolean= true
-    private var data:MutableList<BaseAnswerableQuestion<Any>> = mutableListOf()
+    private var data:MutableList<BaseAnswerableQuestion> = mutableListOf()
 
     companion object {
         private const val QUESTION_ITEM_TYPE = 0
@@ -37,12 +37,12 @@ class AnswerableQuestionsPagerAdapter :
     }
 
     interface Listener {
-        fun onQuestionAnswerStateUpdated(answer: BaseAnswer<Any>, position: Int)
+        fun onQuestionAnswerStateUpdated(answer: BaseAnswer, position: Int)
     }
 
     var listener: Listener? = null
 
-    fun submitList(data: List<BaseAnswerableQuestion<Any>>?){
+    fun submitList(data: List<BaseAnswerableQuestion>?){
         this.data= data.orEmpty().toMutableList()
         notifyDataSetChanged()
     }

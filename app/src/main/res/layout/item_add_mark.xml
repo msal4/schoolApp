@@ -6,7 +6,7 @@
     <data>
         <variable
             name="itemModel"
-            type="com.smart.resources.schools_app.features.students.StudentWithMark" />
+            type="com.smart.resources.schools_app.features.students.models.StudentWithMark" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,15 +22,6 @@
 
 
         <TextView
-            android:id="@+id/stID"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@{itemModel.id}"
-            android:visibility="gone">
-
-        </TextView>
-
-        <TextView
             android:id="@+id/subjectNameM"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,7 +33,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/mark"
-            app:layout_constraintHorizontal_bias="0.016"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.539"
@@ -61,8 +52,6 @@
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="@+id/subjectNameM"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.97"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/subjectNameM"
             app:layout_constraintVertical_bias="0.415"
             tools:text="1" />

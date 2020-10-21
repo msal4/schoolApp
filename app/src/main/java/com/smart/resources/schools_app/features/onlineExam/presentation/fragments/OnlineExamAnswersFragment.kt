@@ -8,7 +8,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.haytham.coder.extensions.toString
 import com.smart.resources.schools_app.R
@@ -86,10 +85,13 @@ class OnlineExamAnswersFragment : Fragment() {
 
     private fun onStudentClicked(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
        if(isAdded){
+           val student= viewModel.students.value?.getOrNull(position)?:return
+           if(student.hasAnswer != 1) return
+
            ExamPaperFragment.newInstance(
                fm = parentFragmentManager,
                exam = viewModel.passedOnlineExam,
-               studentId = viewModel.students.value?.getOrNull(position)?.id,
+               studentId = student.id,
            )
        }
     }

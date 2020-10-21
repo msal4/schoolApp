@@ -29,7 +29,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.threeten.bp.Duration
 
-typealias ListOfAnswerableQuestions = List<BaseAnswerableQuestion<Any>>
+typealias ListOfAnswerableQuestions = List<BaseAnswerableQuestion>
 
 class ExamPaperViewModel @ViewModelInject constructor(
     private val getCurrentUserTypeUseCase: IGetCurrentUserTypeUseCase,
@@ -134,7 +134,7 @@ class ExamPaperViewModel @ViewModelInject constructor(
             .map {
                 it.map { q ->
                     q.answer != null &&
-                            q.answer?.isEmptyAnswer == false
+                            q.answer!!.hasAnswerString
                 }
             }
 
@@ -212,7 +212,7 @@ class ExamPaperViewModel @ViewModelInject constructor(
         }
     }
 
-    fun updateAnswer(answer: BaseAnswer<Any>, position: Int) {
+    fun updateAnswer(answer: BaseAnswer, position: Int) {
         viewModelScope.launch {
             answerableQuestions.value?.getOrNull(position)?.id?.let {
                 saveAnswerLocallyUseCase(answer, it)
@@ -244,45 +244,3 @@ class ExamPaperViewModel @ViewModelInject constructor(
         }
     }
 }
-
-
-private val dummyAnswerableQuestions: MutableList<BaseAnswerableQuestion<Any>> = mutableListOf(
-    AnswerableQuestion(
-        questionId = "0",
-        question = "ما هو الحيوان الذي إن تم قطع رجل من أرجله تنمو مجدداً؟",
-        answer = "hello Sir",
-    ),
-    MultiChoiceAnswerableQuestion(
-        questionId = "1",
-        question = "النحلة ترفرف بجناحيها في الثانية الواحدة بمعدل….؟",
-        options = listOf(
-            "150 مرة",
-            "250 مرة",
-            "350 مرة"
-        ),
-        answer = 1,
-    ),
-    CorrectnessAnswerableQuestion(
-        questionId = "2",
-        question = "ان الشعور بالاكتئاب وتقلب المزاج مرتبط بنقص معدن المغنيسوم",
-        answer = true
-    ),
-
-    AnswerableQuestion(
-        questionId = "3",
-        question = "هل الأطفال أقل تعرضاً لمخاطر الإصابة بـكوفيد-19 مقارنة بالبالغين؟",
-    ),
-    MultiChoiceAnswerableQuestion(
-        questionId = "4",
-        question = "العالم الذي أخترع التلفون هو…؟",
-        options = listOf(
-            "الكسندر غراهام بيل",
-            "جوزف برستلي",
-            "بجوار سيكو رسكي"
-        ),
-    ),
-    CorrectnessAnswerableQuestion(
-        questionId = "5",
-        question = "التوتر قد يصيب بشرتك بحالات من الطفح الجلدي الحاد؟",
-    ),
-)

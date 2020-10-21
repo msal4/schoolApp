@@ -2,22 +2,22 @@ package com.smart.resources.schools_app.features.onlineExam.domain.model
 
 import com.smart.resources.schools_app.core.typeConverters.room.QuestionType
 
-sealed class BaseAnswerableQuestion<out AnswerType> constructor(
+sealed class BaseAnswerableQuestion constructor(
     open val question: Question,
-    open val answer: BaseAnswer<AnswerType>?,
+    open val answer: BaseAnswer?,
 ) {
     val id: String get() = question.id
 
     companion object {
-        fun fromQuestionAnswer(question: Question, answer: BaseAnswer<Any>?) =
+        fun fromQuestionAnswer(question: Question, answer: BaseAnswer?) =
             when (question.questionType) {
                 QuestionType.MULTI_CHOICE -> MultiChoiceAnswerableQuestion(
                     question = question,
-                    answer = answer as? MultiChoiceAnswer
+                    answer = if(answer == null) null else answer as? MultiChoiceAnswer?: MultiChoiceAnswer(answer.answer)
                 )
                 QuestionType.CORRECTNESS -> CorrectnessAnswerableQuestion(
                     question = question,
-                    answer = answer as? CorrectnessAnswer
+                    answer = if(answer == null) null else  answer as? CorrectnessAnswer?: CorrectnessAnswer(answer.answer)
                 )
                 else -> AnswerableQuestion(question = question, answer = answer as? Answer)
             }
@@ -27,63 +27,14 @@ sealed class BaseAnswerableQuestion<out AnswerType> constructor(
 data class AnswerableQuestion constructor(
     override val question: Question,
     override val answer: Answer?
-) : BaseAnswerableQuestion<String>(question, answer) {
-
-    constructor(
-        questionId: String,
-        question: String,
-        options: List<String> = listOf(),
-        answer: String? = null
-    ) : this(
-        question = Question(
-            questionId,
-            question,
-            options,
-            QuestionType.DEFINE,
-        ),
-        answer = if (answer != null) Answer(answer) else null
-    )
-}
+) : BaseAnswerableQuestion(question, answer)
 
 data class MultiChoiceAnswerableQuestion constructor(
     override val question: Question,
-    override val answer: MultiChoiceAnswer?
-
-) : BaseAnswerableQuestion<Int>(question, answer) {
-    constructor(
-        questionId: String,
-        question: String,
-        options: List<String> = listOf(),
-        answer: Int? = null
-    ) : this(
-        question = Question(
-            questionId,
-            question,
-            options,
-            QuestionType.MULTI_CHOICE,
-        ),
-        answer = if (answer != null) MultiChoiceAnswer(answer) else null
-    )
-}
+    override val answer: MultiChoiceAnswer?,
+) : BaseAnswerableQuestion(question, answer)
 
 data class CorrectnessAnswerableQuestion constructor(
     override val question: Question,
-    override val answer: CorrectnessAnswer?
-
-) : BaseAnswerableQuestion<Boolean>(question, answer) {
-    constructor(
-        questionId: String,
-        question: String,
-        options: List<String> = listOf(),
-        answer: Boolean? = null,
-        correctAnswer: String = ""
-    ) : this(
-        question = Question(
-            questionId,
-            question,
-            options,
-            QuestionType.CORRECTNESS,
-        ),
-        answer = if (answer != null) CorrectnessAnswer(answer, correctAnswer) else null
-    )
-}
+    override val answer: CorrectnessAnswer?,
+) : BaseAnswerableQuestion(question, answer)

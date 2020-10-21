@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "f3652cdad973ac89d548ec159fcc8476",
+    "identityHash": "6ba497e471feb7f9370c87e8ff542eb9",
     "entities": [
       {
         "tableName": "UserAccount",
@@ -227,7 +227,7 @@
       },
       {
         "tableName": "Answers",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `questionId` TEXT NOT NULL, `answerNormal` TEXT, `answerMultiChoice` INTEGER, `answerCorrectness` INTEGER, `correctAnswer` TEXT NOT NULL, PRIMARY KEY(`userId`, `questionId`), FOREIGN KEY(`userId`) REFERENCES `UserAccount`(`uid`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`questionId`) REFERENCES `Questions`(`questionId`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `questionId` TEXT NOT NULL, `answerNormal` TEXT NOT NULL, `answerMultiChoice` INTEGER, `answerCorrectness` INTEGER, `correctAnswer` TEXT NOT NULL, PRIMARY KEY(`userId`, `questionId`), FOREIGN KEY(`userId`) REFERENCES `UserAccount`(`uid`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`questionId`) REFERENCES `Questions`(`questionId`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "userId",
@@ -245,7 +245,7 @@
             "fieldPath": "answerNormal",
             "columnName": "answerNormal",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "answerMultiChoice",
@@ -303,7 +303,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f3652cdad973ac89d548ec159fcc8476')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6ba497e471feb7f9370c87e8ff542eb9')"
     ]
   }
 }

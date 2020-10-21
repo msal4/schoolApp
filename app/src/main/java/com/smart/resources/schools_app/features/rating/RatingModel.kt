@@ -2,7 +2,7 @@ package com.smart.resources.schools_app.features.rating
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.smart.resources.schools_app.features.students.StudentWithMark
+import com.smart.resources.schools_app.features.students.models.StudentWithMark
 import org.threeten.bp.LocalDate
 
 

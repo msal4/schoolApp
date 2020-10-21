@@ -6,22 +6,24 @@ import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnsw
 import com.smart.resources.schools_app.features.onlineExam.domain.model.CorrectnessAnswer
 import com.smart.resources.schools_app.features.onlineExam.domain.model.MultiChoiceAnswer
 
-fun mapLocalAnswer(input: LocalAnswer): BaseAnswer<out Any> {
+fun mapLocalAnswer(input: LocalAnswer): BaseAnswer {
     return when {
         input.answerCorrectness != null -> {
             CorrectnessAnswer(
-                answer = input.answerCorrectness,
+                answer = input.answerNormal,
+                correctnessAnswer = input.answerCorrectness,
                 correctAnswer = input.correctAnswer,
             )
         }
         input.answerMultiChoice != null -> {
             MultiChoiceAnswer(
-                answer = input.answerMultiChoice,
+                answer = input.answerNormal,
+                multiChoiceAnswer = input.answerMultiChoice,
             )
         }
         else -> {
             Answer(
-                answer = input.answerNormal.toString(),
+                answer = input.answerNormal,
             )
         }
     }

@@ -42,7 +42,7 @@ class OnlineExamsRepository(
             },
             fetchFromRemote = {
                 if (isTeacher) onlineExamsClient.getTeacherExams()
-                else onlineExamsClient.getOnlineExams()//onlineExamsClient.getClassExams()
+                else onlineExamsClient.getClassExams()
             },
             saveRemoteData = {
                 try {

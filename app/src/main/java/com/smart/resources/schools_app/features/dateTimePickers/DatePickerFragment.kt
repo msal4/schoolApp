@@ -24,7 +24,7 @@ class DatePickerFragment : DialogFragment() {
                     onDateSet?.invoke(date)
                 },
                 year,
-                monthValue,
+                monthValue-1,
                 dayOfMonth
             )
         }

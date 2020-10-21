@@ -11,7 +11,7 @@ class SendAnswersUseCase @Inject constructor(
     private val getUserIdUseCase: IGetUserIdUseCase,
     private val answersRepository: IAnswersRepository
 ) : ISendAnswersUseCase {
-    override suspend fun invoke(answers: List<BaseAnswer<Any>>, questionIds: List<String>) : ApiResponse<Unit>{
+    override suspend fun invoke(answers: List<BaseAnswer>, questionIds: List<String>) : ApiResponse<Unit>{
         val userId = getUserIdUseCase()
         return answersRepository.sendAnswers(answers, questionIds, userId)
     }

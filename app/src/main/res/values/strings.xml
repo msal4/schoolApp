@@ -135,9 +135,9 @@
     <string name="too_many_options_error_msg">يرجى اضافة ثلاث اختيارات كحد اقصى!</string>
     <string name="subject_not_selected_error">يرجى اختيار المادة!</string>
     <string name="class_not_selected_error">يرجى اختيار الصف!</string>
-    <string name="empty_exam_date_error">يرجى اختيار تاريخ الامتحان!</string>
-    <string name="empty_exam_time_error">يرجى اختيار وقت الامتحان!</string>
-    <string name="empty_exam_key_error">يرجى ادخال رمز الامتحان!</string>
+    <string name="empty_date_error">يرجى اختيار التاريخ!</string>
+    <string name="empty_time_error">يرجى اختيار الوقت!</string>
+    <string name="empty_key_error">يرجى ادخال الرمز!</string>
     <string name="invalid_key">الرمز غير صحيح!</string>
     <string name="empty_questions_error">يرجى اضافة سؤال!</string>
     <string name="no_answer">لا يوجد جواب</string>

@@ -39,7 +39,7 @@
             app:layout_constraintTop_toBottomOf="@+id/questionTextView"
             app:layout_constraintVertical_bias="0.0"
             android:radioGroupReadOnly="@{readOnly}"
-            android:checkedButtonIndex="@{answerableQuestion.answer.answer}">
+            android:checkedButtonIndex="@{answerableQuestion.answer.multiChoiceAnswer}">
 
             <RadioButton
                 android:id="@+id/choice1RadioBtn"
@@ -64,6 +64,16 @@
                 android:text="@{answerableQuestion.question.options[2]}"/>
 
         </RadioGroup>
+
+        <TextView
+            android:id="@+id/answerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{answerableQuestion.answer.answer}"
+            android:textAlignment="viewStart"
+            android:visible="@{answerableQuestion.answer.multiChoiceAnswer == null &amp;&amp; answerableQuestion.answer.hasAnswerString}"
+            app:layout_constraintStart_toStartOf="@+id/choicesRadioGroup"
+            app:layout_constraintTop_toBottomOf="@+id/choicesRadioGroup" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

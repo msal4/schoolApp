@@ -183,6 +183,7 @@
                         app:layout_constraintEnd_toEndOf="@+id/guideline"
                         app:layout_constraintTop_toTopOf="@+id/durationNumberPicker"
                         app:picker_min="1"
+                        android:maxPickerValue="@{model.questions.size()}"
                         app:picker_orientation="horizontal"
                         app:picker_stepSize="1"
                         app:picker_tracker="exponential" />

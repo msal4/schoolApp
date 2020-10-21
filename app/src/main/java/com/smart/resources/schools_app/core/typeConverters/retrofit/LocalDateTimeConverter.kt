@@ -10,7 +10,7 @@ import java.lang.reflect.Type
 import java.util.*
 
 
-val timeDisFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("""HH:mm a""", Locale("ar"))
+val timeDisFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("""hh:mm a""", Locale("ar"))
 val dateDisFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("""d\MM\yyyy""", Locale("ar"))
 val dateTimeDisFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d\\MM\\yyyy\n   HH:mm a", Locale("ar"))
 val dateTimeBackendFormatter: DateTimeFormatter =

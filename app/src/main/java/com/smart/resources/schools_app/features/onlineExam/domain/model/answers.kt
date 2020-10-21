@@ -1,21 +1,29 @@
 package com.smart.resources.schools_app.features.onlineExam.domain.model
 
-sealed class BaseAnswer<out AnswerType> (
-    open val answer: AnswerType,
+
+sealed class BaseAnswer(
+    open val answer:String,
 ){
-    val isEmptyAnswer:Boolean get() = this is Answer && answer.isBlank()
+    val hasAnswerString:Boolean get() =  answer.isNotBlank()
 }
 
+data class Answer(
+    override val answer:String,
+): BaseAnswer(answer)
+
+
 data class CorrectnessAnswer(
-    override var answer:Boolean,
+    override val answer:String,
+    val correctnessAnswer:Boolean?=null,
     val correctAnswer:String=""
-): BaseAnswer<Boolean>(answer)
+): BaseAnswer(answer){
+    val hasCorrectAnswer:Boolean get() =  correctAnswer.isNotBlank()
+}
 
 
 data class MultiChoiceAnswer(
-    override var answer:Int,
-): BaseAnswer<Int>(answer)
+    override val answer:String,
+    val multiChoiceAnswer:Int?=null,
+): BaseAnswer(answer)
 
-data class Answer(
-    override var answer:String,
-): BaseAnswer<String>(answer)
+

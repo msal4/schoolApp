@@ -30,7 +30,7 @@ class ExamKeySheetViewModel @ViewModelInject constructor(
 
     fun addExam(){
         if(examKey.value.isNullOrBlank()){
-            _examKeyError.value= R.string.empty_exam_key_error
+            _examKeyError.value= R.string.empty_key_error
             return
         }
 

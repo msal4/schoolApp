@@ -70,7 +70,6 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().setStatusBarColorToWhite(view)
-
     }
 
     override fun onDestroy() {
@@ -78,6 +77,7 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
         (requireActivity() as? SectionActivity)?.apply {
             setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
             setStatusBarColor(R.color.colorPrimaryDark.toColor(requireContext()))
+            showToolbar()
         }
     }
 
@@ -164,7 +164,7 @@ class ExamPaperFragment : Fragment(), AnswerableQuestionsPagerAdapter.Listener {
         binding.questionsPager.setCurrentItem(index, true)
     }
 
-    override fun onQuestionAnswerStateUpdated(answer: BaseAnswer<Any>, position: Int) {
+    override fun onQuestionAnswerStateUpdated(answer: BaseAnswer, position: Int) {
         viewModel.updateAnswer(answer, position)
     }
 

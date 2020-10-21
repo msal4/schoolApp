@@ -19,6 +19,8 @@ import com.haytham.coder.extensions.hide
 import com.haytham.coder.extensions.show
 import com.haytham.coder.extensions.toColorStateList
 import com.smart.resources.schools_app.core.callbacks.SwipeAdapter
+import it.sephiroth.android.library.numberpicker.NumberPicker
+import kotlin.math.max
 
 
 @BindingAdapter("android:checkedButtonIndex")
@@ -82,4 +84,13 @@ fun View.setBackgroundTintDrawableId(@DrawableRes drawableId: Int?) {
     if(drawableId!=null){
         backgroundTintList= drawableId.toColorStateList(context)
     }
+}
+
+@BindingAdapter("android:maxPickerValue")
+fun NumberPicker.setMaxValue(maxValue: Int?) {
+    var max= maxValue?:0
+
+    if(max < minValue) max= minValue
+    if(getProgressValue() > max) setProgressValue(max)
+    this.maxValue= max
 }

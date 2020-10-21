@@ -46,4 +46,5 @@
     <color name="deleteMenuItemBackgroundColor">@color/swipeToDeleteColor</color>
 
     <color name="snackbar_background">#383E4A</color>
+    <color name="checkMarkColor">@color/green_300_alpha_87</color>
 </resources>

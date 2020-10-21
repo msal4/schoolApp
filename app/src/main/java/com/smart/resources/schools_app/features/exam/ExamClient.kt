@@ -1,7 +1,7 @@
 package com.smart.resources.schools_app.features.exam
 
-import com.smart.resources.schools_app.features.students.SendStudentResult
-import com.smart.resources.schools_app.features.students.StudentWithMark
+import com.smart.resources.schools_app.features.students.models.SendStudentResult
+import com.smart.resources.schools_app.features.students.models.StudentWithMark
 import retrofit2.Response
 import retrofit2.http.*
 

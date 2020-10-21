@@ -6,15 +6,16 @@ import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnsw
 import com.smart.resources.schools_app.features.onlineExam.domain.model.CorrectnessAnswer
 import com.smart.resources.schools_app.features.onlineExam.domain.model.MultiChoiceAnswer
 
-fun mapAnswerToNetwork(answer: BaseAnswer<Any>,  questionId:String): PostNetworkAnswer{
+fun mapAnswerToNetwork(answer: BaseAnswer,  questionId:String): PostNetworkAnswer{
     return when(answer){
         is MultiChoiceAnswer -> PostNetworkAnswer(
-            chosen = answer.answer,
+            answer= answer.answer,
+            chosen = answer.multiChoiceAnswer,
             questionId= questionId,
         )
         is CorrectnessAnswer -> PostNetworkAnswer(
-            answer = answer.correctAnswer,
-            TF = answer.answer,
+            answer = if(answer.correctnessAnswer == true || answer.correctAnswer.isBlank()) answer.answer else answer.correctAnswer,
+            TF = answer.correctnessAnswer,
             questionId= questionId,
         )
         is Answer -> PostNetworkAnswer(

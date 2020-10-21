@@ -49,7 +49,7 @@ class AnswersRepository(
         }.flowOn(Dispatchers.IO)
 
     override suspend fun saveAnswerLocally(
-        answer: BaseAnswer<Any>,
+        answer: BaseAnswer,
         questionId: String,
         userId: String
     ) {

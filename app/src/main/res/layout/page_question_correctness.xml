@@ -38,7 +38,7 @@
             app:layout_constraintStart_toStartOf="@+id/questionText"
             app:layout_constraintTop_toBottomOf="@+id/questionText"
             android:radioGroupReadOnly="@{readOnly}"
-            android:checkedButton= "@{questionModel.answer == null? 0 : (questionModel.answer.answer? R.id.correctRadioBtn : R.id.incorrectRadioBtn)}">
+            android:checkedButton= "@{questionModel.answer == null || questionModel.answer.correctnessAnswer==null? 0 : (questionModel.answer.correctnessAnswer? R.id.correctRadioBtn : R.id.incorrectRadioBtn)}">
 
             <RadioButton
                 android:id="@+id/correctRadioBtn"
@@ -52,7 +52,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/wrong" />
-
 
         </RadioGroup>
 
@@ -76,6 +75,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/correcting_answer"
+                    android:text="@{questionModel.answer.correctAnswer}"
                     android:inputType="textMultiLine" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -83,7 +83,7 @@
                 android:id="@+id/answerText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{questionModel.answer.correctAnswer}"
+                android:text="@{questionModel.answer.hasCorrectAnswer? questionModel.answer.correctAnswer: questionModel.answer.answer}"
                 android:textAlignment="viewStart"
                 android:visibility="gone"
                 />

@@ -53,13 +53,13 @@ interface IActivateOnlineExamUseCase{
 }
 
 interface ISaveAnswerLocallyUseCase{
-    suspend operator fun invoke(answer: BaseAnswer<Any>, questionId:String)
+    suspend operator fun invoke(answer: BaseAnswer, questionId:String)
 }
 
 interface ISendAnswersUseCase{
-    suspend operator fun invoke(answers: List<BaseAnswer<Any>>, questionIds:List<String>):ApiResponse<Unit>
+    suspend operator fun invoke(answers: List<BaseAnswer>, questionIds:List<String>):ApiResponse<Unit>
 }
 
 interface IGetStudentExamAnswersUseCase{
-    operator fun invoke(examId: String, studentId:String, shouldFetchFromRemote:Boolean):Flow<Resource<List<BaseAnswer<Any>>>>
+    operator fun invoke(examId: String, studentId:String, shouldFetchFromRemote:Boolean):Flow<Resource<List<BaseAnswer>>>
 }

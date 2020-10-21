@@ -10,22 +10,22 @@ import com.smart.resources.schools_app.features.onlineExam.domain.repository.Lis
 
 
 class AnswerMappersFacade(
-    private val localAnswerMapper: (LocalAnswer) -> BaseAnswer< Any>,
-    private val networkAnswerMapper: (NetworkAnswer) -> BaseAnswer< Any>,
-    private val answerToLocalMapper: (BaseAnswer< Any>, String, String) -> LocalAnswer,
-    private val answerToNetworkMapper: (BaseAnswer< Any>, String, String) -> PostNetworkAnswer
+    private val localAnswerMapper: (LocalAnswer) -> BaseAnswer,
+    private val networkAnswerMapper: (NetworkAnswer) -> BaseAnswer,
+    private val answerToLocalMapper: (BaseAnswer, String, String) -> LocalAnswer,
+    private val answerToNetworkMapper: (BaseAnswer, String, String) -> PostNetworkAnswer
 ) {
 
-    fun mapLocalAnswer(input: LocalAnswer): BaseAnswer< Any> = localAnswerMapper(input)
-    fun mapNetworkAnswer(input: NetworkAnswer): BaseAnswer< Any> = networkAnswerMapper(input)
+    fun mapLocalAnswer(input: LocalAnswer): BaseAnswer = localAnswerMapper(input)
+    fun mapNetworkAnswer(input: NetworkAnswer): BaseAnswer = networkAnswerMapper(input)
     fun mapAnswerToLocal(
-        input: BaseAnswer< Any>,
+        input: BaseAnswer,
         questionId: String,
         userId: String
     ): LocalAnswer = answerToLocalMapper(input, questionId, userId)
 
     fun mapAnswerToNetwork(
-        input: BaseAnswer<Any>,
+        input: BaseAnswer,
         questionId: String,
         userId: String
     ): PostNetworkAnswer = answerToNetworkMapper(input, questionId, userId)

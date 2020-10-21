@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.students
+package com.smart.resources.schools_app.features.students.models
 
 import com.google.gson.annotations.SerializedName
 

@@ -10,7 +10,7 @@ class SaveAnswerLocallyUseCase @Inject constructor(
     private val getUserIdUseCase: IGetUserIdUseCase,
     private val answersRepository: IAnswersRepository
 ) : ISaveAnswerLocallyUseCase {
-    override suspend fun invoke(answer: BaseAnswer<Any>, questionId: String) {
+    override suspend fun invoke(answer: BaseAnswer, questionId: String) {
         val userId= getUserIdUseCase()
         answersRepository.saveAnswerLocally(answer, questionId, userId)
     }

@@ -24,7 +24,6 @@ import com.smart.resources.schools_app.features.onlineExam.presentation.bottomSh
 import dagger.hilt.android.AndroidEntryPoint
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
-import androidx.lifecycle.observe
 
 @AndroidEntryPoint
 class AddOnlineExamFragment : LoadableActionMenuItemFragment() {

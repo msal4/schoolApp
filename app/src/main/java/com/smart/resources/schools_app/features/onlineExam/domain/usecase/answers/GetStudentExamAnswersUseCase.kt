@@ -10,7 +10,7 @@ import javax.inject.Inject
 class GetStudentExamAnswersUseCase @Inject constructor(
     private val answersRepository: IAnswersRepository
 ) : IGetStudentExamAnswersUseCase {
-    override fun invoke(examId: String, studentId: String, shouldFetchFromRemote:Boolean): Flow<Resource<List<BaseAnswer<Any>>>> {
+    override fun invoke(examId: String, studentId: String, shouldFetchFromRemote:Boolean): Flow<Resource<List<BaseAnswer>>> {
         return answersRepository.getStudentExamAnswers(examId, studentId, shouldFetchFromRemote)
     }
 }

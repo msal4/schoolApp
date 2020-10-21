@@ -75,15 +75,15 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
     }
     val examDateErrorMsg: LiveData<Int?> = examDate.map {
         if (it != null) null
-        else R.string.empty_exam_date_error
+        else R.string.empty_date_error
     }
     val examTimeErrorMsg: LiveData<Int?> = examTime.map {
         if (it != null) null
-        else R.string.empty_exam_time_error
+        else R.string.empty_time_error
     }
     val examKeyErrorMsg: LiveData<Int?> = examKey.map {
         if (it.isNotNullOrBlank()) null
-        else R.string.empty_exam_key_error
+        else R.string.empty_key_error
     }
     private var questionsListError: Int? = null
 
@@ -160,8 +160,8 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
         )
 
         viewModelScope.launch {
-            val res= addOnlineExamUseCase(completeOnlineExam)
-            when(res){
+            _isLoading.postValue(Event(true))
+            when(val res= addOnlineExamUseCase(completeOnlineExam)){
                 is ApiErrorResponse -> {
                     Logger.e(res.combinedMessage)
                     val errorMessageId = if(res.statusCode == 0) R.string.connection_error else R.string.add_failed
@@ -171,6 +171,7 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
                 else -> _examAddedEvent.postValue(Event(true))
             }
 
+            _isLoading.postValue(Event(false))
         }
         Logger.d("$TAG, $addOnlineExam")
     }

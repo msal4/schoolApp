@@ -8,8 +8,8 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.databinding.ItemAddMarkBinding
-import com.smart.resources.schools_app.features.students.StudentWithMark
-import com.smart.resources.schools_app.features.students.Marks
+import com.smart.resources.schools_app.features.students.models.StudentWithMark
+import com.smart.resources.schools_app.features.students.models.Marks
 import java.util.*
 
 class AddMarkRecyclerAdapter(private val exams: List<StudentWithMark>) :
@@ -23,15 +23,9 @@ class AddMarkRecyclerAdapter(private val exams: List<StudentWithMark>) :
     inner class MyViewHolder(var binding: ItemAddMarkBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-
-        var editText: EditText
-        var editText2: TextView
-
+        var editText: EditText = binding.mark
+        lateinit var editText2: TextView
         init {
-
-
-            editText = binding.mark
-            editText2 = binding.stID
 
             editText.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(
@@ -76,7 +70,6 @@ class AddMarkRecyclerAdapter(private val exams: List<StudentWithMark>) :
 
         }
 
-
         fun bind(examModel: StudentWithMark) {
             binding.itemModel = examModel
         }
@@ -89,20 +82,13 @@ class AddMarkRecyclerAdapter(private val exams: List<StudentWithMark>) :
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemAddMarkBinding.inflate(inflater, parent, false)
 
-
-
-
-
         return MyViewHolder(binding)
     }
 
     override fun getItemCount(): Int = exams.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-
         holder.bind(exams[position])
-
-
     }
 
 }

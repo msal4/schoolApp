@@ -31,7 +31,7 @@ import com.smart.resources.schools_app.features.users.data.UserAccount
 data class LocalAnswer (
     val userId:String,
     val questionId:String,
-    val answerNormal:String?=null,
+    val answerNormal:String,
     val answerMultiChoice:Int?=null,
     val answerCorrectness:Boolean?=null,
     val correctAnswer:String="",

@@ -1,10 +1,11 @@
-package com.smart.resources.schools_app.features.students
+package com.smart.resources.schools_app.features.students.models
 
 import com.hadiyarajesh.flower.ApiResponse
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface StudentClient {
     companion object{
@@ -16,4 +17,11 @@ interface StudentClient {
 
     @GET("studentsByClass/{$CLASS_ID_PATH}")
     fun getStudentsByClassId(@Path(CLASS_ID_PATH) classId: String): Flow<ApiResponse<List<Student>>>
+
+
+    @GET("examStudentAnswer")
+    fun getStudentsWithAnswerStatus(
+        @Query("onlineExamId") examId: String,
+        @Query("classId") classId: String,
+    ): Flow<ApiResponse<List<StudentWithAnswerStatus>>>
 }

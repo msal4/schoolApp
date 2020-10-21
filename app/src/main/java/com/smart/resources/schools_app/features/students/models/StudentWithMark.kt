@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.students
+package com.smart.resources.schools_app.features.students.models
 
 class StudentWithMark(
     val mark: Int?,

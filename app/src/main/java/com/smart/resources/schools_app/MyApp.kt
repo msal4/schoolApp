@@ -28,17 +28,8 @@ class MyApp : Application() {
         UserRepository.instance= userRepository // To not break old code
         SharedPrefHelper.instance= sharedPrefHelper // To not break old code
         AuthorizationInterceptor.instance= authorizationInterceptor  // To not break old code
-        setupLogger()
+        Logger.addLogAdapter(AndroidLogAdapter())
         WatchTower.start(WebWatchTowerObserver(port = 8085))
-
-    }
-
-    private fun setupLogger() {
-        Logger.addLogAdapter(object : AndroidLogAdapter() {
-            override fun isLoggable(priority: Int, tag: String?): Boolean {
-                return BuildConfig.DEBUG
-            }
-        })
     }
 
 }
