@@ -24,7 +24,6 @@ import com.smart.resources.schools_app.features.onlineExam.presentation.adapter.
 import com.smart.resources.schools_app.features.onlineExam.presentation.bottomSheets.ExamKeyBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: add confirmation dialogs
 @AndroidEntryPoint
 class OnlineExamsFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
@@ -84,7 +83,7 @@ class OnlineExamsFragment : Fragment() {
                 }
             }
 
-            menuActionInProgress.observe(viewLifecycleOwner) {
+            actionInProgress.observe(viewLifecycleOwner) {
                 it.let { isLoading ->
                     if (isLoading) progressHud.show()
                     else progressHud.dismiss()

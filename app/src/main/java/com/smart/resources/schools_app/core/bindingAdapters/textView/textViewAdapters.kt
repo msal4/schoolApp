@@ -44,9 +44,7 @@ fun TextView.setUnOrderedList(list: List<String>) {
         hide()
         return
     }
-    text = list.joinToString(separator = "\n") { it }.unicodeWrap().apply {
-        Logger.wtf(this)
-    }
+    text = list.joinToString(separator = "\n") { it }
 }
 
 @BindingAdapter("android:textCommaSeparated")

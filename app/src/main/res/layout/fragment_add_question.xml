@@ -39,6 +39,8 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:hint="@string/the_question"
+                android:textAlignment="textStart"
+                android:textDirection="anyRtl"
                 android:text="@={model.question}"
                 android:textColor="@android:color/black"
                 android:imeOptions="actionSend"

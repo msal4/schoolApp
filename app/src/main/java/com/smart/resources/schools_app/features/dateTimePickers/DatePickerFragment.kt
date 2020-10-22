@@ -27,5 +27,8 @@ class DatePickerFragment : DialogFragment() {
                 monthValue-1,
                 dayOfMonth
             )
+        }.apply {
+            datePicker.minDate= System.currentTimeMillis() - 1000
         }
+
 }
