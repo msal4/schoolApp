@@ -17,6 +17,7 @@
         tools:targetApi="m">
         <activity android:name=".features.login.SplashScreenActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/SplashScreenTheme"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="com.smart.resources.schools_app.features.imageViewer.ImageViewerActivity"
             android:label="@string/title_activity_full_image" />

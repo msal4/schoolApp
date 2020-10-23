@@ -102,6 +102,8 @@ class ExamPaperViewModel @ViewModelInject constructor(
 
     private fun mapReadOnlyAndExamToRemainingDuration(): MediatorLiveData<Duration> {
         return MediatorLiveData<Duration>().apply {
+            value= Duration.ZERO
+
             addSource(readOnly) {
                 onlineExam.value?.let { onlineExam ->
                     it?.let { updateRemainingTime(onlineExam, it) }
@@ -159,7 +161,7 @@ class ExamPaperViewModel @ViewModelInject constructor(
 
     private fun mapQuestionsStateToRemainingQuestionsCount(): LiveData<String> {
         return questionsSolvedState.map {
-            "${it.filter { solved -> !solved }.size}/${it.size}"
+            String.format("%d/%d", it.filter { solved -> !solved }.size, it.size)
         }
     }
 

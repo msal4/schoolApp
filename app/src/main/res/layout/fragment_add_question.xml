@@ -20,7 +20,9 @@
         android:paddingBottom="@dimen/item_padding"
         android:visibility="gone"
         android:layout_gravity="bottom"
-        tools:visibility="visible">
+        tools:visibility="visible"
+        android:clipChildren="false"
+        android:clipToPadding="false">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/questionFieldLayout"
@@ -73,12 +75,16 @@
             app:layout_constraintEnd_toEndOf="@+id/questionFieldLayout"
             app:layout_constraintStart_toEndOf="@+id/sendIcon"
             app:layout_constraintTop_toBottomOf="@+id/questionFieldLayout"
-            tools:checkedButton="@id/defineQuestionRadioBtn">
+            tools:checkedButton="@id/defineQuestionRadioBtn"
+            android:clipChildren="false"
+            android:clipToPadding="false">
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:clipChildren="false"
+                android:clipToPadding="false">
 
                 <View
                     android:layout_width="0dp"
@@ -87,29 +93,33 @@
 
                 <RadioButton
                     android:id="@+id/defineQuestionRadioBtn"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/define"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_marginStart="24dp"/>
 
                 <RadioButton
                     android:id="@+id/whyQuestionRadioBtn"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/why_question"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_marginStart="12dp" />
 
                 <RadioButton
                     android:id="@+id/answerQuestionRadioBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/answer_the_following" />
+
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+
                 <View
                     android:layout_width="0dp"
                     android:layout_height="1dp"

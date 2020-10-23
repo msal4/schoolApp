@@ -3,6 +3,7 @@ package com.smart.resources.schools_app.features.onlineExam.presentation.adapter
 import android.annotation.SuppressLint
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
+import com.haytham.coder.extensions.unicodeWrap
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ItemStudentBinding
 import com.smart.resources.schools_app.features.students.models.Student
@@ -10,10 +11,9 @@ import com.smart.resources.schools_app.features.students.models.StudentWithAnswe
 
 class StudentsQuickAdapter : BaseQuickAdapter<StudentWithAnswerStatus, BaseDataBindingHolder<ItemStudentBinding>>(R.layout.item_student) {
 
-    @SuppressLint("SetTextI18n")
     override fun convert(holder: BaseDataBindingHolder<ItemStudentBinding>, item: StudentWithAnswerStatus) {
         holder.dataBinding?.apply {
-            orderText.text= "${holder.adapterPosition +1}-"
+            orderText.text= String.format("-%d", holder.adapterPosition +1)
             student= item
             executePendingBindings()
         }

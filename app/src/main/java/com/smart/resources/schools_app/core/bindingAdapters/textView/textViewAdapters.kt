@@ -52,9 +52,9 @@ fun TextView.setText(list: List<String>?) {
     text = list.orEmpty().joinToString(separator = "، ") { it }.unicodeWrap()
 }
 
-@BindingAdapter("android:verticalTextTitle", "android:verticalTextSubtitle", requireAll = true)
-fun TextView.setVerticalText(title:String?, subtitle:String?) {
-    text= "$title\n$subtitle"
+@BindingAdapter("android:verticalNumber", "android:verticalLabel", requireAll = true)
+fun TextView.setVerticalLabeledNumber(number:Int?, label:String?) {
+    text=String.format("%d\n%s", number, label)
 }
 
 

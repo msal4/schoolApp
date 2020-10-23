@@ -30,7 +30,9 @@
                     android:id="@+id/constraintLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="24dp">
+                    android:padding="24dp"
+                    android:clipToPadding="false"
+                    android:clipChildren="false">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/classesInputLayout"
@@ -161,8 +163,8 @@
 
                     <TextView
                         android:id="@+id/requiredQuestionsText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="108dp"
+                        android:layout_height="28dp"
                         android:layout_marginBottom="4dp"
                         android:text="@string/required_questions"
                         android:textSize="16sp"

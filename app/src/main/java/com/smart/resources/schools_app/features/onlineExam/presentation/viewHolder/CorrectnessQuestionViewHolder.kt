@@ -25,44 +25,57 @@ class CorrectnessQuestionViewHolder(
 
     fun setup(answerableQuestion: CorrectnessAnswerableQuestion, readOnly: Boolean) {
         binding.apply {
-            isCorrectRadioGroup.setOnCheckedChangeListener { _, checkedId ->
-                TransitionManager.beginDelayedTransition(root as ViewGroup)
-                val answerText = isCorrectRadioGroup.findViewById<RadioButton?>(checkedId)?.text?.trim().toString()
+            if(answerableQuestion.answer?.hasCorrectAnswer== true){
+                showAnswer(readOnly)
+            }
+            listenToSelectionChange(readOnly)
+            listenToCorrectAnswerChange()
 
-                val answer = if (checkedId == R.id.incorrectRadioBtn) {
-                    showAnswer(readOnly)
+            bind(answerableQuestion, readOnly)
+        }
+    }
 
-                    val correctAnswer = this.answerEditText.text?.trim()?.toString() ?: ""
-                    CorrectnessAnswer(
-                        answer = answerText,
-                        correctnessAnswer = false,
-                        correctAnswer = correctAnswer,
-                    )
-                } else {
-                    hideAnswer()
-                    CorrectnessAnswer(answer = answerText, correctnessAnswer = true)
-                }
+    private fun listenToCorrectAnswerChange() {
+        val afterTextChanged: (Editable?) -> Unit = debounce(
+            coroutineScope = CoroutineScope(Dispatchers.IO),
+            destinationFunction = {
+                val correctAnswer = it?.trim()?.toString().toString()
+
+                val answer = CorrectnessAnswer(
+                    answer = binding.incorrectRadioBtn.text.trim().toString(),
+                    correctnessAnswer = false,
+                    correctAnswer = correctAnswer,
+                )
 
                 onQuestionAnswerUpdated?.invoke(answer)
             }
+        )
+        binding.answerEditText.addTextChangedListener(afterTextChanged = afterTextChanged)
+    }
 
-            val afterTextChanged:(Editable?)->Unit= debounce(
-                coroutineScope = CoroutineScope(Dispatchers.IO),
-                destinationFunction = {
-                    val correctAnswer = it?.trim()?.toString().toString()
+    private fun PageQuestionCorrectnessBinding.listenToSelectionChange(
+        readOnly: Boolean
+    ) {
+        isCorrectRadioGroup.setOnCheckedChangeListener { _, checkedId ->
+            TransitionManager.beginDelayedTransition(root as ViewGroup)
+            val answerText =
+                isCorrectRadioGroup.findViewById<RadioButton?>(checkedId)?.text?.trim().toString()
 
-                    val answer=  CorrectnessAnswer(
-                        answer = binding.incorrectRadioBtn.text.trim().toString(),
-                        correctnessAnswer = false,
-                        correctAnswer = correctAnswer,
-                    )
+            val answer = if (checkedId == R.id.incorrectRadioBtn) {
+                showAnswer(readOnly)
 
-                    onQuestionAnswerUpdated?.invoke(answer)
-                }
-            )
+                val correctAnswer = this.answerEditText.text?.trim()?.toString() ?: ""
+                CorrectnessAnswer(
+                    answer = answerText,
+                    correctnessAnswer = false,
+                    correctAnswer = correctAnswer,
+                )
+            } else {
+                hideAnswer()
+                CorrectnessAnswer(answer = answerText, correctnessAnswer = true)
+            }
 
-            binding.answerEditText.addTextChangedListener(afterTextChanged = afterTextChanged)
-            bind(answerableQuestion, readOnly)
+            onQuestionAnswerUpdated?.invoke(answer)
         }
     }
 

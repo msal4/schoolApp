@@ -23,26 +23,26 @@
             android:id="@+id/orderText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="16sp"
+            android:textDirection="anyRtl"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="1-" />
+            tools:text="-1" />
 
         <CheckedTextView
             android:id="@+id/studentName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:textSize="18sp"
-            android:checkMark="@{student.hasAnswer==1?@drawable/ic_round_check_24_white:null}"
-            android:checkMarkTint="@color/checkMarkColor"
+            android:textSize="16sp"
+            android:checkMark="@{student.hasAnswer==1?@drawable/ic_round_check_24:null}"
             android:text="@{student.name}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/orderText"
             app:layout_constraintTop_toTopOf="parent"
-            tools:checkMark="@drawable/ic_round_check_24_white"
+            tools:checkMark="@drawable/ic_round_check_24"
             tools:text="احمد سامر علي" />
 
 

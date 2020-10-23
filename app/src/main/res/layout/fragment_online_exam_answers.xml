@@ -33,7 +33,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/classAndSectionSpinner"
                 app:layout_constraintVertical_bias="0.0"
-                app:listState="@{model.listState}" />
+                app:listState="@{model.listState}"
+                app:nestedScrolling="@{false}"/>
 
             <com.tiper.MaterialSpinner
                 android:id="@+id/classAndSectionSpinner"

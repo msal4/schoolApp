@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import com.haytham.coder.extensions.hideSystemUi
+import com.haytham.coder.extensions.startCountDown
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.activity.HomeActivity
 import com.smart.resources.schools_app.core.appDatabase.storages.SharedPrefHelper
 import com.smart.resources.schools_app.databinding.ActivitySplashScreenBinding
 import dagger.hilt.android.AndroidEntryPoint
+import org.threeten.bp.Duration
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -33,19 +35,14 @@ class SplashScreenActivity : AppCompatActivity() {
         if (!sharedPrefHelper.currentUserId.isNullOrBlank()) {
             HomeActivity.newInstance(this)
         } else {
-            object : CountDownTimer(300, 400) {
-                override fun onFinish() {
+            Duration.ofMillis(300).startCountDown(
+                onFinished = {
                     LoginActivity.newInstanceWithTrans(
                         this@SplashScreenActivity,
                         Pair(binding.logo, getString(R.string.logo_trans))
                     )
                 }
-
-                override fun onTick(millisUntilFinished: Long) {
-                }
-
-            }.start()
-
+            )
         }
     }
 }

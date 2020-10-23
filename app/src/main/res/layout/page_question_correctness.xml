@@ -76,7 +76,10 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/correcting_answer"
                     android:text="@{questionModel.answer.correctAnswer}"
-                    android:inputType="textMultiLine" />
+                    style="@style/MyEditTextStyle"
+                    android:textAlignment="textStart"
+                    android:textDirection="anyRtl"
+                    android:inputType="textMultiLine|textNoSuggestions" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -84,6 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@{questionModel.answer.hasCorrectAnswer? questionModel.answer.correctAnswer: questionModel.answer.answer}"
+                android:textSize="@dimen/question_answer_text_size"
                 android:textAlignment="viewStart"
                 android:visibility="gone"
                 />

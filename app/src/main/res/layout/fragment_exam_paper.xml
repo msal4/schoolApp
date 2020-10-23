@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <import type="android.view.View" />
-
         <variable
             name="model"
             type="com.smart.resources.schools_app.features.onlineExam.domain.viewModel.ExamPaperViewModel" />
@@ -32,14 +30,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.05" />
+                app:layout_constraintGuide_begin="40dp" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/paperHeaderGuideLine"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.132" />
+                app:layout_constraintGuide_begin="100dp" />
 
             <ImageView
                 android:id="@+id/imageView2"
@@ -87,7 +85,7 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="4dp"
                 android:alpha="0.87"
-                android:text="@{String.valueOf(model.onlineExam.numberOfRequiredQuestions)}"
+                android:text='@{String.format("%d", model.onlineExam.numberOfRequiredQuestions)}'
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="@id/requiredQuestionsText"
                 app:layout_constraintEnd_toEndOf="@+id/subjectName"

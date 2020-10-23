@@ -5,14 +5,28 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
-import java.lang.Exception
+import org.threeten.bp.format.DecimalStyle
+import org.threeten.bp.format.FormatStyle
 import java.lang.reflect.Type
 import java.util.*
 
+// TODO: move with hilt di
+val locale: Locale = Locale.getDefault()// TODO: fix this
 
-val timeDisFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("""hh:mm a""", Locale("ar"))
-val dateDisFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("""d\MM\yyyy""", Locale("ar"))
-val dateTimeDisFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d\\MM\\yyyy\n   HH:mm a", Locale("ar"))
+val timeDisFormatter: DateTimeFormatter =
+    DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
+        .withDecimalStyle(DecimalStyle.of(locale))
+
+val dateDisFormatter: DateTimeFormatter =
+    DateTimeFormatter
+        .ofLocalizedDate(FormatStyle.SHORT)
+        .withDecimalStyle(DecimalStyle.of(locale)) //"""d\MM\yyyy""",
+
+val dateTimeDisFormatter: DateTimeFormatter =
+    DateTimeFormatter
+        .ofLocalizedDateTime(FormatStyle.SHORT)
+        .withDecimalStyle(DecimalStyle.of(locale))
+
 val dateTimeBackendFormatter: DateTimeFormatter =
     DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH)
 val dateTimeBackendSendFormatter: DateTimeFormatter =

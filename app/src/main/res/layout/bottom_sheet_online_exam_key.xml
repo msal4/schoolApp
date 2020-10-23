@@ -42,7 +42,8 @@
                 android:layout_height="wrap_content"
                 android:text="@={model.examKey}"
                 android:hint="@string/exam_key"
-                android:inputType="text"
+                android:inputType="textPassword"
+                android:importantForAutofill="no"
                 android:errorMsg="@{model.examKeyError}"/>
 
         </com.google.android.material.textfield.TextInputLayout>
