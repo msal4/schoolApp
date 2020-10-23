@@ -35,10 +35,11 @@ fun TextView.toLocalTime(): LocalTime? {
 fun TextView.setTimeChangedListener(
     attrChange: InverseBindingListener
 ) {
-    var prevText= text
+    var prevText= text.toString()
     doAfterTextChanged {
-        if(prevText!=text) {
-            prevText= text
+        val currentText= it.toString()
+        if(prevText != currentText) {
+            prevText= currentText
             attrChange.onChange()
         }
     }

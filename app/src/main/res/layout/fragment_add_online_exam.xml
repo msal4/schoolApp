@@ -41,7 +41,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/fields_spacing"
                         android:focusable="false"
-                        android:errorMsg="@{model.showErrors?model.classesErrorMsg:null}"
+                        android:errorMsgId="@{model.showErrors?model.classesErrorMsg:null}"
+                        android:clipToPadding="false"
+                        android:clipChildren="false"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toTopOf="@id/subjectsSpinner"
                         app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +57,7 @@
                             android:focusable="false"
                             android:hint="@string/classes"
                             android:inputType="textMultiLine|textNoSuggestions"
-                            android:layout_marginBottom="@dimen/errorMsgSpacing"
+                            android:layout_marginBottom="@dimen/error_msg_spacing"
                             android:textCommaSeparated="@{model.selectedClasses}" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -65,10 +67,12 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.SpinnerStyle"
                         android:layout_marginEnd="@dimen/fields_spacing"
                         android:layout_marginBottom="@dimen/fields_spacing"
-                        android:errorMsg="@{model.showErrors?model.subjectErrorMsg:null}"
+                        android:errorMsgId="@{model.showErrors?model.subjectErrorMsg:null}"
                         android:hint="@string/subject"
                         android:selectedItem="@={model.selectedSubject}"
                         android:setList="@{model.subjects}"
+                        android:clipToPadding="false"
+                        android:clipChildren="false"
                         app:layout_constraintBottom_toTopOf="@id/examDateLayout"
                         app:layout_constraintEnd_toEndOf="@+id/guideline"
                         app:layout_constraintStart_toStartOf="parent"
@@ -81,8 +85,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/fields_spacing"
-                        android:errorMsg="@{model.showErrors?model.examDateErrorMsg:null}"
                         android:focusable="false"
+                        android:errorMsgId="@{model.showErrors?model.examDateErrorMsg:null}"
+                        android:clipToPadding="false"
+                        android:clipChildren="false"
                         app:layout_constraintBottom_toTopOf="@id/examDurationText"
                         app:layout_constraintEnd_toEndOf="@+id/subjectsSpinner"
                         app:layout_constraintStart_toStartOf="parent"
@@ -93,7 +99,7 @@
                             style="@style/MyEditTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/errorMsgSpacing"
+                            android:layout_marginBottom="@dimen/error_msg_spacing"
                             android:focusable="false"
                             android:hint="@string/date"
                             android:inputType="date"
@@ -108,7 +114,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:focusable="false"
-                        android:errorMsg="@{model.showErrors?model.examTimeErrorMsg:null}"
+                        android:errorMsgId="@{model.showErrors?model.examTimeErrorMsg:null}"
+                        android:clipToPadding="false"
+                        android:clipChildren="false"
                         app:layout_constraintBottom_toBottomOf="@+id/examDateLayout"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/guideline"
@@ -125,10 +133,9 @@
                             android:inputType="date"
                             android:setTime="@={model.examTime}"
                             android:showTimePickerOnClick="@{true}"
-                            android:layout_marginBottom="@dimen/errorMsgSpacing"/>
+                            android:layout_marginBottom="@dimen/error_msg_spacing"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
-
 
                     <TextView
                         android:id="@+id/examDurationText"
@@ -196,7 +203,9 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:errorMsg="@{model.showErrors?model.examKeyErrorMsg:null}"
+                        android:errorMsgId="@{model.showErrors?model.examKeyErrorMsg:null}"
+                        android:clipToPadding="false"
+                        android:clipChildren="false"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/guideline"
                         app:layout_constraintTop_toTopOf="@id/subjectsSpinner"
@@ -208,7 +217,8 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/key"
                             android:inputType="text"
-                            android:text="@={model.examKey}" />
+                            android:text="@={model.examKey}"
+                            android:layout_marginBottom="@dimen/error_msg_spacing"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
 

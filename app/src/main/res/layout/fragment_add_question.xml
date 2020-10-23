@@ -32,7 +32,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:hintEnabled="false"
-            android:errorMsg="@{model.questionErrorMsg}"
+            android:errorMsgId="@{model.questionErrorMsg}"
             android:paddingBottom="4dp">
 
             <com.google.android.material.textfield.TextInputEditText

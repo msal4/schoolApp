@@ -8,6 +8,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.haytham.coder.extensions.toString
 
 private const val EDIT_TEXT_ERROR_MSG_ATTRIBUTE = "android:errorMsg"
+private const val EDIT_TEXT_ERROR_MSG_ID_ATTRIBUTE = "android:errorMsgId"
 
 @BindingAdapter(EDIT_TEXT_ERROR_MSG_ATTRIBUTE)
 fun setEditTextErrorMsg(editText: EditText, errorMsg: String?) {
@@ -25,15 +26,17 @@ fun TextInputLayout.setInputLayoutError(errorMsg: String?) {
     error = errorMsg
 }
 
-@BindingAdapter(EDIT_TEXT_ERROR_MSG_ATTRIBUTE)
+@BindingAdapter(EDIT_TEXT_ERROR_MSG_ID_ATTRIBUTE)
 fun TextInputLayout.setInputLayoutError(errorMsgId: Int?) {
-    if (errorMsgId == null && error == null) return
-
     val layout = rootView
     if (layout is ViewGroup) {
         TransitionManager.beginDelayedTransition(layout)
     }
-    isErrorEnabled = errorMsgId != null
+
+    // clear error msg before setting another one to avoid error msg being cut problem
+    error = null
+    isErrorEnabled = false
+
     error = errorMsgId?.toString(context)
 }
 
