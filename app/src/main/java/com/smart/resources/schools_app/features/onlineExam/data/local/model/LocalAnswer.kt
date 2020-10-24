@@ -1,5 +1,6 @@
 package com.smart.resources.schools_app.features.onlineExam.data.local.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import com.google.gson.annotations.SerializedName

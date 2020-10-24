@@ -2,8 +2,11 @@ package com.smart.resources.schools_app.features.onlineExam.di
 
 import com.smart.resources.schools_app.core.appDatabase.storages.AppDatabase
 import com.smart.resources.schools_app.core.network.RetrofitHelper
+import com.smart.resources.schools_app.core.utils.mapList
 import com.smart.resources.schools_app.features.onlineExam.data.local.dataSource.AnswersDao
 import com.smart.resources.schools_app.features.onlineExam.data.mappers.answers.*
+import com.smart.resources.schools_app.features.onlineExam.data.mappers.mapLocalQuestionWithAnswer
+import com.smart.resources.schools_app.features.onlineExam.data.mappers.questions.QuestionMappersFacade
 import com.smart.resources.schools_app.features.onlineExam.data.remote.dataSource.AnswersClient
 import com.smart.resources.schools_app.features.onlineExam.data.repository.AnswersRepository
 import com.smart.resources.schools_app.features.onlineExam.domain.repository.IAnswersRepository
@@ -29,12 +32,25 @@ object AnswersModule {
     fun provideAnswersRepository(
         AnswersDao: AnswersDao,
         AnswersClient: AnswersClient,
-        answerMappersFacade: AnswerMappersFacade
+        answerMappersFacade: AnswerMappersFacade,
+        questionMappersFacade: QuestionMappersFacade
     ): IAnswersRepository {
         return AnswersRepository(
             answersDao = AnswersDao,
             answersClient = AnswersClient,
             answerMappersFacade = answerMappersFacade,
+            questionWithAnswerMapper = {
+                mapList(
+                    input = it,
+                    mapSingle = { questionWithAnswer ->
+                        mapLocalQuestionWithAnswer(
+                            input = questionWithAnswer,
+                            localQuestionMapper = questionMappersFacade::mapLocalQuestion,
+                            localAnswerMapper = answerMappersFacade::mapLocalAnswer,
+                        )
+                    }
+                )
+            }
         )
     }
 

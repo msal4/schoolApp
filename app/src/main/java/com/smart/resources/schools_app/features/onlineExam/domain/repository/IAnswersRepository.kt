@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 typealias ListOfAnswers = List<BaseAnswer>
 
 interface IAnswersRepository {
-    fun getStudentExamAnswers(examId: String, studentId:String, shouldFetchFromRemote:Boolean): Flow<Resource<ListOfAnswers>>
+    fun getStudentExamAnswers(examId: String, studentId:String, shouldFetchFromRemote:Boolean): Flow<Resource<List<BaseAnswerableQuestion>>>
     suspend fun saveAnswerLocally(answer:BaseAnswer, questionId:String, userId:String)
     suspend fun sendAnswers(answers:ListOfAnswers, questionIds:List<String>, userId:String):ApiResponse<Unit>
 }

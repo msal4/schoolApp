@@ -14,5 +14,6 @@ fun mapAnswerToLocal(answer: BaseAnswer, questionId:String, userId:String): Loca
         correctAnswer = if (answer is CorrectnessAnswer) answer.correctAnswer else "",
         answerMultiChoice = if (answer is MultiChoiceAnswer) answer.multiChoiceAnswer else null,
         answerNormal = answer.answer,
+
     )
 }

@@ -1,7 +1,6 @@
 package com.smart.resources.schools_app.features.onlineExam.di
 
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.*
-import com.smart.resources.schools_app.features.onlineExam.domain.usecase.answers.GetStudentExamAnswersUseCase
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.answers.SaveAnswerLocallyUseCase
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.answers.SendAnswersUseCase
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.questions.GetExamQuestionsUseCase
@@ -47,9 +46,6 @@ interface UseCaseModule {
 
     @Binds
     fun bindSaveAnswerLocallyUseCase(saveAnswerLocallyUseCase: SaveAnswerLocallyUseCase): ISaveAnswerLocallyUseCase
-
-    @Binds
-    fun bindGetStudentExamAnswersUseCase(getStudentExamAnswersUseCase: GetStudentExamAnswersUseCase): IGetStudentExamAnswersUseCase
 
     @Binds
     fun bindGetExamQuestionsWithAnswersUseCase(getExamQuestionsWithAnswersUseCase: GetExamQuestionsWithAnswersUseCase): IGetExamQuestionsWithAnswersUseCase

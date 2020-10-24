@@ -7,8 +7,8 @@ class ListState(
     var bodyError:MutableLiveData<String> = MutableLiveData("")
 ){
     fun setLoading(isLoading: Boolean) {
+        setBodyError("")
         if(this.isLoading.value != isLoading) {
-            if (isLoading) setBodyError("")
             this.isLoading.postValue(isLoading)
         }
     }

@@ -59,7 +59,3 @@ interface ISaveAnswerLocallyUseCase{
 interface ISendAnswersUseCase{
     suspend operator fun invoke(answers: List<BaseAnswer>, questionIds:List<String>):ApiResponse<Unit>
 }
-
-interface IGetStudentExamAnswersUseCase{
-    operator fun invoke(examId: String, studentId:String, shouldFetchFromRemote:Boolean):Flow<Resource<List<BaseAnswer>>>
-}

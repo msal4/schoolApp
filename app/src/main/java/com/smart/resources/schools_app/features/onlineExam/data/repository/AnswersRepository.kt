@@ -5,10 +5,15 @@ import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.core.extentions.TAG
 import com.smart.resources.schools_app.core.extentions.withNewData
 import com.smart.resources.schools_app.features.onlineExam.data.local.dataSource.AnswersDao
+import com.smart.resources.schools_app.features.onlineExam.data.local.dataSource.QuestionsDao
+import com.smart.resources.schools_app.features.onlineExam.data.local.model.QuestionWithAnswer
 import com.smart.resources.schools_app.features.onlineExam.data.mappers.answers.AnswerMappersFacade
 import com.smart.resources.schools_app.features.onlineExam.data.remote.dataSource.AnswersClient
 import com.smart.resources.schools_app.features.onlineExam.data.remote.model.NetworkAnswer
+import com.smart.resources.schools_app.features.onlineExam.domain.model.Answer
+import com.smart.resources.schools_app.features.onlineExam.domain.model.AnswerableQuestion
 import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnswer
+import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnswerableQuestion
 import com.smart.resources.schools_app.features.onlineExam.domain.repository.IAnswersRepository
 import com.smart.resources.schools_app.features.onlineExam.domain.repository.ListOfAnswers
 import kotlinx.coroutines.Dispatchers
@@ -19,28 +24,29 @@ class AnswersRepository(
     private val answersDao: AnswersDao,
     private val answersClient: AnswersClient,
     private val answerMappersFacade: AnswerMappersFacade,
+    private val questionWithAnswerMapper: (List<QuestionWithAnswer>)-> List<BaseAnswerableQuestion>
 ) : IAnswersRepository {
 
     @ExperimentalCoroutinesApi
-    override fun getStudentExamAnswers(examId: String, studentId: String, shouldFetchFromRemote:Boolean): Flow<Resource<ListOfAnswers>> =
-        networkBoundResource<ListOfAnswers, List<NetworkAnswer>>(
+    override fun getStudentExamAnswers(examId: String, studentId: String, shouldFetchFromRemote:Boolean): Flow<Resource<List<BaseAnswerableQuestion>>> =
+        networkBoundResource<List<BaseAnswerableQuestion>, List<NetworkAnswer>>(
             fetchFromLocal = {
                 answersDao
                     .getUserExamAnswers(examId, studentId)
                     .map {
-                        answerMappersFacade.mapLocalAnswer(it)
+                        questionWithAnswerMapper(it)
                     }
             },
             shouldFetchFromRemote = {
-                shouldFetchFromRemote||it.isNullOrEmpty()
+               shouldFetchFromRemote||it.isNullOrEmpty()
             },
             fetchFromRemote = {
                 answersClient.getStudentExamAnswers(examId, studentId)
             },
             saveRemoteData = {
-                // TODO: add correct parameters
-                //val localAnswers= answerMappersFacade.mapNetworkToLocalAnswer(it, emptyList(), studentId)
-                //answersDao.insert(localAnswers)
+                // TODO: need question Id in networkAnswers
+                val localAnswers= answerMappersFacade.mapNetworkToLocalAnswer(it, emptyList(), studentId)
+                answersDao.insert(localAnswers)
             }
         ).catch {
             // must be used to catch exceptions
