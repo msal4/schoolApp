@@ -24,16 +24,16 @@ abstract class AnswersDao : BaseDao<LocalAnswer>() {
         t2.answerMultiChoice AS answers_answerMultiChoice,
         t2.answerCorrectness AS answers_answerCorrectness,
         t2.correctAnswer AS answers_correctAnswer
-        FROM ${LocalQuestion.TABLE_NAME} AS t1
+        FROM (
+        SELECT * 
+        FROM ${LocalQuestion.TABLE_NAME} 
+        WHERE onlineExamId = :examId) AS t1
         LEFT OUTER JOIN ${LocalAnswer.TABLE_NAME} AS t2
         ON t1.questionId == t2.questionId
-        WHERE t1.onlineExamId= :examId
-        AND (
-        t2.userId = :userId 
-        OR t2.userId IS NULL)
+        AND t2.userId = :userId 
         """
     )
-    abstract fun getUserExamAnswers(examId: String, userId: String): Flow<List<QuestionWithAnswer>>
+    abstract fun getUserExamQuestionsWithAnswers(examId: String, userId: String): Flow<List<QuestionWithAnswer>>
 
 
 //    @Query("""

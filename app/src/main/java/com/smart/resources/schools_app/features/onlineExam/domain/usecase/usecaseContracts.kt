@@ -23,7 +23,6 @@ interface ISyncOnlineExamUseCase{
     suspend operator fun invoke(examId:String): ApiResponse<Unit>
 }
 
-
 interface IGetExamQuestionsUseCase{
     operator fun invoke(examId:String): Flow<Resource<List<Question>>>
 }

@@ -69,11 +69,15 @@
             android:id="@+id/answerText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_margin"
             android:text="@{answerableQuestion.answer.answer}"
             android:textAlignment="viewStart"
             android:visible="@{answerableQuestion.answer.multiChoiceAnswer == null &amp;&amp; answerableQuestion.answer.hasAnswerString}"
             app:layout_constraintStart_toStartOf="@+id/choicesRadioGroup"
-            app:layout_constraintTop_toBottomOf="@+id/choicesRadioGroup" />
+            app:layout_constraintTop_toBottomOf="@+id/choicesRadioGroup"
+            android:textSize="@dimen/question_answer_text_size"
+            tools:text="answer"
+            tools:visibility="visible"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

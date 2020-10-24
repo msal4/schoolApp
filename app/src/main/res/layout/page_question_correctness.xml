@@ -90,6 +90,8 @@
                 android:textSize="@dimen/question_answer_text_size"
                 android:textAlignment="viewStart"
                 android:visibility="gone"
+                tools:text="answer"
+                tools:visibility="visible"
                 />
         </FrameLayout>
 
