@@ -1,6 +1,9 @@
-package com.smart.resources.schools_app.features.students.models
+package com.smart.resources.schools_app.features.students
 
 import com.hadiyarajesh.flower.ApiResponse
+import com.smart.resources.schools_app.features.students.models.Student
+import com.smart.resources.schools_app.features.students.models.StudentWithAnswerStatus
+import com.smart.resources.schools_app.features.students.models.StudentWithMark
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 import retrofit2.http.GET

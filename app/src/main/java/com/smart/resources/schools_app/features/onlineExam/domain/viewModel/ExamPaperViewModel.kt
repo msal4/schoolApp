@@ -23,6 +23,7 @@ import com.smart.resources.schools_app.features.onlineExam.domain.usecase.*
 import com.smart.resources.schools_app.features.onlineExam.presentation.fragments.ExamPaperFragment
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserTypeUseCase
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetUserIdUseCase
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
@@ -61,7 +62,7 @@ class ExamPaperViewModel @ViewModelInject constructor(
     val sendingAnswers: LiveData<Boolean> = _sendingAnswers
     val onlineExam = getExamLiveData()
     val readOnly = mapOnlineExamToReadOnly()
-    val answerableQuestions = switchMapUserIdToAnswerableQuestions()
+    val answerableQuestions = createAnswerableQuestionsLiveData()
     val questionsSolvedState = mapQuestionsToSolveState()
     val canSendAnswers: LiveData<Boolean> = mapReadOnlyAndQuestionsStateToCanSendAnswers()
     val remainingQuestionsText = mapQuestionsStateToRemainingQuestionsCount()
@@ -165,27 +166,47 @@ class ExamPaperViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun switchMapUserIdToAnswerableQuestions(): LiveData<ListOfAnswerableQuestions> {
-        return studentId.switchMap { userId ->
-            if (userId == null) {
-                getExamQuestionsUseCase(passedOnlineExam.id).map {
-                    updateListState(it)
-                    it.data.orEmpty().map { question ->
-                        BaseAnswerableQuestion.fromQuestionAnswer(question, null)
-                    }
+    private fun createAnswerableQuestionsLiveData(): LiveData<ListOfAnswerableQuestions> {
+        return MediatorLiveData<ListOfAnswerableQuestions>().apply{
+            addSource(studentId){userId->
+                viewModelScope.launch {
+                    getAnswerableQuestions(userId, readOnly.value, this@apply)
                 }
+            }
 
-            } else {
-                getExamQuestionsWithAnswersUseCase(
-                    passedOnlineExam.id,
-                    userId,
-                    passedOnlineExam.examStatus == OnlineExamStatus.COMPLETED,
-                ).map {
-                    updateListState(it)
-                    it.data.orEmpty()
+            addSource(readOnly){readOnly->
+                viewModelScope.launch {
+                    getAnswerableQuestions(studentId.value, readOnly, this@apply)
                 }
+            }
+        }
+    }
 
-            }.asLiveData(viewModelScope.coroutineContext)
+    private suspend fun getAnswerableQuestions(
+        userId: String?,
+        readOnly: Boolean?,
+        mediatorLiveData: MediatorLiveData<ListOfAnswerableQuestions>
+    ) {
+        if (userId == null) {
+            getExamQuestionsUseCase(passedOnlineExam.id).map {
+                updateListState(it)
+                it.data.orEmpty().map { question ->
+                    BaseAnswerableQuestion.fromQuestionAnswer(question, null)
+                }
+            }
+
+        } else {
+            getExamQuestionsWithAnswersUseCase(
+                passedOnlineExam.id,
+                userId,
+                passedOnlineExam.examStatus == OnlineExamStatus.COMPLETED || readOnly== true,
+            ).map {
+                updateListState(it)
+                it.data.orEmpty()
+            }
+
+        }.collect {
+            mediatorLiveData.postValue(it)
         }
     }
 

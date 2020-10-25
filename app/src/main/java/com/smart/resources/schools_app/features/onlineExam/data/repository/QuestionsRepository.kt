@@ -57,10 +57,12 @@ class QuestionsRepository(
                 )
             ).first()
 
-        if (res is ApiSuccessResponse && res.body != null) {
-            val localQuestions =
-                questionMappersFacade.mapNetworkToLocalQuestion(res.body.orEmpty())
-            questionsDao.upsert(localQuestions)
+        if (res is ApiSuccessResponse) {
+            val questionsRes= questionsClient.getExamQuestions(examId).first()
+            if(questionsRes is ApiSuccessResponse && questionsRes.body!=null){
+                val localQuestions = questionMappersFacade.mapNetworkToLocalQuestion(questionsRes.body.orEmpty())
+                questionsDao.upsert(localQuestions)
+            }
         }
 
         return res.withNewData {

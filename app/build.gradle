@@ -3,6 +3,21 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+
+
+buildscript {
+    repositories {
+        maven { url 'https://plugins.gradle.org/m2/'}
+    }
+    dependencies {
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.8, 0.99.99]'
+    }
+}
+
+repositories {
+    maven { url 'https://maven.google.com' }
+}
 
 android {
     compileSdkVersion 29
@@ -23,6 +38,12 @@ android {
                         "room.expandProjection": "true"]
             }
         }
+
+        manifestPlaceholders = [
+                onesignal_app_id: '585b069c-3704-45fd-8ccb-987349550e52',
+                // Project number pulled from dashboard, local value is ignored.
+                onesignal_google_project_number: '5445493134'
+        ]
     }
     buildTypes {
         release {
@@ -149,4 +170,6 @@ dependencies {
 
     // for curved image view
     implementation 'com.github.developer-shivam:Crescento:1.2.1'
+
+    implementation 'com.onesignal:OneSignal:[3.15.0, 3.99.99]'
 }

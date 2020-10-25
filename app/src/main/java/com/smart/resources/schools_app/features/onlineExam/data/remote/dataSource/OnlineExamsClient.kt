@@ -36,5 +36,5 @@ interface OnlineExamsClient {
     fun finishExam(@Path(EXAM_ID_PATH) examId:String, @Body networkExamFinishedStatus: NetworkExamFinishedStatus): Flow<ApiResponse<Unit>>
 
     @PUT("updateStatus/{$EXAM_ID_PATH}")
-    fun updateStatus(@Path(EXAM_ID_PATH) examId:String, @Body networkOnlineExamStatus: NetworkOnlineExamStatus):Flow<ApiResponse<Unit>>
+    fun updateStatus(@Path(EXAM_ID_PATH) examId:String, @Body networkOnlineExamStatus: NetworkOnlineExamStatus):Flow<ApiResponse<NetworkOnlineExam>>
 }

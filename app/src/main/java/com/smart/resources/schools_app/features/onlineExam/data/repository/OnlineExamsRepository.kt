@@ -46,9 +46,8 @@ class OnlineExamsRepository(
             },
             saveRemoteData = {
                 try {
-                    val examKeys = it.mapNotNull { exam -> exam.examKey }
                     val localExams =
-                        onlineExamMappersFacade.mapNetworkToLocalOnlineExam(it, examKeys)
+                        onlineExamMappersFacade.mapNetworkToLocalOnlineExam(it)
                     onlineExamsDao.syncWithDatabase(userId, localExams)
                 } catch (e: Exception) {
                     Logger.e("$TAG: $e")
@@ -92,8 +91,7 @@ class OnlineExamsRepository(
         val res = onlineExamsClient.getOnlineExam(examId).first()
 
         if (res is ApiSuccessResponse && res.body != null) {
-            val examKey = res.body?.examKey.orEmpty()
-            val localExam = onlineExamMappersFacade.mapNetworkToLocalOnlineExam(res.body!!, examKey)
+            val localExam = onlineExamMappersFacade.mapNetworkToLocalOnlineExam(res.body!!)
             onlineExamsDao.update(localExam)
         }
 
@@ -108,9 +106,8 @@ class OnlineExamsRepository(
         val res = onlineExamsClient.addOnlineExam(networkExam).first()
 
         if (res is ApiSuccessResponse && res.body != null) {
-            val examKey = res.body?.examKey.orEmpty()
             val localExams =
-                onlineExamMappersFacade.mapNetworkToLocalOnlineExam(res.body!!, examKey)
+                onlineExamMappersFacade.mapNetworkToLocalOnlineExam(res.body!!)
             onlineExamsDao.upsertUserOnlineExams(userId, listOf(localExams))
         }
 
@@ -156,13 +153,16 @@ class OnlineExamsRepository(
 
     override suspend fun activateOnlineExam(examId: String): ApiResponse<Unit> {
         val res =
-            onlineExamsClient.updateStatus(examId, NetworkOnlineExamStatus.createActiveStatus())
-                .first()
-        if (res !is ApiErrorResponse<*>) {
-            onlineExamsDao.updateExamStatus(examId, OnlineExamStatus.ACTIVE.value)
+            onlineExamsClient.updateStatus(examId, NetworkOnlineExamStatus.createActiveStatus()).first()
+        if (res is ApiSuccessResponse && res.body != null) {
+            //onlineExamsDao.updateExamStatus(examId, OnlineExamStatus.ACTIVE.value)
+            val localOnlineExam= onlineExamMappersFacade.mapNetworkToLocalOnlineExam(res.body!!)
+            onlineExamsDao.upsert(localOnlineExam)
         }
 
-        return res
+        return res.withNewData {
+            Unit
+        }
     }
 
     override suspend fun finishOnlineExam(examId: String): ApiResponse<Unit> {

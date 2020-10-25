@@ -32,9 +32,8 @@ class AnswerMappersFacade(
 
     fun mapNetworkToLocalAnswer(
         input: NetworkAnswer,
-        questionId: String,
         userId: String
-    ): LocalAnswer = mapAnswerToLocal(mapNetworkAnswer(input), questionId, userId)
+    ): LocalAnswer = mapAnswerToLocal(mapNetworkAnswer(input), input.questionId.toString(), userId)
 
     fun mapLocalAnswer(input: List<LocalAnswer>): ListOfAnswers = mapList(
         input = input,
@@ -70,12 +69,11 @@ class AnswerMappersFacade(
 
     fun mapNetworkToLocalAnswer(
         input: List<NetworkAnswer>,
-        questionIds: List<String>,
         userId: String,
     ): List<LocalAnswer> = mapListIndexed(
         input = input,
         mapSingle = { index, e ->
-            mapNetworkToLocalAnswer(e, questionIds[index], userId)
+            mapNetworkToLocalAnswer(e, userId)
         }
     )
 }

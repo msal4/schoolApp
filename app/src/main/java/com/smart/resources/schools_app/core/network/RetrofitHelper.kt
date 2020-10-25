@@ -21,7 +21,7 @@ import com.smart.resources.schools_app.features.onlineExam.data.remote.dataSourc
 import com.smart.resources.schools_app.features.profile.certificate.CertificateClient
 import com.smart.resources.schools_app.features.rating.RatingClient
 import com.smart.resources.schools_app.features.schedule.ScheduleClient
-import com.smart.resources.schools_app.features.students.models.StudentClient
+import com.smart.resources.schools_app.features.students.StudentClient
 import com.snakydesign.watchtower.interceptor.WatchTowerInterceptor
 import okhttp3.OkHttpClient
 import org.threeten.bp.LocalDate

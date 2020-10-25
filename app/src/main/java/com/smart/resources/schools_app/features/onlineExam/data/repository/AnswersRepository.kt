@@ -1,6 +1,7 @@
 package com.smart.resources.schools_app.features.onlineExam.data.repository
 
 import com.hadiyarajesh.flower.*
+import com.haytham.coder.extensions.isNotNullOrEmpty
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.core.extentions.TAG
 import com.smart.resources.schools_app.core.extentions.withNewData
@@ -29,21 +30,20 @@ class AnswersRepository(
         networkBoundResource<List<BaseAnswerableQuestion>, List<NetworkAnswer>>(
             fetchFromLocal = {
                 answersDao
-                    .getUserExamQuestionsWithAnswers(examId, "s$studentId")
+                    .getUserExamQuestionsWithAnswers(examId, studentId)
                     .map {
                         Logger.wtf(it.toString())
                         questionWithAnswerMapper(it)
                     }
             },
             shouldFetchFromRemote = {
-               shouldFetchFromRemote||it.isNullOrEmpty()
+               shouldFetchFromRemote|| shouldFetchAnswers(it)
             },
             fetchFromRemote = {
-                answersClient.getStudentExamAnswers(examId, studentId)
+                answersClient.getStudentExamAnswers(examId, studentId.substring(0, studentId.length))
             },
             saveRemoteData = {
-                // TODO: need question Id in networkAnswers
-                val localAnswers= answerMappersFacade.mapNetworkToLocalAnswer(it, emptyList(), studentId)
+                val localAnswers= answerMappersFacade.mapNetworkToLocalAnswer(it, studentId)
                 answersDao.insert(localAnswers)
             }
         ).catch {
@@ -51,6 +51,9 @@ class AnswersRepository(
             Logger.e("$TAG: $it")
             emit(Resource.error(msg = it.message.toString()))
         }.flowOn(Dispatchers.IO)
+
+    private fun shouldFetchAnswers(it: List<BaseAnswerableQuestion>?):Boolean =
+        it?.mapNotNull { e -> e.answer }.isNullOrEmpty()
 
     override suspend fun saveAnswerLocally(
         answer: BaseAnswer,

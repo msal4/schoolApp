@@ -23,8 +23,8 @@ class OnlineExamMappersFacade(
     fun mapOnlineExamAddToNetwork(input: AddOnlineExam): PostNetworkOnlineExam =
         addOnlineExamToNetworkMapper(input)
 
-    fun mapNetworkToLocalOnlineExam(input: NetworkOnlineExam, examKey: String): LocalOnlineExam =
-        mapOnlineExamToLocal(mapNetworkOnlineExam(input), examKey)
+    fun mapNetworkToLocalOnlineExam(input: NetworkOnlineExam): LocalOnlineExam =
+        mapOnlineExamToLocal(mapNetworkOnlineExam(input), input.examKey.toString())
 
 
     fun mapLocalOnlineExam(input: List<LocalOnlineExam>): List<OnlineExam> = mapList(
@@ -55,12 +55,8 @@ class OnlineExamMappersFacade(
 
     fun mapNetworkToLocalOnlineExam(
         input: List<NetworkOnlineExam>,
-        examKeys: List<String>
-    ): List<LocalOnlineExam> = mapListIndexed(
+    ): List<LocalOnlineExam> = mapList(
         input = input,
-        mapSingle =
-        { index, exam ->
-            mapNetworkToLocalOnlineExam(exam, examKeys[index])
-        }
+        mapSingle = ::mapNetworkToLocalOnlineExam
     )
 }

@@ -18,12 +18,21 @@ class GetExamQuestionsWithAnswersUseCase @Inject constructor(
         shouldFetchFromRemote: Boolean
     ): Flow<Resource<ListOfAnswerableQuestions>> {
         return flow {
+            emit(Resource.loading(null))
+
             getExamQuestionsUseCase(examId)
-                .distinctUntilChangedBy { it.data }
+//                .distinctUntilChangedBy { it.data }
+//                .filter { it.data != null }
+                .filter {it.status!= Resource.Status.LOADING}
                 .collect {
-                val answerableQuestionsFlow= answersRepository.getStudentExamAnswers(examId, userId, shouldFetchFromRemote)
-                emitAll(answerableQuestionsFlow)
-            }
+
+                    val answerableQuestionsFlow = answersRepository.getStudentExamAnswers(
+                        examId,
+                        userId,
+                        shouldFetchFromRemote
+                    )
+                    emitAll(answerableQuestionsFlow)
+                }
         }
     }
 

@@ -13,7 +13,6 @@ class GetUserOnlineExamUseCase @Inject constructor(
     private val onlineExamsRepository: IOnlineExamsRepository,
 ) : IGetOnlineExamUseCase {
     override fun invoke(examId: String): Flow<Resource<OnlineExam>> {
-
         return onlineExamsRepository.getOnlineExam(examId)
     }
 }
