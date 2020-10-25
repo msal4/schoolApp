@@ -40,7 +40,7 @@ class AnswersRepository(
                shouldFetchFromRemote|| shouldFetchAnswers(it)
             },
             fetchFromRemote = {
-                answersClient.getStudentExamAnswers(examId, studentId.substring(0, studentId.length))
+                answersClient.getStudentExamAnswers(examId, studentId.substring(1, studentId.length))
             },
             saveRemoteData = {
                 val localAnswers= answerMappersFacade.mapNetworkToLocalAnswer(it, studentId)

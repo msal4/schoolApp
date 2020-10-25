@@ -78,7 +78,6 @@
             android:text="-" />
 
         <TextView
-
             android:id="@+id/contentText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -87,7 +86,7 @@
             android:layout_marginEnd="16dp"
             android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/schedule"
+            app:layout_constraintEnd_toStartOf="@+id/barrier"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/advertisementsIcon"
             app:layout_constraintTop_toBottomOf="@+id/subjectName"
@@ -97,18 +96,40 @@
 
         <TextView
             android:id="@+id/schedule"
-            android:layout_width="3dp"
-            android:layout_height="36dp"
-            android:layout_marginEnd="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:setMark="@{itemModel.mark}"
             android:textAlignment="viewStart"
             android:textColor="@android:color/black"
             android:textSize="28sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/examType"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.6"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="50" />
 
+        <TextView
+            android:id="@+id/examType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{itemModel.type}"
+            android:textAlignment="viewStart"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/schedule"
+            app:layout_constraintTop_toBottomOf="@id/schedule"
+            tools:text="المادة" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="start"
+            app:constraint_referenced_ids="schedule,examType"
+            tools:layout_editor_absoluteX="53dp"
+            tools:layout_editor_absoluteY="40dp"
+            />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

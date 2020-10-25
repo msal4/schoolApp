@@ -27,7 +27,6 @@
             android:padding="@dimen/login_padding"
             tools:context=".features.login.LoginActivity">
 
-            <!-- TODO change4: add img_logo -->
             <ImageView
                 android:transitionName="@string/logo_trans"
                 android:id="@+id/logo"

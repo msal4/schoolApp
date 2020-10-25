@@ -118,7 +118,7 @@ class AddMarkFragment : Fragment() {
 
 
         val studentResult = SendStudentResult(
-            AddMarkRecyclerAdapter.sendStudentResult,
+            AddMarkRecyclerAdapter.sendStudentResult.distinct(),
             examId1
         )
 

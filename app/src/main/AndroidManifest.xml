@@ -6,6 +6,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE " />
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".MyApp"
         android:allowBackup="true"
@@ -15,27 +16,28 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".features.login.SplashScreenActivity"
+
+        <activity
+            android:name=".features.login.SplashScreenActivity"
+            android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/SplashScreenTheme"
-            android:noHistory="true">
+            android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.smart.resources.schools_app.features.imageViewer.ImageViewerActivity"
+            android:name=".features.imageViewer.ImageViewerActivity"
             android:label="@string/title_activity_full_image" />
         <activity
-            android:name="com.smart.resources.schools_app.core.activity.SectionActivity"
+            android:name=".core.activity.SectionActivity"
             android:label=""
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name="com.smart.resources.schools_app.core.activity.HomeActivity"
+            android:name=".core.activity.HomeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".features.profile.ProfileActivity"
@@ -45,10 +47,7 @@
             android:name=".features.login.LoginActivity"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden">
-
-        </activity>
+            android:windowSoftInputMode="stateHidden"></activity>
     </application>
-
 
 </manifest>

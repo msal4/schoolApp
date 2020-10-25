@@ -6,7 +6,6 @@ import com.smart.resources.schools_app.core.extentions.isImage
 import kotlinx.android.parcel.Parcelize
 import org.threeten.bp.LocalDate
 
-// TODO: fix this model
 @Parcelize
 data class HomeworkSolutionModel(
     @SerializedName("idSolution")

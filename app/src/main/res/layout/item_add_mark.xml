@@ -50,6 +50,7 @@
             android:paddingRight="20dp"
             android:text="@{itemModel.mark.toString()}"
             android:textAlignment="center"
+            android:maxLength="2"
             app:layout_constraintBottom_toBottomOf="@+id/subjectNameM"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/subjectNameM"

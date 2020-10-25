@@ -11,7 +11,7 @@ class SendStudentResult(
     val examId: Int
 )
 
-class Marks(
+data class Marks(
     val mark: Int,
     val studentId: String
 )

@@ -4,71 +4,23 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.TextView
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.databinding.ItemAddMarkBinding
-import com.smart.resources.schools_app.features.students.models.StudentWithMark
 import com.smart.resources.schools_app.features.students.models.Marks
+import com.smart.resources.schools_app.features.students.models.StudentWithMark
 import java.util.*
 
 class AddMarkRecyclerAdapter(private val exams: List<StudentWithMark>) :
     RecyclerView.Adapter<AddMarkRecyclerAdapter.MyViewHolder>() {
 
     companion object {
-        var sendStudentResult: ArrayList<Marks> = ArrayList()
+        val sendStudentResult: ArrayList<Marks> = ArrayList()
     }
 
 
-    inner class MyViewHolder(var binding: ItemAddMarkBinding) :
+    inner class MyViewHolder(val binding: ItemAddMarkBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-        var editText: EditText = binding.mark
-        lateinit var editText2: TextView
-        init {
-
-            editText.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(
-                    charSequence: CharSequence,
-                    i: Int,
-                    i1: Int,
-                    i2: Int
-                ) {
-
-                }
-
-                override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-                    if (editText.isEnabled) {
-
-                        var iter = sendStudentResult.iterator()
-
-                        while (iter.hasNext()) {
-                            val st: Marks = iter.next()
-                            if (st.studentId == editText2.text.toString()) iter.remove()
-                        }
-                        if (editText.text.toString() != "") {
-                            sendStudentResult.add(
-                                Marks(
-                                    editText.text.toString().toInt(),
-                                    editText2.text.toString()
-                                )
-                            )
-                        }
-                    }
-
-                }
-
-                override fun afterTextChanged(editable: Editable) {
-
-                    if (editText.text.isNotEmpty())
-                        if (editText.text.toString().toInt() > 100 || editText.text.toString().toInt() < 0) {
-                            editText.error = "خطأ في الادخال"
-                        }
-
-                }
-            })
-
-        }
 
         fun bind(examModel: StudentWithMark) {
             binding.itemModel = examModel
@@ -89,6 +41,25 @@ class AddMarkRecyclerAdapter(private val exams: List<StudentWithMark>) :
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bind(exams[position])
-    }
 
+        val studentId = exams[position].id
+
+        holder.binding.apply {
+            mark.doOnTextChanged { text, _, _, _ ->
+                if(text.isNullOrBlank()) return@doOnTextChanged
+                else if (text.toString().toInt() > 100 || text.toString().toInt() < 0) {
+                    mark.error = "خطأ في الادخال"
+                }
+                else {
+                    sendStudentResult.add(
+                        Marks(
+                            text.toString().toInt(),
+                            studentId
+                        )
+                    )
+                }
+            }
+        }
+
+    }
 }

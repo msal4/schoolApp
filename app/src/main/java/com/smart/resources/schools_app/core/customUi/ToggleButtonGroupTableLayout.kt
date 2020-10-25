@@ -19,8 +19,7 @@ class ToggleButtonGroupTableLayout : TableLayout, View.OnClickListener {
     /**
      * @param context
      */
-    constructor(context: Context?) : super(context) {        // TODO Auto-generated constructor stub
-    }
+    constructor(context: Context?) : super(context)
 
     /**
      * @param context
@@ -29,8 +28,7 @@ class ToggleButtonGroupTableLayout : TableLayout, View.OnClickListener {
     constructor(context: Context?, attrs: AttributeSet?) : super(
         context,
         attrs
-    ) {        // TODO Auto-generated constructor stub
-    }
+    )
 
     override fun onClick(v: View) {
         setChecked(v as RadioButton)

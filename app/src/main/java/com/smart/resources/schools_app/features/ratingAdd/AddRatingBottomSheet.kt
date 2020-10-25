@@ -12,7 +12,6 @@ import com.smart.resources.schools_app.databinding.BottomSheetAddRatingBinding
 import com.smart.resources.schools_app.features.rating.RatingModel
 import com.smart.resources.schools_app.features.dateTimePickers.DatePickerFragment
 
-// TODO: add scrolling when page opens
 class AddRatingBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetAddRatingBinding
     private lateinit var ratingModel: RatingModel
@@ -43,7 +42,6 @@ class AddRatingBottomSheet : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // TODO: check if working
         binding = BottomSheetAddRatingBinding.inflate(inflater, container, false)
 
         arguments?.apply {

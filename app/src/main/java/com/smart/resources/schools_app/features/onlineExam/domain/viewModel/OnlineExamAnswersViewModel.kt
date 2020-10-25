@@ -20,6 +20,7 @@ import com.smart.resources.schools_app.features.students.models.Student
 import com.smart.resources.schools_app.features.students.models.StudentWithAnswerStatus
 import com.smart.resources.schools_app.features.students.usecases.IGetStudentsWithAnswerStatus
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentTeacherModelUseCase
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 
 class OnlineExamAnswersViewModel @ViewModelInject constructor(
@@ -40,7 +41,9 @@ class OnlineExamAnswersViewModel @ViewModelInject constructor(
         emit(fullClassNames)
     }
     val selectedClassPos = MutableLiveData(-1)
-    val students: LiveData<List<StudentWithAnswerStatus>> = selectedClassPos.asFlow().map {
+    val students: LiveData<List<StudentWithAnswerStatus>> = selectedClassPos.asFlow()
+        .distinctUntilChanged()
+        .map {
         listState.setLoading(true)
         val studentsList = if (it != null && it.isValidIndex(classModels.size)) {
             getClassStudents(classModels[it].classId)

@@ -11,7 +11,7 @@ abstract class BaseOnlineExam{
     abstract val subjectName: String
     abstract val examDate: LocalDateTime
     abstract val examDuration: Duration
-    abstract val numberOfRequiredQuestions: Int // TODO: change how its displayed
+    abstract val numberOfRequiredQuestions: Int
     abstract val examStatus: OnlineExamStatus
 }
 

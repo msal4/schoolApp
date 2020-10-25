@@ -145,7 +145,7 @@ class OnlineExamsFragment : Fragment() {
                         ExamPaperFragment.newInstance(parentFragmentManager, onlineExam)
                     }
                 }.show(parentFragmentManager, "")
-            }else{
+            }else if(onlineExam.examStatus == OnlineExamStatus.COMPLETED){
                 ExamPaperFragment.newInstance(parentFragmentManager, onlineExam)
             }
         }
