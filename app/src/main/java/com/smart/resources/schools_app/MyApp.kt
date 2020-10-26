@@ -23,6 +23,7 @@ class MyApp : Application() {
     @Inject
     lateinit var authorizationInterceptor: AuthorizationInterceptor
 
+    lateinit var crashApp:Any
     override fun onCreate() {
         super.onCreate()
 
@@ -35,6 +36,7 @@ class MyApp : Application() {
 
         // OneSignal Initialization
         initializeOneSignal()
+        
     }
 
     private fun initializeOneSignal() {
