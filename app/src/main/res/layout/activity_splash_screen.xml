@@ -26,11 +26,10 @@
                 android:id="@+id/logo"
                 android:transitionName="@string/logo_trans"
                 android:layout_margin="24dp"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/img_logo"
+                android:layout_width="@dimen/splash_screen_logo_size"
+                android:layout_height="@dimen/splash_screen_logo_size"
+                android:src="@drawable/logo_img"
                 android:layout_gravity="center" />
-
         </FrameLayout>
 
 

@@ -321,7 +321,7 @@
                     android:layout_height="34dp"
                     android:layout_marginEnd="16dp"
                     android:srcUrl="@{itemModel.schoolImage}"
-                    tools:src="@drawable/img_logo" />
+                    tools:src="@drawable/logo_img" />
 
                 <TextView
                     android:id="@+id/schoolNameText"
@@ -333,9 +333,6 @@
                     tools:text="مدرسة المصادر الذكية" />
 
             </LinearLayout>
-
-
-
 
             <View
                 android:id="@+id/chainHolder"
