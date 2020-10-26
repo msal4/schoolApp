@@ -27,9 +27,7 @@ object AppModule {
             AppDatabase::class.java,
             AppDatabase.DATABASE_NAME
         )
-            .addMigrations(
-                MIGRATION_1_2       // TODO: test migration
-            )
+            .fallbackToDestructiveMigration()
             .allowMainThreadQueries() // TODO: could be removed
             .build()
     }
