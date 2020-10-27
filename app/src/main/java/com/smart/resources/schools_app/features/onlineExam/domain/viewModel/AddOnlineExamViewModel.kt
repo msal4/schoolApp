@@ -13,9 +13,9 @@ import com.smart.resources.schools_app.core.extentions.filterIndexes
 import com.smart.resources.schools_app.core.myTypes.Event
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
 import com.smart.resources.schools_app.core.typeConverters.room.QuestionType
-import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.CompleteOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.model.Question
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.AddOnlineExam
+import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.CompleteOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.IAddOnlineExamUseCase
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentTeacherModelUseCase
@@ -36,7 +36,7 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
 
     private val _showErrors = MutableLiveData<Boolean>(false)
     private val _isLoading = MutableLiveData<Event<Boolean>>(Event(false))
-    private val _questions = MutableLiveData<List<Question>>()
+    private val _questions = MutableLiveData<List<Question>>(emptyList())
     private val _errorMsgEvent = MutableLiveData<Event<Int?>>()
     private val _examAddedEvent = MutableLiveData<Event<Boolean>>()
 
