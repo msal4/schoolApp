@@ -1,12 +1,13 @@
 package com.smart.resources.schools_app.features.youtubePlayer
 
 import android.app.ActivityManager
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.haytham.coder.extensions.hideSystemUi
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
@@ -20,10 +21,10 @@ import com.smart.resources.schools_app.databinding.ActivityYoutubePlayerBinding
 class YoutubePlayerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityYoutubePlayerBinding
     private val url: String? by lazy { intent.getStringExtra(EXTRA_URL) }
-    private var mBackstackLost= false
+    private var mBackstackLost = false
 
     companion object {
-        private const val EXTRA_URL= "extraYoutubeUrl"
+        private const val EXTRA_URL = "extraYoutubeUrl"
         fun newInstance(context: Context, youtubeUrl: String) {
             val intent = Intent(context, YoutubePlayerActivity::class.java).apply {
                 putExtra(EXTRA_URL, youtubeUrl)
@@ -37,6 +38,18 @@ class YoutubePlayerActivity : AppCompatActivity() {
         hideSystemUi()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_youtube_player)
         setupPlayer()
+        setupPipIcon()
+    }
+
+    private fun setupPipIcon() {
+        binding.apply {
+            layout.removeView(pipIcon)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                youtubePlayerView.getPlayerUiController().addView(pipIcon)
+                pipIcon.setOnClickListener { enterPip() }
+            }
+        }
     }
 
     private fun setupPlayer() {
@@ -56,7 +69,11 @@ class YoutubePlayerActivity : AppCompatActivity() {
     }
 
     override fun onUserLeaveHint() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+        enterPip()
+    }
+
+    private fun enterPip() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             enterPictureInPictureMode()
         }
     }
@@ -65,8 +82,12 @@ class YoutubePlayerActivity : AppCompatActivity() {
         isInPictureInPictureMode: Boolean,
         newConfig: Configuration?
     ) {
-        if (! isInPictureInPictureMode) {
+        if (isInPictureInPictureMode) {
+            binding.pipIcon.isVisible = false
+        } else {
+            binding.pipIcon.isVisible = true
             mBackstackLost = true
+            hideSystemUi()
         }
     }
 
