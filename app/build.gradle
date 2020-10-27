@@ -178,6 +178,7 @@ dependencies {
 
     // for curved image view
     implementation 'com.github.developer-shivam:Crescento:1.2.1'
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
 
     implementation 'com.onesignal:OneSignal:[3.15.0, 3.99.99]'
 

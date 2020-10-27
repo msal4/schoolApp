@@ -155,5 +155,6 @@
     <string name="delete_confirmation">هل انت متأكد من الحذف؟</string>
     <string name="exam_finish_confirmation">هل انت متأكد من انهاء الامتحان؟</string>
     <string name="exam_activation_confirmation">هل انت متأكد من تفعيل الامتحان؟</string>
+    <string name="invalid_url">الرابط غير صالح!</string>
 
 </resources>

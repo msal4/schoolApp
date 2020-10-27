@@ -8,11 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import com.haytham.coder.extensions.openUrl
+import com.haytham.coder.extensions.toString
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.core.activity.SectionActivity
-import androidx.lifecycle.observe
+import com.smart.resources.schools_app.features.youtubePlayer.YoutubePlayerActivity
 
 class LectureFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
@@ -63,11 +64,16 @@ class LectureFragment : Fragment() {
     }
 
     private fun onLectureClicked(lectureModel: LectureModel) {
-        try {
-            lectureModel.url?.openUrl(requireContext())
-        } catch (e: Exception) {
-            (binding.root as ViewGroup).showSnackBar(e.message.toString())
+        if(lectureModel.url.isNullOrBlank()){
+            binding.layout.showSnackBar(R.string.invalid_url.toString(requireContext()))
+        }else {
+            YoutubePlayerActivity.newInstance(requireContext(), lectureModel.url!!)
         }
+//        try {
+//            lectureModel.url?.openUrl(requireContext())
+//        } catch (e: Exception) {
+//            (binding.root as ViewGroup).showSnackBar(e.message.toString())
+//        }
     }
 
 }
