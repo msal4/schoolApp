@@ -36,11 +36,9 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
 
     private val _showErrors = MutableLiveData<Boolean>(false)
     private val _isLoading = MutableLiveData<Event<Boolean>>(Event(false))
-    private val _questions =
-        MutableLiveData<List<Question>>(dummyQuestions) // TODO: remove initial data
+    private val _questions = MutableLiveData<List<Question>>()
     private val _errorMsgEvent = MutableLiveData<Event<Int?>>()
     private val _examAddedEvent = MutableLiveData<Event<Boolean>>()
-
 
     private val teacherModel by lazy {
         getCurrentTeacherModelUseCase()
