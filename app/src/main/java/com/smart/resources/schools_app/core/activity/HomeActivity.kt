@@ -5,18 +5,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import com.haytham.coder.extensions.decodeTokenBody
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.bindingAdapters.setAccountImage
-import com.smart.resources.schools_app.databinding.ActivityHomeBinding
-import com.smart.resources.schools_app.features.profile.ProfileActivity
 import com.smart.resources.schools_app.core.myTypes.Section
 import com.smart.resources.schools_app.core.myTypes.UserType
+import com.smart.resources.schools_app.databinding.ActivityHomeBinding
+import com.smart.resources.schools_app.features.profile.ProfileActivity
 import com.smart.resources.schools_app.features.users.data.UserRepository
 import org.json.JSONObject
-import java.lang.Exception
 import java.net.URI
 
 
@@ -65,9 +64,13 @@ class HomeActivity : BaseActivity(){
 
 
     fun imageClick(view: View){
-        ProfileActivity.newInstance(
-            this
-        )
+        binding.apply {
+            ProfileActivity.newInstanceWithTrans(
+                this@HomeActivity,
+                Pair(profileImage, profileImage.transitionName),
+                Pair(schoolName, schoolName.transitionName),
+            )
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

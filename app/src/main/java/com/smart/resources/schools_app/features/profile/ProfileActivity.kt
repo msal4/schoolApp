@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.haytham.coder.extensions.GET_IMAGE_REQUEST
@@ -23,6 +25,25 @@ class ProfileActivity : BaseActivity() {
     private lateinit var binding: ActivityProfileBinding
     private lateinit var viewModel: ProfileViewModel
 
+    companion object Factory {
+        const val REQUEST_IS_PROFILE_IMAGE_UPDATED = 0
+
+        fun newInstance(activity: Activity) {
+            val intent = Intent(activity, ProfileActivity::class.java)
+            activity.startActivityForResult(
+                intent,
+                REQUEST_IS_PROFILE_IMAGE_UPDATED
+            )
+        }
+
+        fun newInstanceWithTrans(activity: Activity, vararg pairs: Pair<View, String>) {
+            Intent(activity, ProfileActivity::class.java).apply {
+                val ao =
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(activity, *pairs)
+                activity.startActivityForResult(this, REQUEST_IS_PROFILE_IMAGE_UPDATED, ao.toBundle())
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +70,7 @@ class ProfileActivity : BaseActivity() {
 
             certificateBar.setOnClickListener(::openCertificateImage)
             model= viewModel
+            executePendingBindings()
         }
     }
 
@@ -64,17 +86,7 @@ class ProfileActivity : BaseActivity() {
 
     private fun getPerson()= UserRepository.instance.getUser()
 
-    companion object Factory {
-        const val REQUEST_IS_PROFILE_IMAGE_UPDATED = 0
 
-        fun newInstance(activity: Activity) {
-            val intent = Intent(activity, ProfileActivity::class.java)
-            activity.startActivityForResult(
-                intent,
-                REQUEST_IS_PROFILE_IMAGE_UPDATED
-            )
-        }
-    }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

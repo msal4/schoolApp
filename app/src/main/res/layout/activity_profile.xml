@@ -120,7 +120,6 @@
                 android:text="@{itemModel.name}"
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
-                android:textFontWeight="900"
                 android:textSize="@dimen/profileAttributeTitleSize"
                 app:layout_constraintBottom_toTopOf="@+id/profileImage"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -339,6 +338,7 @@
                     tools:src="@drawable/logo_img" />
 
                 <TextView
+                    android:transitionName="@string/transition_school_name"
                     android:id="@+id/schoolNameText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

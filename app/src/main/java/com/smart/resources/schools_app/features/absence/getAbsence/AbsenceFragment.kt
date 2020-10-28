@@ -5,24 +5,20 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
-import com.haytham.coder.extensions.hide
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.myTypes.*
-import androidx.lifecycle.observe
+import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
-import com.smart.resources.schools_app.features.absence.StudentAbsenceModel
 import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
 import com.smart.resources.schools_app.features.users.data.UserRepository
-import com.smart.resources.schools_app.core.activity.SectionActivity
 
 class AbsenceFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
     private val viewModel: AbsenceViewModel by viewModels()
 
     companion object {
-        fun newInstance(fm:FragmentManager){
+        fun newInstance(fm: FragmentManager) {
 
-            val fragment=
+            val fragment =
                 AbsenceFragment()
 
             fm.beginTransaction().apply {
@@ -36,23 +32,26 @@ class AbsenceFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false)
+        binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = this@AbsenceFragment
+            listState = viewModel.listState
+
+            viewModel.getAbsence().observe(viewLifecycleOwner, {
+                if (it == null) return@observe
+                errorText.text = ""
+                binding.recyclerView.adapter = AbsenceRecyclerAdapter(it)
+                }
+            )
+        }
+        
         (activity as SectionActivity).setCustomTitle(R.string.absence)
         setHasOptionsMenu(true)
-
-        setupViewModel()
         return binding.root
     }
 
-    private fun setupViewModel() {
-
-        viewModel.apply {
-                getAbsence().observe(viewLifecycleOwner, {onAbsenceDownload(it)})
-            }
-    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if(UserRepository.instance.getCurrentUserAccount()?.userType == 1) {
+        if (UserRepository.instance.getCurrentUserAccount()?.userType == 1) {
             inflater.inflate(R.menu.menu_add_btn, menu)
         }
 
@@ -60,26 +59,10 @@ class AbsenceFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.addMenuItem-> fragmentManager?.let { AddAbsenceFragment.newInstance(it) }
+        when (item.itemId) {
+            R.id.addMenuItem -> fragmentManager?.let { AddAbsenceFragment.newInstance(it) }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private  fun onAbsenceDownload(result: MyResult<List<StudentAbsenceModel>>) {
-        var errorMsg = ""
-        when (result) {
-            is Success -> {
-                if (result.data.isNullOrEmpty()) errorMsg = getString(R.string.no_student_absence)
-                else {
-                    binding.recyclerView.adapter= AbsenceRecyclerAdapter(result.data)
-                }
-            }
-            is ResponseError -> errorMsg = result.combinedMsg
-            is ConnectionError -> errorMsg = getString(R.string.connection_error)
-        }
-
-        binding.errorText.text = errorMsg
-        binding.progressIndicator.hide()
-    }
 }
