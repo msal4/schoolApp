@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.haytham.coder.extensions.GET_IMAGE_REQUEST
@@ -15,10 +14,10 @@ import com.smart.resources.schools_app.core.activity.BaseActivity
 import com.smart.resources.schools_app.core.bindingAdapters.loadImageUrl
 import com.smart.resources.schools_app.core.bindingAdapters.setAccountImage
 import com.smart.resources.schools_app.databinding.ActivityProfileBinding
-import com.smart.resources.schools_app.features.users.presentation.AccountsDialog
-import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.smart.resources.schools_app.features.imageViewer.ImageViewerActivity
 import com.smart.resources.schools_app.features.users.data.TeacherModel
+import com.smart.resources.schools_app.features.users.data.UserRepository
+import com.smart.resources.schools_app.features.users.presentation.AccountsDialog
 
 class ProfileActivity : BaseActivity() {
     private lateinit var binding: ActivityProfileBinding
@@ -47,7 +46,6 @@ class ProfileActivity : BaseActivity() {
                 )
             }
             setResult(Activity.RESULT_OK)
-            setSupportActionBar(binding.toolbar)
 
             certificateBar.setOnClickListener(::openCertificateImage)
             model= viewModel

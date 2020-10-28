@@ -42,15 +42,23 @@
             android:clipToPadding="false"
             tools:context=".features.profile.ProfileActivity">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+            <FrameLayout
+                android:id="@+id/topBar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_profile_toolbar"
+                android:layout_height="@dimen/profile_top_bar_height"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
+
+                <developer.shivam.crescento.CrescentoImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:gradientStartColor="@color/colorPrimaryDark"
+                    app:gradientEndColor="@color/colorPrimary"
+                    app:curvature="@dimen/home_top_curvature"
+                    android:alpha="0.87"
+                    android:elevation="@dimen/item_elevation"/>
 
                 <TextView
                     android:id="@+id/titleText"
@@ -58,7 +66,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|top"
                     android:fontFamily="@font/monadi"
+                    android:layout_margin="@dimen/toolbar_item_margin"
                     android:includeFontPadding="true"
+                    android:elevation="@dimen/max_value"
+                    android:outlineProvider="none"
                     android:text="@string/profile"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/profileAttributeTitleSize" />
@@ -66,23 +77,27 @@
                 <ImageView
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:layout_gravity="top"
+                    android:layout_margin="@dimen/toolbar_item_margin"
+                    android:layout_gravity="top|start"
+                    android:elevation="@dimen/max_value"
+                    android:outlineProvider="none"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:onClick="selectMultiAccount"
                     android:src="@drawable/ic_multi_account_white_24dp" />
 
-            </androidx.appcompat.widget.Toolbar>
+            </FrameLayout>
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profileImage"
-                android:layout_width="110dp"
-                android:layout_height="110dp"
+                android:transitionName="@string/transition_profile_image"
+                android:layout_width="@dimen/profile_user_image_size"
+                android:layout_height="@dimen/profile_user_image_size"
                 android:layout_marginTop="170dp"
                 android:backgroundTint="@android:color/white"
                 android:background="@drawable/bg_circle_white"
                 android:elevation="8dp"
                 android:onClick="selectImage"
-                app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+                app:layout_constraintBottom_toBottomOf="@+id/topBar"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"

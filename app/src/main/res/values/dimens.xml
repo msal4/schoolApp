@@ -51,4 +51,8 @@
     <dimen name="home_top_curvature">15dp</dimen>
     <dimen name="question_answer_text_size">16sp</dimen>
     <dimen name="splash_screen_logo_size">100dp</dimen>
+    <dimen name="toolbar_item_margin">12dp</dimen>
+    <dimen name="profile_top_bar_height">180dp</dimen>
+    <dimen name="home_user_image_size">100dp</dimen>
+    <dimen name="profile_user_image_size">110dp</dimen>
 </resources>
