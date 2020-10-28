@@ -1,12 +1,18 @@
 package com.smart.resources.schools_app.features.addMark
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.myTypes.ConnectionError
+import com.smart.resources.schools_app.core.myTypes.ListState
+import com.smart.resources.schools_app.core.myTypes.ResponseError
+import com.smart.resources.schools_app.core.myTypes.Success
 import com.smart.resources.schools_app.core.network.RetrofitHelper
-import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.students.models.StudentWithMark
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
 
 
 class AddMarkViewModel(application: Application) : AndroidViewModel(application) {
@@ -31,8 +37,7 @@ class AddMarkViewModel(application: Application) : AndroidViewModel(application)
             listState.apply {
                 setLoading(true)
 
-                val result = GlobalScope.async {  RetrofitHelper.examClient.getResultsByExam(examId.toString()) }.toMyResult()
-                when (result) {
+                when (val result = RetrofitHelper.examClient.getResultsByExam(examId.toString())) {
                     is Success -> {
                         if (result.data.isNullOrEmpty())
                             setBodyError(c.getString(R.string.no_students))

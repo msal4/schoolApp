@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.callbacks.SwipeAdapter
 import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
@@ -20,15 +21,13 @@ import com.smart.resources.schools_app.features.homeworkSolution.data.model.Home
 import com.smart.resources.schools_app.features.homeworkSolution.presentation.fragments.AddHomeworkSolutionBottomSheet
 import com.smart.resources.schools_app.features.homeworkSolution.presentation.fragments.HomeworkSolutionFragment
 import com.smart.resources.schools_app.features.homeworkSolution.presentation.fragments.ShowHomeworkSolutionBottomSheet
-import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.smart.resources.schools_app.features.imageViewer.ImageViewerActivity
-import com.smart.resources.schools_app.core.activity.SectionActivity
+import com.smart.resources.schools_app.features.users.data.UserRepository
 
 class HomeworkFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
     private lateinit var adapter: HomeworkRecyclerAdapter
     private val viewModel: HomeworkViewModel by activityViewModels()
-
 
     companion object {
         fun newInstance(fm: FragmentManager) {
@@ -55,8 +54,8 @@ class HomeworkFragment : Fragment() {
                 if (it == null) return@Observer
                 errorText.text = ""
                 adapter.submitList(viewModel.homework.value)
-            })
-
+            }
+            )
         }
         adapter = HomeworkRecyclerAdapter(viewModel.isStudent).apply {
             onImageClicked = ::onImageClicked
@@ -67,13 +66,13 @@ class HomeworkFragment : Fragment() {
         (activity as SectionActivity).setCustomTitle(R.string.homework)
         setHasOptionsMenu(true)
         if (UserRepository.instance.getCurrentUserAccount()?.userType == 1) {
-            val touchHelper = ItemTouchHelper(SwipeAdapter(onSwiped= ::onSwiped))
+            val touchHelper = ItemTouchHelper(SwipeAdapter(onSwiped = ::onSwiped))
             touchHelper.attachToRecyclerView(binding.recyclerView)
         }
         return binding.root
     }
 
-    private fun onSwiped(swipeDirection:Int, viewHolder: RecyclerView.ViewHolder) {
+    private fun onSwiped(swipeDirection: Int, viewHolder: RecyclerView.ViewHolder) {
         viewModel.deleteHomework(viewHolder.adapterPosition)
     }
 
@@ -84,12 +83,12 @@ class HomeworkFragment : Fragment() {
     private fun onAnswerClicked(homeworkModel: HomeworkModel) {
         fragmentManager?.let {
             if (viewModel.isStudent) {
-                if(homeworkModel.solution == null) {
+                if (homeworkModel.solution == null) {
                     AddHomeworkSolutionBottomSheet.newInstance(homeworkModel.idHomework).apply {
                         show(it, "")
                         onSolutionAdded = ::onHomeworkSolutionAdded
                     }
-                }else{
+                } else {
                     ShowHomeworkSolutionBottomSheet.newInstance(homeworkModel.solution).show(it, "")
                 }
             } else {
@@ -97,10 +96,12 @@ class HomeworkFragment : Fragment() {
             }
         }
     }
+
     private fun onHomeworkSolutionAdded(homeworkSolution: HomeworkSolutionModel) {
         binding.layout.showSnackBar(getString(R.string.solution_added_successfully), false)
         viewModel.addSolution(homeworkSolution)
     }
+
     fun onError(errorMsg: String) {
         binding.layout.showSnackBar(errorMsg)
         adapter.notifyDataSetChanged()

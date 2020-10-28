@@ -1,11 +1,11 @@
 package com.smart.resources.schools_app.features.students
 
 import com.hadiyarajesh.flower.ApiResponse
+import com.smart.resources.schools_app.core.myTypes.MyResult
 import com.smart.resources.schools_app.features.students.models.Student
 import com.smart.resources.schools_app.features.students.models.StudentWithAnswerStatus
 import com.smart.resources.schools_app.features.students.models.StudentWithMark
 import kotlinx.coroutines.flow.Flow
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -16,7 +16,7 @@ interface StudentClient {
     }
 
     @GET("studentsByClass/{$CLASS_ID_PATH}")
-    suspend fun getStudentsMarksByClass(@Path(CLASS_ID_PATH) classId: String): Response<List<StudentWithMark>>
+    suspend fun getStudentsMarksByClass(@Path(CLASS_ID_PATH) classId: String): MyResult<List<StudentWithMark>>
 
     @GET("studentsByClass/{$CLASS_ID_PATH}")
     fun getStudentsByClassId(@Path(CLASS_ID_PATH) classId: String): Flow<ApiResponse<List<Student>>>

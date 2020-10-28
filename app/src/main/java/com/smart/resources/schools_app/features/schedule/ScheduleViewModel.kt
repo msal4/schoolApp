@@ -1,11 +1,17 @@
 package com.smart.resources.schools_app.features.schedule
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.myTypes.ConnectionError
+import com.smart.resources.schools_app.core.myTypes.ListState
+import com.smart.resources.schools_app.core.myTypes.ResponseError
+import com.smart.resources.schools_app.core.myTypes.Success
 import com.smart.resources.schools_app.core.network.RetrofitHelper
-import com.smart.resources.schools_app.core.myTypes.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
 
 
 class ScheduleViewModel(application: Application) : AndroidViewModel(application) {
@@ -26,7 +32,7 @@ class ScheduleViewModel(application: Application) : AndroidViewModel(application
             listState.apply {
                 setLoading(true)
 
-                when (val result = GlobalScope.async { RetrofitHelper.scheduleClient.fetchSchedule() }.toMyResult()) {
+                when (val result =  RetrofitHelper.scheduleClient.fetchSchedule() ) {
                     is Success -> {
                         if (result.data.isNullOrEmpty())
                             setBodyError(c.getString(R.string.no_schedule))

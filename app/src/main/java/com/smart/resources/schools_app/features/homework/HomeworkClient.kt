@@ -1,19 +1,19 @@
 package com.smart.resources.schools_app.features.homework
 
+import com.smart.resources.schools_app.core.myTypes.MyResult
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.Response
 import retrofit2.http.*
 
 interface HomeworkClient {
     @GET("classHomeworkStudent")
-    suspend fun fetchHomeworkWithSolution(): Response<List<HomeworkWithSolution>>
+    suspend fun fetchHomeworkWithSolution(): MyResult<List<HomeworkWithSolution>>
 
     @GET("classHomework")
-    suspend fun fetchHomework(): Response<List<HomeworkModel>>
+    suspend fun fetchHomework(): MyResult<List<HomeworkModel>>
 
     @DELETE("homework/{id}")
-    suspend fun deleteHomework(@Path("id") homeworkId: String?): Response<Unit>
+    suspend fun deleteHomework(@Path("id") homeworkId: String?): MyResult<Unit>
 
     @Multipart
     @POST("addHomework")
@@ -24,6 +24,6 @@ interface HomeworkClient {
         @Part("note") note: RequestBody,
         @Part attachment: MultipartBody.Part?,
         @Part("classId") classId: RequestBody
-    ): Response<HomeworkModel>
+    ): MyResult<HomeworkModel>
 
 }

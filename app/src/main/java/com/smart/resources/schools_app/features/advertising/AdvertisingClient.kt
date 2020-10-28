@@ -1,11 +1,11 @@
 package com.smart.resources.schools_app.features.advertising
 
-import retrofit2.Response
+import com.smart.resources.schools_app.core.myTypes.MyResult
 import retrofit2.http.GET
 
 interface AdvertisingClient {
     @GET("advertisements")
-    suspend fun fetchAdvertisements(): Response<List<AdvertisingModel>>
+    suspend fun fetchAdvertisements(): MyResult<List<AdvertisingModel>>
 
 
 }

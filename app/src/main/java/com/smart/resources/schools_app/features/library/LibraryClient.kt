@@ -1,9 +1,9 @@
 package com.smart.resources.schools_app.features.library
 
-import retrofit2.Response
+import com.smart.resources.schools_app.core.myTypes.MyResult
 import retrofit2.http.GET
 
 interface LibraryClient {
     @GET("classLibrary")
-    suspend fun fetchLib(): Response<List<LibraryModel>>
+    suspend fun fetchLib(): MyResult<List<LibraryModel>>
 }

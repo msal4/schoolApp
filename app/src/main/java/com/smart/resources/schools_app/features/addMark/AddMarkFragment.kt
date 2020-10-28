@@ -10,25 +10,22 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.observe
 import com.haytham.coder.extensions.hide
 import com.haytham.coder.extensions.show
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.activity.SectionActivity
+import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.core.myTypes.ConnectionError
 import com.smart.resources.schools_app.core.myTypes.ResponseError
 import com.smart.resources.schools_app.core.myTypes.Success
-import com.smart.resources.schools_app.core.myTypes.toMyResult
 import com.smart.resources.schools_app.core.network.RetrofitHelper
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.students.models.SendStudentResult
 import com.smart.resources.schools_app.features.students.models.StudentWithMark
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import androidx.lifecycle.observe
-import com.smart.resources.schools_app.core.extentions.showSnackBar
 
 class AddMarkFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
@@ -130,17 +127,8 @@ class AddMarkFragment : Fragment() {
                     withContext(Main) {
                         setToolbarLoading(true)
 
-
-                        val result =
-                            GlobalScope.async {
-                                RetrofitHelper.examClient.addMultiResult(
-                                    studentResult
-                                )
-                            }
-                                .toMyResult()
-
-
-                        when (result) {
+                        when (val result =
+                            RetrofitHelper.examClient.addMultiResult(studentResult)) {
                             is Success -> {
                                 onBackPressed()
                             }
@@ -150,12 +138,9 @@ class AddMarkFragment : Fragment() {
                             is ConnectionError -> {
                                 context?.getString(R.string.connection_error)
                                     ?.let { showErrorMsg(it) }
-
                             }
                         }
-
                         setToolbarLoading(false)
-
                     }
 
                 }

@@ -1,11 +1,17 @@
 package com.smart.resources.schools_app.features.library
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.myTypes.ConnectionError
+import com.smart.resources.schools_app.core.myTypes.ListState
+import com.smart.resources.schools_app.core.myTypes.ResponseError
+import com.smart.resources.schools_app.core.myTypes.Success
 import com.smart.resources.schools_app.core.network.RetrofitHelper
-import com.smart.resources.schools_app.core.myTypes.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
 
 
 class LibraryViewModel(application: Application) : AndroidViewModel(application){
@@ -25,8 +31,7 @@ class LibraryViewModel(application: Application) : AndroidViewModel(application)
 
     private fun fetchHomework(){
         viewModelScope.launch {
-            val result =
-                GlobalScope.async { RetrofitHelper.libraryClient.fetchLib() }.toMyResult()
+            val result = RetrofitHelper.libraryClient.fetchLib()
 
             listState.apply {
                 when (result) {

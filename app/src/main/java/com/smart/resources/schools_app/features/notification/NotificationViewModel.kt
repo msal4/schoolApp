@@ -1,12 +1,15 @@
 package com.smart.resources.schools_app.features.notification
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.network.RetrofitHelper
 import com.smart.resources.schools_app.core.myTypes.*
+import com.smart.resources.schools_app.core.network.RetrofitHelper
 import com.smart.resources.schools_app.features.users.data.UserRepository
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
 
 
 class NotificationViewModel(application: Application) : AndroidViewModel(application) {
@@ -33,10 +36,9 @@ class NotificationViewModel(application: Application) : AndroidViewModel(applica
                 setLoading(true)
 
 
-            val result = GlobalScope.async {
+            val result =
                 if(userType == UserType.STUDENT)getStudentNotifications(notificationType)
                 else  RetrofitHelper.notificationClient.fetchTeacherNotifications()
-            }.toMyResult()
 
 
                 when (result) {

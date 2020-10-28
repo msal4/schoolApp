@@ -4,11 +4,9 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.network.RetrofitHelper
 import com.smart.resources.schools_app.core.myTypes.*
+import com.smart.resources.schools_app.core.network.RetrofitHelper
 import com.smart.resources.schools_app.features.rating.RatingModel
-import com.smart.resources.schools_app.core.myTypes.ListState
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class AddRatingViewModel(application: Application, private val postListener: PostListener) :
@@ -32,10 +30,7 @@ class AddRatingViewModel(application: Application, private val postListener: Pos
     private suspend fun fetchStudents(classId: String): MutableList<RatingModel>? {
         listState.setLoading(true)
 
-        val studentsResult =
-            viewModelScope.async { RetrofitHelper.studentClient.getStudentsMarksByClass(classId) }
-                .toMyResult()
-        when (studentsResult) {
+        when (val studentsResult = RetrofitHelper.studentClient.getStudentsMarksByClass(classId)) {
             is Success -> {
                 if (studentsResult.data.isNullOrEmpty()) listState.setBodyError(c.getString(R.string.no_students))
                 else {
@@ -64,11 +59,8 @@ class AddRatingViewModel(application: Application, private val postListener: Pos
             postListener.onUploadStarted()
             viewModelScope.launch {
                 Logger.i("ratings: $it")
-                val result =
-                    async { RetrofitHelper.ratingClient.addRatings(it) }
-                        .toMyResult()
 
-                when (result) {
+                when (val result = RetrofitHelper.ratingClient.addRatings(it)) {
                     is Success -> postListener.onUploadCompleted()
                     is ResponseError -> postListener.onError(result.combinedMsg)
                     is ConnectionError -> postListener.onError(c.getString(R.string.connection_error))

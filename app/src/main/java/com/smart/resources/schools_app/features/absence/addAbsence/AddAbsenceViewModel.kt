@@ -4,13 +4,10 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.network.RetrofitHelper
 import com.smart.resources.schools_app.core.myTypes.*
+import com.smart.resources.schools_app.core.network.RetrofitHelper
 import com.smart.resources.schools_app.features.absence.AddAbsenceModel
 import com.smart.resources.schools_app.features.absence.PostAbsenceModel
-import com.smart.resources.schools_app.core.myTypes.ListState
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 
@@ -40,11 +37,8 @@ class AddAbsenceViewModel(application: Application, private val postListener: Po
         listState.setLoading(true)
 
         Logger.i("absence model: $postAbsenceModel")
-        val studentsResult =
-            viewModelScope.async { RetrofitHelper.studentClient.getStudentsMarksByClass(classId) }
-                .toMyResult()
 
-        when (studentsResult) {
+        when (val studentsResult = RetrofitHelper.studentClient.getStudentsMarksByClass(classId)) {
             is Success -> {
                 if (studentsResult.data.isNullOrEmpty()) listState.setBodyError(c.getString(R.string.no_students))
                 else {
@@ -70,10 +64,8 @@ class AddAbsenceViewModel(application: Application, private val postListener: Po
         Logger.i("uploading started")
         postListener.onUploadStarted()
         viewModelScope.launch {
-            val result =
-                GlobalScope.async { RetrofitHelper.absenceClient.addStudentAbsences(postAbsenceModel) }.toMyResult()
 
-            when (result) {
+            when (val result = RetrofitHelper.absenceClient.addStudentAbsences(postAbsenceModel)) {
                 is Success -> postListener.onUploadCompleted()
                 is ResponseError -> postListener.onError(result.combinedMsg)
                 is ConnectionError -> postListener.onError(c.getString(R.string.connection_error))

@@ -1,11 +1,17 @@
 package com.smart.resources.schools_app.features.rating
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.myTypes.ConnectionError
+import com.smart.resources.schools_app.core.myTypes.ListState
+import com.smart.resources.schools_app.core.myTypes.ResponseError
+import com.smart.resources.schools_app.core.myTypes.Success
 import com.smart.resources.schools_app.core.network.RetrofitHelper
-import com.smart.resources.schools_app.core.myTypes.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
 
 
 class RatingViewModel(application: Application) : AndroidViewModel(application) {
@@ -27,9 +33,7 @@ class RatingViewModel(application: Application) : AndroidViewModel(application) 
             listState.apply {
                 setLoading(true)
 
-                val result = GlobalScope.async {
-                    RetrofitHelper.ratingClient.fetchRating()
-                }.toMyResult()
+                val result = RetrofitHelper.ratingClient.fetchRating()
 
                 when (result) {
                     is Success -> {
