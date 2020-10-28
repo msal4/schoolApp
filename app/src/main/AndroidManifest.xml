@@ -18,6 +18,7 @@
         tools:targetApi="m">
         <activity android:name=".features.youtubePlayer.YoutubePlayerActivity"
             android:supportsPictureInPicture="true"
+            android:autoRemoveFromRecents="true"
             android:excludeFromRecents="true"
             android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
             tools:targetApi="n" />

@@ -92,7 +92,6 @@ class YoutubePlayerActivity : AppCompatActivity() {
     }
 
     override fun finish() {
-
         if (mBackstackLost) {
             navToLauncherTask(this)
         } else {
