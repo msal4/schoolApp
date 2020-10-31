@@ -16,7 +16,9 @@ class HomeworkRepository {
 
 
     suspend fun getTeacherHomework(): MyResult<List<HomeworkModel>> {
-        return RetrofitHelper.homeworkClient.fetchHomework()
+        val myRes= RetrofitHelper.homeworkClient.fetchHomework()
+        if (myRes is Success) homework.value = myRes.data.orEmpty().toMutableList()
+        return myRes
     }
 
     suspend fun getStudentHomework(): MyResult<List<HomeworkWithSolution>> {
