@@ -24,7 +24,7 @@
             tools:targetApi="n" />
 
         <activity
-            android:name=".features.login.SplashScreenActivity"
+            android:name=".features.splashScreen.SplashScreenActivity"
             android:noHistory="true"
             android:screenOrientation="portrait"
             android:theme="@style/SplashScreenTheme">
@@ -35,6 +35,11 @@
             </intent-filter>
 
         </activity>
+
+        <activity
+            android:name=".features.onBoarding.OnBoardingActivity"
+            android:noHistory="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".features.imageViewer.ImageViewerActivity"
             android:label="@string/title_activity_full_image" />

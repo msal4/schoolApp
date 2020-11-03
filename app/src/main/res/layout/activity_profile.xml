@@ -94,7 +94,7 @@
                 android:layout_height="@dimen/profile_user_image_size"
                 android:layout_marginTop="170dp"
                 android:backgroundTint="@android:color/white"
-                android:background="@drawable/bg_circle_white"
+                android:background="@drawable/bg_circle_blue_gradient"
                 android:elevation="8dp"
                 android:onClick="selectImage"
                 app:layout_constraintBottom_toBottomOf="@+id/topBar"

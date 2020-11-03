@@ -32,6 +32,9 @@
     <color name="brown_900_alpha_87">#DE392A2A</color>
     <color name="green_300_alpha_87">#DE81C784</color>
      <color name="cyan_200_alpha_87">#DE73BFE1</color>
+    <color name="swamp_green_alpha_87">#DEA8B381</color>
+    <color name="bali_hai_alpha_87">#DE81A9B3</color>
+    <color name="Bouquet_alpha_87">#DEB381A9</color>
 
     <color name="swipeForOptionsColor">@color/orange_200_alpha_87</color>
     <color name="swipeToDeleteColor">@color/lightRed</color>
@@ -47,6 +50,10 @@
     <color name="activateMenuItemBackgroundColor">@color/green_300_alpha_87</color>
     <color name="finishMenuItemBackgroundColor">@color/brown_900_alpha_87</color>
     <color name="deleteMenuItemBackgroundColor">@color/swipeToDeleteColor</color>
+
+    <color name="colorOnBoarding1">@color/swamp_green_alpha_87</color>
+    <color name="colorOnBoarding2">@color/bali_hai_alpha_87</color>
+    <color name="colorOnBoarding3">@color/Bouquet_alpha_87</color>
 
     <color name="snackbar_background">#383E4A</color>
     <color name="checkMarkColor">@color/green_300_alpha_87</color>

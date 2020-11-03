@@ -35,7 +35,6 @@ class MyApp : Application() {
 
         // OneSignal Initialization
         initializeOneSignal()
-
     }
 
     private fun initializeOneSignal() {

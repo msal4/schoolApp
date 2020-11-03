@@ -62,6 +62,31 @@ class SharedPrefHelper @Inject constructor(@ApplicationContext context: Context)
             }
         }
 
+    var firstStudentLogin: Boolean
+        get() = try {
+            mSharedPreferences.getBoolean(FIRST_STUDENT_LOGIN, true)
+        } catch (e: ClassCastException) {
+            true
+        }
+        set(firstRun) {
+            mSharedPreferences.edit {
+                putBoolean(FIRST_STUDENT_LOGIN, firstRun)
+            }
+        }
+
+
+    var firstTeacherLogin: Boolean
+        get() = try {
+            mSharedPreferences.getBoolean(FIRST_TEACHER_LOGIN, true)
+        } catch (e: ClassCastException) {
+            true
+        }
+        set(firstRun) {
+            mSharedPreferences.edit {
+                putBoolean(FIRST_TEACHER_LOGIN, firstRun)
+            }
+        }
+
 
     var encryptionKey: String
         get() = try {
@@ -94,6 +119,8 @@ class SharedPrefHelper @Inject constructor(@ApplicationContext context: Context)
         private const val PREF_NAME = "appSettingsPref"
         private const val USER_ID = "userId"
         private const val FIRST_RUN = "firstRun"
+        private const val FIRST_STUDENT_LOGIN = "firstStudentLogin"
+        private const val FIRST_TEACHER_LOGIN = "firstTeacherLogin"
         private const val ENCRYPTION_KEY = "encryptionKey"
         private const val INITIALIZATION_VECTOR = "initializationVector"
 

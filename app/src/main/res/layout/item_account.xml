@@ -26,7 +26,7 @@
             android:layout_height="50dp"
             android:accountUrl="@{itemModel.img}"
             android:backgroundTint="@android:color/white"
-            android:background="@drawable/bg_circle_white"
+            android:background="@drawable/bg_circle_blue_gradient"
             android:elevation="8dp" />
 
         <TextView

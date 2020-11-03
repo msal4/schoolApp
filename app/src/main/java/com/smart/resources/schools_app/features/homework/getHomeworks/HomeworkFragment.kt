@@ -31,8 +31,7 @@ class HomeworkFragment : Fragment() {
 
     companion object {
         fun newInstance(fm: FragmentManager) {
-            val fragment =
-                HomeworkFragment()
+            val fragment = HomeworkFragment()
 
             fm.beginTransaction().apply {
                 add(R.id.fragmentContainer, fragment)
@@ -54,7 +53,7 @@ class HomeworkFragment : Fragment() {
                 if (it == null) return@Observer
                 errorText.text = ""
                 adapter.submitList(viewModel.homework.value)
-            }
+                }
             )
         }
         adapter = HomeworkRecyclerAdapter(viewModel.isStudent).apply {
@@ -109,10 +108,8 @@ class HomeworkFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         if (UserRepository.instance.getCurrentUserAccount()?.userType == 1) {
-
             inflater.inflate(R.menu.menu_add_btn, menu)
         }
-
         super.onCreateOptionsMenu(menu, inflater)
     }
 

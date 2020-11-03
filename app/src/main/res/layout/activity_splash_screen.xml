@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -11,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/bg_splash_screen"
-        tools:context="com.smart.resources.schools_app.features.login.SplashScreenActivity">
+        tools:context="com.smart.resources.schools_app.features.splashScreen.SplashScreenActivity">
 
         <FrameLayout
             android:id="@+id/logoFrame"

@@ -158,5 +158,20 @@
     <string name="invalid_url">الرابط غير صالح!</string>
     <string name="transition_profile_image">profileImageTransition</string>
     <string name="transition_school_name">schoolNameTransition</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="on_boarding_title_student_1">تابع دراستك</string>
+    <string name="on_boarding_description_student_1">يمكنك معنا متابعة الواجبات، والامتحانات، والجدول، والتقييم، والغياب، واعلانات المدرسة</string>
+    <string name="on_boarding_title_student_2">ما يفوتك شي ويانة</string>
+    <string name="on_boarding_description_student_2">سوف تصلك اشعارات بكل ما هو جديد لكي تبقى على اطلاع</string>
+    <string name="on_boarding_title_3">امتحن بالتطبيق</string>
+    <string name="on_boarding_description_student_3">يمكنك الان الامتحان من خلال التطبيق ومشاهدة جميع اجاباتك السابقة معنا</string>
+    <string name="skip">تخطي</string>
+    <string name="start">ابدأ</string>
+    <string name="on_boarding_title_teacher_1">درس طلابك</string>
+    <string name="on_boarding_description_teacher_1">يمكنك معنا اضفة واجبات، امتحانات، تقييم، او غيابات للطلاب</string>
+    <string name="on_boarding_title_teacher_2">ما يفوت طلابك شي</string>
+    <string name="on_boarding_description_teacher_2">سوف تصل طلابك اشعارات بكل ما يتم اضافته من جديد</string>
+    <string name="on_boarding_description_teacher_3">يمكنك الان اضافة امتحانات واسئلة لطلابك ومشاهدة اجوبتهم من خلال التطبيق</string>
 
 </resources>
