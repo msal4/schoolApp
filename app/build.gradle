@@ -32,11 +32,11 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
     defaultConfig {
-        applicationId "com.smart.resources.schools.smart"
+        applicationId "com.smart.resources.schools.smart.new"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 18
-        versionName "3.1.2"
+        versionCode 1
+        versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         javaCompileOptions {

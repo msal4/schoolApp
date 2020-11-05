@@ -34,6 +34,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:5445493134:android:d189feec6b18d7bc2104df",
+        "android_client_info": {
+          "package_name": "com.smart.resources.schools.smart.new"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "5445493134-o32kdegc2hkb2tfp1q1a8u1oimc2hpe4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAx1_jOF6I7_U0b54yEZoZkxvxOqYssRSo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "5445493134-o32kdegc2hkb2tfp1q1a8u1oimc2hpe4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
