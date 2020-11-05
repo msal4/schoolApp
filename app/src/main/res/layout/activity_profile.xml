@@ -4,7 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
     <data>
         <import type="android.view.View" />
         <import type="com.smart.resources.schools_app.features.profile.CertificateState" />
@@ -22,17 +21,11 @@
             type="com.smart.resources.schools_app.features.profile.ProfileViewModel" />
     </data>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layoutDirection="rtl">
-
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fillViewport="true">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layoutDirection="rtl">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/rootLayout"
@@ -45,7 +38,7 @@
             <FrameLayout
                 android:id="@+id/topBar"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/profile_top_bar_height"
+                android:layout_height="@dimen/home_top_bar_height"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -95,7 +88,7 @@
                 android:layout_marginTop="170dp"
                 android:backgroundTint="@android:color/white"
                 android:background="@drawable/bg_circle_blue_gradient"
-                android:elevation="8dp"
+                android:elevation="5dp"
                 android:onClick="selectImage"
                 app:layout_constraintBottom_toBottomOf="@+id/topBar"
                 app:layout_constraintHorizontal_bias="0.498"
@@ -103,30 +96,159 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/studentCheckBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="4dp"
-                android:drawablePadding="@dimen/edit_text_drawable_padding"
-                android:fontFamily="@font/monadi"
-                android:padding="@dimen/edit_text_padding"
-                android:shadowColor="@color/shadowColor"
-                android:shadowDx="1"
-                android:shadowDy="4"
-                android:shadowRadius="8"
-                android:text="@{itemModel.name}"
-                android:textAlignment="center"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/profileAttributeTitleSize"
-                app:layout_constraintBottom_toTopOf="@+id/profileImage"
+            <FrameLayout
+                android:id="@+id/profileCard"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="24dp"
+                android:background="@drawable/bg_card_profile"
+                android:elevation="@dimen/item_elevation"
+                app:layout_constraintBottom_toTopOf="@id/certificateCard"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintVertical_chainStyle="packed"
-                tools:text="@string/username" />
+                app:layout_constraintTop_toBottomOf="@id/profileImage" />
 
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/schoolImage"
+                android:layout_width="@dimen/school_logo_image_size"
+                android:layout_height="@dimen/school_logo_image_size"
+                android:elevation="@dimen/max_value"
+                android:outlineProvider="none"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintStart_toStartOf="@id/profileCard"
+                app:layout_constraintTop_toTopOf="@+id/profileCard"
+                android:src="@drawable/logo_img"
+                tools:src="@drawable/logo_img"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/schoolNameText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="24dp"
+                android:alpha="0.87"
+                android:elevation="@dimen/max_value"
+                android:outlineProvider="none"
+                android:text="@{itemModel.schoolName}"
+                android:textAlignment="viewStart"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:transitionName="@string/transition_school_name"
+                app:layout_constraintBottom_toBottomOf="@id/schoolImage"
+                app:layout_constraintEnd_toEndOf="@+id/profileCard"
+                app:layout_constraintStart_toEndOf="@id/schoolImage"
+                app:layout_constraintTop_toTopOf="@id/schoolImage"
+                tools:text="مدرسة المصادر الذكية" />
+
+            <View
+                android:id="@+id/schoolDivider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:alpha="0.1"
+                android:elevation="@dimen/max_value"
+                android:outlineProvider="none"
+                android:background="@color/colorPrimary"
+                app:layout_constraintStart_toEndOf="@id/informationSectionTitle"
+                app:layout_constraintEnd_toEndOf="@id/profileCard"
+                app:layout_constraintTop_toTopOf="@id/informationSectionTitle"
+                app:layout_constraintBottom_toBottomOf="@id/informationSectionTitle"/>
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/nameTitle"
+                android:drawableStart="@drawable/ic_outline_person_24"
+                android:text="@{@string/name + ':'}"
+                app:layout_constraintStart_toStartOf="@id/profileCard"
+                app:layout_constraintTop_toBottomOf="@+id/informationSectionTitle"
+                style="@style/profile_title_text_style" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/ageTitle"
+                android:drawableStart="@drawable/ic_outline_calendar_24"
+                android:text="@{@string/age + ':'}"
+                app:layout_constraintStart_toStartOf="@id/profileCard"
+                app:layout_constraintTop_toBottomOf="@id/nameTitle"
+                style="@style/profile_title_text_style" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/classTitle"
+                android:drawableStart="@drawable/ic_people_outline_24"
+                android:text="@{@string/the_class + ':'}"
+                app:layout_constraintStart_toStartOf="@id/profileCard"
+                app:layout_constraintTop_toBottomOf="@id/ageTitle"
+                style="@style/profile_title_text_style" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/phoneTitleNew"
+                android:drawableStart="@drawable/ic_outline_phone_24"
+                android:text="@{@string/phone + ':'}"
+                app:layout_constraintStart_toStartOf="@id/profileCard"
+                app:layout_constraintTop_toBottomOf="@id/classTitle"
+                style="@style/profile_title_text_style" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/emailTitleNew"
+                android:drawableStart="@drawable/ic_email_black_24"
+                android:text="@{@string/email + ':'}"
+                app:layout_constraintStart_toStartOf="@id/profileCard"
+                app:layout_constraintTop_toBottomOf="@id/phoneTitleNew"
+                style="@style/profile_title_text_style" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/informationSectionTitle"
+                android:text="@string/information"
+                app:layout_constraintStart_toStartOf="@id/profileCard"
+                app:layout_constraintTop_toBottomOf="@id/schoolImage"
+                style="@style/profile_section_title_style" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/studentName"
+                android:text="@{itemModel.name}"
+                app:layout_constraintStart_toEndOf="@id/nameTitle"
+                app:layout_constraintTop_toTopOf="@id/nameTitle"
+                app:layout_constraintBottom_toBottomOf="@id/nameTitle"
+                style="@style/profile_content_text_style" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/studentAge"
+                android:text="@{itemModel.age}"
+                app:layout_constraintStart_toEndOf="@id/ageTitle"
+                app:layout_constraintTop_toTopOf="@id/ageTitle"
+                app:layout_constraintBottom_toBottomOf="@id/ageTitle"
+                style="@style/profile_content_text_style" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/studentClass"
+                android:text="@{itemModel.classesAsString}"
+                app:layout_constraintStart_toEndOf="@id/classTitle"
+                app:layout_constraintTop_toTopOf="@id/classTitle"
+                app:layout_constraintBottom_toBottomOf="@id/classTitle"
+                style="@style/profile_content_text_style" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/phoneNumber"
+                android:text="@{itemModel.phone}"
+                app:layout_constraintStart_toEndOf="@id/phoneTitleNew"
+                app:layout_constraintTop_toTopOf="@id/phoneTitleNew"
+                app:layout_constraintBottom_toBottomOf="@id/phoneTitleNew"
+                style="@style/profile_content_text_style" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/email"
+                android:text="@{itemModel.email}"
+                app:layout_constraintStart_toEndOf="@id/emailTitleNew"
+                app:layout_constraintTop_toTopOf="@id/emailTitleNew"
+                app:layout_constraintBottom_toBottomOf="@id/emailTitleNew"
+                style="@style/profile_content_text_style" />
 
             <TextView
                 android:id="@+id/sectionTitle"
@@ -134,7 +256,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="8dp"
-                android:drawableStart="@drawable/ic_classes_black_24"
+                android:drawableStart="@drawable/ic_people_outline_24"
                 android:drawablePadding="@dimen/edit_text_drawable_padding"
                 android:maxLength="30"
                 android:padding="@dimen/edit_text_padding"
@@ -196,23 +318,23 @@
                 app:layout_constraintVertical_chainStyle="spread" />
 
             <TextView
-                android:id="@+id/ageTitle"
+                android:id="@+id/ageTitleOld"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="8dp"
-                android:drawableStart="@drawable/ic_age_black_24dp"
+                android:drawableStart="@drawable/ic_outline_calendar_24"
                 android:drawablePadding="@dimen/edit_text_drawable_padding"
                 android:padding="@dimen/edit_text_padding"
                 android:text="@string/age"
                 android:textAlignment="viewStart"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/profileAttributeTitleSize"
-                app:layout_constraintBottom_toBottomOf="@+id/studentAge"
-                app:layout_constraintEnd_toStartOf="@id/studentAge"
+                app:layout_constraintBottom_toBottomOf="@+id/studentAgeOld"
+                app:layout_constraintEnd_toStartOf="@id/studentAgeOld"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/studentAge" />
+                app:layout_constraintTop_toTopOf="@+id/studentAgeOld" />
 
 
             <TextView
@@ -284,7 +406,7 @@
                 android:text="@{itemModel.gender}"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/profileAttributeSize"
-                app:layout_constraintBottom_toTopOf="@+id/studentAge"
+                app:layout_constraintBottom_toTopOf="@+id/studentAgeOld"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/genderTitle"
@@ -329,23 +451,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/profileImage">
 
-                <ImageView
-                    android:id="@+id/schoolImage"
-                    android:layout_width="34dp"
-                    android:layout_height="34dp"
-                    android:layout_marginEnd="16dp"
-                    android:srcUrl="@{itemModel.schoolImage}"
-                    tools:src="@drawable/logo_img" />
 
-                <TextView
-                    android:transitionName="@string/transition_school_name"
-                    android:id="@+id/schoolNameText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/monadi"
-                    android:text="@{itemModel.schoolName}"
-                    android:textSize="24sp"
-                    tools:text="مدرسة المصادر الذكية" />
 
             </LinearLayout>
 
@@ -397,7 +503,7 @@
 
 
             <TextView
-                android:id="@+id/studentAge"
+                android:id="@+id/studentAgeOld"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
@@ -408,7 +514,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/studentPhone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/ageTitle"
+                app:layout_constraintStart_toEndOf="@+id/ageTitleOld"
                 app:layout_constraintTop_toBottomOf="@+id/studentGender"
                 tools:text="24 سنة" />
 
@@ -427,7 +533,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/phoneTitle"
-                app:layout_constraintTop_toBottomOf="@+id/studentAge"
+                app:layout_constraintTop_toBottomOf="@+id/studentAgeOld"
                 tools:text="07812345676" />
 
             <TextView
@@ -447,68 +553,74 @@
                 app:layout_constraintStart_toEndOf="@+id/emailTitle"
                 app:layout_constraintTop_toBottomOf="@+id/studentPhone"
                 tools:text="test@gmail.com" />
+            
+            <FrameLayout
+                android:id="@+id/certificateCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card_profile"
+                app:layout_constraintTop_toBottomOf="@id/profileCard"
+                app:layout_constraintStart_toStartOf="@id/profileCard"
+                app:layout_constraintEnd_toEndOf="@id/profileCard"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="24dp">
 
+                <ProgressBar
+                    android:id="@+id/certificateProgressIndicator"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:visibility="@{model.certificateState == CertificateState.UNKNOWN? View.VISIBLE: View.GONE}"
+                    android:layout_gravity="end|center"
+                    android:layout_marginEnd="@dimen/profile_bottom_bar_padding"
+                    android:outlineProvider="none"
+                    android:elevation="8dp"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/certificateBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimaryDark"
+                    android:elevation="4dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/profile_bottom_bar_padding"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.87"
+                        android:fontFamily="@font/monadi"
+                        android:text="@string/the_certificate"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/profileAttributeTitleSize" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/availabilityText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{model.certificateStatusMsg}"
+                        android:textColor="@{model.certificateState == CertificateState.AVAILABLE? @color/white: @android:color/darker_gray}"
+                        android:textSize="@dimen/profileAttributeSize"
+                        android:visibility="@{model.certificateState == CertificateState.UNKNOWN? View.GONE: View.VISIBLE}" />
+
+                </LinearLayout>
+
+
+            </FrameLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ProgressBar
-                android:id="@+id/certificateProgressIndicator"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:visibility="@{model.certificateState == CertificateState.UNKNOWN? View.VISIBLE: View.GONE}"
-                android:layout_gravity="end|center"
-                android:layout_marginEnd="@dimen/profile_bottom_bar_padding"
-                android:outlineProvider="none"
-                android:elevation="8dp"
-                />
-
-            <LinearLayout
-                android:id="@+id/certificateBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryDark"
-                android:elevation="4dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="@dimen/profile_bottom_bar_padding"
-                android:visibility="@{teacherModel == null? View.VISIBLE: View.GONE}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:alpha="0.87"
-                    android:fontFamily="@font/monadi"
-                    android:text="@string/the_certificate"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/profileAttributeTitleSize" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/availabilityText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{model.certificateStatusMsg}"
-                    android:textColor="@{model.certificateState == CertificateState.AVAILABLE? @color/white: @android:color/darker_gray}"
-                    android:textSize="@dimen/profileAttributeSize"
-                    android:visibility="@{model.certificateState == CertificateState.UNKNOWN? View.GONE: View.VISIBLE}" />
-
-            </LinearLayout>
-
-
-        </FrameLayout>
-    </LinearLayout>
 </layout>

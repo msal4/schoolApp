@@ -64,6 +64,7 @@
     <string name="email">الايميل</string>
     <string name="phone">الهاتف</string>
     <string name="age">العمر</string>
+    <string name="name">الاسم</string>
     <string name="gender">الجنس</string>
     <string name="year">سنة</string>
     <string name="logout">تسجيل الخروج</string>
@@ -173,5 +174,6 @@
     <string name="on_boarding_title_teacher_2">ما يفوت طلابك شي</string>
     <string name="on_boarding_description_teacher_2">سوف تصل طلابك اشعارات بكل ما يتم اضافته من جديد</string>
     <string name="on_boarding_description_teacher_3">يمكنك الان اضافة امتحانات واسئلة لطلابك ومشاهدة اجوبتهم من خلال التطبيق</string>
+    <string name="information">المعلومات</string>
 
 </resources>

@@ -157,4 +157,43 @@
         <item name="android:outlineProvider">none</item>
     </style>
 
+    <style name="circleImageViewAppearance" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+
+    <style name="profile_content_text_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">12dp</item>
+        <item name="android:elevation">@dimen/max_value</item>
+        <item name="android:outlineProvider">none</item>
+        <item name="android:gravity">center|start</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">@dimen/profileAttributeSize</item>
+    </style>
+
+    <style name="profile_title_text_style" parent="profile_content_text_style">
+        <item name="android:layout_marginStart">24dp</item>
+        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:alpha">0.6</item>
+        <item name="android:drawablePadding">@dimen/edit_text_drawable_padding</item>
+    </style>
+
+
+    <style name="profile_section_title_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:layout_marginStart">24dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:alpha">0.32</item>
+        <item name="android:elevation">@dimen/max_value</item>
+        <item name="android:outlineProvider">none</item>
+    </style>
+
+
 </resources>

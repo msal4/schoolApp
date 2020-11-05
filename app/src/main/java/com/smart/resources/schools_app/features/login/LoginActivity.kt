@@ -26,11 +26,12 @@ import javax.inject.Inject
 class LoginActivity : BaseActivity() {
     private lateinit var binding: ActivityLoginBinding
     private val viewModel: LoginViewModel by viewModels()
+
     @Inject
     lateinit var sharedPrefHelper: SharedPrefHelper
 
     companion object Factory {
-        private const val EXTRA_MULTI_ACCOUNT= "extraMultiAccount"
+        private const val EXTRA_MULTI_ACCOUNT = "extraMultiAccount"
 
         fun newInstance(context: Context, isMultiAccount: Boolean = false) {
             Intent(context, LoginActivity::class.java).apply {
@@ -59,29 +60,26 @@ class LoginActivity : BaseActivity() {
         setupConstraintLayoutHeight()
         setupViewModel()
         binding.schoolName.applyGradient(*defaultGradient())
-}
+    }
 
     private fun selectNavigation() {
         if (!intent.getBooleanExtra(EXTRA_MULTI_ACCOUNT, false) &&
-            !sharedPrefHelper.currentUserId.isNullOrBlank()) {
+            !sharedPrefHelper.currentUserId.isNullOrBlank()
+        ) {
             HomeActivity.newInstance(this)
         }
     }
 
-
     override fun onEnterAnimationComplete() {
         super.onEnterAnimationComplete()
-        binding.logo.transitionName= ""
+        binding.logo.transitionName = ""
     }
-
-
 
     private fun setupConstraintLayoutHeight() {
         val point = Point()
         windowManager.defaultDisplay.getSize(point)
         binding.constraintLayout.minHeight = point.y
     }
-
 
     private fun setupViewModel() {
         binding.apply {
