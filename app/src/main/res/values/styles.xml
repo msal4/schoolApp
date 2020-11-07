@@ -176,8 +176,8 @@
     </style>
 
     <style name="profile_title_text_style" parent="profile_content_text_style">
-        <item name="android:layout_marginStart">24dp</item>
-        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:layout_marginStart">@dimen/profile_spacing</item>
+        <item name="android:layout_marginTop">@dimen/profile_spacing</item>
         <item name="android:alpha">0.6</item>
         <item name="android:drawablePadding">@dimen/edit_text_drawable_padding</item>
     </style>
@@ -186,13 +186,22 @@
     <style name="profile_section_title_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:layout_marginTop">24dp</item>
-        <item name="android:layout_marginStart">24dp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:layout_marginTop">@dimen/profile_spacing</item>
+        <item name="android:layout_marginStart">@dimen/profile_spacing</item>
         <item name="android:textSize">20sp</item>
         <item name="android:alpha">0.32</item>
         <item name="android:elevation">@dimen/max_value</item>
         <item name="android:outlineProvider">none</item>
+    </style>
+
+    <style name="divider_style">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:alpha">0.1</item>
+        <item name="android:elevation">@dimen/max_value</item>
+        <item name="android:outlineProvider">none</item>
+        <item name="android:background">@color/colorAccent</item>
     </style>
 
 

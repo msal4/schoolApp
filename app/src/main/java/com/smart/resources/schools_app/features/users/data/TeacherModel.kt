@@ -31,11 +31,11 @@ class TeacherModel(
     }
     override val classesAsString: String? get()= classesInfo
         .joinToString (
-            separator = " \n${CharSymbols.FILLED_CIRCLE}",
+            separator = " ${CharSymbols.FILLED_CIRCLE} ",
             prefix = "${CharSymbols.FILLED_CIRCLE} ") {
         it.toString()
     }
     val subjectsAsString: String? get()= subjects.joinToString(
-        separator = "\n${CharSymbols.FILLED_CIRCLE}",
+        separator = " ${CharSymbols.FILLED_CIRCLE} ",
         prefix = "${CharSymbols.FILLED_CIRCLE} ")
 }

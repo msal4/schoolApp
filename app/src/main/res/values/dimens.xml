@@ -55,4 +55,7 @@
     <dimen name="home_user_image_size">100dp</dimen>
     <dimen name="profile_user_image_size">110dp</dimen>
     <dimen name="school_logo_image_size">90dp</dimen>
+    <dimen name="profile_card_border">1dp</dimen>
+    <dimen name="multi_account_icon_size">32dp</dimen>
+    <dimen name="profile_spacing">24dp</dimen>
 </resources>

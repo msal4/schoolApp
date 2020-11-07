@@ -68,8 +68,8 @@
                     android:textSize="@dimen/profileAttributeTitleSize" />
 
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="@dimen/multi_account_icon_size"
+                    android:layout_height="@dimen/multi_account_icon_size"
                     android:layout_margin="@dimen/toolbar_item_margin"
                     android:layout_gravity="top|start"
                     android:elevation="@dimen/max_value"
@@ -91,22 +91,27 @@
                 android:elevation="5dp"
                 android:onClick="selectImage"
                 app:layout_constraintBottom_toBottomOf="@+id/topBar"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/topBar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+ />
 
             <FrameLayout
                 android:id="@+id/profileCard"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_margin="24dp"
+                android:layout_marginStart="@dimen/profile_spacing"
+                android:layout_marginTop="@dimen/profile_spacing"
+                android:layout_marginEnd="@dimen/profile_spacing"
+                android:layout_marginBottom="12dp"
                 android:background="@drawable/bg_card_profile"
                 android:elevation="@dimen/item_elevation"
                 app:layout_constraintBottom_toTopOf="@id/certificateCard"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/profileImage" />
+                app:layout_constraintTop_toBottomOf="@id/profileImage"
+                app:layout_constraintVertical_bias="0.0" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/schoolImage"
@@ -114,11 +119,11 @@
                 android:layout_height="@dimen/school_logo_image_size"
                 android:elevation="@dimen/max_value"
                 android:outlineProvider="none"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginStart="@dimen/profile_spacing"
+                android:layout_marginTop="@dimen/profile_spacing"
                 app:layout_constraintStart_toStartOf="@id/profileCard"
-                app:layout_constraintTop_toTopOf="@+id/profileCard"
-                android:src="@drawable/logo_img"
+                app:layout_constraintTop_toTopOf="@id/profileCard"
+                android:srcUrl="@{itemModel.schoolImage}"
                 tools:src="@drawable/logo_img"
                 />
 
@@ -127,7 +132,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:layout_marginEnd="24dp"
+                android:layout_marginEnd="@dimen/profile_spacing"
                 android:alpha="0.87"
                 android:elevation="@dimen/max_value"
                 android:outlineProvider="none"
@@ -142,21 +147,41 @@
                 app:layout_constraintTop_toTopOf="@id/schoolImage"
                 tools:text="مدرسة المصادر الذكية" />
 
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/studentClassTitle"
+                android:drawableStart="@drawable/ic_people_outline_24"
+                android:text="@{@string/the_class + ':'}"
+                app:layout_constraintStart_toStartOf="@id/profileCard"
+                app:layout_constraintTop_toBottomOf="@id/schoolImage"
+                style="@style/profile_title_text_style"
+                tools:text="الصف:"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/studentClass"
+                android:text="@{itemModel.classesAsString}"
+                app:layout_constraintStart_toEndOf="@id/studentClassTitle"
+                app:layout_constraintTop_toTopOf="@id/studentClassTitle"
+                app:layout_constraintBottom_toBottomOf="@id/studentClassTitle"
+                style="@style/profile_content_text_style"
+                tools:text="الاول - ب"/>
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/informationSectionTitle"
+                android:text="@string/information"
+                app:layout_constraintStart_toStartOf="@id/profileCard"
+                app:layout_constraintTop_toBottomOf="@id/studentClass"
+                style="@style/profile_section_title_style" />
+
             <View
-                android:id="@+id/schoolDivider"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:alpha="0.1"
-                android:elevation="@dimen/max_value"
-                android:outlineProvider="none"
-                android:background="@color/colorPrimary"
+                android:id="@+id/informationDivider"
+                android:layout_marginStart="@dimen/profile_spacing"
+                android:layout_marginEnd="@dimen/profile_spacing"
                 app:layout_constraintStart_toEndOf="@id/informationSectionTitle"
                 app:layout_constraintEnd_toEndOf="@id/profileCard"
                 app:layout_constraintTop_toTopOf="@id/informationSectionTitle"
-                app:layout_constraintBottom_toBottomOf="@id/informationSectionTitle"/>
-
+                app:layout_constraintBottom_toBottomOf="@id/informationSectionTitle"
+                style="@style/divider_style" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/nameTitle"
@@ -164,7 +189,8 @@
                 android:text="@{@string/name + ':'}"
                 app:layout_constraintStart_toStartOf="@id/profileCard"
                 app:layout_constraintTop_toBottomOf="@+id/informationSectionTitle"
-                style="@style/profile_title_text_style" />
+                style="@style/profile_title_text_style"
+                tools:text="الاسم:"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/ageTitle"
@@ -172,41 +198,54 @@
                 android:text="@{@string/age + ':'}"
                 app:layout_constraintStart_toStartOf="@id/profileCard"
                 app:layout_constraintTop_toBottomOf="@id/nameTitle"
-                style="@style/profile_title_text_style" />
+                style="@style/profile_title_text_style"
+                tools:text="العمر:"/>
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/classTitle"
-                android:drawableStart="@drawable/ic_people_outline_24"
-                android:text="@{@string/the_class + ':'}"
+                android:id="@+id/genderTitle"
+                android:drawableStart="@drawable/ic_gender_black_24"
+                android:text="@{@string/gender + ':'}"
                 app:layout_constraintStart_toStartOf="@id/profileCard"
                 app:layout_constraintTop_toBottomOf="@id/ageTitle"
-                style="@style/profile_title_text_style" />
+                style="@style/profile_title_text_style"
+                tools:text="الجنس:"/>
 
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/phoneTitleNew"
+                android:id="@+id/contactSectionTitle"
+                android:text="@string/contact"
+                app:layout_constraintStart_toStartOf="@id/profileCard"
+                app:layout_constraintTop_toBottomOf="@id/genderTitle"
+                style="@style/profile_section_title_style" />
+
+            <View
+                android:id="@+id/contactDivider"
+                android:layout_marginStart="@dimen/profile_spacing"
+                android:layout_marginEnd="@dimen/profile_spacing"
+                style="@style/divider_style"
+                app:layout_constraintStart_toEndOf="@id/contactSectionTitle"
+                app:layout_constraintEnd_toEndOf="@id/profileCard"
+                app:layout_constraintTop_toTopOf="@id/contactSectionTitle"
+                app:layout_constraintBottom_toBottomOf="@id/contactSectionTitle"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/phoneTitle"
                 android:drawableStart="@drawable/ic_outline_phone_24"
                 android:text="@{@string/phone + ':'}"
                 app:layout_constraintStart_toStartOf="@id/profileCard"
-                app:layout_constraintTop_toBottomOf="@id/classTitle"
-                style="@style/profile_title_text_style" />
-
+                app:layout_constraintTop_toBottomOf="@id/contactSectionTitle"
+                style="@style/profile_title_text_style"
+                tools:text="الهاتف:"/>
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/emailTitleNew"
+                android:id="@+id/emailTitle"
                 android:drawableStart="@drawable/ic_email_black_24"
                 android:text="@{@string/email + ':'}"
                 app:layout_constraintStart_toStartOf="@id/profileCard"
-                app:layout_constraintTop_toBottomOf="@id/phoneTitleNew"
-                style="@style/profile_title_text_style" />
-
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/informationSectionTitle"
-                android:text="@string/information"
-                app:layout_constraintStart_toStartOf="@id/profileCard"
-                app:layout_constraintTop_toBottomOf="@id/schoolImage"
-                style="@style/profile_section_title_style" />
+                app:layout_constraintTop_toBottomOf="@id/phoneTitle"
+                android:visible="@{!itemModel.emailEmpty}"
+                style="@style/profile_title_text_style"
+                tools:text="الايميل:"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/studentName"
@@ -214,7 +253,8 @@
                 app:layout_constraintStart_toEndOf="@id/nameTitle"
                 app:layout_constraintTop_toTopOf="@id/nameTitle"
                 app:layout_constraintBottom_toBottomOf="@id/nameTitle"
-                style="@style/profile_content_text_style" />
+                style="@style/profile_content_text_style"
+                tools:text="احمد علي"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/studentAge"
@@ -222,373 +262,125 @@
                 app:layout_constraintStart_toEndOf="@id/ageTitle"
                 app:layout_constraintTop_toTopOf="@id/ageTitle"
                 app:layout_constraintBottom_toBottomOf="@id/ageTitle"
-                style="@style/profile_content_text_style" />
+                style="@style/profile_content_text_style"
+                tools:text="12 سنة"/>
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/studentClass"
-                android:text="@{itemModel.classesAsString}"
-                app:layout_constraintStart_toEndOf="@id/classTitle"
-                app:layout_constraintTop_toTopOf="@id/classTitle"
-                app:layout_constraintBottom_toBottomOf="@id/classTitle"
-                style="@style/profile_content_text_style" />
-
+                android:id="@+id/studentGender"
+                android:text="@{itemModel.gender}"
+                app:layout_constraintStart_toEndOf="@id/genderTitle"
+                app:layout_constraintTop_toTopOf="@id/genderTitle"
+                app:layout_constraintBottom_toBottomOf="@id/genderTitle"
+                style="@style/profile_content_text_style"
+                tools:text="ذكر"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/phoneNumber"
                 android:text="@{itemModel.phone}"
-                app:layout_constraintStart_toEndOf="@id/phoneTitleNew"
-                app:layout_constraintTop_toTopOf="@id/phoneTitleNew"
-                app:layout_constraintBottom_toBottomOf="@id/phoneTitleNew"
-                style="@style/profile_content_text_style" />
+                app:layout_constraintStart_toEndOf="@id/phoneTitle"
+                app:layout_constraintTop_toTopOf="@id/phoneTitle"
+                app:layout_constraintBottom_toBottomOf="@id/phoneTitle"
+                style="@style/profile_content_text_style"
+                tools:text="+964252521"/>
 
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/email"
                 android:text="@{itemModel.email}"
-                app:layout_constraintStart_toEndOf="@id/emailTitleNew"
-                app:layout_constraintTop_toTopOf="@id/emailTitleNew"
-                app:layout_constraintBottom_toBottomOf="@id/emailTitleNew"
-                style="@style/profile_content_text_style" />
-
-            <TextView
-                android:id="@+id/sectionTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="8dp"
-                android:drawableStart="@drawable/ic_people_outline_24"
-                android:drawablePadding="@dimen/edit_text_drawable_padding"
-                android:maxLength="30"
-                android:padding="@dimen/edit_text_padding"
-                android:text="@string/the_class"
-                android:textAlignment="viewStart"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/profileAttributeTitleSize"
-                app:layout_constraintBottom_toBottomOf="@+id/studentSection"
-                app:layout_constraintEnd_toStartOf="@id/studentSection"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/studentSection"
-                app:layout_constraintVertical_bias="0.49"
-                app:layout_constraintVertical_chainStyle="spread" />
-
-            <TextView
-                android:id="@+id/teacherSubjectsTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="8dp"
-                android:drawableStart="@drawable/ic_book_black_24"
-                android:drawablePadding="@dimen/edit_text_drawable_padding"
-                android:maxLength="30"
-                android:paddingStart="@dimen/edit_text_padding"
-                android:text="@string/subjects"
-                android:textAlignment="viewStart"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/profileAttributeTitleSize"
-                android:visibility="@{teacherModel == null? View.GONE: View.VISIBLE}"
-                app:layout_constraintBottom_toBottomOf="@+id/subjects_spinner"
-                app:layout_constraintEnd_toStartOf="@id/subjects_spinner"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/subjects_spinner" />
+                app:layout_constraintStart_toEndOf="@id/emailTitle"
+                app:layout_constraintTop_toTopOf="@id/emailTitle"
+                app:layout_constraintBottom_toBottomOf="@id/emailTitle"
+                style="@style/profile_content_text_style"
+                tools:text="test.email@gmail.com"/>
 
 
-            <TextView
-                android:id="@+id/teacherResponsibilityTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="8dp"
-                android:drawableStart="@drawable/ic_role_black_24"
-                android:drawablePadding="@dimen/edit_text_drawable_padding"
-                android:maxLength="30"
-                android:padding="@dimen/edit_text_padding"
-                android:text="@string/role"
-                android:textAlignment="viewStart"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/profileAttributeTitleSize"
-                android:visibility="@{teacherModel == null? View.GONE: View.VISIBLE}"
-                app:layout_constraintBottom_toBottomOf="@+id/teacherResponsibility"
-                app:layout_constraintEnd_toStartOf="@id/teacherResponsibility"
-                app:layout_constraintHorizontal_bias="0.542"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/teacherResponsibility"
-                app:layout_constraintVertical_chainStyle="spread" />
-
-            <TextView
-                android:id="@+id/ageTitleOld"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="8dp"
-                android:drawableStart="@drawable/ic_outline_calendar_24"
-                android:drawablePadding="@dimen/edit_text_drawable_padding"
-                android:padding="@dimen/edit_text_padding"
-                android:text="@string/age"
-                android:textAlignment="viewStart"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/profileAttributeTitleSize"
-                app:layout_constraintBottom_toBottomOf="@+id/studentAgeOld"
-                app:layout_constraintEnd_toStartOf="@id/studentAgeOld"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/studentAgeOld" />
-
-
-            <TextView
-                android:id="@+id/phoneTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="8dp"
-                android:drawableStart="@drawable/ic_phone_black_24"
-                android:drawablePadding="@dimen/edit_text_drawable_padding"
-                android:padding="@dimen/edit_text_padding"
-                android:text="@string/phone"
-                android:textAlignment="viewStart"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/profileAttributeTitleSize"
-                app:layout_constraintBottom_toBottomOf="@+id/studentPhone"
-                app:layout_constraintEnd_toStartOf="@id/studentPhone"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/studentPhone" />
-
-            <TextView
-                android:visibility="@{itemModel.emailEmpty? View.GONE: View.VISIBLE}"
-                android:id="@+id/emailTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="8dp"
-                android:drawableStart="@drawable/ic_email_black_24"
-                android:drawablePadding="@dimen/edit_text_drawable_padding"
-                android:padding="@dimen/edit_text_padding"
-                android:text="@string/email"
-                android:textAlignment="viewStart"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/profileAttributeTitleSize"
-                app:layout_constraintBottom_toBottomOf="@+id/studentEmail"
-                app:layout_constraintEnd_toStartOf="@id/studentEmail"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/studentEmail" />
-
-            <TextView
-                android:id="@+id/genderTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="8dp"
-                android:drawableStart="@drawable/ic_gender_black_24"
-                android:drawablePadding="@dimen/edit_text_drawable_padding"
-                android:maxLength="30"
-                android:padding="@dimen/edit_text_padding"
-                android:text="@string/gender"
-                android:textAlignment="viewStart"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/profileAttributeTitleSize"
-                app:layout_constraintBottom_toBottomOf="@+id/studentGender"
-                app:layout_constraintEnd_toStartOf="@+id/studentGender"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/studentGender" />
-
-            <TextView
-                android:id="@+id/studentGender"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="24dp"
-                android:text="@{itemModel.gender}"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/profileAttributeSize"
-                app:layout_constraintBottom_toTopOf="@+id/studentAgeOld"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/genderTitle"
-                app:layout_constraintTop_toBottomOf="@+id/subjects_spinner"
-                tools:text="ذكر" />
-
-
-            <TextView
-                android:id="@+id/subjects_spinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="24dp"
-                android:text="@{teacherModel.subjectsAsString}"
-                android:textAlignment="viewEnd"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/profileAttributeSize"
-                android:visibility="@{teacherModel == null? View.GONE: View.VISIBLE}"
-                app:layout_constraintBottom_toTopOf="@+id/studentGender"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/teacherSubjectsTitle"
-                app:layout_constraintTop_toBottomOf="@+id/studentSection"
-                app:layout_constraintVertical_bias="0.49"
-                tools:text="رياضيات ,انكليزي" />
-
-
-            <LinearLayout
-                android:id="@+id/schoolCard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:background="@drawable/bg_outline"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingStart="16dp"
-                android:paddingTop="8dp"
-                android:paddingEnd="16dp"
-                android:paddingBottom="8dp"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profileImage">
-
-
-
-            </LinearLayout>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/classesSectionTitle"
+                android:text="@string/classes"
+                app:layout_constraintStart_toStartOf="@id/profileCard"
+                app:layout_constraintTop_toBottomOf="@id/emailTitle"
+                style="@style/profile_section_title_style" />
 
             <View
-                android:id="@+id/chainHolder"
-                android:layout_width="1dp"
-                android:layout_height="1dp"
-                app:layout_constraintEnd_toEndOf="@+id/profileImage"
-                app:layout_constraintStart_toStartOf="@+id/profileImage"
-                app:layout_constraintTop_toBottomOf="@+id/schoolCard"
-                app:layout_constraintBottom_toTopOf="@+id/teacherResponsibility"
-                app:layout_constraintVertical_chainStyle="spread"/>
+                android:id="@+id/classesDivider"
+                android:layout_marginStart="@dimen/profile_spacing"
+                android:layout_marginEnd="@dimen/profile_spacing"
+                style="@style/divider_style"
+                app:layout_constraintStart_toEndOf="@id/classesSectionTitle"
+                app:layout_constraintEnd_toEndOf="@id/profileCard"
+                app:layout_constraintTop_toTopOf="@id/classesSectionTitle"
+                app:layout_constraintBottom_toBottomOf="@id/classesSectionTitle"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/teacherClasses"
+                android:text="@{teacherModel.classesAsString}"
+                app:layout_constraintStart_toEndOf="@id/emailTitle"
+                app:layout_constraintTop_toBottomOf="@id/classesSectionTitle"
+                android:textDirection="anyRtl"
+                style="@style/profile_content_text_style"
+                android:layout_marginTop="@dimen/profile_spacing"
+                tools:text="• الاول - أ • الثاني - ج"/>
 
 
-            <TextView
-                android:id="@+id/teacherResponsibility"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="24dp"
-                android:text="@{teacherModel.responsibility}"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/profileAttributeSize"
-                android:visibility="@{teacherModel == null? View.GONE: View.VISIBLE}"
-                app:layout_constraintBottom_toTopOf="@+id/studentSection"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/teacherResponsibilityTitle"
-                app:layout_constraintTop_toBottomOf="@+id/chainHolder"
-                app:layout_constraintVertical_chainStyle="spread_inside"
-                tools:text="مدرس" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/subjectsSectionTitle"
+                android:text="@string/subjects"
+                app:layout_constraintStart_toStartOf="@id/profileCard"
+                app:layout_constraintTop_toBottomOf="@id/teacherClasses"
+                style="@style/profile_section_title_style" />
 
-            <TextView
-                android:id="@+id/studentSection"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="@dimen/profile_attribute_margin"
-                android:text="@{itemModel.classesAsString}"
-                android:textAlignment="viewEnd"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/profileAttributeSize"
-                app:layout_constraintBottom_toTopOf="@+id/subjects_spinner"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/sectionTitle"
-                app:layout_constraintTop_toBottomOf="@+id/teacherResponsibility"
-                tools:text="ب - 5" />
+            <View
+                android:id="@+id/subjectsDivider"
+                android:layout_marginStart="@dimen/profile_spacing"
+                android:layout_marginEnd="@dimen/profile_spacing"
+                style="@style/divider_style"
+                tools:text="• الرياضيات • الانكليزي • اللغة العربية"
+                app:layout_constraintStart_toEndOf="@id/subjectsSectionTitle"
+                app:layout_constraintEnd_toEndOf="@id/profileCard"
+                app:layout_constraintTop_toTopOf="@id/subjectsSectionTitle"
+                app:layout_constraintBottom_toBottomOf="@id/subjectsSectionTitle"/>
 
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/teacherSubjects"
+                android:text="@{teacherModel.subjectsAsString}"
+                app:layout_constraintStart_toEndOf="@id/emailTitle"
+                app:layout_constraintTop_toBottomOf="@id/subjectsSectionTitle"
+                android:textDirection="anyRtl"
+                style="@style/profile_content_text_style"
+                android:layout_marginTop="@dimen/profile_spacing"
+                />
 
-            <TextView
-                android:id="@+id/studentAgeOld"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="24dp"
-                android:text="@{itemModel.age}"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/profileAttributeSize"
-                app:layout_constraintBottom_toTopOf="@+id/studentPhone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/ageTitleOld"
-                app:layout_constraintTop_toBottomOf="@+id/studentGender"
-                tools:text="24 سنة" />
-
-
-            <TextView
-                android:id="@+id/studentPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="32dp"
-                android:text="@{itemModel.phone}"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/profileAttributeSize"
-                app:layout_constraintBottom_toTopOf="@+id/studentEmail"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/phoneTitle"
-                app:layout_constraintTop_toBottomOf="@+id/studentAgeOld"
-                tools:text="07812345676" />
-
-            <TextView
-                android:id="@+id/studentEmail"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="32dp"
-                android:text="@{itemModel.email}"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/profileAttributeSize"
-                android:textAlignment="viewEnd"
-                android:visibility="@{itemModel.emailEmpty? View.GONE: View.VISIBLE}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/emailTitle"
-                app:layout_constraintTop_toBottomOf="@+id/studentPhone"
-                tools:text="test@gmail.com" />
-            
             <FrameLayout
                 android:id="@+id/certificateCard"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="@dimen/profile_spacing"
                 android:background="@drawable/bg_card_profile"
-                app:layout_constraintTop_toBottomOf="@id/profileCard"
-                app:layout_constraintStart_toStartOf="@id/profileCard"
-                app:layout_constraintEnd_toEndOf="@id/profileCard"
+                android:backgroundTint="@color/colorPrimary"
+                android:elevation="@dimen/item_elevation"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="24dp">
+                app:layout_constraintEnd_toEndOf="@id/profileCard"
+                app:layout_constraintStart_toStartOf="@id/profileCard"
+                app:layout_constraintTop_toBottomOf="@id/teacherSubjects">
 
                 <ProgressBar
                     android:id="@+id/certificateProgressIndicator"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:visibility="@{model.certificateState == CertificateState.UNKNOWN? View.VISIBLE: View.GONE}"
                     android:layout_gravity="end|center"
                     android:layout_marginEnd="@dimen/profile_bottom_bar_padding"
-                    android:outlineProvider="none"
                     android:elevation="8dp"
-                    />
+                    android:outlineProvider="none"
+                    android:visibility="@{model.certificateState == CertificateState.UNKNOWN? View.VISIBLE: View.INVISIBLE}" />
 
                 <LinearLayout
                     android:id="@+id/certificateBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorPrimaryDark"
-                    android:elevation="4dp"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:padding="@dimen/profile_bottom_bar_padding"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    android:padding="@dimen/profile_bottom_bar_padding">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -614,13 +406,26 @@
                         android:visibility="@{model.certificateState == CertificateState.UNKNOWN? View.GONE: View.VISIBLE}" />
 
                 </LinearLayout>
-
-
             </FrameLayout>
 
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/teacherViews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:layout_editor_absoluteX="46dp"
+                tools:layout_editor_absoluteY="202dp"
+                app:constraint_referenced_ids="classesSectionTitle,classesDivider, teacherClasses, subjectsSectionTitle, subjectsDivider, teacherSubjects"
+                android:visible="@{teacherModel != null}"/>
 
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/studentViews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:layout_editor_absoluteX="46dp"
+                tools:layout_editor_absoluteY="202dp"
+                app:constraint_referenced_ids="studentClassTitle, studentClass"
+                android:visible="@{teacherModel == null}"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </ScrollView>
 
 </layout>

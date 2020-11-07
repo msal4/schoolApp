@@ -6,11 +6,13 @@ import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.haytham.coder.extensions.toDrawable
+import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 
 
 @BindingAdapter("android:srcUrl")
 fun loadImageUrl(iv: ImageView, url: String?) {
+    Logger.wtf(url.toString())
     loadUrl(url, iv)
 }
 

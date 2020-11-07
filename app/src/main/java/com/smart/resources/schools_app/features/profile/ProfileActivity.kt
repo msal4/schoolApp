@@ -4,10 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
 import com.haytham.coder.extensions.GET_IMAGE_REQUEST
 import com.haytham.coder.extensions.getImage
 import com.haytham.coder.extensions.openImagePickerApp
@@ -23,7 +23,7 @@ import com.smart.resources.schools_app.features.users.presentation.AccountsDialo
 
 class ProfileActivity : BaseActivity() {
     private lateinit var binding: ActivityProfileBinding
-    private lateinit var viewModel: ProfileViewModel
+    private val viewModel: ProfileViewModel by viewModels()
 
     companion object Factory {
         const val REQUEST_IS_PROFILE_IMAGE_UPDATED = 0
@@ -49,7 +49,6 @@ class ProfileActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile)
 
-        setupViewModel()
         setupItemModel()
     }
 
@@ -79,15 +78,8 @@ class ProfileActivity : BaseActivity() {
     }
 
 
-    private fun setupViewModel() {
-        viewModel = ViewModelProviders.of(this)
-            .get(ProfileViewModel::class.java)
-    }
 
     private fun getPerson()= UserRepository.instance.getUser()
-
-
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
