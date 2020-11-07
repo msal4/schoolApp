@@ -124,7 +124,8 @@
                 app:layout_constraintStart_toStartOf="@id/profileCard"
                 app:layout_constraintTop_toTopOf="@id/profileCard"
                 android:srcUrl="@{itemModel.schoolImage}"
-                tools:src="@drawable/logo_img"
+                android:placeHolder="@{@drawable/ic_logo_faded}"
+                tools:src="@drawable/ic_logo_faded"
                 />
 
             <com.google.android.material.textview.MaterialTextView

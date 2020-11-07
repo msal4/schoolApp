@@ -42,7 +42,8 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".features.imageViewer.ImageViewerActivity"
-            android:label="@string/title_activity_full_image" />
+            android:label="@string/title_activity_full_image"
+            android:theme="@style/ImageViewerTheme"/>
         <activity
             android:name=".core.activity.SectionActivity"
             android:label=""

@@ -89,10 +89,7 @@ class ProfileActivity : BaseActivity() {
         ) {
             data.getImage().toString().let {
                 UserRepository.instance.updateCurrentUser(it)
-                loadImageUrl(
-                    binding.profileImage,
-                    it
-                )
+                binding.profileImage.loadImageUrl(it)
             }
             setResult(Activity.RESULT_OK)
         }

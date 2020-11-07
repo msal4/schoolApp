@@ -116,14 +116,7 @@
             app:cardCornerRadius="12dp"
             app:cardElevation="0dp">
 
-            <ImageView
-                android:id="@+id/imagePlaceHolder"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/image_loader_padding"
-                android:alpha="0.2"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_image_loader"/>
+
 
             <ImageView
                 android:transitionName="@string/image_trans"
