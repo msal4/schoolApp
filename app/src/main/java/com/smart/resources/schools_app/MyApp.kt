@@ -34,7 +34,7 @@ class MyApp : Application() {
         WatchTower.start(WebWatchTowerObserver(port = 8085))
 
         // OneSignal Initialization
-        //initializeOneSignal() // TODO restore
+        initializeOneSignal()
     }
 
     private fun initializeOneSignal() {
