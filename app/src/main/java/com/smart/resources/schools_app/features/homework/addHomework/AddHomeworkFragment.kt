@@ -11,7 +11,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.haytham.coder.extensions.*
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.activity.SectionActivity
@@ -28,14 +29,17 @@ import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import com.smart.resources.schools_app.features.users.data.TeacherModel
 import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.tiper.MaterialSpinner
+import dagger.hilt.android.AndroidEntryPoint
 import id.zelory.compressor.Compressor
+import kotlinx.coroutines.launch
 import java.io.File
 
+@AndroidEntryPoint
 class AddHomeworkFragment : Fragment(), PostListener {
     private lateinit var binding: FragmentAddHomeworkBinding
     private lateinit var progressBar: ProgressBar
     private lateinit var saveItem: MenuItem
-    private val viewModel: HomeworkViewModel by activityViewModels()
+    private val viewModel: HomeworkViewModel by viewModels()
 
     private val onSpinnerItemSelected = object :
         MaterialSpinner.OnItemSelectedListener {
@@ -110,12 +114,14 @@ class AddHomeworkFragment : Fragment(), PostListener {
     ) {
         binding = FragmentAddHomeworkBinding
             .inflate(inflater, container, false).apply {
-                val currentUser = UserRepository.instance.getCurrentUserAccount()
-                val teacherInfoModel = currentUser?.accessToken?.let { TeacherModel.fromToken(it.value) }
-                teacherInfoModel?.classesInfo
-                    ?.let {
-                        classAndSectionSpinner.setSpinnerList(it)
-                    }
+                lifecycleScope.launch {
+                    val currentUser = UserRepository.instance.getCurrentUserAccount()
+                    val teacherInfoModel = currentUser?.accessToken?.let { TeacherModel.fromToken(it.value) }
+                    teacherInfoModel?.classesInfo
+                        ?.let {
+                            classAndSectionSpinner.setSpinnerList(it)
+                        }
+                }
 
                 dateField.setOnClickListener(::onDateClicked)
                 classAndSectionSpinner.onItemSelectedListener = onSpinnerItemSelected

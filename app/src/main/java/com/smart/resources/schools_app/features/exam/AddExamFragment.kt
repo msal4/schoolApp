@@ -8,6 +8,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.haytham.coder.extensions.hide
 import com.haytham.coder.extensions.show
 import com.smart.resources.schools_app.R
@@ -22,6 +23,7 @@ import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import com.smart.resources.schools_app.features.users.data.TeacherModel
 import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.tiper.MaterialSpinner
+import kotlinx.coroutines.launch
 
 class AddExamFragment : Fragment(), PostListener {
     private lateinit var binding: FragmentAddExamBinding
@@ -120,16 +122,13 @@ class AddExamFragment : Fragment(), PostListener {
         binding = FragmentAddExamBinding
             .inflate(inflater, container, false)
             .apply {
-                val currentUser =
-                    UserRepository.instance.getCurrentUserAccount()
-                val teacherInfoModel = currentUser?.accessToken?.let { TeacherModel.fromToken(it.value) }
-                teacherInfoModel?.apply {
-                    classAndSectionSpinner.setSpinnerList(
-                        classesInfo
-                    )
-                    examTypeSpinner.setSpinnerList(
-                        examType
-                    )
+                lifecycleScope.launch {
+                    val currentUser = UserRepository.instance.getCurrentUserAccount()
+                    val teacherInfoModel = currentUser?.accessToken?.let { TeacherModel.fromToken(it.value) }
+                    teacherInfoModel?.apply {
+                        classAndSectionSpinner.setSpinnerList(classesInfo)
+                        examTypeSpinner.setSpinnerList(examType)
+                    }
                 }
 
                 dateField.setOnClickListener(::onDateClicked)

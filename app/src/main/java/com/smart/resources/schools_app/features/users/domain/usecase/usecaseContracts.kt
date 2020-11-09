@@ -2,22 +2,29 @@ package com.smart.resources.schools_app.features.users.domain.usecase
 
 import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.features.users.data.TeacherModel
+import com.smart.resources.schools_app.features.users.data.UserModel
 
-// TODO: make it suspend
 interface IGetCurrentUserTypeUseCase{
-   operator fun invoke(): UserType
+   suspend operator fun invoke(): UserType
 }
 
-// TODO: make it suspend
+interface IGetCurrentUserModelUseCase{
+   suspend operator fun invoke(): UserModel?
+}
+
+interface IDeleteUserUseCase{
+   suspend operator fun invoke(userId:String): Unit
+}
+
 interface IGetCurrentTeacherModelUseCase{
-   operator fun invoke(): TeacherModel?
+   suspend operator fun invoke(): TeacherModel?
 }
 
 interface IIsUserLoggedUseCase{
    suspend operator fun invoke(): Boolean
 }
 
-interface IGetUserIdUseCase{
+interface IGetCurrentUserIdUseCase{
    suspend operator fun invoke(): String
 }
 

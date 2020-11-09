@@ -109,15 +109,17 @@ class LoginViewModel @ViewModelInject constructor(
                 }
             }
             person?.apply {
-                    UserRepository.instance.insertCurrentUser(
-                        UserAccount(
-                            id,
-                            DecryptedString(it),
-                            "",
-                            name,
-                            if (isTeacher) 1 else 0
+                    viewModelScope.launch {
+                        UserRepository.instance.insertCurrentUser(
+                            UserAccount(
+                                id,
+                                DecryptedString(it),
+                                "",
+                                name,
+                                if (isTeacher) 1 else 0
+                            )
                         )
-                    )
+                    }
             }
         }
     }

@@ -5,8 +5,9 @@ import android.view.*
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
@@ -23,11 +24,14 @@ import com.smart.resources.schools_app.features.homeworkSolution.presentation.fr
 import com.smart.resources.schools_app.features.homeworkSolution.presentation.fragments.ShowHomeworkSolutionBottomSheet
 import com.smart.resources.schools_app.features.imageViewer.ImageViewerActivity
 import com.smart.resources.schools_app.features.users.data.UserRepository
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class HomeworkFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
     private lateinit var adapter: HomeworkRecyclerAdapter
-    private val viewModel: HomeworkViewModel by activityViewModels()
+    private val viewModel: HomeworkViewModel by viewModels()
 
     companion object {
         fun newInstance(fm: FragmentManager) {
@@ -51,22 +55,31 @@ class HomeworkFragment : Fragment() {
 
             viewModel.homework.observe(viewLifecycleOwner, Observer {
                 if (it == null) return@Observer
-                errorText.text = ""
-                adapter.submitList(viewModel.homework.value)
+                if (::adapter.isInitialized) {
+                    errorText.text = ""
+                    adapter.submitList(viewModel.homework.value)
                 }
+            }
             )
         }
-        adapter = HomeworkRecyclerAdapter(viewModel.isStudent).apply {
-            onImageClicked = ::onImageClicked
-            onAnswerClicked = ::onAnswerClicked
+        viewModel.isStudent.observe(viewLifecycleOwner) {
+            if (it == null) returnTransition
+            adapter = HomeworkRecyclerAdapter(it).apply {
+                onImageClicked = ::onImageClicked
+                onAnswerClicked = ::onAnswerClicked
+
+            }
+            binding.recyclerView.adapter = adapter
+            adapter.submitList(viewModel.homework.value)
         }
-        binding.recyclerView.adapter = adapter
 
         (activity as SectionActivity).setCustomTitle(R.string.homework)
         setHasOptionsMenu(true)
-        if (UserRepository.instance.getCurrentUserAccount()?.userType == 1) {
-            val touchHelper = ItemTouchHelper(SwipeAdapter(onSwiped = ::onSwiped))
-            touchHelper.attachToRecyclerView(binding.recyclerView)
+        lifecycleScope.launch {
+            if (UserRepository.instance.getCurrentUserAccount()?.userType == 1) {
+                val touchHelper = ItemTouchHelper(SwipeAdapter(onSwiped = ::onSwiped))
+                touchHelper.attachToRecyclerView(binding.recyclerView)
+            }
         }
         return binding.root
     }
@@ -80,19 +93,18 @@ class HomeworkFragment : Fragment() {
     }
 
     private fun onAnswerClicked(homeworkModel: HomeworkModel) {
-        fragmentManager?.let {
-            if (viewModel.isStudent) {
-                if (homeworkModel.solution == null) {
-                    AddHomeworkSolutionBottomSheet.newInstance(homeworkModel.idHomework).apply {
-                        show(it, "")
-                        onSolutionAdded = ::onHomeworkSolutionAdded
-                    }
-                } else {
-                    ShowHomeworkSolutionBottomSheet.newInstance(homeworkModel.solution).show(it, "")
+        if (viewModel.isStudent.value == true) {
+            if (homeworkModel.solution == null) {
+                AddHomeworkSolutionBottomSheet.newInstance(homeworkModel.idHomework).apply {
+                    show(parentFragmentManager, "")
+                    onSolutionAdded = ::onHomeworkSolutionAdded
                 }
             } else {
-                HomeworkSolutionFragment.newInstance(it, homeworkModel.idHomework)
+                ShowHomeworkSolutionBottomSheet.newInstance(homeworkModel.solution)
+                    .show(parentFragmentManager, "")
             }
+        } else {
+            HomeworkSolutionFragment.newInstance(parentFragmentManager, homeworkModel.idHomework)
         }
     }
 
@@ -107,8 +119,10 @@ class HomeworkFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if (UserRepository.instance.getCurrentUserAccount()?.userType == 1) {
-            inflater.inflate(R.menu.menu_add_btn, menu)
+        lifecycleScope.launch {
+            if (UserRepository.instance.getCurrentUserAccount()?.userType == 1) {
+                inflater.inflate(R.menu.menu_add_btn, menu)
+            }
         }
         super.onCreateOptionsMenu(menu, inflater)
     }

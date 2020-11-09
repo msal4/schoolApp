@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import com.haytham.coder.extensions.decodeTokenBody
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.bindingAdapters.setAccountImage
@@ -15,6 +16,7 @@ import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.databinding.ActivityHomeBinding
 import com.smart.resources.schools_app.features.profile.ProfileActivity
 import com.smart.resources.schools_app.features.users.data.UserRepository
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.net.URI
 
@@ -37,27 +39,34 @@ class HomeActivity : BaseActivity(){
     }
 
     private fun setUserType() {
-        binding.userType =
-            if (UserRepository.instance.getCurrentUserAccount()?.userType == 0) UserType.STUDENT else UserType.TEACHER
-    }
-
-    private fun loadProfileImage() {
-        UserRepository.instance.getCurrentUserAccount()?.img?.let {
-            setAccountImage(
-                binding.profileImage,
-                URI.create(it).toString()
-            )
+        lifecycleScope.launch {
+            binding.userType =
+                if (UserRepository.instance.getCurrentUserAccount()?.userType == 0) UserType.STUDENT else UserType.TEACHER
         }
     }
 
+    private fun loadProfileImage() {
+        lifecycleScope.launch{
+            UserRepository.instance.getCurrentUserAccount()?.img?.let {
+                setAccountImage(
+                    binding.profileImage,
+                    URI.create(it).toString()
+                )
+            }
+        }
+
+    }
+
     private fun setSchoolName(){
-        UserRepository.instance.getCurrentUserAccount()?.apply {
-            try {
-                JSONObject(accessToken.value.decodeTokenBody()).getString("schoolName").apply {
-                    binding.schoolName.text = this
+        lifecycleScope.launch {
+            UserRepository.instance.getCurrentUserAccount()?.apply {
+                try {
+                    JSONObject(accessToken.value.decodeTokenBody()).getString("schoolName").apply {
+                        binding.schoolName.text = this
+                    }
+                }catch (e:Exception){
+                    binding.schoolName.text= ""
                 }
-            }catch (e:Exception){
-                binding.schoolName.text= ""
             }
         }
     }

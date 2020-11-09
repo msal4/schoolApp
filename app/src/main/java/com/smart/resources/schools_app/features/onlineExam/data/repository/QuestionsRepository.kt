@@ -12,9 +12,12 @@ import com.smart.resources.schools_app.features.onlineExam.data.mappers.question
 import com.smart.resources.schools_app.features.onlineExam.data.remote.dataSource.QuestionsClient
 import com.smart.resources.schools_app.features.onlineExam.domain.model.Question
 import com.smart.resources.schools_app.features.onlineExam.domain.repository.IQuestionsRepository
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 class QuestionsRepository(
     private val questionsDao: QuestionsDao,
@@ -33,10 +36,12 @@ class QuestionsRepository(
                 questionsClient.getExamQuestions(examId)
             },
             saveRemoteData = {
-                questionsDao.syncWithDatabase(
-                    examId,
-                    questionMappersFacade.mapNetworkToLocalQuestion(it),
-                )
+                CoroutineScope(IO).launch {
+                    questionsDao.syncWithDatabase(
+                        examId,
+                        questionMappersFacade.mapNetworkToLocalQuestion(it),
+                    )
+                }
             }
         ).catch {
             // must be used to catch exceptions

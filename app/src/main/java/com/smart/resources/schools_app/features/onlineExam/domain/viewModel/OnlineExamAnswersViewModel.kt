@@ -15,8 +15,6 @@ import com.smart.resources.schools_app.core.extentions.combinedMessage
 import com.smart.resources.schools_app.core.myTypes.ListState
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
 import com.smart.resources.schools_app.features.onlineExam.presentation.fragments.OnlineExamAnswersFragment.Factory.EXTRA_ONLINE_EXAM
-import com.smart.resources.schools_app.features.profile.ClassInfoModel
-import com.smart.resources.schools_app.features.students.models.Student
 import com.smart.resources.schools_app.features.students.models.StudentWithAnswerStatus
 import com.smart.resources.schools_app.features.students.usecases.IGetStudentsWithAnswerStatus
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentTeacherModelUseCase
@@ -33,20 +31,19 @@ class OnlineExamAnswersViewModel @ViewModelInject constructor(
     private val c = application.applicationContext
     val passedOnlineExam: OnlineExam get() = savedStateHandle.get(EXTRA_ONLINE_EXAM)!!
     val listState = ListState()
-    private val classModels: List<ClassInfoModel> by lazy {
-        getCurrentTeacherModelUseCase()?.classesInfo.orEmpty()
+    private val classModels= liveData {
+        emit( getCurrentTeacherModelUseCase()?.classesInfo.orEmpty())
     }
-    val classes = liveData {
-        val fullClassNames = classModels.map { it.getClassSection }
-        emit(fullClassNames)
+    val classes = classModels.map {
+      it.map{ classModel -> classModel.getClassSection }
     }
     val selectedClassPos = MutableLiveData(-1)
     val students: LiveData<List<StudentWithAnswerStatus>> = selectedClassPos.asFlow()
         .distinctUntilChanged()
         .map {
         listState.setLoading(true)
-        val studentsList = if (it != null && it.isValidIndex(classModels.size)) {
-            getClassStudents(classModels[it].classId)
+        val studentsList = if (it != null && it.isValidIndex(classModels.value.orEmpty().size)) {
+            getClassStudents(classModels.value?.getOrNull(0)?.classId?:"")
         } else emptyList()
         listState.setLoading(false)
         studentsList

@@ -2,7 +2,6 @@ package com.smart.resources.schools_app.core.di
 
 import android.content.Context
 import androidx.room.Room
-import com.smart.resources.schools_app.core.appDatabase.MIGRATION_1_2
 import com.smart.resources.schools_app.core.appDatabase.storages.AppDatabase
 import com.smart.resources.schools_app.core.appDatabase.storages.SharedPrefHelper
 import com.smart.resources.schools_app.core.utils.EncryptionHelper
@@ -28,7 +27,6 @@ object AppModule {
             AppDatabase.DATABASE_NAME
         )
             .fallbackToDestructiveMigration()
-            .allowMainThreadQueries() // TODO: could be removed
             .build()
     }
 

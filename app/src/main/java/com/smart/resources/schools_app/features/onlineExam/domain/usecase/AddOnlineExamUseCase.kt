@@ -6,13 +6,13 @@ import com.smart.resources.schools_app.core.extentions.withNewData
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.CompleteOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.repository.IOnlineExamsRepository
 import com.smart.resources.schools_app.features.onlineExam.domain.repository.IQuestionsRepository
-import com.smart.resources.schools_app.features.users.domain.usecase.IGetUserIdUseCase
+import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserIdUseCase
 import javax.inject.Inject
 
 class AddOnlineExamUseCase @Inject constructor(
     private val onlineExamsRepository: IOnlineExamsRepository,
     private val questionsRepository: IQuestionsRepository,
-    private val getUserIdUseCase: IGetUserIdUseCase,
+    private val getUserIdUseCase: IGetCurrentUserIdUseCase,
 ) : IAddOnlineExamUseCase {
     override suspend fun invoke(completeOnlineExam: CompleteOnlineExam): ApiResponse<Unit> {
         // 1. add exam

@@ -40,15 +40,15 @@ class AddOnlineExamViewModel @ViewModelInject constructor(
     private val _errorMsgEvent = MutableLiveData<Event<Int?>>()
     private val _examAddedEvent = MutableLiveData<Event<Boolean>>()
 
-    private val teacherModel by lazy {
-        getCurrentTeacherModelUseCase()
+    private val teacherModel= liveData {
+        emit(getCurrentTeacherModelUseCase())
     }
 
-    val subjects = liveData {
-        emit(teacherModel?.subjects.orEmpty())
+    val subjects = teacherModel.map {
+        it?.subjects.orEmpty()
     }
 
-    val classes: List<ClassInfoModel> get() = teacherModel?.classesInfo.orEmpty()
+    val classes: List<ClassInfoModel> get() = teacherModel.value?.classesInfo.orEmpty()
     val selectedClassesPositions = MutableLiveData<List<Int>>(emptyList())
     val selectedClasses = selectedClassesPositions.map {
         classes.filterIndexed { index, _ -> it.contains(index) }.map { it.getClassSection }

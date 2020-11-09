@@ -6,11 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.databinding.ItemExamBinding
-import com.smart.resources.schools_app.features.users.data.UserRepository
 
-class ExamRecyclerAdapter(private val listener:OnItemClickListener
-) : ListAdapter<ExamModel, ExamRecyclerAdapter.MyViewHolder>(DIFF_CALLBACK) {
-    private val isStudent= UserRepository.instance.getCurrentUserAccount()?.userType==0
+class ExamRecyclerAdapter(private val listener:OnItemClickListener) : ListAdapter<ExamModel, ExamRecyclerAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     interface OnItemClickListener {
         fun onItemClick(examModel: ExamModel)
@@ -41,7 +38,7 @@ class ExamRecyclerAdapter(private val listener:OnItemClickListener
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val exam= getItem(position)
 
-        if(!isStudent)holder.itemView.setOnClickListener { listener.onItemClick(exam) }
+        holder.itemView.setOnClickListener { listener.onItemClick(exam) }
         holder.bind(exam)
     }
 

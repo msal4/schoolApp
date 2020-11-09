@@ -1,17 +1,28 @@
 package com.smart.resources.schools_app.features.exam
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.*
-import com.smart.resources.schools_app.features.login.CanLogout
-import kotlinx.coroutines.*
+import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserTypeUseCase
+import kotlinx.coroutines.launch
 
 
-class ExamViewModel(application: Application) : AndroidViewModel(application), CanLogout {
+class ExamViewModel @ViewModelInject constructor(
+    application: Application,
+    private val userTypeUseCase: IGetCurrentUserTypeUseCase,
+)
+    : AndroidViewModel(application) {
     private val c= application.applicationContext
 
+    val isTeacher= liveData {
+        emit(userTypeUseCase() == UserType.TEACHER)
+    }
     val exams: LiveData<MutableList<ExamModel>>
             by lazy {
                 fetchExams()

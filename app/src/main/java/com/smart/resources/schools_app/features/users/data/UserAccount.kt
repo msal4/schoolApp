@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import com.smart.resources.schools_app.core.myTypes.DecryptedString
 
 @Entity
-class UserAccount(
+data class UserAccount(
     @PrimaryKey
     val uid: String,
     val accessToken: DecryptedString,

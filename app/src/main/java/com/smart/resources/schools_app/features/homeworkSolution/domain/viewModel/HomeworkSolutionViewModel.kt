@@ -5,16 +5,17 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.myTypes.*
-import com.smart.resources.schools_app.features.homeworkSolution.data.repository.HomeworkSolutionRepository
+import com.smart.resources.schools_app.core.myTypes.ConnectionError
+import com.smart.resources.schools_app.core.myTypes.ListState
+import com.smart.resources.schools_app.core.myTypes.ResponseError
+import com.smart.resources.schools_app.core.myTypes.Success
 import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
+import com.smart.resources.schools_app.features.homeworkSolution.data.repository.HomeworkSolutionRepository
 import com.smart.resources.schools_app.features.homeworkSolution.domain.repository.IHomeworkSolutionRepository
-import com.smart.resources.schools_app.features.login.CanLogout
 import java.net.HttpURLConnection
 
 
-class HomeworkSolutionViewModel(application: Application) : AndroidViewModel(application),
-    CanLogout {
+class HomeworkSolutionViewModel(application: Application) : AndroidViewModel(application){
     private val c = application.applicationContext
 
     val answers: LiveData<List<HomeworkSolutionModel>> = liveData {

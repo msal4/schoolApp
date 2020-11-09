@@ -6,19 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.activityViewModels
-import com.haytham.coder.extensions.openUrl
+import androidx.fragment.app.viewModels
 import com.haytham.coder.extensions.toString
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
-import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.features.youtubePlayer.YoutubePlayerActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LectureFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
     private lateinit var adapter: LectureRecyclerAdapter
-    private val viewModel: LectureViewModel by activityViewModels()
+    private val viewModel: LectureViewModel by viewModels()
 
     companion object {
         fun newInstance(fm: FragmentManager) {
@@ -69,11 +70,7 @@ class LectureFragment : Fragment() {
         }else {
             YoutubePlayerActivity.newInstance(requireContext(), lectureModel.url!!)
         }
-//        try {
-//            lectureModel.url?.openUrl(requireContext())
-//        } catch (e: Exception) {
-//            (binding.root as ViewGroup).showSnackBar(e.message.toString())
-//        }
+
     }
 
 }
