@@ -166,12 +166,30 @@
                 style="@style/profile_content_text_style"
                 tools:text="الاول - ب"/>
 
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/teacherResponsibilityTitle"
+                android:drawableStart="@drawable/ic_role_black_24"
+                android:text="@{@string/role + ':'}"
+
+                app:layout_constraintStart_toStartOf="@id/profileCard"
+                app:layout_constraintTop_toBottomOf="@id/studentClassTitle"
+                style="@style/profile_title_text_style"
+                tools:text="الدور:"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/teacherResponsibility"
+                android:text="@{teacherModel.responsibility}"
+                app:layout_constraintStart_toEndOf="@id/teacherResponsibilityTitle"
+                app:layout_constraintTop_toTopOf="@id/teacherResponsibilityTitle"
+                app:layout_constraintBottom_toBottomOf="@id/teacherResponsibilityTitle"
+                style="@style/profile_content_text_style"
+                tools:text="معلم"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/informationSectionTitle"
                 android:text="@string/information"
                 app:layout_constraintStart_toStartOf="@id/profileCard"
-                app:layout_constraintTop_toBottomOf="@id/studentClass"
+                app:layout_constraintTop_toBottomOf="@id/teacherResponsibilityTitle"
                 style="@style/profile_section_title_style" />
 
             <View
@@ -415,7 +433,7 @@
                 android:layout_height="wrap_content"
                 tools:layout_editor_absoluteX="46dp"
                 tools:layout_editor_absoluteY="202dp"
-                app:constraint_referenced_ids="classesSectionTitle,classesDivider, teacherClasses, subjectsSectionTitle, subjectsDivider, teacherSubjects"
+                app:constraint_referenced_ids="classesSectionTitle,classesDivider, teacherClasses, subjectsSectionTitle, subjectsDivider, teacherSubjects, teacherResponsibilityTitle, teacherResponsibility"
                 android:visible="@{teacherModel != null}"/>
 
             <androidx.constraintlayout.widget.Group
