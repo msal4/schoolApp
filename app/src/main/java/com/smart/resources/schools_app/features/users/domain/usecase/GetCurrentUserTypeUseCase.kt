@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class GetCurrentUserTypeUseCase @Inject constructor(private val userRepository: UserRepository) :
     IGetCurrentUserTypeUseCase {
-    override fun invoke(): UserType {
+    override suspend fun invoke(): UserType {
         return if (userRepository.getCurrentUserAccount()?.userType == 0) UserType.STUDENT else UserType.TEACHER
     }
 }

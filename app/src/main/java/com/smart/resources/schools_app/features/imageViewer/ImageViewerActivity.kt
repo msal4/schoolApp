@@ -20,10 +20,8 @@ class ImageViewerActivity : AppCompatActivity() {
 
         fun newInstance(activity: Activity, imageView: ImageView?, imageUrl: String) {
             activity.apply {
-
                 val intent = Intent(this, ImageViewerActivity::class.java)
                 intent.putExtra(EXTRA_IMAGE_URL, imageUrl)
-
                 if (imageView == null) {
                     startActivity(intent)
                 } else {
@@ -32,22 +30,22 @@ class ImageViewerActivity : AppCompatActivity() {
                             activity,
                             imageView, getString(R.string.image_trans)
                         )
-
                     startActivity(intent, activityOptionsCompat.toBundle())
                 }
             }
         }
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_image_viewer)
 
         val url = intent.getStringExtra(EXTRA_IMAGE_URL)
-        loadImageUrl(
-            binding.photoView,
-            url
-        )
+        postponeEnterTransition()
+        binding.photoView.loadImageUrl(url){
+            startPostponedEnterTransition()
+        }
     }
 
 }

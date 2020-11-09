@@ -32,8 +32,9 @@ class OnlineExamViewModel @ViewModelInject constructor(
 
     private val c = application.applicationContext
     val listState = ListState()
-    private val userType by lazy { getCurrentUserTypeUseCase() }
-    val isTeacher: Boolean get() = userType == UserType.TEACHER
+    val isTeacher= liveData {
+        emit(getCurrentUserTypeUseCase() == UserType.TEACHER)
+    }
 
     private val _deleteFailedEvent = MutableLiveData<Event<Pair<Int, Int>>>()
     val deleteFailedEvent: LiveData<Event<Pair<Int, Int>>> = _deleteFailedEvent

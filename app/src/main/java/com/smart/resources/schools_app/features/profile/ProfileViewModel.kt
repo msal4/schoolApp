@@ -1,6 +1,7 @@
 package com.smart.resources.schools_app.features.profile
 
 import android.app.Application
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,10 +17,9 @@ import java.net.HttpURLConnection
 
 enum class CertificateState { UNKNOWN, AVAILABLE, UNAVAILABLE, }
 
-class ProfileViewModel(application: Application) : AndroidViewModel(application) {
+class ProfileViewModel @ViewModelInject constructor(application: Application) : AndroidViewModel(application) {
 
     private val c = application.applicationContext
-
 
     private val certificateRepo by lazy { CertificateRepository() }
     var certificateModel: CertificateModel? = null

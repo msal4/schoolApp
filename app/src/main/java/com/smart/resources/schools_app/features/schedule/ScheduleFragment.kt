@@ -1,17 +1,17 @@
 package com.smart.resources.schools_app.features.schedule
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.activity.SectionActivity
+import com.smart.resources.schools_app.core.extentions.createGridLayout
 import com.smart.resources.schools_app.core.myTypes.WeekDays
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
-import com.smart.resources.schools_app.core.activity.SectionActivity
-import com.smart.resources.schools_app.core.extentions.*
-import androidx.lifecycle.observe
 
 class ScheduleFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding

@@ -12,9 +12,12 @@ import com.smart.resources.schools_app.features.onlineExam.data.remote.model.Net
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.AddOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.repository.IOnlineExamsRepository
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import java.net.HttpURLConnection
 
 class OnlineExamsRepository(
@@ -45,14 +48,15 @@ class OnlineExamsRepository(
                 else onlineExamsClient.getClassExams()
             },
             saveRemoteData = {
-                try {
-                    val localExams =
-                        onlineExamMappersFacade.mapNetworkToLocalOnlineExam(it)
-                    onlineExamsDao.syncWithDatabase(userId, localExams)
-                } catch (e: Exception) {
-                    Logger.e("$TAG: $e")
+                CoroutineScope(IO).launch {
+                    try {
+                        val localExams =
+                            onlineExamMappersFacade.mapNetworkToLocalOnlineExam(it)
+                        onlineExamsDao.syncWithDatabase(userId, localExams)
+                    } catch (e: Exception) {
+                        Logger.e("$TAG: $e")
+                    }
                 }
-
             },
             onFetchFailed = { errorBody, statusCode ->
                 Logger.e("$TAG: $statusCode -> $errorBody")
@@ -153,10 +157,11 @@ class OnlineExamsRepository(
 
     override suspend fun activateOnlineExam(examId: String): ApiResponse<Unit> {
         val res =
-            onlineExamsClient.updateStatus(examId, NetworkOnlineExamStatus.createActiveStatus()).first()
+            onlineExamsClient.updateStatus(examId, NetworkOnlineExamStatus.createActiveStatus())
+                .first()
         if (res is ApiSuccessResponse && res.body != null) {
             //onlineExamsDao.updateExamStatus(examId, OnlineExamStatus.ACTIVE.value)
-            val localOnlineExam= onlineExamMappersFacade.mapNetworkToLocalOnlineExam(res.body!!)
+            val localOnlineExam = onlineExamMappersFacade.mapNetworkToLocalOnlineExam(res.body!!)
             onlineExamsDao.upsert(localOnlineExam)
         }
 

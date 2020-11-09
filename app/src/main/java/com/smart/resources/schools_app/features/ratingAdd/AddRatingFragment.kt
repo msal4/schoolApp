@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.customUi.LoadableActionMenuItemFragment
 import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.bindingAdapters.setSpinnerList
+import com.smart.resources.schools_app.core.customUi.LoadableActionMenuItemFragment
 import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.core.myTypes.PostListener
 import com.smart.resources.schools_app.databinding.FragmentAddRatingBinding
@@ -20,6 +21,7 @@ import com.smart.resources.schools_app.features.rating.RatingModel
 import com.smart.resources.schools_app.features.users.data.TeacherModel
 import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.tiper.MaterialSpinner
+import kotlinx.coroutines.launch
 
 
 class AddRatingFragment : LoadableActionMenuItemFragment(), MaterialSpinner.OnItemSelectedListener,
@@ -69,14 +71,14 @@ class AddRatingFragment : LoadableActionMenuItemFragment(), MaterialSpinner.OnIt
     ) {
         binding = FragmentAddRatingBinding
             .inflate(inflater, container, false).apply {
-                val currentUser = UserRepository.instance.getCurrentUserAccount()
-                val teacherInfoModel = currentUser?.accessToken?.let { TeacherModel.fromToken(it.value) }
-                teacherInfoModel?.let {
-                    classAndSectionSpinner.setSpinnerList(it.classesInfo)
-                    classAndSectionSpinner.onItemSelectedListener = this@AddRatingFragment
+                lifecycleScope.launch {
+                    val currentUser = UserRepository.instance.getCurrentUserAccount()
+                    val teacherInfoModel = currentUser?.accessToken?.let { TeacherModel.fromToken(it.value) }
+                    teacherInfoModel?.let {
+                        classAndSectionSpinner.setSpinnerList(it.classesInfo)
+                        classAndSectionSpinner.onItemSelectedListener = this@AddRatingFragment
+                    }
                 }
-
-
                 adapter = AddRatingAdapter(::onRecyclerItemClicked)
                 recyclerViewLoader.recyclerView.adapter = adapter
 

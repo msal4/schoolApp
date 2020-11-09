@@ -1,10 +1,7 @@
 package com.smart.resources.schools_app.features.onBoarding
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.smart.resources.schools_app.core.myTypes.Event
 import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserTypeUseCase
@@ -17,8 +14,8 @@ class OnBoardingViewModel @ViewModelInject constructor(
     private val setNotFirstStudentLoginUseCase: ISetNotFirstStudentLoginUseCase,
     private val setNotFirstTeacherLoginUseCase: ISetNotFirstTeacherLoginUseCase,
     ) : ViewModel() {
-    val userType:UserType by lazy {
-        getUserTypeUseCase()
+    val userType = liveData {
+        emit(getUserTypeUseCase())
     }
     val btnAnimationDuration= 300L
 
@@ -27,7 +24,7 @@ class OnBoardingViewModel @ViewModelInject constructor(
 
     fun finishOnBoarding(){
         viewModelScope.launch {
-            when(userType){
+            when(userType.value){
                 UserType.STUDENT -> {
                     setNotFirstStudentLoginUseCase()
                 }

@@ -1,5 +1,6 @@
 package com.smart.resources.schools_app.features.users.presentation
 
+import android.app.Activity
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -9,28 +10,25 @@ import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.view.Window
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.callbacks.SwipeAdapter
 import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.databinding.DialogAccountsBinding
-import com.smart.resources.schools_app.features.login.CanLogout
 import com.smart.resources.schools_app.features.login.LoginActivity
 import com.smart.resources.schools_app.features.users.data.UserAccount
 import com.smart.resources.schools_app.features.users.data.UserRepository
-import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import dagger.hilt.android.AndroidEntryPoint
 
-
-class AccountsDialog : DialogFragment(), CanLogout,
+@AndroidEntryPoint
+class AccountsDialog : DialogFragment(),
     AccountsRecyclerAdapter.OnItemClickListener {
     private lateinit var binding: DialogAccountsBinding
     private lateinit var adapter: AccountsRecyclerAdapter
-    private val accountsManager = UserRepository.instance
     private var onAccountChanged: (() -> Unit)? = null
+    private val viewModel:AccountsViewModel by viewModels()
 
     fun setOnAccountChanged(onFinish: (() -> Unit)) {
         this.onAccountChanged = onFinish
@@ -40,7 +38,6 @@ class AccountsDialog : DialogFragment(), CanLogout,
         private const val MAX_ACCOUNTS = 6
 
         fun newInstance(): AccountsDialog {
-
             return AccountsDialog()
         }
     }
@@ -60,21 +57,30 @@ class AccountsDialog : DialogFragment(), CanLogout,
             requestWindowFeature(Window.FEATURE_NO_TITLE)
             window?.setBackgroundDrawable( ColorDrawable(Color.TRANSPARENT))
         }
-
-
         binding = DialogAccountsBinding.inflate(inflater, container, false)
+        adapter = AccountsRecyclerAdapter()
+        adapter.setListener(this)
+        binding.accountsRecycler.adapter= adapter
+
         setupUsers()
+        viewModel.logoutEvent.observe(viewLifecycleOwner){
+            it?.getContentIfNotHandled()?.let { eventHappened ->
+                if(eventHappened){
+                    requireActivity().setResult(Activity.RESULT_CANCELED)
+                    requireActivity().finishAffinity()
+                    LoginActivity.newInstance(requireContext())
+                }
+            }
+        }
 
         val touchHelper = ItemTouchHelper(SwipeAdapter(onSwiped= ::onSwiped))
         touchHelper.attachToRecyclerView(binding.accountsRecycler)
 
-
         binding.addAccountBtn.setOnClickListener {
-
             if (adapter.itemCount >= MAX_ACCOUNTS) {
                 binding.rootLayout.showSnackBar(getString(R.string.max_accounts_error))
             } else {
-                context?.let { LoginActivity.newInstance(it, true) }
+                LoginActivity.newInstance(requireContext(), true)
             }
         }
 
@@ -82,12 +88,13 @@ class AccountsDialog : DialogFragment(), CanLogout,
     }
 
     private fun setupUsers() {
-        lifecycleScope.launch {
-            val users = accountsManager.getUsers().toMutableList()
-            withContext(Main) {
-                adapter =
-                    AccountsRecyclerAdapter(users, this@AccountsDialog)
-                binding.accountsRecycler.adapter = adapter
+        viewModel.userAccounts.observe(viewLifecycleOwner){
+            adapter.submitList(it)
+        }
+
+        viewModel.currentUserId.observe(viewLifecycleOwner){
+            if (it != null) {
+                adapter.setSelectedUser(it)
             }
         }
     }
@@ -96,23 +103,13 @@ class AccountsDialog : DialogFragment(), CanLogout,
     private fun onSwiped(swipeDirection:Int, viewHolder: RecyclerView.ViewHolder) {
         if (viewHolder is AccountsRecyclerAdapter.MyViewHolder) {
             viewHolder.binding.itemModel?.uid?.let {
-                accountsManager.deleteUser(it)
-                adapter.removeItem(viewHolder.adapterPosition)
-                logoutIfCurrentUser(viewHolder)
-            }
-        }
-    }
-
-    private fun logoutIfCurrentUser(viewHolder: AccountsRecyclerAdapter.MyViewHolder) {
-        lifecycleScope.launch {
-            if (viewHolder.binding.itemModel?.uid == accountsManager.getCurrentUserAccount()?.uid) {
-                withContext(Main) { context?.let { logout(it) } }
+                viewModel.deleteUser(it)
             }
         }
     }
 
     override fun onItemClick(UserAccount: UserAccount) {
-        if (UserAccount != accountsManager.getCurrentUserAccount()) {
+        if (UserAccount.uid != viewModel.currentUserId.value) {
             UserRepository.instance.setCurrentUser(UserAccount)
             onAccountChanged?.invoke()
         }

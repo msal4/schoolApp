@@ -22,7 +22,7 @@
     <dimen name="item_elevation">4dp</dimen>
     <dimen name="exam_item_active_elevation">12dp</dimen>
     <dimen name="profileAttributeTitleSize">20sp</dimen>
-    <dimen name="profileAttributeSize">14sp</dimen>
+    <dimen name="profileAttributeSize">16sp</dimen>
     <dimen name="advertising_collapsed_height">116dp</dimen>
     <dimen name="homework_collapsed_height">91dp</dimen>
     <dimen name="error_text_margin">42dp</dimen>
@@ -47,12 +47,15 @@
     <dimen name="menu_item_icon_padding">8dp</dimen>
     <dimen name="home_circle_bottom_padding">48dp</dimen>
     <dimen name="home_section_spacing">16dp</dimen>
-    <dimen name="home_top_image_height">160dp</dimen>
+    <dimen name="home_top_bar_height">160dp</dimen>
     <dimen name="home_top_curvature">15dp</dimen>
     <dimen name="question_answer_text_size">16sp</dimen>
     <dimen name="splash_screen_logo_size">100dp</dimen>
     <dimen name="toolbar_item_margin">12dp</dimen>
-    <dimen name="profile_top_bar_height">180dp</dimen>
     <dimen name="home_user_image_size">100dp</dimen>
     <dimen name="profile_user_image_size">110dp</dimen>
+    <dimen name="school_logo_image_size">90dp</dimen>
+    <dimen name="profile_card_border">1dp</dimen>
+    <dimen name="multi_account_icon_size">32dp</dimen>
+    <dimen name="profile_spacing">24dp</dimen>
 </resources>

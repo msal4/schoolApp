@@ -17,12 +17,13 @@ import com.smart.resources.schools_app.core.myTypes.Event
 import com.smart.resources.schools_app.core.myTypes.ListState
 import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
-import com.smart.resources.schools_app.features.onlineExam.domain.model.*
+import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnswer
+import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnswerableQuestion
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.*
 import com.smart.resources.schools_app.features.onlineExam.presentation.fragments.ExamPaperFragment
+import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserIdUseCase
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserTypeUseCase
-import com.smart.resources.schools_app.features.users.domain.usecase.IGetUserIdUseCase
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
@@ -38,7 +39,7 @@ class ExamPaperViewModel @ViewModelInject constructor(
     private val syncOnlineExamUseCase: ISyncOnlineExamUseCase,
     private val saveAnswerLocallyUseCase: ISaveAnswerLocallyUseCase,
     private val sendAnswersUseCase: ISendAnswersUseCase,
-    private val getUserIdUseCase: IGetUserIdUseCase,
+    private val getUserIdUseCase: IGetCurrentUserIdUseCase,
     private val getExamQuestionsWithAnswersUseCase: IGetExamQuestionsWithAnswersUseCase,
     private val getExamQuestionsUseCase: IGetExamQuestionsUseCase,
     @Assisted private val savedStateHandle: SavedStateHandle,
@@ -48,7 +49,9 @@ class ExamPaperViewModel @ViewModelInject constructor(
     private val c = application.applicationContext
     private val passedOnlineExam: OnlineExam get() = savedStateHandle.get(ExamPaperFragment.EXTRA_ONLINE_EXAM)!!
     private val passedStudentId: String? get() = savedStateHandle.get(ExamPaperFragment.EXTRA_STUDENT_ID)
-    private val userType: UserType = getCurrentUserTypeUseCase()
+    private val userType = liveData {
+        emit(getCurrentUserTypeUseCase())
+    }
     private var timer: CountDownTimer? = null
 
     private val _successEvent = MutableLiveData<Event<Int>>()
@@ -71,14 +74,18 @@ class ExamPaperViewModel @ViewModelInject constructor(
     val remainingDuration: LiveData<Duration> = _remainingDuration
 
     private fun getStudentIdLiveData(): LiveData<String?> {
-        return liveData {
-            val studentId = when {
-                passedStudentId != null -> passedStudentId
-                userType == UserType.STUDENT -> getUserIdUseCase()
-                else -> null
-            }
+        return MediatorLiveData<String?>().apply {
+            addSource(userType){
+                    viewModelScope.launch {
+                        val studentId = when {
+                            passedStudentId != null -> passedStudentId
+                            it == UserType.STUDENT -> getUserIdUseCase()
+                            else -> null
+                        }
 
-            emit(studentId)
+                        postValue(studentId)
+                    }
+            }
         }
     }
 
@@ -95,9 +102,15 @@ class ExamPaperViewModel @ViewModelInject constructor(
     }
 
     private fun mapOnlineExamToReadOnly(): LiveData<Boolean> {
-        return onlineExam.map {
-            !(it.examStatus == OnlineExamStatus.ACTIVE
-                    && userType == UserType.STUDENT)
+        return MediatorLiveData<Boolean>().apply {
+            addSource(onlineExam){
+                !(it.examStatus == OnlineExamStatus.ACTIVE
+                        && userType.value == UserType.STUDENT)
+            }
+            addSource(userType){
+                !(onlineExam.value?.examStatus == OnlineExamStatus.ACTIVE
+                        && it == UserType.STUDENT)
+            }
         }
     }
 

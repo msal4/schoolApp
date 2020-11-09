@@ -1,6 +1,5 @@
 package com.smart.resources.schools_app.features.homework.addHomework
 
-//import id.zelory.compressor.Compressor
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -12,31 +11,35 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.haytham.coder.extensions.*
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.bindingAdapters.loadImageUrl
 import com.smart.resources.schools_app.core.bindingAdapters.setSpinnerList
 import com.smart.resources.schools_app.core.bindingAdapters.textView.setDate
-import com.smart.resources.schools_app.core.extentions.*
-import com.smart.resources.schools_app.core.utils.FileUtils
+import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.core.myTypes.PostListener
+import com.smart.resources.schools_app.core.utils.FileUtils
 import com.smart.resources.schools_app.databinding.FragmentAddHomeworkBinding
+import com.smart.resources.schools_app.features.dateTimePickers.DatePickerFragment
 import com.smart.resources.schools_app.features.homework.HomeworkViewModel
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import com.smart.resources.schools_app.features.users.data.TeacherModel
 import com.smart.resources.schools_app.features.users.data.UserRepository
-import com.smart.resources.schools_app.features.dateTimePickers.DatePickerFragment
-import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.tiper.MaterialSpinner
+import dagger.hilt.android.AndroidEntryPoint
 import id.zelory.compressor.Compressor
+import kotlinx.coroutines.launch
 import java.io.File
 
+@AndroidEntryPoint
 class AddHomeworkFragment : Fragment(), PostListener {
     private lateinit var binding: FragmentAddHomeworkBinding
     private lateinit var progressBar: ProgressBar
     private lateinit var saveItem: MenuItem
-    private val viewModel: HomeworkViewModel by activityViewModels()
+    private val viewModel: HomeworkViewModel by viewModels()
 
     private val onSpinnerItemSelected = object :
         MaterialSpinner.OnItemSelectedListener {
@@ -111,12 +114,14 @@ class AddHomeworkFragment : Fragment(), PostListener {
     ) {
         binding = FragmentAddHomeworkBinding
             .inflate(inflater, container, false).apply {
-                val currentUser = UserRepository.instance.getCurrentUserAccount()
-                val teacherInfoModel = currentUser?.accessToken?.let { TeacherModel.fromToken(it.value) }
-                teacherInfoModel?.classesInfo
-                    ?.let {
-                        classAndSectionSpinner.setSpinnerList(it)
-                    }
+                lifecycleScope.launch {
+                    val currentUser = UserRepository.instance.getCurrentUserAccount()
+                    val teacherInfoModel = currentUser?.accessToken?.let { TeacherModel.fromToken(it.value) }
+                    teacherInfoModel?.classesInfo
+                        ?.let {
+                            classAndSectionSpinner.setSpinnerList(it)
+                        }
+                }
 
                 dateField.setOnClickListener(::onDateClicked)
                 classAndSectionSpinner.onItemSelectedListener = onSpinnerItemSelected
@@ -135,17 +140,13 @@ class AddHomeworkFragment : Fragment(), PostListener {
                 saveAsCompressedFile(it)
 
                 binding.apply {
-                    loadImageUrl(
-                        homeworkImage,
+                    homeworkImage.loadImageUrl(
                         it.toString()
                     )
                     homeworkImageCard.visibility = View.VISIBLE
                     addImageIcon.imageTintList =
                         context?.let { c ->
-                            ContextCompat.getColorStateList(
-                                c,
-                                R.color.shadowColor
-                            )
+                            ContextCompat.getColorStateList(c, R.color.shadowColor)
                         }
                 }
             }

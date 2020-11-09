@@ -23,46 +23,6 @@ import kotlinx.android.synthetic.main.activity_on_boarding.*
 @AndroidEntryPoint
 class OnBoardingActivity : BaseActivity() {
     private val viewModel: OnBoardingViewModel by viewModels()
-    private val onBoardingPages: ArrayList<PaperOnboardingPage> by lazy {
-        arrayListOf(
-            PaperOnboardingPage(
-                run {
-                    if (viewModel.userType == UserType.STUDENT) R.string.on_boarding_title_student_1
-                    else R.string.on_boarding_title_teacher_1
-                }.toString(this),
-                run {
-                    if (viewModel.userType == UserType.STUDENT) R.string.on_boarding_description_student_1
-                    else R.string.on_boarding_description_teacher_1
-                }.toString(this),
-                R.color.colorOnBoarding1.toColor(this),
-                R.drawable.ic_on_boarding_1,
-                R.drawable.ic_person_reading
-            ),
-            PaperOnboardingPage(
-                run {
-                    if (viewModel.userType == UserType.STUDENT) R.string.on_boarding_title_student_2
-                    else R.string.on_boarding_title_teacher_2
-                }.toString(this),
-                run {
-                    if (viewModel.userType == UserType.STUDENT) R.string.on_boarding_description_student_2
-                    else R.string.on_boarding_description_teacher_2
-                }.toString(this),
-                R.color.colorOnBoarding2.toColor(this),
-                R.drawable.ic_on_boarding_2,
-                R.drawable.ic_school_bell
-            ),
-            PaperOnboardingPage(
-                R.string.on_boarding_title_3.toString(this),
-                run {
-                    if (viewModel.userType == UserType.STUDENT) R.string.on_boarding_description_student_3
-                    else R.string.on_boarding_description_teacher_3
-                }.toString(this),
-                R.color.colorOnBoarding3.toColor(this),
-                R.drawable.ic_on_boarding_3,
-                R.drawable.ic_exam_on_boarding
-            ),
-        )
-    }
 
     companion object Factory {
         fun newInstance(context: Context) {
@@ -89,12 +49,58 @@ class OnBoardingActivity : BaseActivity() {
         super.onResume()
     }
 
+    private fun getOnBoardingPages(userType: UserType): ArrayList<PaperOnboardingPage> {
+        return arrayListOf(
+            PaperOnboardingPage(
+                run {
+                    if (userType == UserType.STUDENT) R.string.on_boarding_title_student_1
+                    else R.string.on_boarding_title_teacher_1
+                }.toString(this),
+                run {
+                    if (userType == UserType.STUDENT) R.string.on_boarding_description_student_1
+                    else R.string.on_boarding_description_teacher_1
+                }.toString(this),
+                R.color.colorOnBoarding1.toColor(this),
+                R.drawable.ic_on_boarding_1,
+                R.drawable.ic_person_reading
+            ),
+            PaperOnboardingPage(
+                run {
+                    if (userType == UserType.STUDENT) R.string.on_boarding_title_student_2
+                    else R.string.on_boarding_title_teacher_2
+                }.toString(this),
+                run {
+                    if (userType == UserType.STUDENT) R.string.on_boarding_description_student_2
+                    else R.string.on_boarding_description_teacher_2
+                }.toString(this),
+                R.color.colorOnBoarding2.toColor(this),
+                R.drawable.ic_on_boarding_2,
+                R.drawable.ic_school_bell
+            ),
+            PaperOnboardingPage(
+                R.string.on_boarding_title_3.toString(this),
+                run {
+                    if (userType == UserType.STUDENT) R.string.on_boarding_description_student_3
+                    else R.string.on_boarding_description_teacher_3
+                }.toString(this),
+                R.color.colorOnBoarding3.toColor(this),
+                R.drawable.ic_on_boarding_3,
+                R.drawable.ic_exam_on_boarding
+            ),
+        )
+    }
+
+
     private fun createOnBoardingFragment() {
-        supportFragmentManager.commit {
-            val onBoardingFragment = PaperOnboardingFragment.newInstance(onBoardingPages)
-            add(R.id.containerLayout, onBoardingFragment)
-            onBoardingFragment.setOnChangeListener(::onPageChanged)
-            onBoardingFragment.setOnRightOutListener(::onLastPageSwiped)
+        viewModel.userType.observe(this){
+            supportFragmentManager.commit {
+                val onBoardingFragment = PaperOnboardingFragment
+                    .newInstance(getOnBoardingPages(it))
+
+                add(R.id.containerLayout, onBoardingFragment)
+                onBoardingFragment.setOnChangeListener(::onPageChanged)
+                onBoardingFragment.setOnRightOutListener(::onLastPageSwiped)
+            }
         }
     }
 

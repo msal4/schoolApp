@@ -1,42 +1,40 @@
 package com.smart.resources.schools_app.features.homework
 
 import android.app.Application
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
 import com.smart.resources.schools_app.features.users.data.UserRepository
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
 
-class HomeworkViewModel (application: Application) : AndroidViewModel(application){
-
-
+class HomeworkViewModel @ViewModelInject constructor(application: Application) : AndroidViewModel(application){
     val listState = ListState()
     var postHomeworkModel= PostHomeworkModel()
     val postException= PostException()
     var uploadListener: PostListener?= null
-    val isStudent by lazy {
-        UserRepository.instance.getCurrentUserAccount()?.isStudent == true
+    val isStudent = liveData {
+        emit(UserRepository.instance.getCurrentUserAccount()?.isStudent == true)
     }
+
+    private val _actionInProgress = MutableLiveData<Boolean>()
+    val actionInProgress: LiveData<Boolean> = _actionInProgress
 
     private val homeworkRepo= HomeworkRepository()
-    init {
-        fetchHomework()
+
+    val homework: LiveData<MutableList<HomeworkModel>> =  isStudent.switchMap {
+        fetchHomework(it)
+        homeworkRepo.homework
     }
-
-
-    val homework: LiveData<MutableList<HomeworkModel>>
-            by lazy {
-
-                    homeworkRepo.homework
-            }
 
     private val c= application.applicationContext
     var onError: ((String)-> Unit)?= null
 
     fun deleteHomework(position: Int){
         viewModelScope.launch {
+            _actionInProgress.postValue(true)
             when(val result = homeworkRepo.deleteHomework(position)){
                 is Success -> {
 
@@ -44,10 +42,12 @@ class HomeworkViewModel (application: Application) : AndroidViewModel(applicatio
                 is ResponseError -> onError?.invoke(result.combinedMsg)
                 is ConnectionError -> onError?.invoke(c.getString(R.string.connection_error))
             }
+
+            _actionInProgress.postValue(false)
         }
     }
 
-    private fun fetchHomework(){
+    private fun fetchHomework(isStudent:Boolean){
         viewModelScope.launch {
             listState.setLoading(true)
             when (val result =if(isStudent)  homeworkRepo.getStudentHomework() else homeworkRepo.getTeacherHomework()) {

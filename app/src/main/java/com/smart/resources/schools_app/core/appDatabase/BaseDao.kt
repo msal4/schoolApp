@@ -11,7 +11,7 @@ abstract class BaseDao<T> {
      * @return The SQLite row id
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract fun insert(dataModel: T): Long
+    abstract suspend fun insert(dataModel: T): Long
 
     /**
      * Insert an array of objects in the database.
@@ -20,7 +20,7 @@ abstract class BaseDao<T> {
      * @return The SQLite row ids
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract fun insert(dataModel: List<T>): List<Long>
+    abstract suspend fun insert(dataModel: List<T>): List<Long>
 
     /**
      * Update an object from the database.
@@ -28,7 +28,7 @@ abstract class BaseDao<T> {
      * @param dataModel the object to be updated
      */
     @Update
-    abstract fun update(dataModel: T)
+    abstract suspend fun update(dataModel: T)
 
     /**
      * Update an array of objects from the database.
@@ -36,7 +36,7 @@ abstract class BaseDao<T> {
      * @param dataModel the object to be updated
      */
     @Update
-    abstract fun update(dataModel: List<T>)
+    abstract suspend fun update(dataModel: List<T>)
 
     /**
      * Delete an object from the database
@@ -44,7 +44,7 @@ abstract class BaseDao<T> {
      * @param dataModel the object to be deleted
      */
     @Delete
-    abstract fun delete(dataModel: T)
+    abstract suspend fun delete(dataModel: T)
 
     /**
      * Delete an array of objects from the database
@@ -52,10 +52,10 @@ abstract class BaseDao<T> {
      * @param dataModel the object to be deleted
      */
     @Delete
-    abstract fun delete(dataModel: List<T>)
+    abstract suspend fun delete(dataModel: List<T>)
 
     @Transaction
-    open fun upsert(dataModel: T) {
+    open suspend fun upsert(dataModel: T) {
         val id = insert(dataModel)
         if (id == -1L) {
             update(dataModel)
@@ -63,7 +63,7 @@ abstract class BaseDao<T> {
     }
 
     @Transaction
-    open fun upsert(dataList: List<T>) {
+    open suspend fun upsert(dataList: List<T>) {
         val insertResult = insert(dataList)
         val updateList: MutableList<T> = mutableListOf()
         for (i in insertResult.indices) {

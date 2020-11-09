@@ -3,17 +3,14 @@ package com.smart.resources.schools_app.core.bindingAdapters.textView
 import android.annotation.SuppressLint
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.smart.resources.schools_app.R
 import com.haytham.coder.extensions.hide
 import com.haytham.coder.extensions.unicodeWrap
-import com.orhanobut.logger.Logger
-import com.smart.resources.schools_app.features.users.data.UserRepository
+import com.smart.resources.schools_app.R
 import org.threeten.bp.Duration
 
 @BindingAdapter("android:setMark")
 fun setMark(tv: TextView, mark: Int?) {
-    val isStudent = UserRepository.instance.getCurrentUserAccount()?.userType == 0
-    tv.text = mark?.toString() ?: if (isStudent) "- " else ""
+    tv.text = mark?.toString() ?: ""
 }
 
 @BindingAdapter("android:numberOfQuestions")

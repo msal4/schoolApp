@@ -1,32 +1,45 @@
 package com.smart.resources.schools_app.features.lecture
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.liveData
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.*
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.myTypes.*
+import com.smart.resources.schools_app.core.myTypes.ConnectionError
+import com.smart.resources.schools_app.core.myTypes.ListState
+import com.smart.resources.schools_app.core.myTypes.ResponseError
+import com.smart.resources.schools_app.core.myTypes.Success
 import com.smart.resources.schools_app.features.users.data.StudentModel
-import com.smart.resources.schools_app.features.users.data.UserRepository
+import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserModelUseCase
+import kotlinx.coroutines.launch
 import java.net.HttpURLConnection
 
 
-class LectureViewModel(application: Application) : AndroidViewModel(application) {
+class LectureViewModel @ViewModelInject constructor(
+    application: Application,
+    private val getCurrentUserModel: IGetCurrentUserModelUseCase
+) : AndroidViewModel(application) {
     private val c = application.applicationContext
 
-    val lectures: LiveData<List<LectureModel>> = liveData {
-        emit(fetchLectures())
-    }
     val listState = ListState()
     private val lectureRepository:ILectureRepository= LectureRepository()
-    private val user= UserRepository.instance.getUser()
+    private val studentModel:LiveData<StudentModel> = liveData {
+        val userModel= getCurrentUserModel()
+        if(userModel is StudentModel) emit(userModel)
+    }
 
-    private suspend fun fetchLectures(): List<LectureModel> {
-        if(user == null || user !is StudentModel) return listOf()
+    private val _lectures: MutableLiveData<List<LectureModel>> = MutableLiveData()
+    val lectures: LiveData<List<LectureModel>> = studentModel.switchMap {
+        viewModelScope.launch {
+            _lectures.postValue(fetchLectures(it))
+        }
+        _lectures
+    }
+
+    private suspend fun fetchLectures(studentModel: StudentModel): List<LectureModel> {
         listState.apply {
 
             setLoading(true)
-            when (val result = lectureRepository.getLectures(schoolId = user.schoolId,classId = user.classInfo.classId.toString())) {
+            when (val result = lectureRepository.getLectures(schoolId = studentModel.schoolId,classId = studentModel.classInfo.classId.toString())) {
                 is Success -> {
                     if (result.data.isNullOrEmpty()) setBodyError(c.getString(R.string.no_lectures))
                     else {

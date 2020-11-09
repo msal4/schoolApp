@@ -7,6 +7,8 @@ import com.smart.resources.schools_app.features.onlineExam.domain.repository.IOn
 import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.smart.resources.schools_app.features.users.domain.usecase.GetCurrentUserTypeUseCase
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class GetUserOnlineExamsUseCase @Inject constructor(
@@ -15,9 +17,12 @@ class GetUserOnlineExamsUseCase @Inject constructor(
     private val userRepository: UserRepository,
     ) : IGetUserOnlineExamsUseCase {
     override operator fun invoke(): Flow<Resource<List<OnlineExam>>> {
-        val userId = userRepository.getCurrentUserAccount()?.uid.toString()
-        val isTeacher= getCurrentUserTypeUseCase() == UserType.TEACHER
+        return flow {
+           emit(Resource.loading())
+            val userId = userRepository.getCurrentUserAccount()?.uid.toString()
+            val isTeacher= getCurrentUserTypeUseCase() == UserType.TEACHER
 
-        return onlineExamsRepository.getUserOnlineExams(userId, isTeacher)
+            emitAll(onlineExamsRepository.getUserOnlineExams(userId, isTeacher))
+        }
     }
 }

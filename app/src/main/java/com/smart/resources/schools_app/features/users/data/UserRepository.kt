@@ -1,21 +1,18 @@
 package com.smart.resources.schools_app.features.users.data
 
 import com.smart.resources.schools_app.core.appDatabase.storages.SharedPrefHelper
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Singleton
 
-
+@Singleton
 class UserRepository @Inject constructor(
     private val accountsDao: AccountsDao,
     private val sharedPrefHelper: SharedPrefHelper,
 ) {
     private var currentUserAccount: UserAccount? = null
+    fun getUsers() = accountsDao.getUsers()
 
-    suspend fun getUsers() = accountsDao.getUsers()
-
-    fun getCurrentUserAccount(): UserAccount? {
+    suspend fun getCurrentUserAccount(): UserAccount? {
         if (currentUserAccount == null) sharedPrefHelper.currentUserId?.let {
             currentUserAccount = accountsDao.getUserById(it)
         }
@@ -23,7 +20,7 @@ class UserRepository @Inject constructor(
         return currentUserAccount
     }
 
-    fun getUser(): UserModel? {
+    suspend fun getUser(): UserModel? {
         getCurrentUserAccount()?.apply {
             return if (userType == 0) {
                 StudentModel.fromToken(accessToken.value)
@@ -35,20 +32,24 @@ class UserRepository @Inject constructor(
     }
 
 
-    fun deleteUser(uid: String) {
-        CoroutineScope(IO).launch {
-            accountsDao.deleteUserById(uid)
+    suspend fun deleteUser(uid: String) {
+        if (uid == currentUserAccount?.uid) {
+            currentUserAccount = null
+            sharedPrefHelper.currentUserId = null
         }
+
+        accountsDao.deleteUserById(uid)
     }
 
-    fun deleteCurrentUser() {
-        currentUserAccount?.uid?.let { deleteUser(it) }
+    suspend fun deleteCurrentUser() {
+        currentUserAccount?.uid?.let {
+            deleteUser(it)
+        }
+
     }
 
-    fun insertCurrentUser(currentUserAccount: UserAccount) {
-        CoroutineScope(IO).launch {
-            accountsDao.insert(currentUserAccount)
-        }
+    suspend fun insertCurrentUser(currentUserAccount: UserAccount) {
+        accountsDao.insert(currentUserAccount)
         setCurrentUser(currentUserAccount)
     }
 
@@ -57,12 +58,10 @@ class UserRepository @Inject constructor(
         sharedPrefHelper.currentUserId = currentUserAccount.uid
     }
 
-    fun updateCurrentUser(imageLocation: String) {
-        CoroutineScope(IO).launch {
-            currentUserAccount?.uid?.let {
-                accountsDao.updateImg(it, imageLocation)
-                currentUserAccount?.img = imageLocation
-            }
+    suspend fun updateCurrentUser(imageLocation: String) {
+        currentUserAccount?.uid?.let {
+            accountsDao.updateImg(it, imageLocation)
+            currentUserAccount?.img = imageLocation
         }
     }
 

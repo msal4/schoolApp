@@ -12,6 +12,7 @@ import com.kaopiz.kprogresshud.KProgressHUD
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.callbacks.SwipeAdapter
+import com.smart.resources.schools_app.core.extentions.createAppProgressHUD
 import com.smart.resources.schools_app.core.extentions.showConfirmationDialog
 import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
@@ -30,10 +31,7 @@ class OnlineExamsFragment : Fragment() {
     private lateinit var adapter: OnlineExamAdapter
     private val viewModel: OnlineExamViewModel by viewModels()
     private val progressHud: KProgressHUD by lazy {
-        KProgressHUD.create(requireActivity())
-            .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-            .setCancellable(false)
-            .setDimAmount(0.5f)
+        requireActivity().createAppProgressHUD()
     }
 
     companion object {
@@ -101,12 +99,6 @@ class OnlineExamsFragment : Fragment() {
         adapter = OnlineExamAdapter(true)
         adapter.onItemPressed = ::onOnlineExamPressed
 
-        if (viewModel.isTeacher) {
-            // add swipe functionality
-            val swipeAdapter = SwipeAdapter(onSwiped = ::onItemSwiped, swipedRightForOptions = true)
-            ItemTouchHelper(swipeAdapter).attachToRecyclerView(recyclerView)
-            adapter.onItemLongPressed = ::showOptionsMenu
-        }
         recyclerView.adapter = adapter
     }
 
@@ -132,7 +124,7 @@ class OnlineExamsFragment : Fragment() {
     private fun onOnlineExamPressed(onlineExam: OnlineExam) {
         if(!isAdded) return
 
-        if (viewModel.isTeacher) {
+        if (viewModel.isTeacher.value== true) {
             if (onlineExam.examStatus == OnlineExamStatus.INACTIVE) {
                 ExamPaperFragment.newInstance(parentFragmentManager, onlineExam)
             } else {
@@ -186,10 +178,20 @@ class OnlineExamsFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if (viewModel.isTeacher) {
-            inflater.inflate(R.menu.menu_add_btn, menu)
+        viewModel.isTeacher.observe(viewLifecycleOwner){
+            if (it== true) {
+                inflater.inflate(R.menu.menu_add_btn, menu)
+                attachOptionsMenuToRecycler()
+            }
         }
+
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    private fun attachOptionsMenuToRecycler() {
+        val swipeAdapter = SwipeAdapter(onSwiped = ::onItemSwiped, swipedRightForOptions = true)
+        ItemTouchHelper(swipeAdapter).attachToRecyclerView(binding.recyclerView)
+        adapter.onItemLongPressed = ::showOptionsMenu
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

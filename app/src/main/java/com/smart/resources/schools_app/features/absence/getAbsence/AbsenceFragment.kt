@@ -5,11 +5,13 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
 import com.smart.resources.schools_app.features.users.data.UserRepository
+import kotlinx.coroutines.launch
 
 class AbsenceFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
@@ -51,8 +53,10 @@ class AbsenceFragment : Fragment() {
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if (UserRepository.instance.getCurrentUserAccount()?.userType == 1) {
-            inflater.inflate(R.menu.menu_add_btn, menu)
+        lifecycleScope.launch {
+            if (UserRepository.instance.getCurrentUserAccount()?.userType == 1) {
+                inflater.inflate(R.menu.menu_add_btn, menu)
+            }
         }
 
         super.onCreateOptionsMenu(menu, inflater)

@@ -1,7 +1,8 @@
 package com.smart.resources.schools_app.features.onlineExam.data.repository
 
-import com.hadiyarajesh.flower.*
-import com.haytham.coder.extensions.isNotNullOrEmpty
+import com.hadiyarajesh.flower.ApiResponse
+import com.hadiyarajesh.flower.Resource
+import com.hadiyarajesh.flower.networkBoundResource
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.core.extentions.TAG
 import com.smart.resources.schools_app.core.extentions.withNewData
@@ -14,9 +15,12 @@ import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnsw
 import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnswerableQuestion
 import com.smart.resources.schools_app.features.onlineExam.domain.repository.IAnswersRepository
 import com.smart.resources.schools_app.features.onlineExam.domain.repository.ListOfAnswers
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 class AnswersRepository(
     private val answersDao: AnswersDao,
@@ -43,8 +47,10 @@ class AnswersRepository(
                 answersClient.getStudentExamAnswers(examId, studentId.substring(1, studentId.length))
             },
             saveRemoteData = {
-                val localAnswers= answerMappersFacade.mapNetworkToLocalAnswer(it, studentId)
-                answersDao.insert(localAnswers)
+                CoroutineScope(IO).launch {
+                    val localAnswers= answerMappersFacade.mapNetworkToLocalAnswer(it, studentId)
+                    answersDao.insert(localAnswers)
+                }
             }
         ).catch {
             // must be used to catch exceptions

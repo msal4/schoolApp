@@ -17,12 +17,17 @@ import kotlinx.coroutines.launch
 class ScheduleViewModel(application: Application) : AndroidViewModel(application) {
     private val c= application.applicationContext
     val listState = ListState()
+
+
+    init {
+        fetchSchedule()
+    }
     private val schedule: MutableLiveData<List<List<String?>>>
             by lazy { MutableLiveData<List<List<String?>>>() }
 
+
     fun getSchedule():
             LiveData<List<List<String?>>> {
-        fetchSchedule()
 
         return schedule
     }

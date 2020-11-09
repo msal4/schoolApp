@@ -1,5 +1,6 @@
 package com.smart.resources.schools_app.core.extentions
 
+import android.app.Activity
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.graphics.Color
@@ -25,6 +26,7 @@ import com.hadiyarajesh.flower.ApiErrorResponse
 import com.hadiyarajesh.flower.ApiResponse
 import com.hadiyarajesh.flower.ApiSuccessResponse
 import com.haytham.coder.extensions.toColor
+import com.kaopiz.kprogresshud.KProgressHUD
 import com.smart.resources.schools_app.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -199,3 +201,8 @@ fun View.hideKeyboard() {
     imm.hideSoftInputFromWindow(this.windowToken, 0)
 }
 fun Boolean.toInt() = if (this) 1 else 0
+
+fun Activity.createAppProgressHUD(): KProgressHUD = KProgressHUD.create(this)
+        .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+        .setCancellable(false)
+        .setDimAmount(0.5f)

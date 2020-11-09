@@ -4,10 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.lifecycleScope
 import com.haytham.coder.extensions.GET_IMAGE_REQUEST
 import com.haytham.coder.extensions.getImage
 import com.haytham.coder.extensions.openImagePickerApp
@@ -20,10 +21,13 @@ import com.smart.resources.schools_app.features.imageViewer.ImageViewerActivity
 import com.smart.resources.schools_app.features.users.data.TeacherModel
 import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.smart.resources.schools_app.features.users.presentation.AccountsDialog
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class ProfileActivity : BaseActivity() {
     private lateinit var binding: ActivityProfileBinding
-    private lateinit var viewModel: ProfileViewModel
+    private val viewModel: ProfileViewModel by viewModels()
 
     companion object Factory {
         const val REQUEST_IS_PROFILE_IMAGE_UPDATED = 0
@@ -49,22 +53,25 @@ class ProfileActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile)
 
-        setupViewModel()
         setupItemModel()
     }
 
     private fun setupItemModel() {
         binding.apply {
             lifecycleOwner = this@ProfileActivity
+            lifecycleScope.launch {
+
             val personModel = getPerson()
             itemModel = personModel
             teacherModel = if (personModel is TeacherModel) personModel else null
 
-            UserRepository.instance.getCurrentUserAccount()?.img?.let {
-                setAccountImage(
-                    profileImage,
-                    it
-                )
+
+                UserRepository.instance.getCurrentUserAccount()?.img?.let {
+                    setAccountImage(
+                        profileImage,
+                        it
+                    )
+                }
             }
             setResult(Activity.RESULT_OK)
 
@@ -78,16 +85,7 @@ class ProfileActivity : BaseActivity() {
         viewModel.certificateModel?.url?.let { ImageViewerActivity.newInstance(this,null, it) }
     }
 
-
-    private fun setupViewModel() {
-        viewModel = ViewModelProviders.of(this)
-            .get(ProfileViewModel::class.java)
-    }
-
-    private fun getPerson()= UserRepository.instance.getUser()
-
-
-
+    private suspend fun getPerson()= UserRepository.instance.getUser()
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -96,11 +94,10 @@ class ProfileActivity : BaseActivity() {
             resultCode == Activity.RESULT_OK && data != null
         ) {
             data.getImage().toString().let {
-                UserRepository.instance.updateCurrentUser(it)
-                loadImageUrl(
-                    binding.profileImage,
-                    it
-                )
+                lifecycleScope.launch {
+                    UserRepository.instance.updateCurrentUser(it)
+                }
+                binding.profileImage.loadImageUrl(it)
             }
             setResult(Activity.RESULT_OK)
         }

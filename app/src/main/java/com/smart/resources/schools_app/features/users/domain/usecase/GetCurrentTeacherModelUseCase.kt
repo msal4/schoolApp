@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class GetCurrentTeacherModelUseCase @Inject constructor(private val userRepository: UserRepository) :
     IGetCurrentTeacherModelUseCase {
-    override fun invoke(): TeacherModel? {
+    override suspend fun invoke(): TeacherModel? {
         val userModel= userRepository.getUser()
         return if (userModel !=null && userModel is TeacherModel) userModel
         else null

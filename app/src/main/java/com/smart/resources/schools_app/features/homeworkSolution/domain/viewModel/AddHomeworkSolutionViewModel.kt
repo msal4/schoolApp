@@ -2,28 +2,29 @@ package com.smart.resources.schools_app.features.homeworkSolution.domain.viewMod
 
 import android.app.Application
 import android.net.Uri
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.*
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.core.myTypes.Event
-import com.smart.resources.schools_app.core.utils.FileUtils
 import com.smart.resources.schools_app.core.myTypes.ConnectionError
+import com.smart.resources.schools_app.core.myTypes.Event
 import com.smart.resources.schools_app.core.myTypes.ResponseError
 import com.smart.resources.schools_app.core.myTypes.Success
-import com.smart.resources.schools_app.features.homeworkSolution.data.repository.HomeworkSolutionRepository
+import com.smart.resources.schools_app.core.utils.FileUtils
 import com.smart.resources.schools_app.features.homeworkSolution.data.model.AddHomeworkSolutionModel
 import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
+import com.smart.resources.schools_app.features.homeworkSolution.data.repository.HomeworkSolutionRepository
 import com.smart.resources.schools_app.features.homeworkSolution.domain.repository.IHomeworkSolutionRepository
-import com.smart.resources.schools_app.features.login.CanLogout
-import com.smart.resources.schools_app.features.users.data.UserRepository
+import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserIdUseCase
 import id.zelory.compressor.Compressor
 import kotlinx.coroutines.launch
 import java.io.File
 
-class AddHomeworkSolutionViewModel(application: Application) : AndroidViewModel(application),
-    CanLogout {
+
+class AddHomeworkSolutionViewModel @ViewModelInject constructor(
+    application: Application,
+    private val getCurrentUserIdUseCase: IGetCurrentUserIdUseCase
+)
+    : AndroidViewModel(application){
     private val c = application.applicationContext
     private val solutionRepository: IHomeworkSolutionRepository = HomeworkSolutionRepository()
 
@@ -37,7 +38,11 @@ class AddHomeworkSolutionViewModel(application: Application) : AndroidViewModel(
     lateinit var homeworkId: String
     var description: String = ""
     private var attachmentImage: File? = null
-    private val studentId = UserRepository.instance.getUser()?.id
+
+    private val studentId = liveData {
+        emit(getCurrentUserIdUseCase())
+    }
+
 
     fun saveUri(uri: Uri) {
         val originalFile: File = FileUtils.from(c, uri)
@@ -54,7 +59,7 @@ class AddHomeworkSolutionViewModel(application: Application) : AndroidViewModel(
         viewModelScope.launch {
             _isLoading.postValue(true)
             val res = solutionRepository.addSolution(
-                studentId = studentId.toString(),
+                studentId = studentId.value?:"",
                 homeworkId = homeworkId,
                 addHomeworkSolutionModel = model
             )
@@ -82,7 +87,7 @@ class AddHomeworkSolutionViewModel(application: Application) : AndroidViewModel(
             _error.value = Event(c.getString(R.string.empty_answer_msg))
             return false
         }
-        if (!::homeworkId.isInitialized || homeworkId.isBlank() || studentId.isNullOrBlank()) {
+        if (!::homeworkId.isInitialized || homeworkId.isBlank() || studentId.value.isNullOrBlank()) {
             _error.value = Event(c.getString(R.string.unexpected_error))
             return false
         }

@@ -21,10 +21,10 @@ abstract class OnlineExamsDao : BaseDao<LocalOnlineExam>() {
     abstract fun getExamKey(examId: String): Flow<DecryptedString>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertUserOnlineExamCrossRef(onlineExam: List<UserOnlineExamCrossRef>)
+    abstract suspend fun insertUserOnlineExamCrossRef(onlineExam: List<UserOnlineExamCrossRef>)
 
     @Query("DELETE FROM ${UserOnlineExamCrossRef.TABLE_NAME} WHERE uid = :userId AND onlineExamId NOT IN(:examIds)")
-    abstract fun deleteUserOnlineExamCrossRefsNotInList(
+    abstract suspend fun deleteUserOnlineExamCrossRefsNotInList(
         userId: String,
         examIds: List<String>
     )
@@ -39,7 +39,7 @@ abstract class OnlineExamsDao : BaseDao<LocalOnlineExam>() {
         ON (t1.onlineExamId = t2.onlineExamId)
         WHERE t2.uid = null)"""
     )
-    abstract fun deleteOnlineExamsWithoutRelations()
+    abstract suspend fun deleteOnlineExamsWithoutRelations()
 
     /**
      * sync database with server
@@ -48,7 +48,7 @@ abstract class OnlineExamsDao : BaseDao<LocalOnlineExam>() {
      * 3- delete any remaining OnlineExams without relations
      */
     @Transaction
-    open fun syncWithDatabase(userId: String, onlineExams: List<LocalOnlineExam>) {
+    open suspend fun syncWithDatabase(userId: String, onlineExams: List<LocalOnlineExam>) {
         // 1
         upsertUserOnlineExams(userId, onlineExams)
 
@@ -68,7 +68,7 @@ abstract class OnlineExamsDao : BaseDao<LocalOnlineExam>() {
      *  2- insert UserOnlineExamCrossRef for the many to many relation links to be valid
      */
     @Transaction
-    open fun upsertUserOnlineExams(
+    open suspend fun upsertUserOnlineExams(
         userId: String,
         onlineExams: List<LocalOnlineExam>
     ) {
@@ -84,9 +84,9 @@ abstract class OnlineExamsDao : BaseDao<LocalOnlineExam>() {
     }
 
     @Query("DELETE FROM ${LocalOnlineExam.TABLE_NAME} WHERE onlineExamId = :examId")
-    abstract fun deleteOnlineExam(examId: String)
+    abstract suspend fun deleteOnlineExam(examId: String)
 
     @Query("UPDATE ${LocalOnlineExam.TABLE_NAME} SET examStatus = :onlineExamStatus WHERE onlineExamId = :examId")
-    abstract fun updateExamStatus(examId: String, onlineExamStatus: Int)
+    abstract suspend fun updateExamStatus(examId: String, onlineExamStatus: Int)
 
 }

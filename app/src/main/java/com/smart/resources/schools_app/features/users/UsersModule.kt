@@ -18,7 +18,11 @@ abstract class UsersModule {
     @Binds
     abstract fun bindGetCurrentTeacherDataUseCase(getCurrentTeacherModelUseCase: GetCurrentTeacherModelUseCase): IGetCurrentTeacherModelUseCase
     @Binds
-    abstract fun bindGetLocalUserIdUseCase(getLocalUserIdUseCase: GetLocalUserIdUseCase): IGetUserIdUseCase
+    abstract fun bindGetCurrentUserModelUseCase(getCurrentUserModelUseCase: GetCurrentUserModelUseCase): IGetCurrentUserModelUseCase
+    @Binds
+    abstract fun bindDeleteUserUseCase(deleteUserUseCase:DeleteUserUseCase): IDeleteUserUseCase
+    @Binds
+    abstract fun bindGetLocalUserIdUseCase(getLocalUserIdUseCase: GetLocalUserIdUseCase): IGetCurrentUserIdUseCase
     @Binds
     abstract fun bindGetFirstStudentLoginUseCase(getFirstStudentLoginUseCase: GetFirstStudentLoginUseCase): IGetFirstStudentLoginUseCase
     @Binds

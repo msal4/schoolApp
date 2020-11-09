@@ -5,28 +5,35 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ItemAccountBinding
 import com.smart.resources.schools_app.features.users.data.UserAccount
-import com.smart.resources.schools_app.features.users.data.UserRepository
 
-class AccountsRecyclerAdapter(private val UserAccounts:MutableList<UserAccount>?, private val listener: OnItemClickListener) : RecyclerView.Adapter<AccountsRecyclerAdapter.MyViewHolder>(){
+class AccountsRecyclerAdapter : ListAdapter<UserAccount, AccountsRecyclerAdapter.MyViewHolder>(DIFF_CALLBACK){
+
+    private var listener: OnItemClickListener?= null
+
+    fun setListener(listener: OnItemClickListener){
+        this.listener= listener
+    }
+
     interface OnItemClickListener {
         fun onItemClick(UserAccount: UserAccount)
     }
 
-    inner class MyViewHolder(val binding: ItemAccountBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(accountModel: UserAccount) {
-
-            binding.itemModel = accountModel
-
-        }
+    private var selectedUserId:String?= null
+    fun setSelectedUser(userId:String){
+        selectedUserId= userId
+        notifyDataSetChanged()
     }
 
-    fun removeItem(position: Int){
-        UserAccounts?.removeAt(position)
-        notifyItemRemoved(position)
+    inner class MyViewHolder(val binding: ItemAccountBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(accountModel: UserAccount) {
+            binding.itemModel = accountModel
+        }
     }
 
     override fun onCreateViewHolder(
@@ -39,19 +46,17 @@ class AccountsRecyclerAdapter(private val UserAccounts:MutableList<UserAccount>?
         return MyViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = UserAccounts?.size?:0
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        UserAccounts?.get(position)?.let { user ->
+        getItem(position)?.let { user ->
 
             holder.itemView.setOnClickListener{
-                listener.onItemClick(user)
+                listener?.onItemClick(user)
             }
             holder.bind(user)
 
-            if(user.uid== UserRepository.instance.getCurrentUserAccount()?.uid){
-
+            if(user.uid== selectedUserId){
                 holder.binding.profileImage.apply {
                     borderColor= ContextCompat.getColor(holder.itemView.context, R.color.light_green_a700)
                     borderWidth= 2
@@ -60,6 +65,25 @@ class AccountsRecyclerAdapter(private val UserAccounts:MutableList<UserAccount>?
             }
 
         }
+    }
+
+    companion object {
+        private val DIFF_CALLBACK: DiffUtil.ItemCallback<UserAccount> =
+            object : DiffUtil.ItemCallback<UserAccount>() {
+                override fun areItemsTheSame(
+                    oldItem: UserAccount,
+                    newItem: UserAccount
+                ): Boolean {
+                    return oldItem.uid == newItem.uid
+                }
+
+                override fun areContentsTheSame(
+                    oldItem: UserAccount,
+                    newItem: UserAccount
+                ): Boolean {
+                    return oldItem == newItem
+                }
+            }
     }
 
 }

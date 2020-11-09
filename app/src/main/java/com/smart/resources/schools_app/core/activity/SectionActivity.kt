@@ -1,33 +1,34 @@
 package com.smart.resources.schools_app.core.activity
 
+//import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ProgressBar
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import com.haytham.coder.extensions.hide
 import com.haytham.coder.extensions.show
 import com.smart.resources.schools_app.R
-import com.smart.resources.schools_app.databinding.ActivitySectionBinding
-import com.smart.resources.schools_app.features.notification.NotificationFragment
 import com.smart.resources.schools_app.core.myTypes.Section
 import com.smart.resources.schools_app.core.myTypes.Section.EXAM
+import com.smart.resources.schools_app.databinding.ActivitySectionBinding
 import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
 import com.smart.resources.schools_app.features.absence.getAbsence.AbsenceFragment
-//import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
 import com.smart.resources.schools_app.features.advertising.AdvertisingFragment
 import com.smart.resources.schools_app.features.exam.ExamFragment
 import com.smart.resources.schools_app.features.homework.getHomeworks.HomeworkFragment
 import com.smart.resources.schools_app.features.lecture.LectureFragment
 import com.smart.resources.schools_app.features.library.LibraryFragment
+import com.smart.resources.schools_app.features.notification.NotificationFragment
 import com.smart.resources.schools_app.features.onlineExam.presentation.fragments.OnlineExamsFragment
-import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.smart.resources.schools_app.features.rating.RatingFragment
 import com.smart.resources.schools_app.features.ratingAdd.AddRatingFragment
 import com.smart.resources.schools_app.features.schedule.ScheduleFragment
+import com.smart.resources.schools_app.features.users.data.UserRepository
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SectionActivity : BaseActivity() {
@@ -70,26 +71,28 @@ class SectionActivity : BaseActivity() {
 
 
     private fun createFragment() {
-        val isStudent= UserRepository.instance.getCurrentUserAccount()?.userType == 0
+        lifecycleScope.launch {
+            val isStudent= UserRepository.instance.getCurrentUserAccount()?.userType == 0
 
-        supportFragmentManager.apply {
-            when(intent.getSerializableExtra(EXTRA_SECTION) as Section){
-                EXAM -> ExamFragment.newInstance(this)
-                Section.HOMEWORK -> HomeworkFragment.newInstance(this)
-                Section.NOTIFICATION -> NotificationFragment.newInstance(this)
-                Section.LIBRARY -> LibraryFragment.newInstance(this)
-                Section.SCHEDULE -> ScheduleFragment.newInstance(this)
-                Section.ADVERTISING -> AdvertisingFragment.newInstance(this)
-                Section.LECTURE -> LectureFragment.newInstance(this)
+            supportFragmentManager.apply {
+                when(intent.getSerializableExtra(EXTRA_SECTION) as Section){
+                    EXAM -> ExamFragment.newInstance(this)
+                    Section.HOMEWORK -> HomeworkFragment.newInstance(this)
+                    Section.NOTIFICATION -> NotificationFragment.newInstance(this)
+                    Section.LIBRARY -> LibraryFragment.newInstance(this)
+                    Section.SCHEDULE -> ScheduleFragment.newInstance(this)
+                    Section.ADVERTISING -> AdvertisingFragment.newInstance(this)
+                    Section.LECTURE -> LectureFragment.newInstance(this)
 
-                Section.ABSENCE ->
-                    if(isStudent) AbsenceFragment.newInstance(this)
-                    else AddAbsenceFragment.newInstance(this)
+                    Section.ABSENCE ->
+                        if(isStudent) AbsenceFragment.newInstance(this)
+                        else AddAbsenceFragment.newInstance(this)
 
-                Section.RATING ->
-                    if(isStudent) RatingFragment.newInstance(this)
-                    else AddRatingFragment.newInstance(this)
-                Section.ONLINE_EXAM -> OnlineExamsFragment.newInstance(this)
+                    Section.RATING ->
+                        if(isStudent) RatingFragment.newInstance(this)
+                        else AddRatingFragment.newInstance(this)
+                    Section.ONLINE_EXAM -> OnlineExamsFragment.newInstance(this)
+                }
             }
         }
     }
