@@ -10,9 +10,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.kaopiz.kprogresshud.KProgressHUD
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.callbacks.SwipeAdapter
+import com.smart.resources.schools_app.core.extentions.createAppProgressHUD
 import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.homework.HomeworkModel
@@ -32,6 +34,9 @@ class HomeworkFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
     private lateinit var adapter: HomeworkRecyclerAdapter
     private val viewModel: HomeworkViewModel by viewModels()
+    private val progressHud: KProgressHUD by lazy {
+        requireActivity().createAppProgressHUD()
+    }
 
     companion object {
         fun newInstance(fm: FragmentManager) {
@@ -53,25 +58,36 @@ class HomeworkFragment : Fragment() {
             listState = viewModel.listState
             viewModel.onError = ::onError
 
-            viewModel.homework.observe(viewLifecycleOwner, Observer {
-                if (it == null) return@Observer
-                if (::adapter.isInitialized) {
-                    errorText.text = ""
+            viewModel.apply {
+                homework.observe(viewLifecycleOwner, Observer {
+                    if (it == null) return@Observer
+                    if (::adapter.isInitialized) {
+                        errorText.text = ""
+                        adapter.submitList(viewModel.homework.value)
+                    }
+                }
+                )
+
+                isStudent.observe(viewLifecycleOwner) {
+                    if (it == null) returnTransition
+                    adapter = HomeworkRecyclerAdapter(it).apply {
+                        onImageClicked = ::onImageClicked
+                        onAnswerClicked = ::onAnswerClicked
+
+                    }
+                    binding.recyclerView.adapter = adapter
                     adapter.submitList(viewModel.homework.value)
                 }
-            }
-            )
-        }
-        viewModel.isStudent.observe(viewLifecycleOwner) {
-            if (it == null) returnTransition
-            adapter = HomeworkRecyclerAdapter(it).apply {
-                onImageClicked = ::onImageClicked
-                onAnswerClicked = ::onAnswerClicked
 
+                actionInProgress.observe(viewLifecycleOwner) {
+                    it.let { isLoading ->
+                        if (isLoading) progressHud.show()
+                        else progressHud.dismiss()
+                    }
+                }
             }
-            binding.recyclerView.adapter = adapter
-            adapter.submitList(viewModel.homework.value)
         }
+
 
         (activity as SectionActivity).setCustomTitle(R.string.homework)
         setHasOptionsMenu(true)

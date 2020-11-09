@@ -19,6 +19,9 @@ class HomeworkViewModel @ViewModelInject constructor(application: Application) :
         emit(UserRepository.instance.getCurrentUserAccount()?.isStudent == true)
     }
 
+    private val _actionInProgress = MutableLiveData<Boolean>()
+    val actionInProgress: LiveData<Boolean> = _actionInProgress
+
     private val homeworkRepo= HomeworkRepository()
 
     val homework: LiveData<MutableList<HomeworkModel>> =  isStudent.switchMap {
@@ -31,6 +34,7 @@ class HomeworkViewModel @ViewModelInject constructor(application: Application) :
 
     fun deleteHomework(position: Int){
         viewModelScope.launch {
+            _actionInProgress.postValue(true)
             when(val result = homeworkRepo.deleteHomework(position)){
                 is Success -> {
 
@@ -38,6 +42,8 @@ class HomeworkViewModel @ViewModelInject constructor(application: Application) :
                 is ResponseError -> onError?.invoke(result.combinedMsg)
                 is ConnectionError -> onError?.invoke(c.getString(R.string.connection_error))
             }
+
+            _actionInProgress.postValue(false)
         }
     }
 

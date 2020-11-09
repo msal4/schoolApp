@@ -12,6 +12,7 @@ import com.kaopiz.kprogresshud.KProgressHUD
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.callbacks.SwipeAdapter
+import com.smart.resources.schools_app.core.extentions.createAppProgressHUD
 import com.smart.resources.schools_app.core.extentions.showConfirmationDialog
 import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.core.typeConverters.room.OnlineExamStatus
@@ -30,10 +31,7 @@ class OnlineExamsFragment : Fragment() {
     private lateinit var adapter: OnlineExamAdapter
     private val viewModel: OnlineExamViewModel by viewModels()
     private val progressHud: KProgressHUD by lazy {
-        KProgressHUD.create(requireActivity())
-            .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-            .setCancellable(false)
-            .setDimAmount(0.5f)
+        requireActivity().createAppProgressHUD()
     }
 
     companion object {
