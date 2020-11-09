@@ -150,7 +150,7 @@
 
             <ImageView
                 style="@style/home_section_image_style"
-                android:src="@drawable/ic_schedule"
+                android:src="@drawable/ic_calender"
                 app:layout_constraintBottom_toBottomOf="@+id/schedule"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toEndOf="@+id/schedule"
@@ -300,7 +300,7 @@
 
             <ImageView
                 style="@style/home_section_image_style"
-                android:src="@drawable/ic_rating"
+                android:src="@drawable/ic_star"
                 app:layout_constraintBottom_toBottomOf="@+id/ratings"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toEndOf="@+id/ratings"
