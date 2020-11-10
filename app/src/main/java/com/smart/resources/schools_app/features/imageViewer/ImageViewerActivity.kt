@@ -11,7 +11,6 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.bindingAdapters.loadImageUrl
 import com.smart.resources.schools_app.databinding.ActivityImageViewerBinding
 
-
 class ImageViewerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityImageViewerBinding
 
@@ -42,9 +41,9 @@ class ImageViewerActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_image_viewer)
 
         val url = intent.getStringExtra(EXTRA_IMAGE_URL)
-        postponeEnterTransition()
+        //postponeEnterTransition()
         binding.photoView.loadImageUrl(url){
-            startPostponedEnterTransition()
+//            startPostponedEnterTransition()
         }
     }
 
