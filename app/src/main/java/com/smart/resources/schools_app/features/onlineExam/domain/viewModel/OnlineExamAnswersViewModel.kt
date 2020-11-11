@@ -43,7 +43,7 @@ class OnlineExamAnswersViewModel @ViewModelInject constructor(
         .map {
         listState.setLoading(true)
         val studentsList = if (it != null && it.isValidIndex(classModels.value.orEmpty().size)) {
-            getClassStudents(classModels.value?.getOrNull(0)?.classId?:"")
+            getClassStudents(classModels.value?.getOrNull(it)?.classId?:"")
         } else emptyList()
         listState.setLoading(false)
         studentsList
