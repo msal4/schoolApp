@@ -381,7 +381,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/profileCard"
                 app:layout_constraintStart_toStartOf="@id/profileCard"
-                app:layout_constraintTop_toBottomOf="@id/teacherSubjects">
+                app:layout_constraintTop_toBottomOf="@id/teacherSubjects"
+                android:visibility="@{teacherModel == null?View.VISIBLE:View.INVISIBLE}">
 
                 <ProgressBar
                     android:id="@+id/certificateProgressIndicator"
