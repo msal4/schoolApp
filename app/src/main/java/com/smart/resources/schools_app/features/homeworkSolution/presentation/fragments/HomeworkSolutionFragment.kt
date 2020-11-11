@@ -8,20 +8,21 @@ import android.widget.ImageView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.observe
+import androidx.fragment.app.viewModels
 import com.smart.resources.schools_app.R
+import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
-import com.smart.resources.schools_app.features.homeworkSolution.domain.viewModel.HomeworkSolutionViewModel
 import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
+import com.smart.resources.schools_app.features.homeworkSolution.domain.viewModel.HomeworkSolutionViewModel
 import com.smart.resources.schools_app.features.homeworkSolution.presentation.adapter.HomeworkAnswerRecyclerAdapter
 import com.smart.resources.schools_app.features.imageViewer.ImageViewerActivity
-import com.smart.resources.schools_app.core.activity.SectionActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeworkSolutionFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerLoaderBinding
     private lateinit var adapter: HomeworkAnswerRecyclerAdapter
-    private val viewModel: HomeworkSolutionViewModel by activityViewModels()
+    private val viewModel: HomeworkSolutionViewModel by viewModels()
 
 
     companion object {

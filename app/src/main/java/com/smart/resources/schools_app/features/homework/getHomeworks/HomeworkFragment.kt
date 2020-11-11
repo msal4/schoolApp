@@ -145,7 +145,7 @@ class HomeworkFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.addMenuItem -> fragmentManager?.let { AddHomeworkFragment.newInstance(it) }
+            R.id.addMenuItem -> AddHomeworkFragment.newInstance(parentFragmentManager)
         }
         return super.onOptionsItemSelected(item)
     }

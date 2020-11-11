@@ -1,6 +1,7 @@
 package com.smart.resources.schools_app.features.homeworkSolution.domain.viewModel
 
 import android.app.Application
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
@@ -15,7 +16,7 @@ import com.smart.resources.schools_app.features.homeworkSolution.domain.reposito
 import java.net.HttpURLConnection
 
 
-class HomeworkSolutionViewModel(application: Application) : AndroidViewModel(application){
+class HomeworkSolutionViewModel @ViewModelInject constructor(application: Application) : AndroidViewModel(application){
     private val c = application.applicationContext
 
     val answers: LiveData<List<HomeworkSolutionModel>> = liveData {
