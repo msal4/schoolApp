@@ -7,22 +7,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.observe
+import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.haytham.coder.extensions.GET_IMAGE_REQUEST
 import com.haytham.coder.extensions.getImage
 import com.haytham.coder.extensions.openImagePickerApp
-import com.smart.resources.schools_app.core.myTypes.Event
 import com.smart.resources.schools_app.core.extentions.showSnackBar
+import com.smart.resources.schools_app.core.myTypes.Event
 import com.smart.resources.schools_app.databinding.BottomSheetAnswerHomeworkBinding
 import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
 import com.smart.resources.schools_app.features.homeworkSolution.domain.viewModel.AddHomeworkSolutionViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 typealias solutionAddedCallback= (homeworkSolution:HomeworkSolutionModel)->Unit
+
+@AndroidEntryPoint
 class AddHomeworkSolutionBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetAnswerHomeworkBinding
-    private lateinit var viewModel: AddHomeworkSolutionViewModel
+    private val viewModel: AddHomeworkSolutionViewModel by viewModels()
     var onSolutionAdded: solutionAddedCallback?= null
 
     companion object Factory {
@@ -42,9 +44,7 @@ class AddHomeworkSolutionBottomSheet : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProviders
-            .of(this)
-            .get(AddHomeworkSolutionViewModel::class.java).apply {
+        viewModel.apply {
                 error.observe(viewLifecycleOwner, ::onError)
                 solutionSent.observe(viewLifecycleOwner, ::onSolutionSent)
                 homeworkId= arguments?.getString(EXTRA_HOMEWORK_ID)?:""

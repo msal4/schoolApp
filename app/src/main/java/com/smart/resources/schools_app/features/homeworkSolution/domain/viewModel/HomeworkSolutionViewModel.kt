@@ -22,6 +22,7 @@ class HomeworkSolutionViewModel @ViewModelInject constructor(application: Applic
     val answers: LiveData<List<HomeworkSolutionModel>> = liveData {
         emit(getSolutions())
     }
+
     private val solutionRepo: IHomeworkSolutionRepository = HomeworkSolutionRepository()
     val listState = ListState()
 

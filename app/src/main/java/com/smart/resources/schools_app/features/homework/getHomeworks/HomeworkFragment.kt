@@ -112,9 +112,9 @@ class HomeworkFragment : Fragment() {
         if (viewModel.isStudent.value == true) {
             if (homeworkModel.solution == null) {
                 AddHomeworkSolutionBottomSheet.newInstance(homeworkModel.idHomework).apply {
-                    show(parentFragmentManager, "")
                     onSolutionAdded = ::onHomeworkSolutionAdded
-                }
+                }.show(parentFragmentManager, "")
+
             } else {
                 ShowHomeworkSolutionBottomSheet.newInstance(homeworkModel.solution)
                     .show(parentFragmentManager, "")
