@@ -12,12 +12,12 @@ import androidx.lifecycle.lifecycleScope
 import com.haytham.coder.extensions.GET_IMAGE_REQUEST
 import com.haytham.coder.extensions.getImage
 import com.haytham.coder.extensions.openImagePickerApp
+import com.haytham.coder.extensions.openPdfViewer
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.activity.BaseActivity
 import com.smart.resources.schools_app.core.bindingAdapters.loadImageUrl
 import com.smart.resources.schools_app.core.bindingAdapters.setAccountImage
 import com.smart.resources.schools_app.databinding.ActivityProfileBinding
-import com.smart.resources.schools_app.features.imageViewer.ImageViewerActivity
 import com.smart.resources.schools_app.features.users.data.TeacherModel
 import com.smart.resources.schools_app.features.users.data.UserRepository
 import com.smart.resources.schools_app.features.users.presentation.AccountsDialog
@@ -82,7 +82,10 @@ class ProfileActivity : BaseActivity() {
     }
 
     private fun openCertificateImage(view:View){
-        viewModel.certificateModel?.url?.let { ImageViewerActivity.newInstance(this,null, it) }
+        viewModel.certificateModel?.url?.let {
+            //ImageViewerActivity.newInstance(this,null, it)
+            openPdfViewer(it)
+        }
     }
 
     private suspend fun getPerson()= UserRepository.instance.getUser()
