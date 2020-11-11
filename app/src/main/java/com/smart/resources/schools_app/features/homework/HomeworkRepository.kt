@@ -10,10 +10,12 @@ import com.smart.resources.schools_app.core.myTypes.Success
 import com.smart.resources.schools_app.core.network.RetrofitHelper
 import com.smart.resources.schools_app.core.typeConverters.retrofit.dateTimeBackendSendFormatter
 import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class HomeworkRepository {
+@Singleton
+class HomeworkRepository @Inject constructor(){
     val homework: MutableLiveData<MutableList<HomeworkModel>> = MutableLiveData(mutableListOf())
-
 
     suspend fun getTeacherHomework(): MyResult<List<HomeworkModel>> {
         val myRes= RetrofitHelper.homeworkClient.fetchHomework()

@@ -10,7 +10,10 @@ import com.smart.resources.schools_app.features.homeworkSolution.data.model.Home
 import com.smart.resources.schools_app.features.users.data.UserRepository
 import kotlinx.coroutines.launch
 
-class HomeworkViewModel @ViewModelInject constructor(application: Application) : AndroidViewModel(application){
+class HomeworkViewModel @ViewModelInject constructor(
+    application: Application,
+    private val homeworkRepo:HomeworkRepository
+) : AndroidViewModel(application){
     val listState = ListState()
     var postHomeworkModel= PostHomeworkModel()
     val postException= PostException()
@@ -21,8 +24,6 @@ class HomeworkViewModel @ViewModelInject constructor(application: Application) :
 
     private val _actionInProgress = MutableLiveData<Boolean>()
     val actionInProgress: LiveData<Boolean> = _actionInProgress
-
-    private val homeworkRepo= HomeworkRepository()
 
     val homework: LiveData<MutableList<HomeworkModel>> =  isStudent.switchMap {
         fetchHomework(it)
