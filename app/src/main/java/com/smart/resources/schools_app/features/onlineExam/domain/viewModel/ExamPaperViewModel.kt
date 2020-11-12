@@ -104,14 +104,21 @@ class ExamPaperViewModel @ViewModelInject constructor(
     private fun mapOnlineExamToReadOnly(): LiveData<Boolean> {
         return MediatorLiveData<Boolean>().apply {
             addSource(onlineExam){
-                !(it.examStatus == OnlineExamStatus.ACTIVE
-                        && userType.value == UserType.STUDENT)
+                userType.value?.let { userType ->
+                  value=  readOnly(it, userType)
+                }
             }
             addSource(userType){
-                !(onlineExam.value?.examStatus == OnlineExamStatus.ACTIVE
-                        && it == UserType.STUDENT)
+                onlineExam.value?.let { onlineExam ->
+                    value=  readOnly(onlineExam, it)
+                }
             }
         }
+    }
+
+    private fun readOnly(onlineExam: OnlineExam, userType: UserType):Boolean {
+       return !(onlineExam.examStatus == OnlineExamStatus.ACTIVE
+                && userType == UserType.STUDENT)
     }
 
     private fun mapReadOnlyAndExamToRemainingDuration(): MediatorLiveData<Duration> {

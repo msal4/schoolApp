@@ -60,7 +60,6 @@ class ProfileActivity : BaseActivity() {
         binding.apply {
             lifecycleOwner = this@ProfileActivity
             lifecycleScope.launch {
-
             val personModel = getPerson()
             itemModel = personModel
             teacherModel = if (personModel is TeacherModel) personModel else null
