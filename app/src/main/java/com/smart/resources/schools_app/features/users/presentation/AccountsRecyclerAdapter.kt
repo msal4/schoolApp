@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.databinding.ItemAccountBinding
-import com.smart.resources.schools_app.features.users.data.UserAccount
+import com.smart.resources.schools_app.features.users.data.model.Account
 
-class AccountsRecyclerAdapter : ListAdapter<UserAccount, AccountsRecyclerAdapter.MyViewHolder>(DIFF_CALLBACK){
+class AccountsRecyclerAdapter : ListAdapter<Account, AccountsRecyclerAdapter.MyViewHolder>(DIFF_CALLBACK){
 
     private var listener: OnItemClickListener?= null
 
@@ -21,7 +21,7 @@ class AccountsRecyclerAdapter : ListAdapter<UserAccount, AccountsRecyclerAdapter
     }
 
     interface OnItemClickListener {
-        fun onItemClick(UserAccount: UserAccount)
+        fun onItemClick(Account: Account)
     }
 
     private var selectedUserId:String?= null
@@ -31,7 +31,7 @@ class AccountsRecyclerAdapter : ListAdapter<UserAccount, AccountsRecyclerAdapter
     }
 
     inner class MyViewHolder(val binding: ItemAccountBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(accountModel: UserAccount) {
+        fun bind(accountModel: Account) {
             binding.itemModel = accountModel
         }
     }
@@ -56,30 +56,28 @@ class AccountsRecyclerAdapter : ListAdapter<UserAccount, AccountsRecyclerAdapter
             }
             holder.bind(user)
 
-            if(user.uid== selectedUserId){
+            if(user.userId.toString() == selectedUserId){
                 holder.binding.profileImage.apply {
                     borderColor= ContextCompat.getColor(holder.itemView.context, R.color.light_green_a700)
                     borderWidth= 2
                 }
-
             }
-
         }
     }
 
     companion object {
-        private val DIFF_CALLBACK: DiffUtil.ItemCallback<UserAccount> =
-            object : DiffUtil.ItemCallback<UserAccount>() {
+        private val DIFF_CALLBACK: DiffUtil.ItemCallback<Account> =
+            object : DiffUtil.ItemCallback<Account>() {
                 override fun areItemsTheSame(
-                    oldItem: UserAccount,
-                    newItem: UserAccount
+                    oldItem: Account,
+                    newItem: Account
                 ): Boolean {
-                    return oldItem.uid == newItem.uid
+                    return oldItem.userId == newItem.userId
                 }
 
                 override fun areContentsTheSame(
-                    oldItem: UserAccount,
-                    newItem: UserAccount
+                    oldItem: Account,
+                    newItem: Account
                 ): Boolean {
                     return oldItem == newItem
                 }

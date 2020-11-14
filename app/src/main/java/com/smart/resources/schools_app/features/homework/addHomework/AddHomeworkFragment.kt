@@ -26,8 +26,8 @@ import com.smart.resources.schools_app.databinding.FragmentAddHomeworkBinding
 import com.smart.resources.schools_app.features.dateTimePickers.DatePickerFragment
 import com.smart.resources.schools_app.features.homework.HomeworkViewModel
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
-import com.smart.resources.schools_app.features.users.data.TeacherModel
-import com.smart.resources.schools_app.features.users.data.UserRepository
+import com.smart.resources.schools_app.features.users.data.model.userInfo.TeacherInfoModel
+import com.smart.resources.schools_app.features.users.data.repository.UserRepository
 import com.tiper.MaterialSpinner
 import dagger.hilt.android.AndroidEntryPoint
 import id.zelory.compressor.Compressor
@@ -115,8 +115,8 @@ class AddHomeworkFragment : Fragment(), PostListener {
         binding = FragmentAddHomeworkBinding
             .inflate(inflater, container, false).apply {
                 lifecycleScope.launch {
-                    val currentUser = UserRepository.instance.getCurrentUserAccount()
-                    val teacherInfoModel = currentUser?.accessToken?.let { TeacherModel.fromToken(it.value) }
+                    val currentUser = UserRepository.instance.getCurrentAccount()
+                    val teacherInfoModel = currentUser?.accessToken?.let { TeacherInfoModel.fromToken(it.value) }
                     teacherInfoModel?.classesInfo
                         ?.let {
                             classAndSectionSpinner.setSpinnerList(it)
@@ -140,9 +140,7 @@ class AddHomeworkFragment : Fragment(), PostListener {
                 saveAsCompressedFile(it)
 
                 binding.apply {
-                    homeworkImage.loadImageUrl(
-                        it.toString()
-                    )
+                    homeworkImage.loadImageUrl(it.toString())
                     homeworkImageCard.visibility = View.VISIBLE
                     addImageIcon.imageTintList =
                         context?.let { c ->

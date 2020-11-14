@@ -18,8 +18,8 @@ import com.smart.resources.schools_app.core.myTypes.PostListener
 import com.smart.resources.schools_app.databinding.FragmentAddRatingBinding
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
 import com.smart.resources.schools_app.features.rating.RatingModel
-import com.smart.resources.schools_app.features.users.data.TeacherModel
-import com.smart.resources.schools_app.features.users.data.UserRepository
+import com.smart.resources.schools_app.features.users.data.model.userInfo.TeacherInfoModel
+import com.smart.resources.schools_app.features.users.data.repository.UserRepository
 import com.tiper.MaterialSpinner
 import kotlinx.coroutines.launch
 
@@ -72,8 +72,8 @@ class AddRatingFragment : LoadableActionMenuItemFragment(), MaterialSpinner.OnIt
         binding = FragmentAddRatingBinding
             .inflate(inflater, container, false).apply {
                 lifecycleScope.launch {
-                    val currentUser = UserRepository.instance.getCurrentUserAccount()
-                    val teacherInfoModel = currentUser?.accessToken?.let { TeacherModel.fromToken(it.value) }
+                    val currentUser = UserRepository.instance.getCurrentAccount()
+                    val teacherInfoModel = currentUser?.accessToken?.let { TeacherInfoModel.fromToken(it.value) }
                     teacherInfoModel?.let {
                         classAndSectionSpinner.setSpinnerList(it.classesInfo)
                         classAndSectionSpinner.onItemSelectedListener = this@AddRatingFragment

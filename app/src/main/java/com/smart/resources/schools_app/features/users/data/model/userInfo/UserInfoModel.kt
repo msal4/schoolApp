@@ -1,11 +1,11 @@
-package com.smart.resources.schools_app.features.users.data
+package com.smart.resources.schools_app.features.users.data.model.userInfo
 
 import com.haytham.coder.extensions.decodeTokenBody
 import com.smart.resources.schools_app.core.network.RetrofitHelper
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.Period
 
-abstract class UserModel(
+abstract class UserInfoModel(
     val name: String,
     val email: String?,
     val phone: String,
@@ -28,7 +28,7 @@ abstract class UserModel(
     val isEmailEmpty: Boolean get() = email.isNullOrBlank()
 
     companion object Factory {
-        fun <T : UserModel> fromToken(classType: Class<T>, accessToken: String): T? {
+        fun <T : UserInfoModel> fromToken(classType: Class<T>, accessToken: String): T? {
             return try {
                 val body = accessToken.decodeTokenBody()
                 val gson = RetrofitHelper.gson

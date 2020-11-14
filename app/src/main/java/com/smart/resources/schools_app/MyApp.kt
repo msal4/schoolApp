@@ -7,7 +7,7 @@ import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.core.appDatabase.storages.SharedPrefHelper
 import com.smart.resources.schools_app.core.network.AuthorizationInterceptor
-import com.smart.resources.schools_app.features.users.data.UserRepository
+import com.smart.resources.schools_app.features.users.data.repository.UserRepository
 import com.snakydesign.watchtower.WatchTower
 import com.snakydesign.watchtower.interceptor.WebWatchTowerObserver
 import dagger.hilt.android.HiltAndroidApp

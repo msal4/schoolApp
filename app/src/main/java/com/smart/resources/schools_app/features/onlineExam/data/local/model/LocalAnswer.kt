@@ -1,10 +1,8 @@
 package com.smart.resources.schools_app.features.onlineExam.data.local.model
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import com.google.gson.annotations.SerializedName
-import com.smart.resources.schools_app.features.users.data.UserAccount
+import com.smart.resources.schools_app.features.users.data.model.User
 
 @Entity(
     tableName = LocalAnswer.TABLE_NAME,
@@ -14,8 +12,8 @@ import com.smart.resources.schools_app.features.users.data.UserAccount
     ] ,
     foreignKeys = [
         ForeignKey(
-            entity = UserAccount::class,
-            parentColumns = ["uid"],
+            entity = User::class,
+            parentColumns = ["userId"],
             childColumns = ["userId"],
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE,

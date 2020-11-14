@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 abstract class OnlineExamsDao : BaseDao<LocalOnlineExam>() {
     @Transaction
-    @Query("SELECT * FROM UserAccount where uid= :userId")
+    @Query("SELECT * FROM Account where userId= :userId")
     abstract fun getUserOnlineExams(userId: String): Flow<List<UserWithOnlineExams>>
 
     @Query("SELECT * FROM ${LocalOnlineExam.TABLE_NAME} where onlineExamId= :examId")
@@ -23,7 +23,7 @@ abstract class OnlineExamsDao : BaseDao<LocalOnlineExam>() {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insertUserOnlineExamCrossRef(onlineExam: List<UserOnlineExamCrossRef>)
 
-    @Query("DELETE FROM ${UserOnlineExamCrossRef.TABLE_NAME} WHERE uid = :userId AND onlineExamId NOT IN(:examIds)")
+    @Query("DELETE FROM ${UserOnlineExamCrossRef.TABLE_NAME} WHERE userId = :userId AND onlineExamId NOT IN(:examIds)")
     abstract suspend fun deleteUserOnlineExamCrossRefsNotInList(
         userId: String,
         examIds: List<String>
@@ -37,7 +37,7 @@ abstract class OnlineExamsDao : BaseDao<LocalOnlineExam>() {
         FROM ${LocalOnlineExam.TABLE_NAME} as t1
         LEFT JOIN ${UserOnlineExamCrossRef.TABLE_NAME} as t2 
         ON (t1.onlineExamId = t2.onlineExamId)
-        WHERE t2.uid = null)"""
+        WHERE t2.userId = null)"""
     )
     abstract suspend fun deleteOnlineExamsWithoutRelations()
 
@@ -74,7 +74,7 @@ abstract class OnlineExamsDao : BaseDao<LocalOnlineExam>() {
     ) {
         val userExamsCrossRefs = onlineExams.map {
             UserOnlineExamCrossRef(
-                uid = userId,
+                userId = userId,
                 onlineExamId = it.onlineExamId,
             )
         }

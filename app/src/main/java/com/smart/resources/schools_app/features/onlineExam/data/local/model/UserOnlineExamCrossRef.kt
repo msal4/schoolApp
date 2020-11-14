@@ -2,19 +2,19 @@ package com.smart.resources.schools_app.features.onlineExam.data.local.model
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import com.smart.resources.schools_app.features.users.data.UserAccount
+import com.smart.resources.schools_app.features.users.data.model.User
 
 @Entity(
     tableName = UserOnlineExamCrossRef.TABLE_NAME,
     primaryKeys = [
-        "uid",
+        "userId",
         "onlineExamId",
     ],
     foreignKeys = [
         ForeignKey(
-            entity = UserAccount::class,
-            parentColumns = ["uid"],
-            childColumns = ["uid"],
+            entity = User::class,
+            parentColumns = ["userId"],
+            childColumns = ["userId"],
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE,
         ),
@@ -28,7 +28,7 @@ import com.smart.resources.schools_app.features.users.data.UserAccount
     ],
 )
 data class UserOnlineExamCrossRef(
-    val uid: String,
+    val userId: String,
     val onlineExamId: String,
 ){
     companion object{

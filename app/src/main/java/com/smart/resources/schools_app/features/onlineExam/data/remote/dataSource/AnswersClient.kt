@@ -23,5 +23,4 @@ interface AnswersClient {
 
     @POST("addMultiAnswer")
     fun addAnswers(@Body answers: List<PostNetworkAnswer>): Flow<ApiResponse<List<NetworkAnswer>>>
-
 }

@@ -7,7 +7,7 @@ import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
-import com.smart.resources.schools_app.features.users.data.UserRepository
+import com.smart.resources.schools_app.features.users.data.repository.UserRepository
 import kotlinx.coroutines.launch
 
 class HomeworkViewModel @ViewModelInject constructor(
@@ -19,7 +19,7 @@ class HomeworkViewModel @ViewModelInject constructor(
     val postException= PostException()
     var uploadListener: PostListener?= null
     val isStudent = liveData {
-        emit(UserRepository.instance.getCurrentUserAccount()?.isStudent == true)
+        emit(UserRepository.instance.getCurrentAccount()?.isStudent == true)
     }
 
     private val _actionInProgress = MutableLiveData<Boolean>()

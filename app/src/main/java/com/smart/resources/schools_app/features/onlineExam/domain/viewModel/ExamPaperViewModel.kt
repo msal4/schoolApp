@@ -22,9 +22,8 @@ import com.smart.resources.schools_app.features.onlineExam.domain.model.BaseAnsw
 import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineExam.OnlineExam
 import com.smart.resources.schools_app.features.onlineExam.domain.usecase.*
 import com.smart.resources.schools_app.features.onlineExam.presentation.fragments.ExamPaperFragment
-import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserIdUseCase
+import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentLocalUserIdUseCase
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserTypeUseCase
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
@@ -39,7 +38,7 @@ class ExamPaperViewModel @ViewModelInject constructor(
     private val syncOnlineExamUseCase: ISyncOnlineExamUseCase,
     private val saveAnswerLocallyUseCase: ISaveAnswerLocallyUseCase,
     private val sendAnswersUseCase: ISendAnswersUseCase,
-    private val getUserIdUseCase: IGetCurrentUserIdUseCase,
+    private val getUserIdUseCase: IGetCurrentLocalUserIdUseCase,
     private val getExamQuestionsWithAnswersUseCase: IGetExamQuestionsWithAnswersUseCase,
     private val getExamQuestionsUseCase: IGetExamQuestionsUseCase,
     @Assisted private val savedStateHandle: SavedStateHandle,
@@ -75,16 +74,16 @@ class ExamPaperViewModel @ViewModelInject constructor(
 
     private fun getStudentIdLiveData(): LiveData<String?> {
         return MediatorLiveData<String?>().apply {
-            addSource(userType){
-                    viewModelScope.launch {
-                        val studentId = when {
-                            passedStudentId != null -> passedStudentId
-                            it == UserType.STUDENT -> getUserIdUseCase()
-                            else -> null
-                        }
-
-                        postValue(studentId)
+            addSource(userType) {
+                viewModelScope.launch {
+                    val studentId = when {
+                        passedStudentId != null -> passedStudentId
+                        it == UserType.STUDENT -> getUserIdUseCase()
+                        else -> null
                     }
+
+                    postValue(studentId)
+                }
             }
         }
     }
@@ -103,28 +102,27 @@ class ExamPaperViewModel @ViewModelInject constructor(
 
     private fun mapOnlineExamToReadOnly(): LiveData<Boolean> {
         return MediatorLiveData<Boolean>().apply {
-            addSource(onlineExam){
+            addSource(onlineExam) {
                 userType.value?.let { userType ->
-                  value=  readOnly(it, userType)
+                    value = readOnly(it, userType)
                 }
             }
-            addSource(userType){
+            addSource(userType) {
                 onlineExam.value?.let { onlineExam ->
-                    value=  readOnly(onlineExam, it)
+                    value = readOnly(onlineExam, it)
                 }
             }
         }
     }
 
-    private fun readOnly(onlineExam: OnlineExam, userType: UserType):Boolean {
-       return !(onlineExam.examStatus == OnlineExamStatus.ACTIVE
+    private fun readOnly(onlineExam: OnlineExam, userType: UserType): Boolean {
+        return !(onlineExam.examStatus == OnlineExamStatus.ACTIVE
                 && userType == UserType.STUDENT)
     }
 
     private fun mapReadOnlyAndExamToRemainingDuration(): MediatorLiveData<Duration> {
         return MediatorLiveData<Duration>().apply {
-            value= Duration.ZERO
-
+            value = Duration.ZERO
             addSource(readOnly) {
                 onlineExam.value?.let { onlineExam ->
                     it?.let { updateRemainingTime(onlineExam, it) }
@@ -186,28 +184,25 @@ class ExamPaperViewModel @ViewModelInject constructor(
         }
     }
 
+    private var answerableQuestionsSource: LiveData<ListOfAnswerableQuestions>? = null
     private fun createAnswerableQuestionsLiveData(): LiveData<ListOfAnswerableQuestions> {
-        return MediatorLiveData<ListOfAnswerableQuestions>().apply{
-            addSource(studentId){userId->
-                viewModelScope.launch {
-                    getAnswerableQuestions(userId, readOnly.value, this@apply)
-                }
+        return MediatorLiveData<ListOfAnswerableQuestions>().apply {
+            addSource(studentId) { userId ->
+                getAnswerableQuestions(userId, readOnly.value, this@apply)
             }
 
-            addSource(readOnly){readOnly->
-                viewModelScope.launch {
-                    getAnswerableQuestions(studentId.value, readOnly, this@apply)
-                }
+            addSource(readOnly) { readOnly ->
+                getAnswerableQuestions(studentId.value, readOnly, this@apply)
             }
         }
     }
 
-    private suspend fun getAnswerableQuestions(
+    private fun getAnswerableQuestions(
         userId: String?,
         readOnly: Boolean?,
         mediatorLiveData: MediatorLiveData<ListOfAnswerableQuestions>
     ) {
-        if (userId == null) {
+        val liveDataSource = if (userId == null) {
             getExamQuestionsUseCase(passedOnlineExam.id).map {
                 updateListState(it)
                 it.data.orEmpty().map { question ->
@@ -219,14 +214,20 @@ class ExamPaperViewModel @ViewModelInject constructor(
             getExamQuestionsWithAnswersUseCase(
                 passedOnlineExam.id,
                 userId,
-                passedOnlineExam.examStatus == OnlineExamStatus.COMPLETED || readOnly== true,
+                passedOnlineExam.examStatus == OnlineExamStatus.COMPLETED || readOnly == true,
             ).map {
                 updateListState(it)
                 it.data.orEmpty()
             }
 
-        }.collect {
-            mediatorLiveData.postValue(it)
+        }.asLiveData(viewModelScope.coroutineContext)
+
+        answerableQuestionsSource?.let {
+            mediatorLiveData.removeSource(it)
+        }
+        answerableQuestionsSource = liveDataSource
+        mediatorLiveData.addSource(liveDataSource) { listOfAnswerableQuestions ->
+            mediatorLiveData.postValue(listOfAnswerableQuestions)
         }
     }
 

@@ -8,7 +8,7 @@ import com.smart.resources.schools_app.core.myTypes.ConnectionError
 import com.smart.resources.schools_app.core.myTypes.ListState
 import com.smart.resources.schools_app.core.myTypes.ResponseError
 import com.smart.resources.schools_app.core.myTypes.Success
-import com.smart.resources.schools_app.features.users.data.StudentModel
+import com.smart.resources.schools_app.features.users.data.model.userInfo.StudentInfoModel
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserModelUseCase
 import kotlinx.coroutines.launch
 import java.net.HttpURLConnection
@@ -22,9 +22,9 @@ class LectureViewModel @ViewModelInject constructor(
 
     val listState = ListState()
     private val lectureRepository:ILectureRepository= LectureRepository()
-    private val studentModel:LiveData<StudentModel> = liveData {
+    private val studentModel:LiveData<StudentInfoModel> = liveData {
         val userModel= getCurrentUserModel()
-        if(userModel is StudentModel) emit(userModel)
+        if(userModel is StudentInfoModel) emit(userModel)
     }
 
     private val _lectures: MutableLiveData<List<LectureModel>> = MutableLiveData()
@@ -35,7 +35,7 @@ class LectureViewModel @ViewModelInject constructor(
         _lectures
     }
 
-    private suspend fun fetchLectures(studentModel: StudentModel): List<LectureModel> {
+    private suspend fun fetchLectures(studentModel: StudentInfoModel): List<LectureModel> {
         listState.apply {
 
             setLoading(true)

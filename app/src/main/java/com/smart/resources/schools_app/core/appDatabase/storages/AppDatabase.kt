@@ -12,12 +12,15 @@ import com.smart.resources.schools_app.features.onlineExam.data.local.model.Loca
 import com.smart.resources.schools_app.features.onlineExam.data.local.model.LocalOnlineExam
 import com.smart.resources.schools_app.features.onlineExam.data.local.model.LocalQuestion
 import com.smart.resources.schools_app.features.onlineExam.data.local.model.UserOnlineExamCrossRef
-import com.smart.resources.schools_app.features.users.data.AccountsDao
-import com.smart.resources.schools_app.features.users.data.UserAccount
+import com.smart.resources.schools_app.features.users.data.localDataSource.AccountsDao
+import com.smart.resources.schools_app.features.users.data.localDataSource.UsersDao
+import com.smart.resources.schools_app.features.users.data.model.Account
+import com.smart.resources.schools_app.features.users.data.model.User
 
 @Database(
     entities = [
-        UserAccount::class,
+        User::class,
+        Account::class,
         LocalOnlineExam::class,
         UserOnlineExamCrossRef::class,
         LocalQuestion::class,
@@ -37,6 +40,7 @@ import com.smart.resources.schools_app.features.users.data.UserAccount
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getAccountDao(): AccountsDao
+    abstract fun getUsersDao(): UsersDao
     abstract fun getOnlineExamDao(): OnlineExamsDao
     abstract fun getQuestionsDao(): QuestionsDao
     abstract fun getAnswersDao(): AnswersDao

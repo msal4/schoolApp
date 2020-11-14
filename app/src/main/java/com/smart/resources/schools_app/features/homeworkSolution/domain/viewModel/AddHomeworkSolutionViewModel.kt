@@ -14,7 +14,7 @@ import com.smart.resources.schools_app.features.homeworkSolution.data.model.AddH
 import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
 import com.smart.resources.schools_app.features.homeworkSolution.data.repository.HomeworkSolutionRepository
 import com.smart.resources.schools_app.features.homeworkSolution.domain.repository.IHomeworkSolutionRepository
-import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserIdUseCase
+import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentLocalUserIdUseCase
 import id.zelory.compressor.Compressor
 import kotlinx.coroutines.launch
 import java.io.File
@@ -22,7 +22,7 @@ import java.io.File
 
 class AddHomeworkSolutionViewModel @ViewModelInject constructor(
     application: Application,
-    private val getCurrentUserIdUseCase: IGetCurrentUserIdUseCase
+    private val getCurrentUserIdUseCase: IGetCurrentLocalUserIdUseCase
 )
     : AndroidViewModel(application){
     private val c = application.applicationContext

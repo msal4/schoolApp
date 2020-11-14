@@ -1,7 +1,8 @@
 package com.smart.resources.schools_app.features.users
 
 import com.smart.resources.schools_app.core.appDatabase.storages.AppDatabase
-import com.smart.resources.schools_app.features.users.data.AccountsDao
+import com.smart.resources.schools_app.features.users.data.localDataSource.AccountsDao
+import com.smart.resources.schools_app.features.users.data.localDataSource.UsersDao
 import com.smart.resources.schools_app.features.users.domain.usecase.*
 import dagger.Binds
 import dagger.Module
@@ -22,7 +23,9 @@ abstract class UsersModule {
     @Binds
     abstract fun bindDeleteUserUseCase(deleteUserUseCase:DeleteUserUseCase): IDeleteUserUseCase
     @Binds
-    abstract fun bindGetLocalUserIdUseCase(getLocalUserIdUseCase: GetLocalUserIdUseCase): IGetCurrentUserIdUseCase
+    abstract fun bindGetLocalUserIdUseCase(getLocalUserIdUseCase: GetLocalUserIdUseCase): IGetCurrentLocalUserIdUseCase
+    @Binds
+    abstract fun bindGetBackendUserIdUseCase(getBackendUserIdUseCase: GetBackendUserIdUseCase): IGetCurrentBackendUserIdUseCase
     @Binds
     abstract fun bindGetFirstStudentLoginUseCase(getFirstStudentLoginUseCase: GetFirstStudentLoginUseCase): IGetFirstStudentLoginUseCase
     @Binds
@@ -37,8 +40,14 @@ abstract class UsersModule {
     companion object{
         @Singleton
         @Provides
-        fun provideAccountDao(appDatabase: AppDatabase): AccountsDao {
+        fun provideAccountsDao(appDatabase: AppDatabase): AccountsDao {
             return appDatabase.getAccountDao()
+        }
+
+        @Singleton
+        @Provides
+        fun provideUsersDao(appDatabase: AppDatabase): UsersDao {
+            return appDatabase.getUsersDao()
         }
     }
 

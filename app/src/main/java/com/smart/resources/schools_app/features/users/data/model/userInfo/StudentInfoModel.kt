@@ -1,4 +1,4 @@
-package com.smart.resources.schools_app.features.users.data
+package com.smart.resources.schools_app.features.users.data.model.userInfo
 
 import com.google.gson.annotations.SerializedName
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
@@ -6,7 +6,7 @@ import org.threeten.bp.LocalDateTime
 
 
 
-class StudentModel(
+class StudentInfoModel(
     val classInfo: ClassInfoModel,
     name: String,
     email: String,
@@ -18,14 +18,14 @@ class StudentModel(
     schoolId: String,
     schoolName: String,
     schoolImage: String
-) : UserModel(name, email, phone, gender, dob,schoolId, schoolName, schoolImage) {
+) : UserInfoModel(name, email, phone, gender, dob,schoolId, schoolName, schoolImage) {
 
     override val classesAsString: String
         get() = classInfo.getClassSection
 
     companion object {
-        fun fromToken(accessToken: String): StudentModel? {
-            return fromToken(StudentModel::class.java, accessToken)
+        fun fromToken(accessToken: String): StudentInfoModel? {
+            return fromToken(StudentInfoModel::class.java, accessToken)
         }
     }
 }

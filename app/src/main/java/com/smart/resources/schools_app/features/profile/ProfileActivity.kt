@@ -18,8 +18,8 @@ import com.smart.resources.schools_app.core.activity.BaseActivity
 import com.smart.resources.schools_app.core.bindingAdapters.loadImageUrl
 import com.smart.resources.schools_app.core.bindingAdapters.setAccountImage
 import com.smart.resources.schools_app.databinding.ActivityProfileBinding
-import com.smart.resources.schools_app.features.users.data.TeacherModel
-import com.smart.resources.schools_app.features.users.data.UserRepository
+import com.smart.resources.schools_app.features.users.data.model.userInfo.TeacherInfoModel
+import com.smart.resources.schools_app.features.users.data.repository.UserRepository
 import com.smart.resources.schools_app.features.users.presentation.AccountsDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -62,10 +62,10 @@ class ProfileActivity : BaseActivity() {
             lifecycleScope.launch {
             val personModel = getPerson()
             itemModel = personModel
-            teacherModel = if (personModel is TeacherModel) personModel else null
+            teacherModel = if (personModel is TeacherInfoModel) personModel else null
 
 
-                UserRepository.instance.getCurrentUserAccount()?.img?.let {
+                UserRepository.instance.getCurrentAccount()?.img?.let {
                     setAccountImage(
                         profileImage,
                         it
@@ -87,7 +87,7 @@ class ProfileActivity : BaseActivity() {
         }
     }
 
-    private suspend fun getPerson()= UserRepository.instance.getUser()
+    private suspend fun getPerson()= UserRepository.instance.getUserModel()
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -97,7 +97,7 @@ class ProfileActivity : BaseActivity() {
         ) {
             data.getImage().toString().let {
                 lifecycleScope.launch {
-                    UserRepository.instance.updateCurrentUser(it)
+                    UserRepository.instance.updateCurrentAccount(it)
                 }
                 binding.profileImage.loadImageUrl(it)
             }

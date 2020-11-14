@@ -2,16 +2,42 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "6ba497e471feb7f9370c87e8ff542eb9",
+    "identityHash": "551ad8d28f6a5bb12a7684897214d7dd",
     "entities": [
       {
-        "tableName": "UserAccount",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` TEXT NOT NULL, `accessToken` TEXT NOT NULL, `img` TEXT NOT NULL, `username` TEXT NOT NULL, `userType` INTEGER NOT NULL, PRIMARY KEY(`uid`))",
+        "tableName": "User",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `backendUserId` TEXT NOT NULL)",
         "fields": [
           {
-            "fieldPath": "uid",
-            "columnName": "uid",
+            "fieldPath": "userId",
+            "columnName": "userId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "backendUserId",
+            "columnName": "backendUserId",
             "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "userId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Account",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `accessToken` TEXT NOT NULL, `img` TEXT NOT NULL, `username` TEXT NOT NULL, `userType` INTEGER NOT NULL, FOREIGN KEY(`userId`) REFERENCES `User`(`userId`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "userId",
+            "columnName": "userId",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -41,12 +67,24 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "uid"
+            "userId"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "table": "User",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "userId"
+            ],
+            "referencedColumns": [
+              "userId"
+            ]
+          }
+        ]
       },
       {
         "tableName": "OnlineExams",
@@ -112,11 +150,11 @@
       },
       {
         "tableName": "UserOnlineExamCrossRef",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` TEXT NOT NULL, `onlineExamId` TEXT NOT NULL, PRIMARY KEY(`uid`, `onlineExamId`), FOREIGN KEY(`uid`) REFERENCES `UserAccount`(`uid`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`onlineExamId`) REFERENCES `OnlineExams`(`onlineExamId`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `onlineExamId` TEXT NOT NULL, PRIMARY KEY(`userId`, `onlineExamId`), FOREIGN KEY(`userId`) REFERENCES `User`(`userId`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`onlineExamId`) REFERENCES `OnlineExams`(`onlineExamId`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
-            "fieldPath": "uid",
-            "columnName": "uid",
+            "fieldPath": "userId",
+            "columnName": "userId",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -129,7 +167,7 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "uid",
+            "userId",
             "onlineExamId"
           ],
           "autoGenerate": false
@@ -137,14 +175,14 @@
         "indices": [],
         "foreignKeys": [
           {
-            "table": "UserAccount",
+            "table": "User",
             "onDelete": "CASCADE",
             "onUpdate": "CASCADE",
             "columns": [
-              "uid"
+              "userId"
             ],
             "referencedColumns": [
-              "uid"
+              "userId"
             ]
           },
           {
@@ -227,7 +265,7 @@
       },
       {
         "tableName": "Answers",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `questionId` TEXT NOT NULL, `answerNormal` TEXT NOT NULL, `answerMultiChoice` INTEGER, `answerCorrectness` INTEGER, `correctAnswer` TEXT NOT NULL, PRIMARY KEY(`userId`, `questionId`), FOREIGN KEY(`userId`) REFERENCES `UserAccount`(`uid`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`questionId`) REFERENCES `Questions`(`questionId`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `questionId` TEXT NOT NULL, `answerNormal` TEXT NOT NULL, `answerMultiChoice` INTEGER, `answerCorrectness` INTEGER, `correctAnswer` TEXT NOT NULL, PRIMARY KEY(`userId`, `questionId`), FOREIGN KEY(`userId`) REFERENCES `User`(`userId`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`questionId`) REFERENCES `Questions`(`questionId`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "userId",
@@ -276,14 +314,14 @@
         "indices": [],
         "foreignKeys": [
           {
-            "table": "UserAccount",
+            "table": "User",
             "onDelete": "CASCADE",
             "onUpdate": "CASCADE",
             "columns": [
               "userId"
             ],
             "referencedColumns": [
-              "uid"
+              "userId"
             ]
           },
           {
@@ -303,7 +341,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6ba497e471feb7f9370c87e8ff542eb9')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '551ad8d28f6a5bb12a7684897214d7dd')"
     ]
   }
 }

@@ -26,7 +26,7 @@ import com.smart.resources.schools_app.features.onlineExam.presentation.fragment
 import com.smart.resources.schools_app.features.rating.RatingFragment
 import com.smart.resources.schools_app.features.ratingAdd.AddRatingFragment
 import com.smart.resources.schools_app.features.schedule.ScheduleFragment
-import com.smart.resources.schools_app.features.users.data.UserRepository
+import com.smart.resources.schools_app.features.users.data.repository.UserRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -72,7 +72,7 @@ class SectionActivity : BaseActivity() {
 
     private fun createFragment() {
         lifecycleScope.launch {
-            val isStudent= UserRepository.instance.getCurrentUserAccount()?.userType == 0
+            val isStudent= UserRepository.instance.getCurrentAccount()?.userType == 0
 
             supportFragmentManager.apply {
                 when(intent.getSerializableExtra(EXTRA_SECTION) as Section){

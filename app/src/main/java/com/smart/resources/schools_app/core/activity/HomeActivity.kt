@@ -15,7 +15,7 @@ import com.smart.resources.schools_app.core.myTypes.Section
 import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.databinding.ActivityHomeBinding
 import com.smart.resources.schools_app.features.profile.ProfileActivity
-import com.smart.resources.schools_app.features.users.data.UserRepository
+import com.smart.resources.schools_app.features.users.data.repository.UserRepository
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.net.URI
@@ -41,13 +41,13 @@ class HomeActivity : BaseActivity(){
     private fun setUserType() {
         lifecycleScope.launch {
             binding.userType =
-                if (UserRepository.instance.getCurrentUserAccount()?.userType == 0) UserType.STUDENT else UserType.TEACHER
+                if (UserRepository.instance.getCurrentAccount()?.userType == 0) UserType.STUDENT else UserType.TEACHER
         }
     }
 
     private fun loadProfileImage() {
         lifecycleScope.launch{
-            UserRepository.instance.getCurrentUserAccount()?.img?.let {
+            UserRepository.instance.getCurrentAccount()?.img?.let {
                 setAccountImage(
                     binding.profileImage,
                     URI.create(it).toString()
@@ -59,7 +59,7 @@ class HomeActivity : BaseActivity(){
 
     private fun setSchoolName(){
         lifecycleScope.launch {
-            UserRepository.instance.getCurrentUserAccount()?.apply {
+            UserRepository.instance.getCurrentAccount()?.apply {
                 try {
                     JSONObject(accessToken.value.decodeTokenBody()).getString("schoolName").apply {
                         binding.schoolName.text = this

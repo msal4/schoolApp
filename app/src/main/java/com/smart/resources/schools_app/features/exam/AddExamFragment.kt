@@ -20,8 +20,8 @@ import com.smart.resources.schools_app.core.myTypes.PostListener
 import com.smart.resources.schools_app.databinding.FragmentAddExamBinding
 import com.smart.resources.schools_app.features.dateTimePickers.DatePickerFragment
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
-import com.smart.resources.schools_app.features.users.data.TeacherModel
-import com.smart.resources.schools_app.features.users.data.UserRepository
+import com.smart.resources.schools_app.features.users.data.model.userInfo.TeacherInfoModel
+import com.smart.resources.schools_app.features.users.data.repository.UserRepository
 import com.tiper.MaterialSpinner
 import kotlinx.coroutines.launch
 
@@ -123,8 +123,8 @@ class AddExamFragment : Fragment(), PostListener {
             .inflate(inflater, container, false)
             .apply {
                 lifecycleScope.launch {
-                    val currentUser = UserRepository.instance.getCurrentUserAccount()
-                    val teacherInfoModel = currentUser?.accessToken?.let { TeacherModel.fromToken(it.value) }
+                    val currentUser = UserRepository.instance.getCurrentAccount()
+                    val teacherInfoModel = currentUser?.accessToken?.let { TeacherInfoModel.fromToken(it.value) }
                     teacherInfoModel?.apply {
                         classAndSectionSpinner.setSpinnerList(classesInfo)
                         examTypeSpinner.setSpinnerList(examType)
@@ -140,14 +140,9 @@ class AddExamFragment : Fragment(), PostListener {
     private fun onDateClicked(dateField: View) {
         DatePickerFragment.newInstance()
             .apply {
-                onDateSet = {
-                    (dateField as TextView).setDate(it)
-                }
-
-                this@AddExamFragment.fragmentManager?.let { show(it, "") }
-            }
+                onDateSet = { (dateField as TextView).setDate(it) }
+            }.show(parentFragmentManager, "")
     }
-
 
     private fun setupViewModel() {
         viewModel.apply {

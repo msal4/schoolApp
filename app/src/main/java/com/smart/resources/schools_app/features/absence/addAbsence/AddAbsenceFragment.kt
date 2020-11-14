@@ -17,8 +17,8 @@ import com.smart.resources.schools_app.core.myTypes.PostListener
 import com.smart.resources.schools_app.databinding.FragmentAddAbsenceBinding
 import com.smart.resources.schools_app.features.absence.AddAbsenceModel
 import com.smart.resources.schools_app.features.profile.ClassInfoModel
-import com.smart.resources.schools_app.features.users.data.TeacherModel
-import com.smart.resources.schools_app.features.users.data.UserRepository
+import com.smart.resources.schools_app.features.users.data.model.userInfo.TeacherInfoModel
+import com.smart.resources.schools_app.features.users.data.repository.UserRepository
 import com.tiper.MaterialSpinner
 import kotlinx.coroutines.launch
 
@@ -82,11 +82,11 @@ class AddAbsenceFragment : Fragment(), MaterialSpinner.OnItemSelectedListener, P
 
                 // setup spinner
                 lifecycleScope.launch {
-                    val currentUser = UserRepository.instance.getCurrentUserAccount()
+                    val currentUser = UserRepository.instance.getCurrentAccount()
                     if (currentUser != null) {
                         if (currentUser.userType == 1) {
                             val teacherInfoModel =
-                                currentUser.accessToken.let { TeacherModel.fromToken(it.value) }
+                                currentUser.accessToken.let { TeacherInfoModel.fromToken(it.value) }
                             teacherInfoModel?.let {
                                 classAndSectionSpinner.setSpinnerList(it.classesInfo)
                                 classAndSectionSpinner.onItemSelectedListener = this@AddAbsenceFragment
@@ -109,7 +109,6 @@ class AddAbsenceFragment : Fragment(), MaterialSpinner.OnItemSelectedListener, P
             addAbsenceModels.observe(viewLifecycleOwner, ::onStudentsDownloadCompleted)
         }
     }
-
 
     private fun onStudentsDownloadCompleted(students: List<AddAbsenceModel>?) {
         students?.let {
@@ -161,7 +160,7 @@ class AddAbsenceFragment : Fragment(), MaterialSpinner.OnItemSelectedListener, P
     override fun onItemSelected(parent: MaterialSpinner, view: View?, position: Int, id: Long) {
         if (parent.selectedItem is ClassInfoModel) {
             adapter.clearData()
-            val classId = (parent.selectedItem as ClassInfoModel).classId.toString()
+            val classId = (parent.selectedItem as ClassInfoModel).classId
             viewModel.classId.value = classId
         } else if (parent.selectedItem is String) {
             viewModel.postAbsenceModel.subjectName = parent.selectedItem as String

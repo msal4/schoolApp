@@ -18,8 +18,8 @@ import com.smart.resources.schools_app.core.callbacks.SwipeAdapter
 import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.databinding.DialogAccountsBinding
 import com.smart.resources.schools_app.features.login.LoginActivity
-import com.smart.resources.schools_app.features.users.data.UserAccount
-import com.smart.resources.schools_app.features.users.data.UserRepository
+import com.smart.resources.schools_app.features.users.data.model.Account
+import com.smart.resources.schools_app.features.users.data.repository.UserRepository
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -88,7 +88,7 @@ class AccountsDialog : DialogFragment(),
     }
 
     private fun setupUsers() {
-        viewModel.userAccounts.observe(viewLifecycleOwner){
+        viewModel.accounts.observe(viewLifecycleOwner){
             adapter.submitList(it)
         }
 
@@ -99,18 +99,17 @@ class AccountsDialog : DialogFragment(),
         }
     }
 
-
     private fun onSwiped(swipeDirection:Int, viewHolder: RecyclerView.ViewHolder) {
         if (viewHolder is AccountsRecyclerAdapter.MyViewHolder) {
-            viewHolder.binding.itemModel?.uid?.let {
-                viewModel.deleteUser(it)
+            viewHolder.binding.itemModel?.userId?.let {
+                viewModel.deleteUser(it.toString())
             }
         }
     }
 
-    override fun onItemClick(UserAccount: UserAccount) {
-        if (UserAccount.uid != viewModel.currentUserId.value) {
-            UserRepository.instance.setCurrentUser(UserAccount)
+    override fun onItemClick(Account: Account) {
+        if (Account.userId.toString() != viewModel.currentUserId.value) {
+            UserRepository.instance.setCurrentAccount(Account)
             onAccountChanged?.invoke()
         }
 

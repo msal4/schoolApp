@@ -9,10 +9,9 @@ import androidx.lifecycle.viewModelScope
 import com.haytham.coder.extensions.replaceArNumbersWithEn
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.*
-import com.smart.resources.schools_app.features.users.data.StudentModel
-import com.smart.resources.schools_app.features.users.data.TeacherModel
-import com.smart.resources.schools_app.features.users.data.UserAccount
-import com.smart.resources.schools_app.features.users.data.UserRepository
+import com.smart.resources.schools_app.features.users.data.model.userInfo.StudentInfoModel
+import com.smart.resources.schools_app.features.users.data.model.userInfo.TeacherInfoModel
+import com.smart.resources.schools_app.features.users.data.repository.UserRepository
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetFirstStudentLoginUseCase
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetFirstTeacherLoginUseCase
 import kotlinx.coroutines.Dispatchers.Main
@@ -99,25 +98,22 @@ class LoginViewModel @ViewModelInject constructor(
             var id= ""
 
             val person= if (isTeacher) {
-                TeacherModel.fromToken(it)?.apply {
+                TeacherInfoModel.fromToken(it)?.apply {
                     id= "t${this.id}"
                 }
             }
             else {
-                StudentModel.fromToken(it)?.apply {
+                StudentInfoModel.fromToken(it)?.apply {
                     id= "s${this.id}"
                 }
             }
             person?.apply {
                     viewModelScope.launch {
-                        UserRepository.instance.insertCurrentUser(
-                            UserAccount(
-                                id,
-                                DecryptedString(it),
-                                "",
-                                name,
-                                if (isTeacher) 1 else 0
-                            )
+                        UserRepository.instance.insertCurrentAccount(
+                            id,
+                            DecryptedString(it),
+                            name,
+                            if (isTeacher) 1 else 0,
                         )
                     }
             }

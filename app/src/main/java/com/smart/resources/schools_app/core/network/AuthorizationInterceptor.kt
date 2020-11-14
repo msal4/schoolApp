@@ -6,7 +6,7 @@ import android.os.Looper
 import android.widget.Toast
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.features.login.LoginActivity
-import com.smart.resources.schools_app.features.users.data.UserRepository
+import com.smart.resources.schools_app.features.users.data.repository.UserRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
@@ -19,7 +19,7 @@ import javax.inject.Singleton
 class AuthorizationInterceptor @Inject constructor(@ApplicationContext private val context: Context) :
     Interceptor {
     private suspend fun getToken() =
-        UserRepository.instance.getCurrentUserAccount()?.accessToken?.value
+        UserRepository.instance.getCurrentAccount()?.accessToken?.value
 
     companion object {
         private const val HEADER_AUTHORIZATION = "Authorization"
@@ -46,7 +46,7 @@ class AuthorizationInterceptor @Inject constructor(@ApplicationContext private v
 
     private fun logout() {
         runBlocking {
-            UserRepository.instance.deleteCurrentUser()
+            UserRepository.instance.deleteCurrentAccount()
         }
         Handler(Looper.getMainLooper()).post {
             Toast
@@ -54,8 +54,7 @@ class AuthorizationInterceptor @Inject constructor(@ApplicationContext private v
                     context,
                     context.getString(R.string.account_expire),
                     Toast.LENGTH_LONG,
-                )
-                .show()
+                ).show()
             LoginActivity.newInstance(context)
         }
     }

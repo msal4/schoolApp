@@ -33,7 +33,7 @@ class AnswerMappersFacade(
     fun mapNetworkToLocalAnswer(
         input: NetworkAnswer,
         userId: String
-    ): LocalAnswer = mapAnswerToLocal(mapNetworkAnswer(input), input.questionId.toString(), userId)
+    ): LocalAnswer = mapAnswerToLocal(mapNetworkAnswer(input), input.idQuestion.toString(), userId)
 
     fun mapLocalAnswer(input: List<LocalAnswer>): ListOfAnswers = mapList(
         input = input,
