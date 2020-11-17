@@ -1,3 +1,4 @@
+
 package com.smart.resources.schools_app
 
 import android.app.Application

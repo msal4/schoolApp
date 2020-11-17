@@ -22,13 +22,17 @@ class UserRepository @Inject constructor(
     private var currentUser: User? = null
 
     fun getUsers() = accountsDao.getAccounts()
-
     suspend fun getCurrentUser(): User? {
         if (currentUser == null) sharedPrefHelper.currentUserId?.let {
             currentUser = usersDao.getUserById(it)
         }
 
+
         return currentUser
+    }
+
+    suspend fun insertUsers(users:List<User>){
+        usersDao.insert(users)
     }
 
     suspend fun getCurrentAccount(): Account? {
@@ -73,18 +77,24 @@ class UserRepository @Inject constructor(
         username: String,
         userType: Int,
     ) {
-        val user = User(0, backendUserId = backendUserId)
-        val userId= usersDao.insert(user)
+        val accounts= accountsDao.getAccountByBackendUserId(backendUserId)
+        val foundAccount= accounts.firstOrNull { it.userType == userType }
+        if(foundAccount== null){
+            val user = User(0, backendUserId = backendUserId)
+            val userId= usersDao.insert(user)
 
-        val account= Account(
-            userId.toInt(),
-            accessToken,
-            "",
-            username,
-            userType,
-        )
-        accountsDao.insert(account)
-        setCurrentAccount(account)
+            val account= Account(
+                userId.toInt(),
+                accessToken,
+                "",
+                username,
+                userType,
+            )
+            accountsDao.insert(account)
+            setCurrentAccount(account)
+        }else{
+            setCurrentAccount(foundAccount)
+        }
     }
 
     fun setCurrentAccount(currentAccount: Account) {

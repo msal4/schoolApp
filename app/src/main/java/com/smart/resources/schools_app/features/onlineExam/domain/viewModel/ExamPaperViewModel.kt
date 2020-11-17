@@ -194,6 +194,7 @@ class ExamPaperViewModel @ViewModelInject constructor(
             addSource(readOnly) { readOnly ->
                 getAnswerableQuestions(studentId.value, readOnly, this@apply)
             }
+
         }
     }
 
@@ -202,33 +203,35 @@ class ExamPaperViewModel @ViewModelInject constructor(
         readOnly: Boolean?,
         mediatorLiveData: MediatorLiveData<ListOfAnswerableQuestions>
     ) {
-        val liveDataSource = if (userId == null) {
-            getExamQuestionsUseCase(passedOnlineExam.id).map {
-                updateListState(it)
-                it.data.orEmpty().map { question ->
-                    BaseAnswerableQuestion.fromQuestionAnswer(question, null)
-                }
-            }
+       viewModelScope.launch {
+           val liveDataSource = if (userId == null) {
+               getExamQuestionsUseCase(passedOnlineExam.id).map {
+                   updateListState(it)
+                   it.data.orEmpty().map { question ->
+                       BaseAnswerableQuestion.fromQuestionAnswer(question, null)
+                   }
+               }
 
-        } else {
-            getExamQuestionsWithAnswersUseCase(
-                passedOnlineExam.id,
-                userId,
-                passedOnlineExam.examStatus == OnlineExamStatus.COMPLETED || readOnly == true,
-            ).map {
-                updateListState(it)
-                it.data.orEmpty()
-            }
+           } else {
+               getExamQuestionsWithAnswersUseCase(
+                   passedOnlineExam.id,
+                   userId,
+                   passedOnlineExam.examStatus == OnlineExamStatus.COMPLETED || readOnly == true,
+               ).map {
+                   updateListState(it)
+                   it.data.orEmpty()
+               }
 
-        }.asLiveData(viewModelScope.coroutineContext)
+           }.asLiveData(viewModelScope.coroutineContext)
 
-        answerableQuestionsSource?.let {
-            mediatorLiveData.removeSource(it)
-        }
-        answerableQuestionsSource = liveDataSource
-        mediatorLiveData.addSource(liveDataSource) { listOfAnswerableQuestions ->
-            mediatorLiveData.postValue(listOfAnswerableQuestions)
-        }
+           answerableQuestionsSource?.let {
+               mediatorLiveData.removeSource(it)
+           }
+           answerableQuestionsSource = liveDataSource
+           mediatorLiveData.addSource(liveDataSource) { listOfAnswerableQuestions ->
+               mediatorLiveData.postValue(listOfAnswerableQuestions)
+           }
+       }
     }
 
     private fun updateListState(it: Resource<List<Any>>) {

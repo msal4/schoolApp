@@ -25,7 +25,7 @@ abstract class UsersModule {
     @Binds
     abstract fun bindGetLocalUserIdUseCase(getLocalUserIdUseCase: GetLocalUserIdUseCase): IGetCurrentLocalUserIdUseCase
     @Binds
-    abstract fun bindGetBackendUserIdUseCase(getBackendUserIdUseCase: GetBackendUserIdUseCase): IGetCurrentBackendUserIdUseCase
+    abstract fun bindGetBackendUserIdUseCase(getBackendUserIdUseCase: GetBackendUserIdUseCase): IGetBackendUserIdUseCase
     @Binds
     abstract fun bindGetFirstStudentLoginUseCase(getFirstStudentLoginUseCase: GetFirstStudentLoginUseCase): IGetFirstStudentLoginUseCase
     @Binds
@@ -35,7 +35,9 @@ abstract class UsersModule {
     @Binds
     abstract fun bindSetFirstTeacherLoginUseCase(setFirstTeacherLoginUseCase: SetNotFirstTeacherLoginUseCase): ISetNotFirstTeacherLoginUseCase
     @Binds
-    abstract fun bindIsUserLoggedUseCaseUseCase(isUserLoggedUseCase: IsUserLoggedUseCase): IIsUserLoggedUseCase
+    abstract fun bindIsUserLoggedUseCase(isUserLoggedUseCase: IsUserLoggedUseCase): IIsUserLoggedUseCase
+    @Binds
+    abstract fun bindInsertUsersUseCase(insertUsersUseCase:InsertUsersUseCase): IInsertUsersUseCase
 
     companion object{
         @Singleton

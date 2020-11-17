@@ -14,21 +14,19 @@ class GetExamQuestionsWithAnswersUseCase @Inject constructor(
 ) : IGetExamQuestionsWithAnswersUseCase {
     override fun invoke(
         examId: String,
-        userId: String,
+        backendUserId: String,
         shouldFetchFromRemote: Boolean
     ): Flow<Resource<ListOfAnswerableQuestions>> {
         return flow {
             emit(Resource.loading(null))
 
             getExamQuestionsUseCase(examId)
-//                .distinctUntilChangedBy { it.data }
-//                .filter { it.data != null }
-                .filter {it.status!= Resource.Status.LOADING}
+                .filter { it.status != Resource.Status.LOADING }
                 .collect {
 
                     val answerableQuestionsFlow = answersRepository.getStudentExamAnswers(
                         examId,
-                        userId,
+                        backendUserId,
                         shouldFetchFromRemote
                     )
                     emitAll(answerableQuestionsFlow)

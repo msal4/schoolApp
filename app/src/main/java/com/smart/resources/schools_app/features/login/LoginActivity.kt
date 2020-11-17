@@ -94,7 +94,6 @@ class LoginActivity : BaseActivity() {
         }
     }
 
-
     private fun onLogin() {
         HomeActivity.newInstance(this)
         finishAffinity()

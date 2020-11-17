@@ -4,7 +4,7 @@ import com.smart.resources.schools_app.features.users.data.repository.UserReposi
 import javax.inject.Inject
 
 class GetBackendUserIdUseCase @Inject constructor(private val userRepository: UserRepository) :
-    IGetCurrentBackendUserIdUseCase {
+    IGetBackendUserIdUseCase {
     override suspend fun invoke(): String {
         return userRepository.getCurrentUser()?.backendUserId.toString()
     }

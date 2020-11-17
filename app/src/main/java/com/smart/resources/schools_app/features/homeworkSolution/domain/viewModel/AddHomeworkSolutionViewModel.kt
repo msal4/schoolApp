@@ -3,7 +3,10 @@ package com.smart.resources.schools_app.features.homeworkSolution.domain.viewMod
 import android.app.Application
 import android.net.Uri
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.ConnectionError
 import com.smart.resources.schools_app.core.myTypes.Event
@@ -14,7 +17,7 @@ import com.smart.resources.schools_app.features.homeworkSolution.data.model.AddH
 import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
 import com.smart.resources.schools_app.features.homeworkSolution.data.repository.HomeworkSolutionRepository
 import com.smart.resources.schools_app.features.homeworkSolution.domain.repository.IHomeworkSolutionRepository
-import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentLocalUserIdUseCase
+import com.smart.resources.schools_app.features.users.domain.usecase.IGetBackendUserIdUseCase
 import id.zelory.compressor.Compressor
 import kotlinx.coroutines.launch
 import java.io.File
@@ -22,7 +25,7 @@ import java.io.File
 
 class AddHomeworkSolutionViewModel @ViewModelInject constructor(
     application: Application,
-    private val getCurrentUserIdUseCase: IGetCurrentLocalUserIdUseCase
+    private val getBackendUserIdUseCase: IGetBackendUserIdUseCase
 )
     : AndroidViewModel(application){
     private val c = application.applicationContext
@@ -39,10 +42,12 @@ class AddHomeworkSolutionViewModel @ViewModelInject constructor(
     var description: String = ""
     private var attachmentImage: File? = null
 
-    private val studentId = liveData {
-        emit(getCurrentUserIdUseCase())
+    private lateinit var studentId:String
+    init {
+        viewModelScope.launch {
+            studentId= getBackendUserIdUseCase()
+        }
     }
-
 
     fun saveUri(uri: Uri) {
         val originalFile: File = FileUtils.from(c, uri)
@@ -57,9 +62,10 @@ class AddHomeworkSolutionViewModel @ViewModelInject constructor(
         )
 
         viewModelScope.launch {
+
             _isLoading.postValue(true)
             val res = solutionRepository.addSolution(
-                studentId = studentId.value?:"",
+                studentId = studentId,
                 homeworkId = homeworkId,
                 addHomeworkSolutionModel = model
             )
@@ -87,7 +93,7 @@ class AddHomeworkSolutionViewModel @ViewModelInject constructor(
             _error.value = Event(c.getString(R.string.empty_answer_msg))
             return false
         }
-        if (!::homeworkId.isInitialized || homeworkId.isBlank() || studentId.value.isNullOrBlank()) {
+        if (!::homeworkId.isInitialized || homeworkId.isBlank() || !::studentId.isInitialized || studentId.isBlank()) {
             _error.value = Event(c.getString(R.string.unexpected_error))
             return false
         }

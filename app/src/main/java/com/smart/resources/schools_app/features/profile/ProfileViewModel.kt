@@ -12,14 +12,14 @@ import com.smart.resources.schools_app.core.myTypes.ResponseError
 import com.smart.resources.schools_app.core.myTypes.Success
 import com.smart.resources.schools_app.features.profile.certificate.CertificateModel
 import com.smart.resources.schools_app.features.profile.certificate.CertificateRepository
-import com.smart.resources.schools_app.features.users.domain.usecase.GetBackendUserIdUseCase
+import com.smart.resources.schools_app.features.users.domain.usecase.IGetBackendUserIdUseCase
 import java.net.HttpURLConnection
 
 enum class CertificateState { UNKNOWN, AVAILABLE, UNAVAILABLE, }
 
 class ProfileViewModel @ViewModelInject constructor(
     application: Application,
-    private val getBackendUserIdUseCase: GetBackendUserIdUseCase,
+    private val getBackendUserIdUseCase: IGetBackendUserIdUseCase,
 ) :
     AndroidViewModel(application) {
 

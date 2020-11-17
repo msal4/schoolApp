@@ -91,7 +91,7 @@ class OnlineExamAnswersFragment : Fragment() {
            ExamPaperFragment.newInstance(
                fm = parentFragmentManager,
                exam = viewModel.passedOnlineExam,
-               studentId = "s${student.id}",
+               studentId = student.id,
            )
        }
     }

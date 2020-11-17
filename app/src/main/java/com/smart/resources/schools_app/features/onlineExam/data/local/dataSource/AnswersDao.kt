@@ -6,6 +6,8 @@ import com.smart.resources.schools_app.core.appDatabase.BaseDao
 import com.smart.resources.schools_app.features.onlineExam.data.local.model.LocalAnswer
 import com.smart.resources.schools_app.features.onlineExam.data.local.model.LocalQuestion
 import com.smart.resources.schools_app.features.onlineExam.data.local.model.QuestionWithAnswer
+import com.smart.resources.schools_app.features.users.data.model.Account
+import com.smart.resources.schools_app.features.users.data.model.User
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -28,12 +30,20 @@ abstract class AnswersDao : BaseDao<LocalAnswer>() {
         SELECT * 
         FROM ${LocalQuestion.TABLE_NAME} 
         WHERE onlineExamId = :examId) AS t1
-        LEFT OUTER JOIN ${LocalAnswer.TABLE_NAME} AS t2
+        LEFT OUTER JOIN (
+        SELECT * 
+        FROM ${LocalAnswer.TABLE_NAME} AS answer
+        INNER JOIN ${User.TABLE_NAME} AS user
+        ON answer.userId == user.userId
+        AND user.backendUserId = :backendUserId 
+        LEFT OUTER JOIN ${Account.TABLE_NAME} AS account
+        ON user.userId == account.userId
+        AND account.userType!= 1
+        ) AS t2
         ON t1.questionId == t2.questionId
-        AND t2.userId = :userId 
         """
     )
-    abstract fun getUserExamQuestionsWithAnswers(examId: String, userId: String): Flow<List<QuestionWithAnswer>>
+    abstract fun getUserExamQuestionsWithAnswers(examId: String, backendUserId: String): Flow<List<QuestionWithAnswer>>
 
 
 //    @Query("""

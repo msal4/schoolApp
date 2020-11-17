@@ -95,17 +95,12 @@ class LoginViewModel @ViewModelInject constructor(
     ) {
         val isTeacher = userType == UserType.TEACHER
         result.data?.let {
-            var id= ""
 
             val person= if (isTeacher) {
-                TeacherInfoModel.fromToken(it)?.apply {
-                    id= "t${this.id}"
-                }
+                TeacherInfoModel.fromToken(it)
             }
             else {
-                StudentInfoModel.fromToken(it)?.apply {
-                    id= "s${this.id}"
-                }
+                StudentInfoModel.fromToken(it)
             }
             person?.apply {
                     viewModelScope.launch {

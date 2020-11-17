@@ -8,9 +8,9 @@ import androidx.room.PrimaryKey
 )
 data class User(
     @PrimaryKey(autoGenerate = true)
-    val userId:Int,
-    val backendUserId:String,
-){
+    val userId: Int,
+    val backendUserId: String,
+) {
     companion object {
         const val TABLE_NAME = "User"
     }

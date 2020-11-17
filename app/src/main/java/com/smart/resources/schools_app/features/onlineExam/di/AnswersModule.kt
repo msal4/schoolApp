@@ -10,6 +10,7 @@ import com.smart.resources.schools_app.features.onlineExam.data.mappers.question
 import com.smart.resources.schools_app.features.onlineExam.data.remote.dataSource.AnswersClient
 import com.smart.resources.schools_app.features.onlineExam.data.repository.AnswersRepository
 import com.smart.resources.schools_app.features.onlineExam.domain.repository.IAnswersRepository
+import com.smart.resources.schools_app.features.users.data.localDataSource.UsersDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,14 +31,16 @@ object AnswersModule {
 
     @Provides
     fun provideAnswersRepository(
-        AnswersDao: AnswersDao,
-        AnswersClient: AnswersClient,
+        usersDao: UsersDao,
+        answersDao: AnswersDao,
+        answersClient: AnswersClient,
         answerMappersFacade: AnswerMappersFacade,
         questionMappersFacade: QuestionMappersFacade
     ): IAnswersRepository {
         return AnswersRepository(
-            answersDao = AnswersDao,
-            answersClient = AnswersClient,
+            usersDao = usersDao,
+            answersDao = answersDao,
+            answersClient = answersClient,
             answerMappersFacade = answerMappersFacade,
             questionWithAnswerMapper = {
                 mapList(

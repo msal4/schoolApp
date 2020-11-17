@@ -1,6 +1,7 @@
 package com.smart.resources.schools_app.features.users.domain.usecase
 
 import com.smart.resources.schools_app.core.myTypes.UserType
+import com.smart.resources.schools_app.features.users.data.model.User
 import com.smart.resources.schools_app.features.users.data.model.userInfo.TeacherInfoModel
 import com.smart.resources.schools_app.features.users.data.model.userInfo.UserInfoModel
 
@@ -28,7 +29,7 @@ interface IGetCurrentLocalUserIdUseCase{
    suspend operator fun invoke(): String
 }
 
-interface IGetCurrentBackendUserIdUseCase{
+interface IGetBackendUserIdUseCase{
    suspend operator fun invoke(): String
 }
 
@@ -46,4 +47,8 @@ interface ISetNotFirstStudentLoginUseCase{
 
 interface ISetNotFirstTeacherLoginUseCase{
    suspend operator fun invoke()
+}
+
+interface IInsertUsersUseCase{
+   suspend operator fun invoke(users:List<User>)
 }

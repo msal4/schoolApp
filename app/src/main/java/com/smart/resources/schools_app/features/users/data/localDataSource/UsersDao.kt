@@ -9,4 +9,8 @@ import com.smart.resources.schools_app.features.users.data.model.User
 abstract class UsersDao : BaseDao<User>() {
     @Query("SELECT * FROM User WHERE userId = :userId")
     abstract suspend fun getUserById(userId:String): User
+
+    @Query("SELECT * FROM User WHERE backendUserId = :backendUserId")
+    abstract suspend fun getStudentByBackendUserId(backendUserId:String): User
+
 }

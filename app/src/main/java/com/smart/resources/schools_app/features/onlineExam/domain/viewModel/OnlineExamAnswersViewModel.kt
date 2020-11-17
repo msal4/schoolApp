@@ -17,13 +17,16 @@ import com.smart.resources.schools_app.features.onlineExam.domain.model.onlineEx
 import com.smart.resources.schools_app.features.onlineExam.presentation.fragments.OnlineExamAnswersFragment.Factory.EXTRA_ONLINE_EXAM
 import com.smart.resources.schools_app.features.students.models.StudentWithAnswerStatus
 import com.smart.resources.schools_app.features.students.usecases.IGetStudentsWithAnswerStatus
+import com.smart.resources.schools_app.features.users.data.model.User
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentTeacherModelUseCase
+import com.smart.resources.schools_app.features.users.domain.usecase.IInsertUsersUseCase
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 
 class OnlineExamAnswersViewModel @ViewModelInject constructor(
     private val getCurrentTeacherModelUseCase: IGetCurrentTeacherModelUseCase,
     private val getStudentsWithAnswerStatus: IGetStudentsWithAnswerStatus,
+    private val insertUsersUseCase: IInsertUsersUseCase,
     @Assisted private val savedStateHandle: SavedStateHandle,
     application: Application,
 ) : AndroidViewModel(application) {
@@ -31,26 +34,36 @@ class OnlineExamAnswersViewModel @ViewModelInject constructor(
     private val c = application.applicationContext
     val passedOnlineExam: OnlineExam get() = savedStateHandle.get(EXTRA_ONLINE_EXAM)!!
     val listState = ListState()
-    private val classModels= liveData {
-        emit( getCurrentTeacherModelUseCase()?.classesInfo.orEmpty())
+    private val classModels = liveData {
+        emit(getCurrentTeacherModelUseCase()?.classesInfo.orEmpty())
     }
     val classes = classModels.map {
-      it.map{ classModel -> classModel.getClassSection }
+        it.map { classModel -> classModel.getClassSection }
     }
+
     val selectedClassPos = MutableLiveData(-1)
     val students: LiveData<List<StudentWithAnswerStatus>> = selectedClassPos.asFlow()
         .distinctUntilChanged()
         .map {
-        listState.setLoading(true)
-        val studentsList = if (it != null && it.isValidIndex(classModels.value.orEmpty().size)) {
-            getClassStudents(classModels.value?.getOrNull(it)?.classId?:"")
-        } else emptyList()
-        listState.setLoading(false)
-        studentsList
-    }.asLiveData(viewModelScope.coroutineContext)
+            listState.setLoading(true)
+            val studentsList =
+                if (it != null && it.isValidIndex(classModels.value.orEmpty().size)) {
+                    getClassStudents(classModels.value?.getOrNull(it)?.classId ?: "")
+                } else emptyList()
+            listState.setLoading(false)
+
+            val users = studentsList.map { student ->
+                User(
+                    userId = 0,
+                    backendUserId = student.id,
+                )
+            }
+            insertUsersUseCase(users)
+            studentsList
+        }.asLiveData(viewModelScope.coroutineContext)
 
     private suspend fun getClassStudents(classId: String): List<StudentWithAnswerStatus> {
-        return when (val res = getStudentsWithAnswerStatus(passedOnlineExam.id ,classId)) {
+        return when (val res = getStudentsWithAnswerStatus(passedOnlineExam.id, classId)) {
             is ApiEmptyResponse -> {
                 listState.setBodyError(R.string.no_students.toString(c))
                 emptyList()
