@@ -21,22 +21,22 @@ repositories {
 }
 
 android {
-    signingConfigs {
-        config {
-            storeFile file('D:\\Projects\\SRIT\\Schools\\original project\\smartResources\\signature\\smartResourcesSchoolKey.jks')
-            keyAlias 'smartResourcesKey'
-            keyPassword 'smartResourcesKey'
-            storePassword 'smartResourcesKey'
-        }
-    }
-    compileSdkVersion 29
+//    signingConfigs {
+//        config {
+//            storeFile file('D:\\Projects\\SRIT\\Schools\\original project\\smartResources\\signature\\smartResourcesSchoolKey.jks')
+//            keyAlias 'smartResourcesKey'
+//            keyPassword 'smartResourcesKey'
+//            storePassword 'smartResourcesKey'
+//        }
+//    }
+    compileSdkVersion 30
     buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.smart.resources.schools.smart.new"
         minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 3
-        versionName "1.0.2"
+        targetSdkVersion 30
+        versionCode 4
+        versionName "1.0.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         javaCompileOptions {
@@ -58,7 +58,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
+//            signingConfig signingConfigs.config
         }
     }
     buildFeatures{
