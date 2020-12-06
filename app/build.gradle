@@ -53,6 +53,11 @@ android {
                 // Project number pulled from dashboard, local value is ignored.
                 onesignal_google_project_number: '5445493134'
         ]
+
+        ndk {
+            // Filter for architectures supported by Flutter.
+            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86_64'
+        }
     }
     buildTypes {
         release {
@@ -77,6 +82,7 @@ android {
 
 
 dependencies {
+    implementation project(path: ':flutter')
     def lifecycle_version = "2.2.0"
     def nav_version = "2.3.0"
     def multidex_version = "2.0.1"

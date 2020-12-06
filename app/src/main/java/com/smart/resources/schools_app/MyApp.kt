@@ -12,6 +12,9 @@ import com.smart.resources.schools_app.features.users.data.repository.UserReposi
 import com.snakydesign.watchtower.WatchTower
 import com.snakydesign.watchtower.interceptor.WebWatchTowerObserver
 import dagger.hilt.android.HiltAndroidApp
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.embedding.engine.FlutterEngineCache
+import io.flutter.embedding.engine.dart.DartExecutor
 import javax.inject.Inject
 
 
@@ -23,9 +26,22 @@ class MyApp : Application() {
     lateinit var sharedPrefHelper: SharedPrefHelper
     @Inject
     lateinit var authorizationInterceptor: AuthorizationInterceptor
+    lateinit var flutterEngine : FlutterEngine
 
     override fun onCreate() {
         super.onCreate()
+        // Instantiate a FlutterEngine.
+        flutterEngine = FlutterEngine(this)
+
+        // Start executing Dart code to pre-warm the FlutterEngine.
+        flutterEngine.dartExecutor.executeDartEntrypoint(
+            DartExecutor.DartEntrypoint.createDefault()
+        )
+
+        // Cache the FlutterEngine to be used by FlutterActivity.
+        FlutterEngineCache
+            .getInstance()
+            .put("default-flutter-engine", flutterEngine)
 
         AndroidThreeTen.init(this)
         UserRepository.instance = userRepository // To not break old code

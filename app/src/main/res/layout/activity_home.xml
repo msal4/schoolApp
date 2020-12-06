@@ -18,11 +18,20 @@
         android:fillViewport="true"
         android:layoutDirection="rtl">
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:context=".core.activity.HomeActivity">
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onClick"
+                android:text="click me"
+                app:layout_constraintBottom_toTopOf="@+id/schoolName"
+                app:layout_constraintEnd_toEndOf="@+id/topPart"
+                app:layout_constraintTop_toTopOf="@+id/topPart" />
             <developer.shivam.crescento.CrescentoImageView
                 android:id="@+id/topPart"
                 android:layout_width="match_parent"
