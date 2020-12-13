@@ -15,6 +15,7 @@ class HomeworkViewModel @ViewModelInject constructor(
     private val homeworkRepo:HomeworkRepository
 ) : AndroidViewModel(application){
     val listState = ListState()
+
     var postHomeworkModel= PostHomeworkModel()
     val postException= PostException()
     var uploadListener: PostListener?= null

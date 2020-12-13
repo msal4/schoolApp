@@ -176,5 +176,13 @@
     <string name="on_boarding_description_teacher_3">يمكنك الان اضافة امتحانات واسئلة لطلابك ومشاهدة اجوبتهم من خلال التطبيق</string>
     <string name="information">المعلومات</string>
     <string name="contact">التواصل</string>
-
+    <string name="pdf">PDF</string>
+    <string name="defaultFeesValue">0</string>
+    <string name="paid_amount">المبلغ المدفوع</string>
+    <string name="total_amount">المبلغ الكلي</string>
+    <string name="remaining_amount">المبلغ المتبقي</string>
+    <string name="amount">المبلغ</string>
+    <string name="fees">الاقساط</string>
+    <string name="no_fees">لا توجد اقساط</string>
+    <string name="defaultDate">08/10/2020</string>
 </resources>

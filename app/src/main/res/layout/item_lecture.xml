@@ -5,6 +5,9 @@
 
     <data>
         <variable
+            name="hasPdf"
+            type="Boolean" />
+        <variable
             name="model"
             type="com.smart.resources.schools_app.features.lecture.LectureModel" />
     </data>
@@ -34,7 +37,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
             android:fontFamily="@font/monadi"
-            android:text="@{model.title}"
+            android:text="@{model.subjectName}"
             android:textAlignment="viewStart"
             android:textColor="@android:color/black"
             app:layout_constraintEnd_toStartOf="@id/examDate"
@@ -56,6 +59,17 @@
             app:layout_constraintTop_toTopOf="parent"
             android:setDate="@{model.date}"
             tools:text="8/10/2019" />
+
+        <Button
+            android:id="@+id/viewPdf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:text="@string/pdf"
+            android:visible="@{hasPdf}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/examDate"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/subtitle"

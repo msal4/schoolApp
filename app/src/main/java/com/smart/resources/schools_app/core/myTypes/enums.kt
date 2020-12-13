@@ -10,7 +10,9 @@ enum class Section{
     EXAM,
     NOTIFICATION,
     LECTURE,
+    SUBJECT,
     ONLINE_EXAM,
+    FEES,
 }
 
 enum class WeekDays(val dayName:String) {

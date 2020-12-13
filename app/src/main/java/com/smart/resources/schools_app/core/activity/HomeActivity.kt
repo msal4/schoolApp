@@ -16,7 +16,6 @@ import com.smart.resources.schools_app.core.myTypes.UserType
 import com.smart.resources.schools_app.databinding.ActivityHomeBinding
 import com.smart.resources.schools_app.features.profile.ProfileActivity
 import com.smart.resources.schools_app.features.users.data.repository.UserRepository
-import io.flutter.embedding.android.FlutterActivity
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.net.URI
@@ -32,11 +31,13 @@ class HomeActivity : BaseActivity(){
         }
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= DataBindingUtil.setContentView(this, R.layout.activity_home)
 
         refreshUi()
+
     }
 
     private fun setUserType() {
@@ -138,20 +139,17 @@ class HomeActivity : BaseActivity(){
 
             R.id.lectures-> SectionActivity.newInstance(
                 this,
-                Section.LECTURE
+                Section.SUBJECT
             )
             R.id.onlineExams-> SectionActivity.newInstance(
                 this,
                 Section.ONLINE_EXAM
             )
+            R.id.fees -> SectionActivity.newInstance(
+                this,
+                Section.FEES
+            )
         }
     }
 
-    fun onClick(view: View) {
-        startActivity(
-            FlutterActivity
-                .withCachedEngine("default-flutter-engine")
-                .build(this)
-        )
-    }
 }

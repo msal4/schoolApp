@@ -1,5 +1,6 @@
 package com.smart.resources.schools_app.features.splashScreen
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -13,12 +14,17 @@ import com.smart.resources.schools_app.databinding.ActivitySplashScreenBinding
 import com.smart.resources.schools_app.features.login.LoginActivity
 import com.smart.resources.schools_app.features.onBoarding.OnBoardingActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import org.threeten.bp.Duration
+
 
 @AndroidEntryPoint
 class SplashScreenActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashScreenBinding
-    private val viewModel:SplashScreenViewModel by viewModels()
+    private val viewModel: SplashScreenViewModel by viewModels()
+    private val CHANNEL = "app/auth"
+    private val _mainScope = CoroutineScope(Dispatchers.Main)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,15 +60,15 @@ class SplashScreenActivity : AppCompatActivity() {
         }
     }
 
-    private fun goToOnBoarding(){
+    private fun goToOnBoarding() {
         OnBoardingActivity.newInstance(this)
     }
 
-    private fun gotoHomeScreen(){
+    private fun gotoHomeScreen() {
         HomeActivity.newInstance(this)
     }
 
-    private fun continueSplashScreenToLoginScreen(){
+    private fun continueSplashScreenToLoginScreen() {
         Duration.ofMillis(300).startCountDown(
             onFinished = {
                 LoginActivity.newInstanceWithTrans(

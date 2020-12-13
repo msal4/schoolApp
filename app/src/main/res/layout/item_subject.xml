@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="model"
+            type="com.smart.resources.schools_app.features.subject.Subject" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_card"
+        android:elevation="@dimen/item_elevation"
+        android:layoutDirection="rtl"
+        android:padding="@dimen/item_padding"
+        android:layout_marginBottom="@dimen/item_margin">
+
+        <ImageView
+            android:id="@+id/lectureIcon"
+            android:layout_width="@dimen/item_icon_size"
+            android:layout_height="@dimen/item_icon_size"
+            android:src="@drawable/ic_lecture"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/monadi"
+            android:text="@{model.subjectName}"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/lectureIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="رياضيات" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

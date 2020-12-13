@@ -21,22 +21,22 @@ repositories {
 }
 
 android {
-//    signingConfigs {
-//        config {
-//            storeFile file('D:\\Projects\\SRIT\\Schools\\original project\\smartResources\\signature\\smartResourcesSchoolKey.jks')
-//            keyAlias 'smartResourcesKey'
-//            keyPassword 'smartResourcesKey'
-//            storePassword 'smartResourcesKey'
-//        }
-//    }
+    signingConfigs {
+        config {
+            storeFile file('./smartResourcesSchoolKey.jks')
+            keyAlias 'smartResourcesKey'
+            keyPassword 'smartResourcesKey'
+            storePassword 'smartResourcesKey'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.smart.resources.schools.smart.new"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 4
-        versionName "1.0.3"
+        versionCode 5
+        versionName "1.0.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         javaCompileOptions {
@@ -63,7 +63,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.config
+            signingConfig signingConfigs.config
         }
     }
     buildFeatures{
@@ -82,7 +82,6 @@ android {
 
 
 dependencies {
-    implementation project(path: ':flutter')
     def lifecycle_version = "2.2.0"
     def nav_version = "2.3.0"
     def multidex_version = "2.0.1"

@@ -16,7 +16,7 @@ import java.net.HttpURLConnection
 
 class LectureViewModel @ViewModelInject constructor(
     application: Application,
-    private val getCurrentUserModel: IGetCurrentUserModelUseCase
+    private val getCurrentUserModel: IGetCurrentUserModelUseCase,
 ) : AndroidViewModel(application) {
     private val c = application.applicationContext
 
@@ -28,18 +28,27 @@ class LectureViewModel @ViewModelInject constructor(
     }
 
     private val _lectures: MutableLiveData<List<LectureModel>> = MutableLiveData()
-    val lectures: LiveData<List<LectureModel>> = studentModel.switchMap {
-        viewModelScope.launch {
-            _lectures.postValue(fetchLectures(it))
+//    val lectures: LiveData<List<LectureModel>> = studentModel.switchMap {
+//        viewModelScope.launch {
+//            _lectures.postValue(fetchLectures(it, subjectId))
+//        }
+//        _lectures
+//    }
+
+    fun getLectures(subjectId: Int): LiveData<List<LectureModel>> {
+        return studentModel.switchMap {
+            viewModelScope.launch {
+                _lectures.postValue(fetchLectures(it, subjectId))
+            }
+            _lectures
         }
-        _lectures
     }
 
-    private suspend fun fetchLectures(studentModel: StudentInfoModel): List<LectureModel> {
+    private suspend fun fetchLectures(studentModel: StudentInfoModel, subjectId: Int): List<LectureModel> {
         listState.apply {
 
             setLoading(true)
-            when (val result = lectureRepository.getLectures(schoolId = studentModel.schoolId,classId = studentModel.classInfo.classId.toString())) {
+            when (val result = lectureRepository.getLectures(subjectId)) {
                 is Success -> {
                     if (result.data.isNullOrEmpty()) setBodyError(c.getString(R.string.no_lectures))
                     else {
