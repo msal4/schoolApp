@@ -66,8 +66,9 @@ class HomeworkRecyclerAdapter(private val isStudent:Boolean) :
             binding.expandLayout.apply {
                 onStateChangeListener =
                     { _: State?, newState: State ->
-                        binding.contentText.maxLines =
-                            if (newState == State.Expanded || newState == State.Expanding) 500 else 1
+                            val maxLines = if (newState == State.Expanded || newState == State.Expanding) 500 else 1
+                            binding.contentText.maxLines = maxLines
+                            binding.schedule.maxLines = maxLines
                     }
                 setOnClickListener {
                     toggle(true)
