@@ -16,7 +16,6 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.extentions.extractStartTimeFromUrl
 import com.smart.resources.schools_app.core.extentions.extractVideoIdFromUrl
 import com.smart.resources.schools_app.databinding.ActivityYoutubePlayerBinding
-import timber.log.Timber
 
 
 class YoutubePlayerActivity : AppCompatActivity() {
@@ -59,9 +58,10 @@ class YoutubePlayerActivity : AppCompatActivity() {
             getYouTubePlayerWhenReady(
                 object : YouTubePlayerCallback {
                     override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
-                        val videoId = url.extractVideoIdFromUrl() ?: ""
-                        val startTime = url.extractStartTimeFromUrl().toFloat()
-                        youTubePlayer.loadVideo(videoId, startTime)
+                        youTubePlayer.loadVideo(
+                            url.extractVideoIdFromUrl() ?: "",
+                            url.extractStartTimeFromUrl().toFloat()
+                        )
                     }
                 },
             )

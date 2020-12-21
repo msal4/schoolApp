@@ -8,10 +8,8 @@ import com.smart.resources.schools_app.core.typeConverters.retrofit.LocalDateCon
 import com.smart.resources.schools_app.core.typeConverters.retrofit.LocalDateTimeConverter
 import com.smart.resources.schools_app.core.typeConverters.retrofit.LocalTimeConverter
 import com.smart.resources.schools_app.features.absence.AbsenceClient
-import com.smart.resources.schools_app.features.addLecture.AddLectureClient
 import com.smart.resources.schools_app.features.advertising.AdvertisingClient
 import com.smart.resources.schools_app.features.exam.ExamClient
-import com.smart.resources.schools_app.features.fees.FeesClient
 import com.smart.resources.schools_app.features.homework.HomeworkClient
 import com.smart.resources.schools_app.features.homeworkSolution.data.remoteDataSource.HomeworkSolutionClient
 import com.smart.resources.schools_app.features.lecture.LectureClient
@@ -25,7 +23,6 @@ import com.smart.resources.schools_app.features.profile.certificate.CertificateC
 import com.smart.resources.schools_app.features.rating.RatingClient
 import com.smart.resources.schools_app.features.schedule.ScheduleClient
 import com.smart.resources.schools_app.features.students.StudentClient
-import com.smart.resources.schools_app.features.subject.SubjectClient
 import com.snakydesign.watchtower.interceptor.WatchTowerInterceptor
 import okhttp3.OkHttpClient
 import org.threeten.bp.LocalDate
@@ -91,7 +88,6 @@ object RetrofitHelper {
             }
 
 
-    val accountClient: AccountClient get() = retrofit.create(AccountClient::class.java)
     val homeworkClient: HomeworkClient get() = retrofitWithAuth.create(HomeworkClient::class.java)
     val homeworkSolutionClient: HomeworkSolutionClient
         get() = retrofitWithAuth.create(
@@ -110,7 +106,5 @@ object RetrofitHelper {
     val scheduleClient: ScheduleClient get() = retrofitWithAuth.create(ScheduleClient::class.java)
     val ratingClient: RatingClient get() = retrofitWithAuth.create(RatingClient::class.java)
     val studentClient: StudentClient get() = retrofitWithAuth.create(StudentClient::class.java)
-    val subjectClient: SubjectClient get() = retrofitWithAuth.create(SubjectClient::class.java)
-    val feesClient: FeesClient get() = retrofitWithAuth.create(FeesClient::class.java)
-    val addLectureClient: AddLectureClient get() = retrofitWithAuth.create(AddLectureClient::class.java)
+    val accountClient: AccountClient get() = retrofit.create(AccountClient::class.java)
 }

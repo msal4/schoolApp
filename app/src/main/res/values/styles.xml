@@ -18,11 +18,7 @@
         <item name="bottomSheetDialogTheme">@style/BottomSheetDialogStyle</item>
         <item name="snackbarStyle">@style/Widget.MaterialComponents.Snackbar</item>
     </style>
-    <style name="LaunchTheme" parent="@android:style/Theme.Black.NoTitleBar">
-        <!-- Show a splash screen on the activity. Automatically removed when
-             Flutter draws its first frame -->
-        <item name="android:windowBackground">@drawable/launch_background</item>
-    </style>
+
 
     <style name="SplashScreenTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
         <item name="android:windowBackground">@drawable/bg_splash_screen</item>

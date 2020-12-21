@@ -15,7 +15,6 @@ class HomeworkViewModel @ViewModelInject constructor(
     private val homeworkRepo:HomeworkRepository
 ) : AndroidViewModel(application){
     val listState = ListState()
-
     var postHomeworkModel= PostHomeworkModel()
     val postException= PostException()
     var uploadListener: PostListener?= null
@@ -31,7 +30,7 @@ class HomeworkViewModel @ViewModelInject constructor(
         homeworkRepo.homework
     }
 
-    private val c = application.applicationContext
+    private val c= application.applicationContext
     var onError: ((String)-> Unit)?= null
 
     fun deleteHomework(position: Int){

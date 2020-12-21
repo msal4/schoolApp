@@ -5,22 +5,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.haytham.coder.extensions.isNotNullOrBlank
 import com.smart.resources.schools_app.databinding.ItemLectureBinding
-import kotlinx.android.synthetic.main.item_lecture.view.*
 
 class LectureRecyclerAdapter: ListAdapter<LectureModel, LectureRecyclerAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     var onItemClick: ((LectureModel) -> Unit)?= null
-    var onItemPdfClick: ((LectureModel) -> Unit)?= null
 
     class MyViewHolder(private val binding: ItemLectureBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(lectureModel: LectureModel) {
             binding.model = lectureModel
-
-            binding.hasPdf = lectureModel.pdfURL.isNotNullOrBlank()
         }
 
         companion object {
@@ -48,7 +43,6 @@ class LectureRecyclerAdapter: ListAdapter<LectureModel, LectureRecyclerAdapter.M
         val lectureModel = getItem(position)
 
         holder.itemView.setOnClickListener { onItemClick?.invoke(lectureModel) }
-        holder.itemView.viewPdf.setOnClickListener { onItemPdfClick?.invoke(lectureModel)}
         holder.bind(lectureModel)
     }
 
@@ -59,7 +53,7 @@ class LectureRecyclerAdapter: ListAdapter<LectureModel, LectureRecyclerAdapter.M
                     oldItem: LectureModel,
                     newItem: LectureModel
                 ): Boolean {
-                    return oldItem.subjectID == newItem.subjectID
+                    return oldItem.id == newItem.id
                 }
 
                 override fun areContentsTheSame(

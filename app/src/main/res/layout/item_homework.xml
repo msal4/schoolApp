@@ -57,63 +57,47 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.060000002" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:baselineAligned="false"
                     android:gravity="start|center"
-                    android:layoutDirection="rtl"
                     android:minHeight="@dimen/min_homework_height"
-                    android:orientation="vertical"
-                    android:padding="5dp">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/subjectName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
                         android:drawableEnd="@{itemModel.hasImage? @drawable/ic_attachment_horizontal : null}"
                         android:drawablePadding="12dp"
                         android:fontFamily="@font/monadi"
                         android:includeFontPadding="true"
-                        android:minWidth="30dp"
                         android:text="@{itemModel.subjectName}"
                         android:textAlignment="viewStart"
                         android:textColor="@android:color/black"
                         android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
                         tools:text="العنوان" />
 
                     <TextView
                         android:id="@+id/contentText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:minLines="1"
                         android:text="@{itemModel.note}"
                         android:textAlignment="viewStart"
                         android:visibility="@{itemModel.hasNote? View.VISIBLE: View.GONE}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
                         tools:text="المحتوى هو هذا وها وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا وهذا المحتوى هو هذاالمحتوى هو هذا" />
 
-                    <TextView
-                        android:id="@+id/schedule"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
-                        android:maxLines="1"
-                        android:minLines="1"
-                        android:text="@{itemModel.assignmentName}"
-                        android:textAlignment="viewStart"
-                        app:layout_constraintBottom_toTopOf="@+id/contentText"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/subjectName"
-                        tools:text="المادة" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
 
 
                 <LinearLayout
@@ -130,6 +114,14 @@
                         android:textAlignment="viewStart"
                         tools:text="8/10/2019" />
 
+                    <TextView
+                        android:id="@+id/schedule"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@{itemModel.assignmentName}"
+                        android:textAlignment="viewStart"
+                        tools:text="المادة" />
                 </LinearLayout>
 
             </LinearLayout>

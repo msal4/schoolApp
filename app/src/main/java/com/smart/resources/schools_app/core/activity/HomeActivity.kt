@@ -31,13 +31,11 @@ class HomeActivity : BaseActivity(){
         }
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= DataBindingUtil.setContentView(this, R.layout.activity_home)
 
         refreshUi()
-
     }
 
     private fun setUserType() {
@@ -139,21 +137,12 @@ class HomeActivity : BaseActivity(){
 
             R.id.lectures-> SectionActivity.newInstance(
                 this,
-                Section.SUBJECT
+                Section.LECTURE
             )
             R.id.onlineExams-> SectionActivity.newInstance(
                 this,
                 Section.ONLINE_EXAM
             )
-            R.id.fees -> SectionActivity.newInstance(
-                this,
-                Section.FEES
-            )
-//            R.id.addLecture -> SectionActivity.newInstance(
-//                this,
-//                Section.ADD_LECTURE
-//            )
         }
     }
-
 }

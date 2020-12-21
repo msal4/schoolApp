@@ -5,11 +5,11 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
-import retrofit2.http.Path
 
 interface LectureClient {
-    @GET("lectures/{subjectId}")
-    suspend fun getClassLectures(@Path("subjectId") subjectId:Int)
+    @GET("classLectures")
+    suspend fun getClassLectures(@Query("schoolId") schoolId:String,
+                                 @Query("classId") classId:String)
             : MyResult<List<LectureModel>>
 
     @POST("addSolution")

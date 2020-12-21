@@ -40,7 +40,7 @@ fun String?.extractStartTimeFromUrl(): Int {
         val startTimeString= splittedUrl.last()
         return try {
             return startTimeString.toInt()
-        }catch (e:Exception){
+        } catch (e:Exception) {
             0
         }
     }

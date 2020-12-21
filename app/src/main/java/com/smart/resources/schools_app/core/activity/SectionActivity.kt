@@ -16,10 +16,8 @@ import com.smart.resources.schools_app.core.myTypes.Section.EXAM
 import com.smart.resources.schools_app.databinding.ActivitySectionBinding
 import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
 import com.smart.resources.schools_app.features.absence.getAbsence.AbsenceFragment
-import com.smart.resources.schools_app.features.addLecture.AddLectureFragment
 import com.smart.resources.schools_app.features.advertising.AdvertisingFragment
 import com.smart.resources.schools_app.features.exam.ExamFragment
-import com.smart.resources.schools_app.features.fees.FeesFragment
 import com.smart.resources.schools_app.features.homework.getHomeworks.HomeworkFragment
 import com.smart.resources.schools_app.features.lecture.LectureFragment
 import com.smart.resources.schools_app.features.library.LibraryFragment
@@ -28,7 +26,6 @@ import com.smart.resources.schools_app.features.onlineExam.presentation.fragment
 import com.smart.resources.schools_app.features.rating.RatingFragment
 import com.smart.resources.schools_app.features.ratingAdd.AddRatingFragment
 import com.smart.resources.schools_app.features.schedule.ScheduleFragment
-import com.smart.resources.schools_app.features.subject.SubjectFragment
 import com.smart.resources.schools_app.features.users.data.repository.UserRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -85,7 +82,7 @@ class SectionActivity : BaseActivity() {
                     Section.LIBRARY -> LibraryFragment.newInstance(this)
                     Section.SCHEDULE -> ScheduleFragment.newInstance(this)
                     Section.ADVERTISING -> AdvertisingFragment.newInstance(this)
-                    Section.SUBJECT -> SubjectFragment.newInstance(this)
+                    Section.LECTURE -> LectureFragment.newInstance(this)
 
                     Section.ABSENCE ->
                         if(isStudent) AbsenceFragment.newInstance(this)
@@ -95,8 +92,6 @@ class SectionActivity : BaseActivity() {
                         if(isStudent) RatingFragment.newInstance(this)
                         else AddRatingFragment.newInstance(this)
                     Section.ONLINE_EXAM -> OnlineExamsFragment.newInstance(this)
-                    Section.FEES -> FeesFragment.newInstance(this)
-                    Section.ADD_LECTURE -> AddLectureFragment.newInstance(this)
                 }
             }
         }

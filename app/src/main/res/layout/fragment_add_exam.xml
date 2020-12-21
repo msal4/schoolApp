@@ -106,8 +106,7 @@
             app:layout_constraintBottom_toTopOf="@+id/classAndSectionSpinner"
             app:layout_constraintEnd_toEndOf="@+id/dateInputLayout"
             app:layout_constraintStart_toStartOf="@+id/dateInputLayout"
-            app:layout_constraintTop_toBottomOf="@+id/dateInputLayout"
-        />
+            app:layout_constraintTop_toBottomOf="@+id/dateInputLayout" />
 
 
         <com.tiper.MaterialSpinner
