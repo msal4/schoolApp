@@ -12,6 +12,8 @@ import com.smart.resources.schools_app.features.users.data.repository.UserReposi
 import com.snakydesign.watchtower.WatchTower
 import com.snakydesign.watchtower.interceptor.WebWatchTowerObserver
 import dagger.hilt.android.HiltAndroidApp
+import timber.log.Timber
+import timber.log.Timber.DebugTree
 import javax.inject.Inject
 
 
@@ -27,6 +29,10 @@ class MyApp : Application() {
     override fun onCreate() {
         super.onCreate()
         // Instantiate a FlutterEngine.
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(DebugTree())
+        }
 
         AndroidThreeTen.init(this)
         UserRepository.instance = userRepository // To not break old code

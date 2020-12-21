@@ -9,7 +9,7 @@ private val videoIdRegex = arrayOf(
     "\\?vi?=([^&]*)",
     "watch\\?.*v=([^&]*)",
     "(?:embed|vi?)/([^/?]*)",
-    "^([A-Za-z0-9\\-]*)"
+    "^([A-Za-z0-9\\-\\_]*)"
 )
 
 fun String?.extractVideoIdFromUrl(): String? {

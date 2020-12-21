@@ -44,8 +44,7 @@ class AddExamFragment : Fragment(), PostListener {
                 (parent.selectedItem as ClassInfoModel).classId.toString()
         }
 
-        override fun onNothingSelected(parent: MaterialSpinner) {
-        }
+        override fun onNothingSelected(parent: MaterialSpinner) {}
 
     }
 

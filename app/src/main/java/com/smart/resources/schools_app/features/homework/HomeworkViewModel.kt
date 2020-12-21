@@ -31,7 +31,7 @@ class HomeworkViewModel @ViewModelInject constructor(
         homeworkRepo.homework
     }
 
-    private val c= application.applicationContext
+    private val c = application.applicationContext
     var onError: ((String)-> Unit)?= null
 
     fun deleteHomework(position: Int){

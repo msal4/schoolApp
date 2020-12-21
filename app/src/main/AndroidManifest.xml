@@ -19,21 +19,6 @@
         tools:replace="android:allowBackup"
         tools:targetApi="m">
 
-        <activity
-            android:name="io.flutter.embedding.android.FlutterActivity"
-            android:theme="@style/LaunchTheme"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-            android:hardwareAccelerated="true"
-            android:windowSoftInputMode="adjustResize"
-         />
-        <activity
-            android:name="io.flutter.embedding.android.FlutterActivity"
-            android:theme="@style/LaunchTheme"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-            android:hardwareAccelerated="true"
-            android:windowSoftInputMode="adjustResize"
-            />
-
         <activity android:name=".features.youtubePlayer.YoutubePlayerActivity"
             android:supportsPictureInPicture="true"
             android:autoRemoveFromRecents="true"

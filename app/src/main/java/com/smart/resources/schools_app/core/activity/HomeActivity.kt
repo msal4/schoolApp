@@ -149,6 +149,10 @@ class HomeActivity : BaseActivity(){
                 this,
                 Section.FEES
             )
+//            R.id.addLecture -> SectionActivity.newInstance(
+//                this,
+//                Section.ADD_LECTURE
+//            )
         }
     }
 

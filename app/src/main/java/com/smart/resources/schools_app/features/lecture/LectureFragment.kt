@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
 import com.haytham.coder.extensions.openPdfViewer
 import com.haytham.coder.extensions.toString
 import com.smart.resources.schools_app.R
@@ -48,12 +49,6 @@ class LectureFragment : Fragment() {
                 replace(R.id.fragmentContainer, fragment)
                 addToBackStack(LECTURE_FRAGMENT)
                 commit()
-
-
-//            fm.beginTransaction().apply {
-//                add(R.id.fragmentContainer, fragment)
-//                commit()
-//            }
             }
         }
     }
@@ -81,7 +76,7 @@ class LectureFragment : Fragment() {
         viewModel.apply {
             binding.listState = listState
             val subjectId = arguments?.getInt("subjectId")!!
-            getLectures(subjectId).observe(viewLifecycleOwner,  { onLectureDownload(it) })
+            getLectures(subjectId).observe(viewLifecycleOwner) { onLectureDownload(it) }
         }
     }
 
@@ -97,7 +92,7 @@ class LectureFragment : Fragment() {
     }
 
     private fun onLectureClicked(lectureModel: LectureModel) {
-        if(lectureModel.url.isNullOrBlank()){
+        if(lectureModel.url.isBlank()){
             binding.layout.showSnackBar(R.string.invalid_url.toString(requireContext()))
         }else {
             YoutubePlayerActivity.newInstance(requireContext(), lectureModel.url!!)

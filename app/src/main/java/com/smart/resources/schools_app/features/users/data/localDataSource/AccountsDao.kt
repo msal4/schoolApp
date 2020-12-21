@@ -15,6 +15,9 @@ interface AccountsDao {
     @Query("SELECT * FROM Account WHERE userId = :userId")
     suspend fun getAccountByUserId(userId: String): Account
 
+    @Query("DELETE FROM Account WHERE userId = :userId")
+    suspend fun removeAccountByUserId(userId: String)
+
     @Query("SELECT * FROM Account INNER JOIN User ON Account.userId == User.userId WHERE backendUserId = :backendUserId")
     suspend fun getAccountByBackendUserId(backendUserId: String): List<Account>
 

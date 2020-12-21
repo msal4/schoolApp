@@ -20,14 +20,14 @@ fun <T>MaterialSpinner.setSpinnerList(list:List<T>?) {
         android.R.layout.simple_spinner_item, list
     ).apply {
         setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        adapter= this
+        adapter = this
     }
 }
 
 
 @BindingAdapter(SPINNER_SELECT_ITEM_ATTRIBUTE)
 fun MaterialSpinner.setSelectedItem(index:Int?){
-        selection=index?:0
+        selection = index ?: 0
 }
 
 @InverseBindingAdapter(attribute = SPINNER_SELECT_ITEM_ATTRIBUTE)

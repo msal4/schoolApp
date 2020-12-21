@@ -185,4 +185,18 @@
     <string name="fees">الاقساط</string>
     <string name="no_fees">لا توجد اقساط</string>
     <string name="defaultDate">08/10/2020</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="lecture_subject">موضوع المحاضرة</string>
+    <string name="add_lecture">اضافة محاضرة</string>
+    <string name="lecture_url">رابط المحاضرة</string>
+    <string name="upload_lecture_pdf_optional">رفع ملف المحاضرة (اختياري)</string>
+    <string name="upload_lecture">رفع المحاضرة</string>
 </resources>

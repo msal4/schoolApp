@@ -16,6 +16,7 @@ import com.smart.resources.schools_app.core.myTypes.Section.EXAM
 import com.smart.resources.schools_app.databinding.ActivitySectionBinding
 import com.smart.resources.schools_app.features.absence.addAbsence.AddAbsenceFragment
 import com.smart.resources.schools_app.features.absence.getAbsence.AbsenceFragment
+import com.smart.resources.schools_app.features.addLecture.AddLectureFragment
 import com.smart.resources.schools_app.features.advertising.AdvertisingFragment
 import com.smart.resources.schools_app.features.exam.ExamFragment
 import com.smart.resources.schools_app.features.fees.FeesFragment
@@ -95,6 +96,7 @@ class SectionActivity : BaseActivity() {
                         else AddRatingFragment.newInstance(this)
                     Section.ONLINE_EXAM -> OnlineExamsFragment.newInstance(this)
                     Section.FEES -> FeesFragment.newInstance(this)
+                    Section.ADD_LECTURE -> AddLectureFragment.newInstance(this)
                 }
             }
         }

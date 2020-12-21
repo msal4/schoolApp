@@ -42,8 +42,7 @@ class ProfileActivity : BaseActivity() {
 
         fun newInstanceWithTrans(activity: Activity, vararg pairs: Pair<View, String>) {
             Intent(activity, ProfileActivity::class.java).apply {
-                val ao =
-                    ActivityOptionsCompat.makeSceneTransitionAnimation(activity, *pairs)
+                val ao = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, *pairs)
                 activity.startActivityForResult(this, REQUEST_IS_PROFILE_IMAGE_UPDATED, ao.toBundle())
             }
         }

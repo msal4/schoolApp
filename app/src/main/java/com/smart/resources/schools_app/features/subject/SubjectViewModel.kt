@@ -10,6 +10,7 @@ import com.smart.resources.schools_app.core.myTypes.ResponseError
 import com.smart.resources.schools_app.core.myTypes.Success
 import com.smart.resources.schools_app.core.network.RetrofitHelper
 import com.smart.resources.schools_app.features.users.data.model.userInfo.StudentInfoModel
+import com.smart.resources.schools_app.features.users.data.model.userInfo.UserInfoModel
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserModelUseCase
 import kotlinx.coroutines.launch
 import java.net.HttpURLConnection
@@ -22,16 +23,20 @@ class SubjectViewModel @ViewModelInject constructor(
     private val c = application.applicationContext
 
     val listState = ListState()
-    private val studentModel:LiveData<StudentInfoModel> = liveData {
+    private val studentModel: LiveData<UserInfoModel?> = liveData {
         val userModel= getCurrentUserModel()
         if(userModel is StudentInfoModel) emit(userModel)
     }
 
     private val _subjects: MutableLiveData<List<Subject>> = MutableLiveData()
     val subjects: LiveData<List<Subject>> = studentModel.switchMap {
-        viewModelScope.launch {
-            _subjects.postValue(fetchLectures(it))
+        when (it) {
+            is StudentInfoModel ->
+                viewModelScope.launch {
+                    _subjects.postValue(fetchLectures(it))
+                }
         }
+
         _subjects
     }
 

@@ -11,6 +11,7 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.view.Window
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.smart.resources.schools_app.R
@@ -64,7 +65,7 @@ class AccountsDialog : DialogFragment(),
 
         setupUsers()
         viewModel.logoutEvent.observe(viewLifecycleOwner){
-            it?.getContentIfNotHandled()?.let { eventHappened ->
+            it.getContentIfNotHandled()?.let { eventHappened ->
                 if(eventHappened){
                     requireActivity().setResult(Activity.RESULT_CANCELED)
                     requireActivity().finishAffinity()

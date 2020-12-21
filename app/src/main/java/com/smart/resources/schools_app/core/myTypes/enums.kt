@@ -13,6 +13,7 @@ enum class Section{
     SUBJECT,
     ONLINE_EXAM,
     FEES,
+    ADD_LECTURE,
 }
 
 enum class WeekDays(val dayName:String) {

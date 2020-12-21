@@ -9,6 +9,10 @@ import com.smart.resources.schools_app.features.users.data.model.User
 import com.smart.resources.schools_app.features.users.data.model.userInfo.StudentInfoModel
 import com.smart.resources.schools_app.features.users.data.model.userInfo.TeacherInfoModel
 import com.smart.resources.schools_app.features.users.data.model.userInfo.UserInfoModel
+import kotlinx.coroutines.flow.count
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.toList
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -26,7 +30,6 @@ class UserRepository @Inject constructor(
         if (currentUser == null) sharedPrefHelper.currentUserId?.let {
             currentUser = usersDao.getUserById(it)
         }
-
 
         return currentUser
     }
@@ -94,6 +97,18 @@ class UserRepository @Inject constructor(
             setCurrentAccount(account)
         }else{
             setCurrentAccount(foundAccount)
+        }
+    }
+
+    suspend fun logout() {
+       val currentAccount = getCurrentAccount()
+        if (currentAccount != null) {
+            accountsDao.removeAccountByUserId(currentAccount.userId.toString())
+        }
+        val accounts = accountsDao.getAccounts().toList()[0]
+        val count = accounts.count()
+        if (count > 0) {
+            setCurrentAccount(accounts.last())
         }
     }
 

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/item_padding"
+        tools:context=".features.addLecture.AddLectureFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/lectureSubject"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/lectureSubjectText"
+                    style="@style/MyEditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/lecture_subject"
+                    android:inputType="text"
+                    android:text="" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/lectureUrl"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toTopOf="@id/selectClass"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lectureSubject">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/lectureUrlText"
+                    style="@style/MyEditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/lecture_url"
+                    android:inputType="textUri"
+                    android:text="" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.tiper.MaterialSpinner
+                android:id="@+id/selectClass"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.SpinnerStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:hint="@string/classes"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lectureUrl"
+                app:spinnerMode="dropdown" />
+
+            <com.tiper.MaterialSpinner
+                android:id="@+id/selectSubject"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.SpinnerStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:hint="@string/subject"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/selectClass"
+                app:spinnerMode="dropdown" />
+
+            <LinearLayout
+                android:id="@+id/pdfFileArea"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/selectSubject"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layoutDirection="ltr"
+                android:weightSum="1"
+                android:layout_height="wrap_content">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/selectPdf"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/orange_200_alpha_87"
+                android:padding="15dp"
+                android:maxLines="1"
+                android:text="@string/upload_lecture_pdf_optional"
+                android:textColor="#555"
+                app:icon="@drawable/ic_attach_file_black_24dp"
+                android:layout_marginEnd="10dp"
+                />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/removePdf"
+                    android:layout_width="0dp"
+                    android:layout_weight="0"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/red_a100_alpha_87"
+                    android:padding="15dp"
+                    android:textColor="#555"
+                    android:text="@string/cancel"
+                    android:visibility="gone"
+                    app:icon="@drawable/ic_remove_white_24dp"
+                    />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/submit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/colorPrimary"
+                android:maxLines="1"
+                android:padding="15dp"
+                android:text="@string/upload_lecture"
+                android:textColor="#ffff"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pdfFileArea" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+</layout>

@@ -1,5 +1,6 @@
 package com.smart.resources.schools_app.features.login
 
+import com.onesignal.OneSignal
 import com.orhanobut.logger.Logger
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.core.network.RetrofitHelper
@@ -21,7 +22,8 @@ object LoginRepository{
         password: String,
         userType: UserType
     ): MyResult<String> {
-        val requestBody = hashMapOf("phone" to phoneNumber, "password" to password)
+        val userID = OneSignal.getPermissionSubscriptionState().subscriptionStatus.userId
+        val requestBody = hashMapOf("phone" to phoneNumber, "password" to password, "playerId" to userID)
 
         return try {
             val myRes = getLoginResult(userType, requestBody)

@@ -8,6 +8,7 @@ import com.smart.resources.schools_app.core.typeConverters.retrofit.LocalDateCon
 import com.smart.resources.schools_app.core.typeConverters.retrofit.LocalDateTimeConverter
 import com.smart.resources.schools_app.core.typeConverters.retrofit.LocalTimeConverter
 import com.smart.resources.schools_app.features.absence.AbsenceClient
+import com.smart.resources.schools_app.features.addLecture.AddLectureClient
 import com.smart.resources.schools_app.features.advertising.AdvertisingClient
 import com.smart.resources.schools_app.features.exam.ExamClient
 import com.smart.resources.schools_app.features.fees.FeesClient
@@ -111,4 +112,5 @@ object RetrofitHelper {
     val studentClient: StudentClient get() = retrofitWithAuth.create(StudentClient::class.java)
     val subjectClient: SubjectClient get() = retrofitWithAuth.create(SubjectClient::class.java)
     val feesClient: FeesClient get() = retrofitWithAuth.create(FeesClient::class.java)
+    val addLectureClient: AddLectureClient get() = retrofitWithAuth.create(AddLectureClient::class.java)
 }
