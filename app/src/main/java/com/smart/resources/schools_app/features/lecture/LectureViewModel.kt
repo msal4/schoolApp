@@ -9,6 +9,7 @@ import com.smart.resources.schools_app.core.myTypes.ListState
 import com.smart.resources.schools_app.core.myTypes.ResponseError
 import com.smart.resources.schools_app.core.myTypes.Success
 import com.smart.resources.schools_app.features.users.data.model.userInfo.StudentInfoModel
+import com.smart.resources.schools_app.features.users.data.model.userInfo.UserInfoModel
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserModelUseCase
 import kotlinx.coroutines.launch
 import java.net.HttpURLConnection
@@ -22,7 +23,7 @@ class LectureViewModel @ViewModelInject constructor(
 
     val listState = ListState()
     private val lectureRepository:ILectureRepository= LectureRepository()
-    private val studentModel:LiveData<StudentInfoModel> = liveData {
+    private val studentModel: LiveData<UserInfoModel?> = liveData {
         val userModel= getCurrentUserModel()
         if(userModel is StudentInfoModel) emit(userModel)
     }
@@ -38,7 +39,7 @@ class LectureViewModel @ViewModelInject constructor(
     fun getLectures(subjectId: Int): LiveData<List<LectureModel>> {
         return studentModel.switchMap {
             viewModelScope.launch {
-                _lectures.postValue(fetchLectures(it, subjectId))
+                _lectures.postValue(fetchLectures(it as StudentInfoModel, subjectId))
             }
             _lectures
         }

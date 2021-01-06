@@ -10,6 +10,7 @@ data class LectureModel (
     val url: String,
     @SerializedName("lecture")
     val subtitle: String,
+    @SerializedName("pdfUrl")
     var pdfURL: String,
     val date: LocalDate,
     val idSubject: Long,

@@ -16,6 +16,7 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.core.bindingAdapters.setSelectedItem
 import com.smart.resources.schools_app.core.bindingAdapters.setSpinnerList
+import com.smart.resources.schools_app.core.extentions.showSnackBar
 import com.smart.resources.schools_app.core.myTypes.Success
 import com.smart.resources.schools_app.core.network.RetrofitHelper
 import com.smart.resources.schools_app.databinding.AddLectureFragmentBinding
@@ -37,6 +38,7 @@ class AddLectureFragment : Fragment() {
     private val PICK_PDF_FILE = 2
     private var pdfFile: InputStream? = null
     private var subjectId: Int? = null
+    private var classStr: String? = null
 
     companion object {
         fun newInstance(fm: FragmentManager) {
@@ -52,7 +54,8 @@ class AddLectureFragment : Fragment() {
 
     private val onClassSelectedListener = object : MaterialSpinner.OnItemSelectedListener {
         override fun onItemSelected(parent: MaterialSpinner, view: View?, position: Int, id: Long) {
-            viewModel.fetchSubjects(parent.selectedItem.toString())
+            classStr = parent.selectedItem.toString()
+            viewModel.fetchSubjects(classStr!!)
         }
 
         override fun onNothingSelected(parent: MaterialSpinner) {}
@@ -81,6 +84,14 @@ class AddLectureFragment : Fragment() {
         binding.selectPdf.setOnClickListener(::openFile)
         binding.removePdf.setOnClickListener(::removeFile)
         binding.submit.setOnClickListener(::submit)
+
+        viewModel.apply {
+            binding.classErrMsg = classErrMsg
+            binding.lectureErrMsg = lectureErrMsg
+            binding.subjectErrMsg = subjectErrMsg
+            binding.lectureSubjectErrMsg = lectureSubjectErrMsg
+            binding.lectureUrlErrMsg = lectureUrlErrMsg
+        }
 
         lifecycleScope.launch {
             UserRepository.instance.getUserModel()?.let { teacher ->
@@ -135,32 +146,54 @@ class AddLectureFragment : Fragment() {
 
     private fun submit(view: View?) {
         val url = binding.lectureUrlText.text.toString()
-        val lectureSubject = binding.lectureSubjectText.toString()
+        val lectureSubject = binding.lectureSubjectText.text.toString()
+        viewModel.subjectErrMsg.postValue("")
+        viewModel.lectureErrMsg.postValue("")
+        viewModel.lectureSubjectErrMsg.postValue("")
+        viewModel.lectureUrlErrMsg.postValue("")
+        viewModel.classErrMsg.postValue("")
 
-        if (subjectId == null) {
-            Timber.d("subjectId is null for some reason")
+        if (lectureSubject.isEmpty()) {
+            viewModel.lectureSubjectErrMsg.postValue("يرجى ادخال موضوع المادة")
             return
         }
+
+        if (url.isEmpty()) {
+            viewModel.lectureUrlErrMsg.postValue("يرجى ادخال رابط المادة")
+            return
+        }
+
+        if (classStr.isNullOrEmpty()) {
+            viewModel.classErrMsg.postValue("يرجى ادخال الصف")
+            return
+        }
+
+        if (subjectId == null) {
+            viewModel.subjectErrMsg.postValue("يرجى اختيار المادة")
+            return
+        }
+
 
         binding.submit.isEnabled = false
 
         lifecycleScope.launch {
-
-
             val res = RetrofitHelper.addLectureClient.addLecture(
                 subjectId = subjectId!!,
-                lecture = lectureSubject,
-                pdfURL = makePartBody(),
-                url = url
+                lecture = lectureSubject.toRequestBody("text/plain".toMediaTypeOrNull()),
+                pdfUrl = makePartBody(),
+                url = url.toRequestBody("text/plain".toMediaTypeOrNull())
             )
 
-            when (res) {
-                is Success -> {
-                    Timber.d("this is working perfectly")
-                    activity?.supportFragmentManager?.popBackStackImmediate()
-                }
-                else -> binding.submit.isEnabled = true
+            if (res is Success) {
+                Timber.d("this is working perfectly")
+                binding.addLectureLayout.showSnackBar(getString(R.string.done_successfully), false)
             }
+            viewModel.subjectErrMsg.postValue("")
+            viewModel.lectureErrMsg.postValue("")
+            viewModel.lectureSubjectErrMsg.postValue("")
+            viewModel.lectureUrlErrMsg.postValue("")
+            viewModel.classErrMsg.postValue("")
+            binding.submit.isEnabled = true
         }
     }
 
@@ -190,12 +223,11 @@ class AddLectureFragment : Fragment() {
         }
     }
 
-
     private fun makePartBody(): MultipartBody.Part? {
         if (pdfFile == null) return null
         val bytes = pdfFile!!.readBytes()
         return MultipartBody.Part.createFormData(
-            "pdfURL",
+            "pdfUrl",
             "file.pdf",
             bytes.toRequestBody("application/pdf".toMediaTypeOrNull(), 0, bytes.size)
         )

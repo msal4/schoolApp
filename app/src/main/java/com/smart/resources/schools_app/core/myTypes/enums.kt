@@ -14,6 +14,7 @@ enum class Section{
     ONLINE_EXAM,
     FEES,
     ADD_LECTURE,
+    LIVE_STREAM
 }
 
 enum class WeekDays(val dayName:String) {

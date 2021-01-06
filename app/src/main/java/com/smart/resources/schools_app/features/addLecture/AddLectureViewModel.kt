@@ -1,8 +1,6 @@
 package com.smart.resources.schools_app.features.addLecture
 
-import android.util.Log
 import androidx.lifecycle.*
-import com.smart.resources.schools_app.core.myTypes.ResponseError
 import com.smart.resources.schools_app.core.myTypes.Success
 import com.smart.resources.schools_app.core.network.RetrofitHelper
 import com.smart.resources.schools_app.features.subject.Subject
@@ -15,6 +13,12 @@ class AddLectureViewModel: ViewModel() {
     get() {
         return _subjects
     }
+    val subjectErrMsg = MutableLiveData<String>()
+    val lectureErrMsg = MutableLiveData<String>()
+    val lectureSubjectErrMsg = MutableLiveData<String>()
+    val classErrMsg = MutableLiveData<String>()
+    val lectureUrlErrMsg = MutableLiveData<String>()
+
 
     fun fetchSubjects(className: String) {
         viewModelScope.launch {

@@ -23,6 +23,7 @@ import com.smart.resources.schools_app.features.fees.FeesFragment
 import com.smart.resources.schools_app.features.homework.getHomeworks.HomeworkFragment
 import com.smart.resources.schools_app.features.lecture.LectureFragment
 import com.smart.resources.schools_app.features.library.LibraryFragment
+import com.smart.resources.schools_app.features.liveStream.LiveStreamFragment
 import com.smart.resources.schools_app.features.notification.NotificationFragment
 import com.smart.resources.schools_app.features.onlineExam.presentation.fragments.OnlineExamsFragment
 import com.smart.resources.schools_app.features.rating.RatingFragment
@@ -97,6 +98,7 @@ class SectionActivity : BaseActivity() {
                     Section.ONLINE_EXAM -> OnlineExamsFragment.newInstance(this)
                     Section.FEES -> FeesFragment.newInstance(this)
                     Section.ADD_LECTURE -> AddLectureFragment.newInstance(this)
+                    Section.LIVE_STREAM -> LiveStreamFragment.newInstance(this)
                 }
             }
         }

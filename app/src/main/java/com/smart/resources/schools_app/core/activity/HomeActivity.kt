@@ -22,7 +22,7 @@ import java.net.URI
 
 
 class HomeActivity : BaseActivity(){
-    private lateinit var binding:ActivityHomeBinding
+    private lateinit var binding: ActivityHomeBinding
 
     companion object Factory{
         fun newInstance(context: Context){
@@ -149,10 +149,18 @@ class HomeActivity : BaseActivity(){
                 this,
                 Section.FEES
             )
-//            R.id.addLecture -> SectionActivity.newInstance(
-//                this,
-//                Section.ADD_LECTURE
-//            )
+            R.id.addLecture -> SectionActivity.newInstance(
+                this,
+                Section.ADD_LECTURE
+            )
+            R.id.liveStream -> SectionActivity.newInstance(
+                this,
+                Section.LIVE_STREAM
+            )
+            R.id.startLiveStream -> SectionActivity.newInstance(
+                this,
+                Section.LIVE_STREAM
+            )
         }
     }
 

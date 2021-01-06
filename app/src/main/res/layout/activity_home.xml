@@ -308,6 +308,7 @@
                 app:layout_constraintStart_toStartOf="@+id/ratings"
                 app:layout_constraintTop_toTopOf="@+id/ratings"
                 app:layout_constraintVertical_bias="0.5" />
+
             <TextView
                 android:id="@+id/fees"
                 style="@style/home_section_text_style"
@@ -331,28 +332,72 @@
                 app:layout_constraintTop_toTopOf="@+id/fees"
                 app:layout_constraintVertical_bias="0.0" />
 
-<!--            <TextView-->
-<!--                    android:id="@+id/addLecture"-->
-<!--                    style="@style/home_section_text_style"-->
-<!--                    android:layout_marginTop="16dp"-->
-<!--                    android:onClick="navigate"-->
-<!--                    android:text="@string/add_lecture"-->
-<!--                    android:visible="@{userType == UserType.TEACHER}"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintDimensionRatio="h,1:1"-->
-<!--                    app:layout_constraintEnd_toStartOf="@+id/guideline2"-->
-<!--                    app:layout_constraintStart_toStartOf="@+id/guideline4"-->
-<!--                    app:layout_constraintTop_toBottomOf="@+id/ratings" />-->
+            <TextView
+                android:id="@+id/liveStream"
+                style="@style/home_section_text_style"
+                android:layout_marginTop="16dp"
+                android:onClick="navigate"
+                android:text="@string/live_stream"
+                android:visible="@{userType == UserType.STUDENT}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="h,1:1"
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/ratings" />
 
-<!--            <ImageView-->
-<!--                    style="@style/home_section_image_style"-->
-<!--                    android:src="@drawable/ic_lecture"-->
-<!--                    app:layout_constraintBottom_toBottomOf="@+id/addLecture"-->
-<!--                    app:layout_constraintDimensionRatio="h,1:1"-->
-<!--                    app:layout_constraintEnd_toEndOf="@+id/addLecture"-->
-<!--                    app:layout_constraintStart_toStartOf="@+id/addLecture"-->
-<!--                    app:layout_constraintTop_toTopOf="@+id/addLecture"-->
-<!--                    app:layout_constraintVertical_bias="0.0" />-->
+            <ImageView
+                style="@style/home_section_image_style"
+                android:src="@drawable/ic_lecture"
+                app:layout_constraintBottom_toBottomOf="@+id/liveStream"
+                app:layout_constraintDimensionRatio="h,1:1"
+                app:layout_constraintEnd_toEndOf="@+id/liveStream"
+                app:layout_constraintStart_toStartOf="@+id/liveStream"
+                app:layout_constraintTop_toTopOf="@+id/liveStream"
+                app:layout_constraintVertical_bias="0.5" />
+
+            <TextView
+                android:id="@+id/startLiveStream"
+                style="@style/home_section_text_style"
+                android:layout_marginTop="16dp"
+                android:onClick="navigate"
+                android:text="@string/live_stream"
+                android:visible="@{userType == UserType.TEACHER}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="h,1:1"
+                app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toBottomOf="@+id/onlineExams" />
+            <ImageView
+                style="@style/home_section_image_style"
+                android:src="@drawable/ic_lecture"
+                app:layout_constraintDimensionRatio="h,1:1"
+                app:layout_constraintBottom_toBottomOf="@+id/startLiveStream"
+                app:layout_constraintEnd_toEndOf="@+id/startLiveStream"
+                app:layout_constraintStart_toStartOf="@+id/startLiveStream"
+                app:layout_constraintTop_toTopOf="@+id/startLiveStream"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/addLecture"
+                style="@style/home_section_text_style"
+                android:layout_marginTop="16dp"
+                android:onClick="navigate"
+                android:text="@string/add_lecture"
+                android:visible="@{userType == UserType.TEACHER}"
+                app:layout_constraintDimensionRatio="h,1:1"
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/ratings" />
+
+            <ImageView
+                    style="@style/home_section_image_style"
+                    android:src="@drawable/ic_lecture"
+                    app:layout_constraintBottom_toBottomOf="@+id/addLecture"
+                    app:layout_constraintDimensionRatio="h,1:1"
+                    app:layout_constraintEnd_toEndOf="@+id/addLecture"
+                    app:layout_constraintStart_toStartOf="@+id/addLecture"
+                    app:layout_constraintTop_toTopOf="@+id/addLecture"
+                    app:layout_constraintVertical_bias="0.0" />
 
 
             <androidx.constraintlayout.widget.Guideline

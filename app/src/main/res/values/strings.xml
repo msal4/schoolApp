@@ -199,4 +199,5 @@
     <string name="lecture_url">رابط المحاضرة</string>
     <string name="upload_lecture_pdf_optional">رفع ملف المحاضرة (اختياري)</string>
     <string name="upload_lecture">رفع المحاضرة</string>
+    <string name="live_stream">البث المباشر</string>
 </resources>
