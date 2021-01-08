@@ -40,17 +40,19 @@ class SectionActivity : BaseActivity() {
 
     companion object Factory{
         private const val EXTRA_SECTION= "extraSection"
+        private const val EXTRA_CODE= "extraCode"
 
-        fun newInstance(context: Context, section: Section?){
-            val intent= Intent(context, SectionActivity::class.java)
+        fun newInstance(context: Context, section: Section?, code: String = ""){
+            val intent = Intent(context, SectionActivity::class.java)
             intent.putExtra(EXTRA_SECTION, section)
+            intent.putExtra(EXTRA_CODE, code)
             context.startActivity(intent)
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding= DataBindingUtil.setContentView(this, R.layout.activity_section)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_section)
         setSupportActionBar(binding.toolbar)
 
         createFragment()
@@ -98,7 +100,7 @@ class SectionActivity : BaseActivity() {
                     Section.ONLINE_EXAM -> OnlineExamsFragment.newInstance(this)
                     Section.FEES -> FeesFragment.newInstance(this)
                     Section.ADD_LECTURE -> AddLectureFragment.newInstance(this)
-                    Section.LIVE_STREAM -> LiveStreamFragment.newInstance(this)
+                    Section.LIVE_STREAM -> LiveStreamFragment.newInstance(this, intent.getStringExtra(EXTRA_CODE) ?: "ss")
                 }
             }
         }

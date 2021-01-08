@@ -35,7 +35,6 @@ class LectureFragment : Fragment() {
 
             val fragment = LectureFragment()
 
-
             Bundle().apply {
                 putInt("subjectId", subject.idSubject)
                 fragment.arguments = this

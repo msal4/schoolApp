@@ -22,9 +22,14 @@ class LiveStreamFragment : Fragment() {
     private lateinit var binding: FragmentLiveStreamBinding
 
     companion object {
-        fun newInstance(fm: FragmentManager) {
+        fun newInstance(fm: FragmentManager, code: String = "") {
             val fragment =
                 LiveStreamFragment()
+            Bundle().apply {
+                putString("code", code)
+                fragment.arguments = this
+            }
+
             fm.beginTransaction().apply {
                 setCustomAnimations(
                     R.anim.slide_in_right,
@@ -37,6 +42,7 @@ class LiveStreamFragment : Fragment() {
             }
         }
     }
+
     lateinit var webkitPermissionRequest : PermissionRequest
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreateView(
@@ -62,12 +68,12 @@ class LiveStreamFragment : Fragment() {
                         request.grant(request.resources)
                     }
                 }
-
+                val code = arguments?.getString("code") ?: "ss"
                 binding.webview.webViewClient = object : WebViewClient() {
                     override fun onPageFinished(view: WebView?, url: String?) {
                         binding.webview.evaluateJavascript("""
                             document.querySelector('#name').value = '${it.username}';
-                            document.querySelector('#roomNumber').value = 'ss';
+                            document.querySelector('#roomNumber').value = '$code';
                             document.querySelector('#$submitButtonId').click();
                             """) {}
                         super.onPageFinished(view, url)
@@ -77,6 +83,11 @@ class LiveStreamFragment : Fragment() {
         }
         (activity as SectionActivity).setCustomTitle(R.string.live_stream)
         return binding.root
+    }
+
+    override fun onDestroy() {
+        binding.webview.destroy()
+        super.onDestroy()
     }
 
 }
