@@ -32,6 +32,7 @@ import com.tiper.MaterialSpinner
 import dagger.hilt.android.AndroidEntryPoint
 import id.zelory.compressor.Compressor
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.io.File
 
 @AndroidEntryPoint
@@ -132,6 +133,7 @@ class AddHomeworkFragment : Fragment(), PostListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
         if (requestCode == GET_IMAGE_REQUEST &&
             resultCode == Activity.RESULT_OK &&
             data != null
@@ -165,6 +167,7 @@ class AddHomeworkFragment : Fragment(), PostListener {
         DatePickerFragment.newInstance()
             .apply {
                 onDateSet = {
+                    Timber.d(it.toString())
                     (dateField as TextView).setDate(it)
                 }
 

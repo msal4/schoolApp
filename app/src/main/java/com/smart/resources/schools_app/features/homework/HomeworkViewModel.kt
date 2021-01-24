@@ -9,6 +9,7 @@ import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
 import com.smart.resources.schools_app.features.users.data.repository.UserRepository
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class HomeworkViewModel @ViewModelInject constructor(
     application: Application,
@@ -74,6 +75,7 @@ class HomeworkViewModel @ViewModelInject constructor(
 
         uploadListener?.onUploadStarted()
         viewModelScope.launch {
+            Timber.d(postHomeworkModel.date.toString())
             when (val myRes = homeworkRepo.addHomework(postHomeworkModel)) {
                 is Success -> {
                     uploadListener?.onUploadCompleted()

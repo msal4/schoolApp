@@ -46,10 +46,12 @@ class MyApp : Application() {
     }
 
     private fun initializeOneSignal() {
-        OneSignal.startInit(this)
-            .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
-            .unsubscribeWhenNotificationsAreDisabled(true)
-            .init()
-    }
+        OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);
 
+        OneSignal.init(this, "1056409072168", "df9bc8b6-c043-4c02-8424-9a11fe40ed19")
+//        OneSignal.startInit(this)
+//            .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+//            .unsubscribeWhenNotificationsAreDisabled(true)
+//            .init()
+    }
 }

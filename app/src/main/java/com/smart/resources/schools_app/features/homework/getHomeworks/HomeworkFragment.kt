@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.kaopiz.kprogresshud.KProgressHUD
@@ -28,6 +29,7 @@ import com.smart.resources.schools_app.features.imageViewer.ImageViewerActivity
 import com.smart.resources.schools_app.features.users.data.repository.UserRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class HomeworkFragment : Fragment() {
@@ -59,8 +61,8 @@ class HomeworkFragment : Fragment() {
             viewModel.onError = ::onError
 
             viewModel.apply {
-                homework.observe(viewLifecycleOwner, Observer {
-                    if (it == null) return@Observer
+                homework.observe(viewLifecycleOwner, Observer { list ->
+                    if (list == null) return@Observer
                     if (::adapter.isInitialized) {
                         errorText.text = ""
                         adapter.submitList(viewModel.homework.value)
@@ -73,8 +75,8 @@ class HomeworkFragment : Fragment() {
                     adapter = HomeworkRecyclerAdapter(it).apply {
                         onImageClicked = ::onImageClicked
                         onAnswerClicked = ::onAnswerClicked
-
                     }
+
                     binding.recyclerView.adapter = adapter
                     adapter.submitList(viewModel.homework.value)
                 }

@@ -3,6 +3,7 @@ package com.smart.resources.schools_app.features.homework
 import com.smart.resources.schools_app.core.extentions.isImage
 import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
 import org.threeten.bp.LocalDate
+import timber.log.Timber
 import java.io.File
 
 
@@ -27,6 +28,8 @@ data class HomeworkModel(
     val subjectName: String,
     val solution: HomeworkSolutionModel?
 ){
+
+
     val hasImage get() = attachment.isImage()
     val hasNote  get() = !note.isBlank()
 
@@ -40,6 +43,7 @@ class PostHomeworkModel(
     note: String= "",
     subjectName: String= ""
 ): BaseHomeworkModel(assignmentName, date, note, subjectName){
+
 
     override fun toString(): String {
         return "${super.toString()}\n PostHomeworkModel(attachment=$attachment, classId='$classId')"

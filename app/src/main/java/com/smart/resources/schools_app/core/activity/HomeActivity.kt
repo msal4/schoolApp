@@ -1,12 +1,14 @@
 package com.smart.resources.schools_app.core.activity
 
+import android.Manifest
 import android.app.Activity
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
@@ -21,7 +23,6 @@ import com.smart.resources.schools_app.features.users.data.repository.UserReposi
 import kotlinx.android.synthetic.main.dialog_livestream.view.*
 import kotlinx.coroutines.launch
 import org.json.JSONObject
-import timber.log.Timber
 import java.net.URI
 
 
@@ -40,8 +41,19 @@ class HomeActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
 
-        refreshUi()
+        hasPermissions(this, )
+        val permissionsAll = 1
+        val permissions = arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO)
 
+        if (!hasPermissions(this, *permissions)) {
+            ActivityCompat.requestPermissions(this, permissions, permissionsAll)
+        }
+
+        refreshUi()
+    }
+
+    private fun hasPermissions(context: Context, vararg permissions: String): Boolean = permissions.all {
+        ActivityCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun setUserType() {

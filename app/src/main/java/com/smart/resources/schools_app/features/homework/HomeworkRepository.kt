@@ -10,6 +10,7 @@ import com.smart.resources.schools_app.core.myTypes.Success
 import com.smart.resources.schools_app.core.network.RetrofitHelper
 import com.smart.resources.schools_app.core.typeConverters.retrofit.dateTimeBackendSendFormatter
 import com.smart.resources.schools_app.features.homeworkSolution.data.model.HomeworkSolutionModel
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,13 +20,16 @@ class HomeworkRepository @Inject constructor(){
 
     suspend fun getTeacherHomework(): MyResult<List<HomeworkModel>> {
         val myRes= RetrofitHelper.homeworkClient.fetchHomework()
-        if (myRes is Success) homework.value = myRes.data.orEmpty().toMutableList()
+        if (myRes is Success) homework.value = myRes.data?.map { it.copy(date = it.date.plusDays(1)) }.orEmpty().toMutableList()
         return myRes
     }
 
     suspend fun getStudentHomework(): MyResult<List<HomeworkWithSolution>> {
         val myRes = RetrofitHelper.homeworkClient.fetchHomeworkWithSolution()
-        if (myRes is Success) homework.value = myRes.data?.map { it.homework.copy(solution = it.solution) }?.toMutableList() ?: mutableListOf()
+        if (myRes is Success) homework.value = myRes.data?.map {
+
+            it.homework.copy(date = it.homework.date.plusDays(1), solution = it.solution)
+        }?.toMutableList() ?: mutableListOf()
         return myRes
 
     }
