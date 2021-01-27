@@ -20,15 +20,14 @@ class HomeworkRepository @Inject constructor(){
 
     suspend fun getTeacherHomework(): MyResult<List<HomeworkModel>> {
         val myRes= RetrofitHelper.homeworkClient.fetchHomework()
-        if (myRes is Success) homework.value = myRes.data?.map { it.copy(date = it.date.plusDays(1)) }.orEmpty().toMutableList()
+        if (myRes is Success) homework.value = myRes.data.orEmpty().toMutableList()
         return myRes
     }
 
     suspend fun getStudentHomework(): MyResult<List<HomeworkWithSolution>> {
         val myRes = RetrofitHelper.homeworkClient.fetchHomeworkWithSolution()
         if (myRes is Success) homework.value = myRes.data?.map {
-
-            it.homework.copy(date = it.homework.date.plusDays(1), solution = it.solution)
+            it.homework.copy(solution = it.solution)
         }?.toMutableList() ?: mutableListOf()
         return myRes
 

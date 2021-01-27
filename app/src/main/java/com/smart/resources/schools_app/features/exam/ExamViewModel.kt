@@ -11,6 +11,8 @@ import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.myTypes.*
 import com.smart.resources.schools_app.features.users.domain.usecase.IGetCurrentUserTypeUseCase
 import kotlinx.coroutines.launch
+import org.threeten.bp.format.DateTimeFormatter
+import timber.log.Timber
 
 
 class ExamViewModel @ViewModelInject constructor(
@@ -61,6 +63,8 @@ class ExamViewModel @ViewModelInject constructor(
 
         listener?.onUploadStarted()
         viewModelScope.launch {
+            postExamModel.date = postExamModel.date?.plusDays(1)
+
             when(val myRes= examRepo.addExam(postExamModel)){
                 is Success -> listener?.onUploadCompleted()
                 is ResponseError -> listener?.onError(myRes.combinedMsg)

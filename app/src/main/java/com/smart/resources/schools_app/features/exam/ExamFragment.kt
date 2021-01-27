@@ -14,6 +14,7 @@ import com.smart.resources.schools_app.features.addMark.AddMarkFragment
 import com.smart.resources.schools_app.features.users.data.repository.UserRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class ExamFragment : Fragment(), ExamRecyclerAdapter.OnItemClickListener {
@@ -41,6 +42,9 @@ class ExamFragment : Fragment(), ExamRecyclerAdapter.OnItemClickListener {
             adapter = ExamRecyclerAdapter(this@ExamFragment)
             recyclerView.adapter = adapter
             lifecycleOwner = this@ExamFragment
+        }
+        lifecycleScope.launch {
+           Timber.d(UserRepository.instance.getCurrentAccount()?.accessToken?.value);
         }
 
         (activity as SectionActivity).setCustomTitle(R.string.exams)

@@ -17,13 +17,12 @@ class ExamModel(
     note: String,
     type: String
 ) : Exam(subjectName, date, note, type){
-
     fun isContentSame(model: ExamModel) =
-        subjectName== model.subjectName &&
-                date== model.date &&
-                note== model.note &&
-                type == model.type &&
-                mark== model.mark
+        subjectName == model.subjectName &&
+               date == model.date &&
+               note == model.note &&
+               type == model.type &&
+               mark == model.mark
 }
 
 

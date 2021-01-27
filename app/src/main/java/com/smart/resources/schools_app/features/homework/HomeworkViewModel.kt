@@ -75,7 +75,8 @@ class HomeworkViewModel @ViewModelInject constructor(
 
         uploadListener?.onUploadStarted()
         viewModelScope.launch {
-            Timber.d(postHomeworkModel.date.toString())
+            postHomeworkModel.date = postHomeworkModel.date?.plusDays(1)
+
             when (val myRes = homeworkRepo.addHomework(postHomeworkModel)) {
                 is Success -> {
                     uploadListener?.onUploadCompleted()

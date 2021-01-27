@@ -23,7 +23,4 @@ interface ExamClient {
 
     @GET("resultByExamId/{id}")
     suspend fun getResultsByExam(@Path("id") examId: String): MyResult<List<StudentWithMark>>
-
-
-
 }

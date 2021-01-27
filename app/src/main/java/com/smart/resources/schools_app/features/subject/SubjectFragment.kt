@@ -8,13 +8,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import com.smart.resources.schools_app.R
 import com.smart.resources.schools_app.core.activity.SectionActivity
 import com.smart.resources.schools_app.databinding.FragmentRecyclerLoaderBinding
 import com.smart.resources.schools_app.features.lecture.LectureFragment
 import com.smart.resources.schools_app.features.schedule.ScheduleDayFragment
+import com.smart.resources.schools_app.features.users.data.repository.UserRepository
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class SubjectFragment : Fragment() {
@@ -37,6 +41,9 @@ class SubjectFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        lifecycleScope.launch {
+            Timber.d(UserRepository.instance.getCurrentAccount()?.accessToken?.value)
+        }
         binding = FragmentRecyclerLoaderBinding.inflate(inflater, container, false).apply {
             SubjectRecyclerAdapter().apply {
                 adapter = this
